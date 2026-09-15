@@ -1,15 +1,3 @@
-# FreeCAD temporary/backups
-*.FCStd1
-*.FCBak
-*.bak
-*~
-
-# Python
 __pycache__/
 *.pyc
-.venv/
-
-# Generated manufacturing files
-exports/*.stl
-exports/*.3mf
-exports/*.gcode
+*.FCBak
