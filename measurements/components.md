@@ -15,15 +15,14 @@ dimensional source for anything.
 | Height, S3 mounted | 17.5 | |
 | Height, tallest dupont pins | 28.3 | Governs upper-deck headroom |
 | Mounting holes | 4.6 dia | One in each corner |
-| Hole spacing across width | 35.5 | **Ambiguous — see note** |
-| Hole spacing along length | 59.6 | **Ambiguous — see note** |
+| Hole span across width, outer edge to outer edge | 35.5 | → 30.9 center-to-center |
+| Hole span along length, outer edge to outer edge | 59.6 | → 55.0 center-to-center |
+| **Hole pattern, center-to-center** | **30.9 x 55.0** | Confirmed 2026-09-15 |
 
-Hole spacings were reported as measured "from nearest edges of the circles." Taken literally
-(the gap between facing edges), the width figure is geometrically impossible: 35.5 + 4.6 = 40.1
-center-to-center on a 42-wide board puts hole centers 0.95 from the edge, so a 4.6 hole would
-run off the board. Read instead as outer-edge-to-outer-edge, center-to-center becomes 30.9
-(width) and 55.0 (length), placing centers 5.55 in from the long edges and 9.5 in from the
-ends — plausible. **Unconfirmed. Do not cut a mounting pattern from these numbers yet.**
+Spans were measured across the outer edges of the holes, so center-to-center = span − hole
+diameter: 35.5 − 4.6 = 30.9 across the width, 59.6 − 4.6 = 55.0 along the length. That places
+hole centers 5.55 in from each long edge and 9.5 in from each end, leaving 3.25 and 7.2 of
+material outboard respectively. Self-consistent with the 42 x 74 outline.
 
 ## Breadboard with C6 + BNO (logic, upper deck)
 
@@ -59,11 +58,23 @@ it needs to sit clear of the aluminum deck to radiate.
 | Height excl. heatsink | 18.7 | |
 | Heatsink height | 32 | |
 | Heatsink width | 51 | Matches board width |
-| Heatsink protrusion past board bottom edge | ~28 | |
+| Heatsink protrusion below the PCB underside | ~28 | |
 
-Intent: mount so the **heatsinks sit outside the body envelope** — exposed to airflow while the
-bot moves, and to reclaim interior volume. Heatsink orientation relative to the board is not yet
-pinned down precisely enough to model (see open questions).
+**Orientation:** the heatsink **hangs below the board face** — fins point down from the underside
+of the PCB, not up from the component side and not sideways past an edge. Confirmed 2026-09-15.
+
+**Numbers do not fully reconcile — needs one clean re-measure.** If the heatsink hangs 28 below
+the PCB and components rise 18.7 above it, a board resting fins-down on a table should stand
+roughly 28 + 1.6 + 18.7 ≈ 48 tall, but overall height was measured at 41.2. The separately
+reported 32 heatsink height doesn't close the gap either. Resolve by standing one driver on its
+fins on the bench and measuring (a) total height to the tallest component, and (b) PCB underside
+to the tips of the fins.
+
+**Mounting intent:** one driver per side, **canted diagonally outward** — outer edge raised so the
+boards flare out like angled exhaust headers. With the heatsink on the underside, canting outward
+aims the fins down-and-outboard into moving air. At 45 degrees a 51-wide board rises ~36 and
+flares ~36 outboard of its inner edge. Whether the fins clear the track runs is gated by the
+track measurements still outstanding.
 
 ## Power distribution board (power)
 
@@ -124,8 +135,7 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
 
 ## Still to measure
 
-- S3 hole spacing, confirmed center-to-center (or edge-of-board to hole-center)
-- Motor driver heatsink orientation relative to the board
+- Motor driver: total height standing on its fins, and PCB underside to fin tips (see note above)
 - C6 antenna connector position and pigtail length
 - Mast OD, height above lower deck, and whether it passes through the upper deck
 - **Track clearance:** deck side edge to inner face of each track run, and track top height

@@ -30,6 +30,9 @@ and wiring sitting on and around the battery.
 | Rail-to-deck mounting | **Via the existing slits, not the holes** | Slots give fore-aft adjustment when setting the rails |
 | Existing 4mm / M2 hole pattern | Repurposed for board mounts | Freed up by moving rail mounting to the slits |
 | Lateral adjustment | Add small horizontal (crosswise) slots at the rail feet | Absorbs the 3mm front/rear X offset and print tolerance |
+| Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
+| Power distribution board | Hung from the **underside of the upper deck**, over the battery | Will not fit the rear zone — the mast bisects it; hanging it means it lifts away with the deck and exposes the cells |
+| Power rails | Recessed into the top of each side rail | At 84 long they exceed the 79 deck width, so they can only run fore-aft; the side rails are already the wiring path |
 
 ## Consequences of those choices
 
@@ -60,8 +63,17 @@ slots are not yet decided.
 
 ## Open questions blocking modeling
 
-1. S3 mounting hole spacing — the reported figures are not self-consistent (see
-   `measurements/components.md`).
-2. Motor driver heatsink orientation relative to its board, needed before the outboard heatsink
-   mounting can be laid out.
-3. Mast OD and whether it penetrates the upper deck.
+1. **Track geometry.** Deck side edge to inner face of each track run, the track's outer extent,
+   and its top height relative to the deck top (Z = 2). The canted drivers flare outboard over the
+   tracks, so this decides the cant angle and how far out the boards can reach before the fins
+   foul the track.
+2. **Motor driver height reconciliation** — the reported 41.2 / 18.7 / 32 / 28 figures don't close
+   (see `measurements/components.md`).
+3. **Mast OD** and whether it penetrates the upper deck.
+
+## Deferred
+
+- Whether the rails taper to follow the 3mm front/rear slot offset, or run straight with offset
+  feet. Decide once the crosswise adjustment slots are sized.
+- Rail-to-deck wiring connector location.
+- Antenna mounting point, clear of the aluminum deck and the drivers.
