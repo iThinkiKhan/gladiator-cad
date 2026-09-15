@@ -27,9 +27,11 @@ and wiring sitting on and around the battery.
 | Upper deck fastening | Heat-set brass inserts in the rails | Deck opens repeatedly; self-tapped plastic threads strip |
 | Component split | Power hardware low, logic up top | Keeps heat, noise and thick cable away from the S3 and IMU |
 | Deck removal | Lifts off loaded, boards attached | Deck acts as a removable tray |
-| Rail-to-deck mounting | **Via the existing slits, not the holes** | Slots give fore-aft adjustment when setting the rails |
-| Existing 4mm / M2 hole pattern | Repurposed for board mounts | Freed up by moving rail mounting to the slits |
-| Lateral adjustment | Add small horizontal (crosswise) slots at the rail feet | Absorbs the 3mm front/rear X offset and print tolerance |
+| Rail-to-deck mounting | **Via the outermost slits at both ends, not the holes** | Slots give fore-aft adjustment when setting the rails |
+| **Aluminum lower deck** | **Existing physical part — do not add features to it** | It is already fabricated. The CAD is a faithful reverse-model. New features would mean hand-machining a finished plate |
+| Lateral adjustment | Crosswise slots in the **printed rail feet**, not the aluminum | Some play, but not much. Keeps all tolerance absorption in the cheap-to-reprint part |
+| Slot fastening | Plain M3 screw, nut and washer under the deck | A screw through a slot has nothing to self-tap into |
+| Upper deck width | **100**, wider than the 79 lower deck | Two 9.5 buses on the edges leave an 81 channel; S3 (42) + breadboard (35.5) = 77.5 fit side by side. At 95 they would not |
 | Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
 | Power distribution board | Hung from the **underside of the upper deck**, over the battery | Will not fit the rear zone — the mast bisects it; hanging it means it lifts away with the deck and exposes the cells |
 | Power rails | Fore-aft only; **placement unresolved** | At 84 long they exceed the 79 deck width, so they cannot run crosswise |
@@ -118,18 +120,51 @@ Self-tapping into the aluminum only works at the 1.6 pilot holes. A screw passin
 **underside** of the lower deck. Under-deck clearance beneath the slots is therefore a new
 requirement and is not yet measured — the track units and motors live down there.
 
-## Proposed rail cross-section (for review, not yet modeled)
+## Side rails — BUILT
 
-| Property | Value | Notes |
-| --- | --- | --- |
-| Overall | 14 wide x 38 tall | Z 2 (deck top) to ~40 (upper deck underside) |
-| Left rail X | 5 .. 19 (center 12) | Covers front slot 8.5-12.5 and rear outer slit 11.5-15.5 |
-| Right rail X | 60 .. 74 (center 67) | Mirrored |
-| Length | ~130, Y 5 .. 135 | Just inside the deck ends |
-| Wall thickness | 2.4 | 6 perimeters at 0.4 nozzle, PETG |
-| Section | C-channel, opening inboard | Wires hidden from outside, accessible with the deck off |
-| Internal raceway | ~11.6 wide x ~33 tall | Generous for the bundle |
-| Deck attachment | M3 heat-set inserts in bosses at the rail top | 3-4 per rail |
+Modeled in `Gladiator_Master.FCStd` as `SideRailLeft` (PartDesign body) and `SideRailRight`
+(mirrored about the deck centerline). Fully parametric off the `Parameters` spreadsheet.
+
+**They are arches, not straight beams.** The battery holder fills the full deck width (X 0..79)
+from Y 21..96.5 up to Z 21.5, so a constant-section rail sitting on the deck would pass straight
+through it. The rails instead land on the exposed deck ahead of and behind the battery and span
+over it.
+
+| Property | Value |
+| --- | --- |
+| Left rail X | 5 .. 19 (14 wide) |
+| Right rail X | 60 .. 74 (mirrored) |
+| Length | Y 5 .. 135 |
+| Top face | Z 40, flat full length — carries the upper deck |
+| Front leg | Y 5 .. 19, underside Z 2 (2.0 gap to battery front at Y 21) |
+| Arch span | Y 19 .. 98, underside Z 24 (2.5 clear over battery top at Z 21.5) |
+| Rear leg | Y 98 .. 135, underside Z 2 (1.5 gap to battery rear at Y 96.5) |
+| Beam depth over battery | 16 |
+| Section | C-channel, opening inboard |
+| Raceway | 11.6 wide, continuous front to rear; 11.2 tall over the arch, 31.6 tall in the legs |
+| Wall / leg floor | 2.4 / 4.0 |
+| Volume | 17185 mm3 each |
+
+**Mounting:** slots at both ends, per decision — no reliance on the 4mm locating hole. Each leg
+has a crosswise adjustment slot giving 4 total lateral play (M3 clearance, 3.4 wide):
+
+| Leg | Foot slot | Screw nominal | Lands in deck slot |
+| --- | --- | --- | --- |
+| Front | X 6.8..14.2, Y 11.3..14.7 | X 10.5 | Front slot X 8.5..12.5 |
+| Rear | X 9.8..17.2, Y 113.3..116.7 | X 13.5 | Rear outer slit X 11.5..15.5 |
+
+The 3 lateral offset between the front and rear deck slots is absorbed by the feet, so the rail
+itself runs dead straight. Fastening is a plain M3 screw with a nut and washer under the deck.
+
+**Driver access:** an 8 dia hole through the top wall directly above each mounting screw. The
+raceway is continuous, so a driver drops straight down through the hole to the screw head. The
+upper deck covers these in normal use — they're only needed with the deck off, which is exactly
+when rails get adjusted.
+
+Verified: zero clash against the battery, the lower deck, or each other.
+
+**Still to add:** heat-set insert bosses in the top wall for the upper deck. Deferred until the
+deck is designed, since insert positions must match its hole pattern.
 
 ## Open questions blocking modeling
 
