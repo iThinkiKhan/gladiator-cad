@@ -62,3 +62,15 @@ Four M2 self-tap pilot holes (1.6 mm) in the gap between each side's rear inner 
 Modeled rear pilot hole centers: left (19.0, 128) and (19.0, 111); right (60.0, 128) and (60.0, 111).
 
 All of the above are driven by named cells in the `Parameters` spreadsheet inside `Gladiator_Master.FCStd` (`mount_hole_diameter`, `pilot_hole_diameter`, `front_slit_side_gap`, `front_slit_edge_gap`, `front_slit_length`, `front_hole_edge_gap`, `front_hole_slit_inset`, `pilot_hole_offset`, `rear_pilot_edge_gap`, `rear_pilot_spacing`, `rear_pilot_outside_bias`). `outer_slit_center_spacing` still drives the rear outer slits, unchanged from the original model.
+
+## Battery box (added 2026-09-15)
+
+A simple reference solid for the 4S battery case, sized to the existing battery footprint (`battery_width` x `battery_length`) and sitting directly on top of the deck. This is a standalone `Part::Box` object (`BatteryBox`), not part of the `ChassisDeck` body -- it's a clearance/visualization reference, not a cut or manufactured feature of the deck itself.
+
+| Feature | Value | Model interpretation |
+| --- | ---: | --- |
+| Battery box height | 19.5, empty (no batteries installed) | Box Z = 2 to 21.5 (sits on top of the 2mm deck) |
+
+Modeled battery box extents: X 0-79, Y 21-96.5, Z 2-21.5. Driven by `Parameters.battery_box_height`, reusing the existing `battery_width`/`battery_length`/`battery_front_gap`/`deck_thickness` cells for footprint and placement.
+
+`scripts/export_step.py` was updated to export every solid in the document (each `PartDesign::Body`'s final shape plus standalone solids like `BatteryBox`), rather than only `ChassisDeck` -- otherwise new standalone reference objects silently don't make it into the STEP file.
