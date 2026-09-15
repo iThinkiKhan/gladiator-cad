@@ -39,16 +39,18 @@ and wiring sitting on and around the battery.
 The mast **penetrates the upper deck**, and the upper deck acts as its structural support. It
 carries a **swappable sensor head**. Servo placement undecided.
 
-Structural consequence: a mast with a head on top is a cantilever, so it feeds a bending moment
-into the upper deck. The deck needs real stiffness local to the opening (boss / collar / ribs),
-and the rails have to resist the deck twisting under that moment. This is the main argument for
-the rails plus deck genuinely behaving as a structural box rather than a shelf on posts.
+**The lower deck 14 opening at (39.5, 113) is the anchor point.** The upper deck is a secondary
+bearing, not the primary support.
 
-If the mast also passes through the lower deck's 14 opening at (39.5, 113), it gains a second
-bearing point roughly 38 below the first, which carries the moment far better than a single
-anchor and mostly relieves the upper deck of bending. **Open:** mast OD is still unmeasured. If it
-is around 19-21 as the (unreliable) old collar coupons hint, it will not pass a 14 hole — either
-the mast steps down at its base, it seats on top of the lower deck, or that opening gets enlarged.
+That ordering matters structurally. The cantilever moment from the sensor head is reacted by the
+aluminum lower deck, and the upper deck only has to restrain the mast laterally — a much smaller
+load. So the upper deck opening needs a modest collar or bushing rather than a heavy reinforced
+boss with ribs, which is what keeps the second-floor area around the mast usable rather than
+sacrificed to structure. The two bearings sit roughly 38 apart vertically, which stiffens the mast
+considerably against deflection compared with anchoring at one deck alone.
+
+**Open:** mast OD is still unmeasured, along with whether the 14 hole takes the mast tube directly
+or a stepped spigot at its base.
 
 ## Consequences of those choices
 
@@ -108,6 +110,26 @@ Levers, roughly in order of preference:
 2. Stack the breadboard above the S3 on standoffs.
 3. Relocate the buses vertically onto the inner faces of the rails, reachable from above through a
    gap between the deck edge and the rail.
+
+## Consequence of mounting through slots rather than holes
+
+Self-tapping into the aluminum only works at the 1.6 pilot holes. A screw passing through a
+**slot** has nothing to bite, so rail mounting needs a nut, T-nut or backing bar on the
+**underside** of the lower deck. Under-deck clearance beneath the slots is therefore a new
+requirement and is not yet measured — the track units and motors live down there.
+
+## Proposed rail cross-section (for review, not yet modeled)
+
+| Property | Value | Notes |
+| --- | --- | --- |
+| Overall | 14 wide x 38 tall | Z 2 (deck top) to ~40 (upper deck underside) |
+| Left rail X | 5 .. 19 (center 12) | Covers front slot 8.5-12.5 and rear outer slit 11.5-15.5 |
+| Right rail X | 60 .. 74 (center 67) | Mirrored |
+| Length | ~130, Y 5 .. 135 | Just inside the deck ends |
+| Wall thickness | 2.4 | 6 perimeters at 0.4 nozzle, PETG |
+| Section | C-channel, opening inboard | Wires hidden from outside, accessible with the deck off |
+| Internal raceway | ~11.6 wide x ~33 tall | Generous for the bundle |
+| Deck attachment | M3 heat-set inserts in bosses at the rail top | 3-4 per rail |
 
 ## Open questions blocking modeling
 
