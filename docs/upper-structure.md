@@ -32,7 +32,23 @@ and wiring sitting on and around the battery.
 | Lateral adjustment | Add small horizontal (crosswise) slots at the rail feet | Absorbs the 3mm front/rear X offset and print tolerance |
 | Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
 | Power distribution board | Hung from the **underside of the upper deck**, over the battery | Will not fit the rear zone — the mast bisects it; hanging it means it lifts away with the deck and exposes the cells |
-| Power rails | Recessed into the top of each side rail | At 84 long they exceed the 79 deck width, so they can only run fore-aft; the side rails are already the wiring path |
+| Power rails | Fore-aft only; **placement unresolved** | At 84 long they exceed the 79 deck width, so they cannot run crosswise |
+
+## Mast
+
+The mast **penetrates the upper deck**, and the upper deck acts as its structural support. It
+carries a **swappable sensor head**. Servo placement undecided.
+
+Structural consequence: a mast with a head on top is a cantilever, so it feeds a bending moment
+into the upper deck. The deck needs real stiffness local to the opening (boss / collar / ribs),
+and the rails have to resist the deck twisting under that moment. This is the main argument for
+the rails plus deck genuinely behaving as a structural box rather than a shelf on posts.
+
+If the mast also passes through the lower deck's 14 opening at (39.5, 113), it gains a second
+bearing point roughly 38 below the first, which carries the moment far better than a single
+anchor and mostly relieves the upper deck of bending. **Open:** mast OD is still unmeasured. If it
+is around 19-21 as the (unreliable) old collar coupons hint, it will not pass a 14 hole — either
+the mast steps down at its base, it seats on top of the lower deck, or that opening gets enlarged.
 
 ## Consequences of those choices
 
@@ -60,6 +76,38 @@ Note the **3mm lateral offset** between the front and rear outer slots (front ce
 68.5, rear outer centers X 13.5 / 65.5). A rail at constant X cannot sit centered in both, which
 is what the added crosswise adjustment slots are meant to absorb. Size and placement of those
 slots are not yet decided.
+
+## Upper deck area problem
+
+Recessing the power rails into the rail tops was considered and **rejected**: the upper deck sits
+on top of the rails and spans the full width, so it would cover them. The buses need to be
+reachable while the bot is running, so they have to live on an exposed surface.
+
+That pushes them onto the upper deck, which is then tight. At 79 x 140 the deck must hold:
+
+| Item | Footprint | Area |
+| --- | --- | ---: |
+| S3 + expander | 42 x 74 | 3108 |
+| Breadboard (C6 + BNO) | 46.3 x 35.5 | 1644 |
+| Power rails x2 | 84 x 9.5 each | 1596 |
+| | **total** | **6348 of 11060** |
+
+57% raw coverage sounds workable, but it does not lay out cleanly. Two buses along the side edges
+leave a 60-wide central channel; the S3 (42) and breadboard (35.5) fit that channel individually
+but not side by side (77.5), so they must sit fore-and-aft — 74 + 46.3 = 120.3 end to end. With
+the mast at Y 113 eating the rear, only ~103 of length is clear ahead of it. Doesn't fit. Nor can
+the breadboard be relegated downstairs: the rear zone is 43.5 deep (breadboard is 46.3 long, and
+rotating it into the zone collides with the mast), and the front zone is only 21 deep.
+
+Levers, roughly in order of preference:
+
+1. **Make the upper deck wider than the lower deck.** Nothing constrains it to 79 — it sits above
+   the tracks, which are free space. Going to ~95-100 wide buys 2000-3000 mm2, gives the buses
+   their own edge lanes, and provides outer edges to hang the canted driver mounts from (the
+   stated fallback). Also shelters the tracks.
+2. Stack the breadboard above the S3 on standoffs.
+3. Relocate the buses vertically onto the inner faces of the rails, reachable from above through a
+   gap between the deck edge and the rail.
 
 ## Open questions blocking modeling
 

@@ -54,27 +54,36 @@ it needs to sit clear of the aluminum deck to radiate.
 | --- | ---: | --- |
 | Board length | 49.5 | |
 | Board width | 51 | |
-| Height incl. heatsink | 41.2 | |
-| Height excl. heatsink | 18.7 | |
-| Heatsink height | 32 | |
+| **Overall, fin tip to tallest component** | **41** | Governing stack height |
 | Heatsink width | 51 | Matches board width |
 | Heatsink protrusion below the PCB underside | ~28 | |
+| Components above the PCB | ~13 | Back-solved from 41 overall |
 
-**Orientation:** the heatsink **hangs below the board face** — fins point down from the underside
-of the PCB, not up from the component side and not sideways past an edge. Confirmed 2026-09-15.
+No dupont pins on these boards — the tallest features are the screw terminals.
 
-**Numbers do not fully reconcile — needs one clean re-measure.** If the heatsink hangs 28 below
-the PCB and components rise 18.7 above it, a board resting fins-down on a table should stand
-roughly 28 + 1.6 + 18.7 ≈ 48 tall, but overall height was measured at 41.2. The separately
-reported 32 heatsink height doesn't close the gap either. Resolve by standing one driver on its
-fins on the bench and measuring (a) total height to the tallest component, and (b) PCB underside
-to the tips of the fins.
+**Orientation:** the heatsink is on the **underside** of the board — fins project from the face
+opposite the components, not from an edge.
 
-**Mounting intent:** one driver per side, **canted diagonally outward** — outer edge raised so the
-boards flare out like angled exhaust headers. With the heatsink on the underside, canting outward
-aims the fins down-and-outboard into moving air. At 45 degrees a 51-wide board rises ~36 and
-flares ~36 outboard of its inner edge. Whether the fins clear the track runs is gated by the
-track measurements still outstanding.
+**Mounting intent:** one driver per side, **canted diagonally with the heatsink facing outward and
+the fins pointing up and away from the tracks.** The component face therefore looks down-and-inward,
+putting the screw terminals toward the vehicle interior where they can be wired. Fins pointing up
+and out keeps them out of track debris and in clean air — track fouling is not a concern in this
+orientation.
+
+Envelope, measured outward/upward from the board's inner edge (board 51 across the cant, fins 28
+proud of the board face):
+
+| Cant from horizontal | Outboard reach | Vertical rise |
+| ---: | ---: | ---: |
+| 30 deg | ~58 | ~50 |
+| 45 deg | ~56 | ~56 |
+| 60 deg | ~50 | ~58 |
+
+At any of these the driver assemblies reach roughly 50-58 outboard of wherever they anchor, which
+may well make them the widest point on the vehicle. Track outer extent is still needed to confirm.
+
+Fallback if canting off the rails proves awkward: mounts that rise above and to the sides of the
+upper deck, carrying the drivers at the same angle but higher up.
 
 ## Power distribution board (power)
 
