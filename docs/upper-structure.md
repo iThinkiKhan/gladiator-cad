@@ -497,10 +497,8 @@ Resulting board envelope, X -47.7 .. 13.3 and Z 33.3 .. 98:
 | Deck top Z 52 (lowest driver material over the deck is Z 77.5) | 25.5 |
 | Mast top Z 120 | driver tops out at 98, still lower |
 
-**Deck notches were needed.** As the plate cants down-and-out it passes through Z 48..52 around
-X 0..5.5 — straight through the deck edge. Rather than raise the whole assembly 9.5 (and the robot
-with it), the deck is notched X 0..6.5 and 72.5..79 over Y 88..142. The rails sit at X 6..18 and
-61..73, so the notch removes only edge material and costs no rail support.
+**Superseded — see "Open frame" below.** The solid plate was replaced; the deck notches it
+required have been removed and the deck edge is solid again.
 
 The driver bosses also had to move inboard to **X 14.5 / 64.5**: at X 12 the boss outboard edge
 (X 7.5) sat under the descending plate at Z 55, inside the boss's own Z 52..58.
@@ -517,6 +515,54 @@ battery (which ends at Y 96.5), and beyond Y 112 they hit the rails' rear haunch
 **Antenna post** (`AntennaPost`). 10 x 10 column at X 65..75, Y 3..13, rising Z 52..78, with a 6.5
 cross-hole at Z 70 for an SMA bulkhead. Front-right corner, close to the C6 on the breadboard so the
 pigtail stays short, and diagonally as far as possible from the drivers at the rear.
+
+### Driver mounts — open frame (2026-09-16 rev)
+
+The solid backing plate is gone. **The heatsink must stay in open air and must not be the clamping
+surface** — the driver hangs on its four PCB holes from inward-facing standoffs, GPIO side inboard,
+fins projecting outboard past the structure entirely.
+
+Measured board data that drives it:
+
+| | |
+| --- | ---: |
+| PCB | 49.5 x 51 |
+| Mounting holes, centre to centre | **39.5 x 39.5** (square) |
+| Heatsink | 51 wide (full board width) x **32 long** |
+| Clear PCB at each end of the 49.5 axis | 8.75 |
+
+The square hole pattern puts the holes 5 in from the 49.5-axis ends and 5.75 in from the 51-axis
+edges — both inside the 8.75 of bare board the 32 heatsink leaves, so the standoffs land on PCB,
+never on the heatsink.
+
+Structure per side: a foot across the two deck bosses, two uprights, two links reaching out over
+the board's inboard edge, and **two 6-wide arms in the board plane** carrying four 6.5 standoffs.
+Nothing spans the middle — the heatsink passes clean through.
+
+| Element | u along the board (49.5 axis) |
+| --- | --- |
+| Arms | 2..8 and 41.5..47.5 |
+| Standoffs | 1.75..8.25 and 41.25..47.75 |
+| Heatsink | 8.75..40.75 |
+
+0.5 to 0.75 of clearance each side. Volume dropped **15135 -> 10815 mm3** per side and the fins are
+fully exposed.
+
+**Notches no longer needed.** The old plate dipped into the deck only because a solid plate offset
+15 to the component side swung inboard and down, reaching Z 42..50 at X 0. With the PCB on short
+standoffs the structure sits at Z 68.5 at X 0 — 16.5 above the deck. Notches removed, deck edge
+verified solid again at X 1/3/5 across Y 95..135.
+
+The Z 84 board height is unchanged: that was never set by the plate but by the GPIO-side components
+needing to clear the deck, which they do by 2.5.
+
+**Airflow orientation.** The board's longer dimension (51) runs perpendicular to the body, so the
+heatsink's 32 dimension runs fore-aft. Reading the fin direction off the reference photo — fins
+perpendicular to the header edge — that puts the fin channels **along the direction of travel**, so
+air is forced between them rather than against a face. Worth confirming against the real part: if
+the fins actually run the other way the board rotates 90 degrees. The square hole pattern would
+still fit unchanged, but the arms would have to move to the other axis, since a heatsink 51 long
+fore-aft would leave no clear board for them.
 
 ### Deck width is now fully consumed
 
