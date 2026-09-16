@@ -138,8 +138,28 @@ side in both socket and deck bore.
 
 Verified: zero clash against the aluminum, both rails, the battery, or between mast parts.
 
-**Still open:** head interface geometry, final mast height (120 is a placeholder giving 68 of
-cantilever above the deck), and servo placement.
+**Still open:** final mast height (120 is a placeholder giving 68 of cantilever above the deck) and
+servo placement.
+
+### Mast head — owned elsewhere
+
+A separate agent is designing the sensor head (noted 2026-09-16). **Nothing in this workstream
+should model it.** Interface it needs from this side:
+
+| | |
+| --- | --- |
+| Mast tube OD / bore | 20.0 / 12.0 |
+| Tube top | Z 120 (provisional — say if the head needs a different height) |
+| Wire path | down the 12 bore, exiting a 10 x 12 window on the rear face at Z 24..36 |
+| Upper deck bearing | 20.4 bore, collar Z 38..48, so the tube is laterally constrained there |
+| Base retention | 3.4 cross-hole at Z 13 through the base collar and tube |
+| Fixed, not rotating | pan, if any, lives inside the head |
+
+**Coordination hazard.** Both workstreams would be editing the same
+`cad/master/Gladiator_Master.FCStd` on the same server. These scripts do open -> modify -> save on
+the whole document, so concurrent edits silently overwrite each other, and both sides push to the
+same git branch. Either the head should be built as its own file under `cad/parts/` and only
+referenced here, or the two of us need to take turns on the master with a commit in between.
 
 ## Consequences of those choices
 
@@ -535,9 +555,26 @@ The square hole pattern puts the holes 5 in from the 49.5-axis ends and 5.75 in 
 edges — both inside the 8.75 of bare board the 32 heatsink leaves, so the standoffs land on PCB,
 never on the heatsink.
 
-Structure per side: a foot across the two deck bosses, two uprights, two links reaching out over
-the board's inboard edge, and **two 6-wide arms in the board plane** carrying four 6.5 standoffs.
-Nothing spans the middle — the heatsink passes clean through.
+**Free-standing spacers were wrong and are gone (rev 2).** The first attempt put the frame 8
+outboard of the PCB and hung four standoff posts off it. Topologically that was one solid, but the
+arms cantilevered 51 from their inboard links with nothing at the far end, so the outboard pair sat
+on the end of a whip. Two changes fixed it:
+
+1. **The frame now lies in the board plane** and the PCB bolts flat to it. No standoffs at all —
+   the GPIO components simply project inboard past the arms into free space, and the heatsink
+   projects outboard through the opening. Thread engagement comes from 8-dia bosses on the
+   *outboard* face, backed by the arm, giving 9 of material.
+2. **The frame is closed.** A cross-tie at v 52..58 joins the two arms at their outboard ends,
+   just past the heatsink's 51 edge. Arms run v -13..58, reaching inboard past the board's edge to
+   meet shoulders that bridge to the uprights — crossing the board plane above the PCB, where there
+   is no board to foul.
+
+Verified as one solid, one shell, with every feature contributing volume (2574 -> 12056), so it is
+genuinely fused rather than touching at faces.
+
+Structure per side: a foot across the two deck bosses, two uprights, two shoulders, and a closed
+frame of two 6-wide arms plus a cross-tie. Nothing spans the middle — the heatsink passes clean
+through.
 
 | Element | u along the board (49.5 axis) |
 | --- | --- |
