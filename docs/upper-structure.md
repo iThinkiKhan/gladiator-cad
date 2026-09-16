@@ -129,6 +129,14 @@ exactly Z 6, the same as the plate top, and the corners grazed it.
 **MastTube.** 20 OD / 12 bore, Z 6..120. A 10 x 12 wire window on the rear face at Z 24..36 lets
 the loom out into the rear zone, below the deck collar. Matching 3.4 cross-hole at Z 13.
 
+**Bug found and fixed (2026-09-17): the wire window never actually opened.** `MastWindowCut` had
+`Reversed=False` with `Length=20`, cutting outward away from the tube (its resulting volume was
+bit-for-bit identical to the uncut tube's) -- the rear wall had been solid this entire time.
+Diagnosed independently by the mast-head design workstream via `docs/mast-head/cad-audit-20260916.txt`,
+who isolated the exact fix (`Reversed=True`, `Length=12`) in a trial without touching the saved
+master. Applied that fix here: volume dropped by 523.4 mm3, exactly matching their trial figure.
+Verified the bore is now open at the rear wall (Z25-35 probes) while the front wall stays solid.
+
 **UpperDeck bearing collar.** The mast bore is 20.4 through the deck, with a 28 OD collar hanging
 below to Z 38 — so the bearing is **14 long** rather than just the deck's 4.
 
@@ -170,15 +178,35 @@ about 2.5 of room to lower the assembly regardless -- not enough to meaningfully
 re-anchoring it further from the mast in Y, either of which is a proper redesign, not a parameter
 tweak. Not pursued for now; flagging here in case the head design finds it still matters.
 
-**Caution for whoever builds the head, or edits the driver mount:** the driver PCB's actual
-component envelope is **not modelled as a solid** anywhere in this file -- only the printed frame
-is. A boolean clash check against `DriverMountLeft/Right` will report zero even when the real board
-components would physically interfere (this happened here: widening the deck to X=-3 showed 0.0
-clash against the frame, but algebraically interfered with the component envelope by 2.66). If deck
-geometry near the driver zone (Y 89..140) changes again, redo the algebraic check in
-`check_widen_vs_drop.py` rather than trusting a clash report alone -- or better, model a
-`DriverBoard` reference envelope the way `S3Board`/`Breadboard` already exist, so this stops being
-a silent gap.
+**Resolved (2026-09-17): `DriverBoardLeft`/`DriverBoardRight` now exist as real reference solids**,
+modelling the PCB plus its component side (13 deep) and heatsink side (28 deep, matching the
+measured 41 fin-tip-to-tallest-component) as one tilted box per side, built with the same rotation
+convention as the frame itself. They clash-check cleanly against everything except their own mount
+frame (7129 mm3 overlap each side -- expected and correct, since the PCB is screwed flush to the
+frame arms at exactly those points).
+
+**Correction: the earlier deck-widening-vs-drop analysis in this file was wrong.** It used
+`check_widen_vs_drop.py`, a hand-derived line calculation that (it turns out) mixed up which board
+dimension -- 49.5 or 51 -- was the canted one, an inconsistency across several of this session's
+scripts. Querying the actual `DriverBoardLeft` solid instead of hand trig gives a different answer:
+
+| | Hand-calc claim (wrong) | Verified from the solid |
+| --- | --- | --- |
+| Margin to an 79-wide deck edge | +2.5 | **+15 to +17** (never conflicts) |
+| Margin to an 85-wide deck edge | -2.7 (interference) | **+12 to +14** (never conflicts) |
+| Room to drop the driver height before hitting the deck | ~2.5 | **not the limiting factor at all** |
+| Vertical clearance, envelope bottom to track top | not checked | **32** |
+
+So the deck was never actually the constraint on dropping the driver height for the mast FOV
+question -- there is real room there. What **does** gate a drop is that the frame's structural
+members (foot/uprights/gusset) are built at fixed Z values tied to the current board height, not
+derived parametrically from it, so lowering the board means rebuilding the frame around a new
+height rather than moving a single parameter. The tapered deck itself is unaffected and still
+correctly fixes the S3/breadboard layout regardless of this correction -- it just wasn't required
+by the driver conflict, which never existed as described.
+
+If the mast FOV question comes back around, there is real room to revisit dropping the driver
+assembly -- ask before assuming the 2.5 figure from earlier in this log.
 
 **Coordination hazard.** Both workstreams would be editing the same
 `cad/master/Gladiator_Master.FCStd` on the same server. These scripts do open -> modify -> save on
