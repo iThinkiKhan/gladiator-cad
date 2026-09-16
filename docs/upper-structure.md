@@ -51,8 +51,61 @@ boss with ribs, which is what keeps the second-floor area around the mast usable
 sacrificed to structure. The two bearings sit roughly 38 apart vertically, which stiffens the mast
 considerably against deflection compared with anchoring at one deck alone.
 
-**Open:** mast OD is still unmeasured, along with whether the 14 hole takes the mast tube directly
-or a stepped spigot at its base.
+### Role
+
+Vertical, removable / swappable sensor mast. It is a **standardized backbone and interface**, not
+a housing for one specific sensor — the head swaps. Servo placement undecided.
+
+### The 6 mm constraint
+
+There is only **6 of clearance between the underside of the aluminum deck and the motor**, directly
+below the mast bore. That rules out:
+
+- a through-mast with a nut, clamp or collar underneath
+- any deep socket reaching below the plate
+- long fasteners protruding under the mast centreline
+
+Usable engagement is 2 (plate thickness) + about 5 (leaving 1 of safety) = **7 total**.
+
+### Why shallow engagement is acceptable anyway
+
+The mast has two bearings: the aluminum deck at Z 2 and the upper deck at Z 48..52, roughly **46
+apart**. A sensor head's bending moment is reacted as a *couple* between those two bearings — the
+lower one carries **shear**, not moment. So socket depth is not the governing factor; a 7 socket
+resists shear easily.
+
+Stiffness is not a concern either. A 14 OD / 9 ID PETG tube has I = 1563 mm4; a 100 g head on a
+100 cantilever above the upper deck deflects about 0.11. Even 300 g at 150 is only ~1.1.
+
+**The real gap is torsion.** A round spigot in a round hole cannot resist the head being twisted.
+Anti-rotation has to come from fasteners off the centreline.
+
+### Anchoring opportunity, and a correction
+
+Checked against the built rails (script `check_mast_zone.py`):
+
+| Rear M2 pilot | Status |
+| --- | --- |
+| (19, 111) | **usable** — rail is overhead at Z 30+, screw head has clear room |
+| (60, 111) | **usable** — same |
+| (19, 128) | **BLOCKED** — buried under the rail's rear foot (Y 119..135) |
+| (60, 128) | **BLOCKED** — same |
+
+This corrects an earlier note claiming all four rear pilots stayed free for board mounts. Only the
+Y 111 pair is actually reachable.
+
+That pair is well placed for the mast: **41 apart, straddling the bore at Y 113**, and clear of the
+rails. Two M2 screws there give both clamping and the anti-rotation the socket cannot provide. A
+base plate can span X 16..63, Y 104..118 — fully clear of the rail feet, which only come down to
+deck level at Y 2..13 and Y 119..135.
+
+The inner long slits (X 23.5..27.5 and 51.5..55.5, running Y 58.75..132.5) are also unused and sit
+just **5 from the bore edge**, offering a supplementary or alternative anchor — but they need nuts
+underneath, and under-deck clearance at that location is still unmeasured.
+
+**Open:** mast OD is a *design choice*, not a measurement, since the shape is not locked. Also
+open: whether the mast itself pans (servo at the base) or is fixed with any pan motion inside the
+head — that inverts the anti-rotation requirement.
 
 ## Consequences of those choices
 
@@ -298,7 +351,7 @@ Everything here is blocked on measurements or on layout decisions:
 2. **Board mounting patterns** — S3 + expander is a known 30.9 x 55 centre-to-centre; the
    breadboard, INA226 and power distro patterns are not measured.
 3. **Bus lanes** for the two 84 x 9.5 power rails, along the deck edges.
-4. **Driver mounts** on the outer overhangs — needs the track outer extent.
+4. **Driver mounts** on the outer overhangs. Tracks reach 50 outboard of each deck edge (overall width 179), so a driver canted off the deck edge at X -10.5 would reach X -60 to -66 and become the widest point by 10-16. Anchoring nearer X 0 keeps it inside the track envelope.
 5. Optional: counterbores on the six fixing holes so the screw heads sit flush. Deliberately left
    plain for now; 4 of thickness leaves room for them later.
 
