@@ -258,6 +258,38 @@ Insert positions (Y 16, 68, 120) are provisional — the upper deck's hole patte
 to match them, or they get moved when the deck is laid out. Three per rail gives six fixings
 across a 140 deck.
 
+## Upper deck — pass 1 BUILT
+
+Modeled as the `UpperDeck` body. Structure and fixings only; layout comes in pass 2.
+
+| Property | Value |
+| --- | --- |
+| Outline | 100 wide x 140 long, corners R6 |
+| X extent | -10.5 .. 89.5, centred on the chassis centreline X 39.5 |
+| Y extent | 0 .. 140, matching the lower deck |
+| Z | 46 .. 50 (sits directly on the rail tops) |
+| Thickness | 4 |
+| Rail fixings | 6 x M3 clearance (3.4) at X 12 and 67, Y 16 / 68 / 120 |
+
+Verified: hole positions match the rail insert bores exactly, and zero clash against the rails,
+battery or lower deck.
+
+Spans and overhangs: the deck is unsupported for **43 between the rails** and overhangs the lower
+deck by **10.5 each side**, out over the tracks. At 4 PETG both are comfortable; the overhangs are
+where the canted driver mounts are expected to attach.
+
+### Pass 2, still to add
+
+Everything here is blocked on measurements or on layout decisions:
+
+1. **Mast collar** — needs mast OD. The deck is the mast's secondary lateral bearing.
+2. **Board mounting patterns** — S3 + expander is a known 30.9 x 55 centre-to-centre; the
+   breadboard, INA226 and power distro patterns are not measured.
+3. **Bus lanes** for the two 84 x 9.5 power rails, along the deck edges.
+4. **Driver mounts** on the outer overhangs — needs the track outer extent.
+5. Optional: counterbores on the six fixing holes so the screw heads sit flush. Deliberately left
+   plain for now; 4 of thickness leaves room for them later.
+
 ## Open questions blocking modeling
 
 1. **Track geometry.** Deck side edge to inner face of each track run, the track's outer extent,
