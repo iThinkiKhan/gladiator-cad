@@ -481,6 +481,59 @@ Two things make it workable:
    is not limited to 43. A cradle whose floor and walls sit at Z 26..30 can be wider than the
    channel, with only the board itself (40) poking up into the 43 gap above.
 
+### Driver mounts, power shield, antenna — BUILT (2026-09-16)
+
+**Driver mounts** (`DriverMountLeft`, `DriverMountRight`). Foot on the deck at Z 58..62, riser to
+Z 77, then a 4-thick plate canted 60 deg carrying the board 15 off its face so the 13 of components
+clear. Bolts to two new deck bosses per side. Sits at **Y 90..139.5**, behind the S3 (which ends at
+Y 89) so nothing collides.
+
+Resulting board envelope, X -47.7 .. 13.3 and Z 33.3 .. 98:
+
+| Check | Margin |
+| --- | ---: |
+| Track outer edge X -50 | 2.3 |
+| Track tops ~Z 7 | 26.3 |
+| Deck top Z 52 (lowest driver material over the deck is Z 77.5) | 25.5 |
+| Mast top Z 120 | driver tops out at 98, still lower |
+
+**Deck notches were needed.** As the plate cants down-and-out it passes through Z 48..52 around
+X 0..5.5 — straight through the deck edge. Rather than raise the whole assembly 9.5 (and the robot
+with it), the deck is notched X 0..6.5 and 72.5..79 over Y 88..142. The rails sit at X 6..18 and
+61..73, so the notch removes only edge material and costs no rail support.
+
+The driver bosses also had to move inboard to **X 14.5 / 64.5**: at X 12 the boss outboard edge
+(X 7.5) sat under the descending plate at Z 55, inside the boss's own Z 52..58.
+
+**Power board shield** (`PowerShield`). Floor X 18.5..60.5, Y 39..102 at Z 24..26, with a front lip
+only — side lips would need 40 + 2x3 = 46 in the 43 channel, so the long sides stay open exactly as
+the earlier analysis predicted. Two legs at X 16..23 and 56..63, Y 97..112, drop to Z 6 and land on
+the mast base plate, **sharing its two existing M2 screws at (19, 111) and (60, 111)**. Board space
+inside the lip is Y 42..102 = 60, matching the board.
+
+Legs stop at Y 112 and start at Y 97 for two reasons found by clash check: below Y 97 they hit the
+battery (which ends at Y 96.5), and beyond Y 112 they hit the rails' rear haunches as those descend.
+
+**Antenna post** (`AntennaPost`). 10 x 10 column at X 65..75, Y 3..13, rising Z 52..78, with a 6.5
+cross-hole at Z 70 for an SMA bulkhead. Front-right corner, close to the C6 on the breadboard so the
+pigtail stays short, and diagonally as far as possible from the drivers at the rear.
+
+### Deck width is now fully consumed
+
+The S3 is inset 1 from the deck edge as asked, but that is all the room there is:
+
+| | |
+| --- | ---: |
+| S3 | 42 |
+| Breadboard | 35.5 |
+| Total | 77.5 |
+| Deck | 79 |
+| **Slack to distribute** | **1.5** |
+
+Current split: S3 inset 1.0, gap between boards 0.5, breadboard flush at X 79. Any larger inset has
+to come out of the gap or push the breadboard off the edge. Real margins would need the deck back
+out to roughly 85, or the breadboard stacked above the S3.
+
 ### Pass 2, still to add
 
 Everything here is blocked on measurements or on layout decisions:
@@ -489,7 +542,7 @@ Everything here is blocked on measurements or on layout decisions:
 2. ~~Board mounting patterns~~ - resolved: only the S3 is screwed, rest adhesive.
    breadboard, INA226 and power distro patterns are not measured.
 3. ~~Bus lanes~~ - dropped; buses move into repurposed breadboard space.
-4. **Driver mounts** on the outer overhangs. Tracks reach 50 outboard of each deck edge (overall width 179), so a driver canted off the deck edge at X -10.5 would reach X -60 to -66 and become the widest point by 10-16. Anchoring nearer X 0 keeps it inside the track envelope.
+4. ~~Driver mounts~~ - BUILT, see above.
 5. Optional: counterbores on the six fixing holes so the screw heads sit flush. Deliberately left
    plain for now; 4 of thickness leaves room for them later.
 
