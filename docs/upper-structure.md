@@ -399,11 +399,24 @@ Breadboard is 46.3 x 35.5, adhesive-mounted, and goes on the **top deck** to kee
 | Between S3 rear edge and the bore (Y 89..102.8) | 13.8 long | Too short |
 | Forward region (Y 0..102.8) | 79 x 102.8 | **The only place it fits** |
 
-So at 79 the breadboard must share the forward region with the S3, side by side: 42 + 35.5 = 77.5
-in 79, leaving 1.5 total. Adhesive mounting makes that workable — no screw heads needing edge
-margin — but it forces the S3 off centre, which in turn puts one of its standoff bosses within
-about 0.25 of a rail fixing hole. Alternatives are stacking the breadboard above the S3, or
-recovering a few mm of deck width.
+So at 79 the breadboard shares the forward region with the S3, side by side: 42 + 35.5 = 77.5 in
+79, leaving 1.5 total. Adhesive mounting makes that workable — no screw heads needing edge margin.
+
+**Built layout:**
+
+| Item | X | Y | Z | Mounting |
+| --- | --- | --- | --- | --- |
+| S3 + expander | 0 .. 42 | 15 .. 89 | 58 .. 86.3 | 4 x M3 into deck bosses |
+| Breadboard + C6 + BNO | 43.5 .. 79 | 15 .. 61.3 | 52 .. 73.5 | Adhesive |
+
+1.5 gap between the two; both sit flush to their deck edge. The S3 pattern centre moved to
+**X 21** (from 39.5) to make room. Both are modeled as reference envelopes (`S3Board`,
+`Breadboard`) so future parts can be clash-checked against them.
+
+**Earlier concern retracted.** A note claimed an S3 boss would sit ~0.25 from a rail fixing hole.
+That compared X ranges only and ignored the Y separation — the bosses are at Y 24.5 / 79.5 while
+the fixings are at Y 16 / 68. Actual closest centre-to-centre is **10.67**, against 7.25 needed
+(4.5 boss radius + 2.75 M3 cap head radius). Verified clear, so side-by-side carries no penalty.
 
 ### Mounting approach (2026-09-16)
 
