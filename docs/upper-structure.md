@@ -149,11 +149,11 @@ haunches and the material between them is gone.
 | Rear foot | Y 119 .. 135, underside Z 2 |
 | Beam depth over battery | 16 |
 | Section | **Solid member with a raceway worked into it**, not a hollow shell |
-| Raceway groove | Z 32..39 (7 tall) x 8.5 deep = 59.5 mm2, open on the inboard face, Y 5..132 |
+| Raceway groove | Z 32..39 (7 tall) x 8.5 deep = 59.5 mm2, inboard corners rounded R2, open on the inboard face, Y 5..132 |
 | Top slab | Z 39..46 (7 solid, full 12 width) — hosts the heat-set inserts |
 | Bottom flange over arch | Z 30..32 |
 | Outboard web | X 6..9.5 (3.5 solid) |
-| Volume | 23163 mm3 each |
+| Volume | 23930 mm3 each |
 
 **Posts at both ends, not a diagonal.** v3 ran the rear haunch as a 24-long rake from Y 97 down to
 Y 121, which meant the deck load was carried by that diagonal — the triangle was doing the work
@@ -221,7 +221,25 @@ opens upward, so the tabs need no support.
 to spare above the raceway ceiling. Positions dodge the driver shafts at Y 10 and 127.
 
 **Foot wells.** At each foot the inboard face is opened out to 9.5 deep, from the floor at Z 6 up
-to the raceway, so a driver can reach the mounting screw. Front well Y 5..15, rear Y 119..132.
+to the raceway, so a driver can reach the mounting screw. Front well Y 5..13 (stops at the foot
+end), rear Y 119..132.
+
+**Front post fix (v7).** The front well previously ran to Y 15 while the foot ends at Y 13, so it
+undercut the rising haunch: where the well floor at Z 6 crossed the soffit line the wall thinned
+to nothing, leaving a knife edge that was not carrying anything. The well now stops at Y 13, the
+same way the rear well starts exactly at its foot (Y 119) — which is why only the front showed the
+problem. Verified as a single solid, single shell.
+
+**Rounded raceway.** The channel is now cut as a true cross-section swept along Y rather than a
+rectangle pocketed sideways, so the two inboard corners carry an R2 fillet running the full
+length. Easier on wire insulation, and no sharp internal corner for the slicer to fight.
+
+**Well tabs and future use.** Each foot well also gets a retention tab (front at Y 5..6.5 against
+the sealed end wall, rear at Y 120..123 ahead of the screw slot), both 8 tall off the well floor.
+The wells are 9.5 deep x 26 tall x 8 (front) / 13 (rear) long — genuinely usable volume. Candidate
+later uses: small fuse holder, buck converter, or a terminal block. Nothing is committed; the
+volume is simply kept clear so the option stays open. Note the front well is largely taken up by
+screw access (slot Y 8.3..11.7, driver shaft Y 7..13), so the rear well is the roomier of the two.
 
 **Ends are sealed.** Up to v4 both the raceway and the foot wells ran straight out through the
 rail's front and rear end faces. That made the front end a scoop: driving forward would funnel
