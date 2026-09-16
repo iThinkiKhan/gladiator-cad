@@ -130,33 +130,52 @@ from Y 21..96.5 up to Z 21.5, so a constant-section rail sitting on the deck wou
 through it. The rails instead land on the exposed deck ahead of and behind the battery and span
 over it.
 
+**Faceted arch, not a portal.** The first version had legs sized by filling the footprint rather
+than by load — a 37-long solid slab at the rear. Each rail carries roughly 2.5 N, which against a
+12 x 8 PETG section is about 0.02 MPa versus PETG's ~50 MPa yield: over-built by three orders of
+magnitude. Stiffness and printability set the minimum, not strength. The legs are now slender
+haunches and the material between them is gone.
+
 | Property | Value |
 | --- | --- |
-| Left rail X | 5 .. 19 (14 wide) |
-| Right rail X | 60 .. 74 (mirrored) |
-| Length | Y 5 .. 135 |
+| Left rail X | 6 .. 18 (12 wide) |
+| Right rail X | 61 .. 73 (mirrored) |
+| Length | Y 2 .. 135 |
 | Top face | Z 40, flat full length — carries the upper deck |
-| Front leg | Y 5 .. 19, underside Z 2 (2.0 gap to battery front at Y 21) |
-| Arch span | Y 19 .. 98, underside Z 24 (2.5 clear over battery top at Z 21.5) |
-| Rear leg | Y 98 .. 135, underside Z 2 (1.5 gap to battery rear at Y 96.5) |
+| Front foot | Y 2 .. 13, underside Z 2 |
+| Front haunch | 4 chords, Y 13 -> 20, rising Z 2 -> 24 |
+| Soffit | Y 20 .. 97, flat at Z 24 (2.5 clear over battery top Z 21.5) |
+| Rear haunch | 5 chords, Y 97 -> 121, falling Z 24 -> 2 |
+| Rear foot | Y 121 .. 135, underside Z 2 |
 | Beam depth over battery | 16 |
 | Section | C-channel, opening inboard |
-| Raceway | 11.6 wide, continuous front to rear; 11.2 tall over the arch, 31.6 tall in the legs |
-| Wall / leg floor | 2.4 / 4.0 |
-| Volume | 17185 mm3 each |
+| Raceway | 9.6 wide, continuous front to rear; 11.2 tall over the arch, 31.6 tall in the feet |
+| Wall / foot floor | 2.4 / 4.0 |
+| Volume | 15404 mm3 each (down from 17185) |
+
+**The arch is asymmetric by necessity.** The battery sits 21 from the front deck edge but 43.5
+from the rear, and the soffit has to be at Z 24 before it reaches the battery. The front haunch
+therefore climbs 22 in 7 of run and is near-vertical whatever shape is drawn; the rear has three
+times the room and gets the long sweep. Forcing symmetry would only waste the rear space.
+
+The raceway is offset perpendicular to each haunch rather than vertically, so wall thickness
+stays at 2.4 around the curve instead of thinning on the shallow rear chords.
 
 **Mounting:** slots at both ends, per decision — no reliance on the 4mm locating hole. Each leg
 has a crosswise adjustment slot giving 4 total lateral play (M3 clearance, 3.4 wide):
 
-| Leg | Foot slot | Screw nominal | Lands in deck slot |
+| Foot | Foot slot | Screw nominal | Lands in deck slot |
 | --- | --- | --- | --- |
-| Front | X 6.8..14.2, Y 11.3..14.7 | X 10.5 | Front slot X 8.5..12.5 |
-| Rear | X 9.8..17.2, Y 113.3..116.7 | X 13.5 | Rear outer slit X 11.5..15.5 |
+| Front | X 7.3..13.7, Y 8.3..11.7 | X 10.5, Y 10 | Front slot X 8.5..12.5, Y 7.5..40.5 |
+| Rear | X 10.3..16.7, Y 125.3..128.7 | X 13.5, Y 127 | Rear outer slit X 11.5..15.5, Y 99.5..132.5 |
+
+Travel is 3 total (±1.5) at each foot — "some play, but not much". The rail X range 6..18 is
+centred on the midpoint of the two screw positions so both slots keep equal edge margin.
 
 The 3 lateral offset between the front and rear deck slots is absorbed by the feet, so the rail
 itself runs dead straight. Fastening is a plain M3 screw with a nut and washer under the deck.
 
-**Driver access:** an 8 dia hole through the top wall directly above each mounting screw. The
+**Driver access:** a 7 dia hole through the top wall directly above each mounting screw. The
 raceway is continuous, so a driver drops straight down through the hole to the screw head. The
 upper deck covers these in normal use — they're only needed with the deck off, which is exactly
 when rails get adjusted.
