@@ -152,7 +152,7 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
 - Motor driver: total height standing on its fins, and PCB underside to fin tips (see note above)
 - C6 antenna connector position and pigtail length
 - Mast OD, height above lower deck, and whether it passes through the upper deck
-- Track **top height** relative to the deck top (Z = 2) — the outboard extent is now known (below)
+- ~~Track top height~~ - measured: ~5 above the deck, so tops sit near Z 7 (possibly more in motion).
   but the height is not.
 - Battery: true width (79 vs 80), holder height with cells seated, cable exit and connector
 - Vertical clearance needed above the holder to extract an 18650 (cells are 65 long; they may

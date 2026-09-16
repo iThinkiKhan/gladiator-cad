@@ -31,7 +31,7 @@ and wiring sitting on and around the battery.
 | **Aluminum lower deck** | **Existing physical part — do not add features to it** | It is already fabricated. The CAD is a faithful reverse-model. New features would mean hand-machining a finished plate |
 | Lateral adjustment | Crosswise slots in the **printed rail feet**, not the aluminum | Some play, but not much. Keeps all tolerance absorption in the cheap-to-reprint part |
 | Slot fastening | Plain M3 screw, nut and washer under the deck | A screw through a slot has nothing to self-tap into |
-| Upper deck width | **100**, wider than the 79 lower deck | Two 9.5 buses on the edges leave an 81 channel; S3 (42) + breadboard (35.5) = 77.5 fit side by side. At 95 they would not |
+| Upper deck width | **79**, flush with the lower deck | Narrowed 2026-09-16. The 100 was driven by bus edge lanes that no longer exist; 79 still covers the rails with 6 to spare and keeps driver mounts inside the track envelope |
 | Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
 | Power distribution board | **Unresolved** — gets a clip-on backing shield over its solder side; location is a wiring question, tentatively rear | Will not fit the rear zone flat (the mast bisects it). Hanging under the deck remains an option but is no longer assumed |
 | Power rails | Fore-aft only; **placement unresolved** | At 84 long they exceed the 79 deck width, so they cannot run crosswise |
@@ -376,6 +376,34 @@ battery or lower deck.
 Spans and overhangs: the deck is unsupported for **43 between the rails** and overhangs the lower
 deck by **10.5 each side**, out over the tracks. At 4 PETG both are comfortable; the overhangs are
 where the canted driver mounts are expected to attach.
+
+### Deck narrowed to 79 (2026-09-16)
+
+100 was chosen when the deck had to carry two 9.5 bus lanes on its edges *and* the S3 and
+breadboard side by side. The buses are gone, so that driver disappeared. The deck is now **79,
+X 0..79, flush with the aluminum below**, leaving 6 of deck outboard of each rail.
+
+Track measurement that made this safe: **tracks sit ~5 above the deck**, so their tops are around
+Z 7 while the upper deck is at Z 48 — about 41 of vertical clearance. Driver mounts hanging off
+the deck edge cannot foul them. Only *width* matters, and narrowing helps there too: a driver
+flaring ~50 outboard from X 0 lands at the track line (X -50) instead of 10-16 proud of it.
+
+### Layout consequence of 79
+
+Breadboard is 46.3 x 35.5, adhesive-mounted, and goes on the **top deck** to keep leads short.
+
+| Region of the deck top | Size | Verdict |
+| --- | --- | --- |
+| Beside the mast bore (X 0..29.3, X 49.7..79) | 29.3 wide | **Too narrow** — needs 35.5 |
+| Aft of the bore (Y 123.2..140) | 16.8 long | Too short |
+| Between S3 rear edge and the bore (Y 89..102.8) | 13.8 long | Too short |
+| Forward region (Y 0..102.8) | 79 x 102.8 | **The only place it fits** |
+
+So at 79 the breadboard must share the forward region with the S3, side by side: 42 + 35.5 = 77.5
+in 79, leaving 1.5 total. Adhesive mounting makes that workable — no screw heads needing edge
+margin — but it forces the S3 off centre, which in turn puts one of its standoff bosses within
+about 0.25 of a rail fixing hole. Alternatives are stacking the breadboard above the S3, or
+recovering a few mm of deck width.
 
 ### Mounting approach (2026-09-16)
 
