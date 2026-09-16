@@ -377,14 +377,59 @@ Spans and overhangs: the deck is unsupported for **43 between the rails** and ov
 deck by **10.5 each side**, out over the tracks. At 4 PETG both are comfortable; the overhangs are
 where the canted driver mounts are expected to attach.
 
+### Mounting approach (2026-09-16)
+
+**Only the S3 gets screwed down. Everything else is adhesive.** That removes the need for hole
+patterns on the breadboard, INA226 and power board, which were the main outstanding measurements
+for deck layout.
+
+**The breadboard power rails are probably dropped.** Bus function moves into repurposed breadboard
+space instead, so the two 84 x 9.5 strips no longer need edge lanes on the deck. That frees about
+1600 mm2 and removes the constraint that drove the deck to 100 wide in the first place — the width
+stays, but there is now real slack in the layout.
+
+**The power board needs a cradle**, not adhesive: a closed floor so its underside cannot short
+against anything, but removable so components can be added later.
+
+### S3 mounts — BUILT
+
+Four bosses on the deck top, 9 dia x 6 tall, at the **30.9 x 55** pattern centred on (39.5, 52),
+so the board sits Y 15..89. Each takes an M3 heat-set insert (4.4 bore, 7.5 deep from the boss
+top). Stack is deck 48..52 plus boss 52..58 = 10 of material, bore down to 50.5, leaving 2.5.
+
+The 6 boss height does double duty: it gives the 7.05 insert somewhere to live (the 4 deck alone
+cannot hold one, same problem the rails had) and lifts the board clear of its own pin tails.
+
+### Power board cradle — the 43 mm problem
+
+Measured from the built geometry:
+
+| | |
+| --- | --- |
+| Gap between rails (X 18 .. 61) | **43.0** |
+| Power board | 40 x 60 x 16 |
+| Vertical room, battery top Z 21.5 to deck underside Z 48 | 26.5 |
+| Wall budget each side if hung at beam level | **1.50** |
+
+The board only fits between the rails with its 40 dimension across X, and that leaves 1.5 per side
+for cradle walls — before any drop-in clearance. A conventional four-walled tray does not fit.
+
+Two things make it workable:
+
+1. **The floor is what stops the shorting, not the side walls.** A tray with a closed floor and end
+   lips, open along the long sides where the rails are, satisfies the requirement and fits easily.
+2. **Below Z 30 the channel opens up.** The rails' soffit is at Z 30, so anything under that height
+   is not limited to 43. A cradle whose floor and walls sit at Z 26..30 can be wider than the
+   channel, with only the board itself (40) poking up into the 43 gap above.
+
 ### Pass 2, still to add
 
 Everything here is blocked on measurements or on layout decisions:
 
 1. ~~Mast collar~~ — DONE, see the Mast section.
-2. **Board mounting patterns** — S3 + expander is a known 30.9 x 55 centre-to-centre; the
+2. ~~Board mounting patterns~~ - resolved: only the S3 is screwed, rest adhesive.
    breadboard, INA226 and power distro patterns are not measured.
-3. **Bus lanes** for the two 84 x 9.5 power rails, along the deck edges.
+3. ~~Bus lanes~~ - dropped; buses move into repurposed breadboard space.
 4. **Driver mounts** on the outer overhangs. Tracks reach 50 outboard of each deck edge (overall width 179), so a driver canted off the deck edge at X -10.5 would reach X -60 to -66 and become the widest point by 10-16. Anchoring nearer X 0 keeps it inside the track envelope.
 5. Optional: counterbores on the six fixing holes so the screw heads sit flush. Deliberately left
    plain for now; 4 of thickness leaves room for them later.
