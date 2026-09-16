@@ -56,8 +56,9 @@ or a stepped spigot at its base.
 
 ## Consequences of those choices
 
-- A PETG boss hosting an M3 heat-set insert needs roughly a 4.2 bore with >= 2 wall around it, so
-  the rail must be about 9 wide minimum wherever the upper deck bolts down.
+- The actual inserts on hand are **M3 thread, 7.05 long, 5.0 OD at the thickest knurl**. Bore is
+  4.4 (convention is ~0.6 under the knurl) x 7.5 deep. They need 9 of slab to sit in, which is what
+  set the rail top at Z 48 — see below. Wall around a 4.4 bore is 3.8 each side in a 12 rail.
 - Two different joints, two fastener types: rails bolt **down** to aluminum with M2 screws
   self-tapping into the existing 1.6 pilots; the upper deck bolts **up** into heat-set inserts in
   the printed rails. Only the second joint is opened repeatedly.
@@ -141,16 +142,16 @@ haunches and the material between them is gone.
 | Left rail X | 6 .. 18 (12 wide) |
 | Right rail X | 61 .. 73 (mirrored) |
 | Length | Y 2 .. 135 |
-| Top face | Z 46, flat full length — carries the upper deck |
+| Top face | Z 48, flat full length — carries the upper deck |
 | Front foot | Y 2 .. 13, underside Z 2 |
 | Front haunch | 4 chords, Y 13 -> 20, rising Z 2 -> 30 |
 | Soffit | Y 20 .. 112, flat at Z 30 (8.5 clear over battery holder top Z 21.5) |
 | Rear post | 4 chords, Y 112 -> 119, falling Z 30 -> 2 — 7 of run, matching the front |
 | Rear foot | Y 119 .. 135, underside Z 2 |
-| Beam depth over battery | 16 |
+| Beam depth over battery | 18 |
 | Section | **Solid member with a raceway worked into it**, not a hollow shell |
 | Raceway groove | Z 32..39 (7 tall) x 8.5 deep = 59.5 mm2, inboard corners rounded R2, open on the inboard face, Y 5..132 |
-| Top slab | Z 39..46 (7 solid, full 12 width) — hosts the heat-set inserts |
+| Top slab | Z 39..48 (9 solid, full 12 width) — hosts the heat-set inserts |
 | Bottom flange over arch | Z 30..32 |
 | Outboard web | X 6..9.5 (3.5 solid) |
 | Volume | 23930 mm3 each |
@@ -182,6 +183,17 @@ Knock-ons:
   board is 40 x 60, so it fits only with its **40 dimension across X** — 1.5 clearance each side.
 - Actual cell protrusion above the 19.5 holder is still unmeasured, so 8.5 is an estimate, not a
   verified fit.
+
+**Raised again, to Z 48, for the inserts (v8).** The real inserts are 7.05 long, needing a 7.5
+bore — but the top slab was only 7, so the bore would have punched through into the raceway. The
+beam budget had no slack: 2 flange + 7 raceway + 7 slab = 16. Options were a through-bore (insert
+bottom open to the wire channel), thinning the flange to 1, cutting the raceway to 5 tall, or
+raising the top. Raising won: **rail top 46 -> 48**, slab 39..48 = 9, blind bore with 1.5 of
+material beneath it, raceway untouched at 7. Beam is now 18 deep. Cumulative height added this
+session is 8 (soffit 24 -> 30, top 40 -> 48).
+
+The upper deck followed automatically to Z 48..52 — its placement is expression-bound to
+`rail_top_z`, so nothing needed rebuilding on that side.
 
 **Why solid rather than a shell.** v2 was a 2.4 thin-walled box section — structurally fine but it
 read as a wall with a hole in it, and worse, a 2.4 top wall cannot host an M3 heat-set insert
@@ -216,8 +228,8 @@ gap to press wire through and then hold it captive behind them; alternating side
 shallow labyrinth so nothing works its way back out. Printed with the rail on its side the groove
 opens upward, so the tabs need no support.
 
-**Heat-set inserts.** Three M3 bores per rail (4.2 dia, 6 deep from the top face) at Y 16, 68 and
-120, on the rail centreline X 12 — 3.9 of material either side. They sit in the 7 top slab with 1
+**Heat-set inserts.** Three M3 bores per rail (4.4 dia, 7.5 deep from the top face) at Y 16, 68 and
+120, on the rail centreline X 12 — 3.9 of material either side. They sit in the 9 top slab with 1.5
 to spare above the raceway ceiling. Positions dodge the driver shafts at Y 10 and 127.
 
 **Foot wells.** At each foot the inboard face is opened out to 9.5 deep, from the floor at Z 6 up
@@ -267,7 +279,7 @@ Modeled as the `UpperDeck` body. Structure and fixings only; layout comes in pas
 | Outline | 100 wide x 140 long, corners R6 |
 | X extent | -10.5 .. 89.5, centred on the chassis centreline X 39.5 |
 | Y extent | 0 .. 140, matching the lower deck |
-| Z | 46 .. 50 (sits directly on the rail tops) |
+| Z | 48 .. 52 (sits directly on the rail tops) |
 | Thickness | 4 |
 | Rail fixings | 6 x M3 clearance (3.4) at X 12 and 67, Y 16 / 68 / 120 |
 
