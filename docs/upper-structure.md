@@ -155,6 +155,13 @@ should model it.** Interface it needs from this side:
 | Base retention | 3.4 cross-hole at Z 13 through the base collar and tube |
 | Fixed, not rotating | pan, if any, lives inside the head |
 
+**FOV note (checked 2026-09-16).** The driver mounts sit at bearing roughly +-90 to 120 degrees
+from the mast (to the sides and rear-quarters), topping out at Z 101.3 -- only 18.7 below the Z 120
+mast top. From a sensor at the mast top, that occupies the view below about **42-45 degrees
+depression** at those bearings. No physical clash (10.5 clearance to the mast tube itself), but if
+the head needs to see steeply downward to its sides, it will see these mounts. Worth knowing before
+finalizing sensor placement inside the head.
+
 **Coordination hazard.** Both workstreams would be editing the same
 `cad/master/Gladiator_Master.FCStd` on the same server. These scripts do open -> modify -> save on
 the whole document, so concurrent edits silently overwrite each other, and both sides push to the
@@ -678,8 +685,39 @@ not remove it.
 Added 3.4 clearance holes at (14.5, 95) and (14.5, 135), matching the boss/insert positions exactly.
 Volume 18722 -> 22529, still one solid and one shell.
 
-**Antenna pylon replaces the block.** Tapered pylon 20 wide at the base narrowing to 14 at the top,
-Z 56..80, on a foot flange bolted to two new deck bosses at (64, 8) and (74, 8). The top face
-carries a vertical **6.5 SMA bulkhead** hole so the whip screws in pointing up, and a **10
-pass-through** in the pylon body routes the pigtail and lightens the part. Y 1..13, leaving 2 to
-the breadboard.
+**Joint gusseted into one continuous mass (2026-09-16, third pass).** The upright/shoulder/frame
+transition was still a stack of orthogonal blocks meeting at a thin corner-to-corner touch --
+topologically one solid, but with a reentrant notch right where the tilted frame's inboard edge
+met the vertical shoulder, which is exactly where a printed part would crack first. Computed the
+frame's actual inboard edge in that plane (X -1.9..8.5, Z 95.3..101.3) and enlarged the shoulder
+("gusset" now) to X -6..16, Z 86..106 -- fully engulfing that edge with several mm of margin on
+every side rather than a knife-edge touch. Verified solid at points inside the old notch that were
+previously empty air. One solid, one shell, vol 28645.
+
+**Mast obstruction, checked and mostly cleared (2026-09-16).** Physical clearance from the mast
+tube to either driver mount is 10.5, and the heatsink fins point outboard/away from the mast
+entirely (left fin tips at X -22..-48, mast at X 29.5..49.5 -- opposite directions). No physical
+conflict.
+
+There is a real FOV consideration for whoever designs the sensor head: from a sensor at the mast
+top (Z 120), the driver mounts sit at bearing roughly +-90 to 120 degrees (to the sides and
+rear-quarters) and would occupy the view below about **42-45 degrees depression** -- they top out
+at Z 101.3, only 18.7 below the mast top. Not a structural problem and not fixed here since it
+depends entirely on the sensor's required FOV; flagged for the mast-head workstream below.
+
+**Antenna pylon replaces the block, then corrected to actually mount a connector (2026-09-16).**
+First version's "SMA hole" was a **blind** pocket, 10 deep from the top face -- nowhere for the
+connector's threaded barrel to pass through, no shoulder for a nut to clamp against, no path out
+for the cable. It was a hole to sit in, not a mount.
+
+Rebuilt with the actual bulkhead mechanism: an **inset cavity inside the pylon**, Z 62..78, walls
+2.5 all round, leaving a **solid top panel** (Z 78..80) that the SMA connector actually passes
+through -- **6.5 hole cut fully through that panel into the cavity**, so the connector's shoulder
+seats against the panel's underside and the nut clamps down on top. The cavity gives the connector
+body and any strain-relief boot clearance behind the panel. A separate **8 dia hole through the
+rear wall** (facing the breadboard) lets the pigtail exit the cavity toward the C6.
+
+Outer envelope unchanged: tapered 20 wide at the base narrowing to 14 at the top, Z 56..80, foot
+flange bolted to two deck bosses at (64, 8) and (74, 8), Y 1..13 (2 clear of the breadboard).
+Verified: cavity, hole, and cable exit are all open air; base flange and side walls are solid;
+solid, single shell.
