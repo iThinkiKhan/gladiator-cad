@@ -645,3 +645,29 @@ Everything here is blocked on measurements or on layout decisions:
   feet. Decide once the crosswise adjustment slots are sized.
 - Rail-to-deck wiring connector location.
 - Antenna mounting point, clear of the aluminum deck and the drivers.
+
+## Stiffening and antenna pylon (2026-09-16 rev 3)
+
+**Driver frame is now a beam, not a plate.** Arms and cross-tie went **5 -> 12 thick** outboard.
+Bending stiffness goes as thickness cubed, so that is roughly **14x** stiffer for about 55% more
+material. The separate screw bosses are gone — the holes now go straight into the 12, giving more
+thread engagement than the old 9.
+
+Why not a strut under the frame's low end, which is the obvious fix: **every route from there back
+to the chassis crosses the PCB's inboard component zone**, which is 13 deep across the whole board.
+Three paths were checked — foot to low end passes through it at around X -9.5, cross-tie to rail
+passes through around X -15, and going low enough to stay clear lands at Z 20 where there is no
+rail to attach to at the front arm's Y. Thickening avoids the problem entirely.
+
+Numbers behind the call: the frame overhangs about 60, and two 6 x 5 arms give I ~ 125 mm4. At 1 N
+that is 0.29 static deflection — already modest, but 5-10x under vibration. At 12 thick it drops to
+roughly 0.02 static.
+
+Envelope is unchanged where it matters: the fins are still the widest point at X -47.7 with 2.3 to
+the track line, and the frame sits 10.4 inside them.
+
+**Antenna pylon replaces the block.** Tapered pylon 20 wide at the base narrowing to 14 at the top,
+Z 56..80, on a foot flange bolted to two new deck bosses at (64, 8) and (74, 8). The top face
+carries a vertical **6.5 SMA bulkhead** hole so the whip screws in pointing up, and a **10
+pass-through** in the pylon body routes the pigtail and lightens the part. Y 1..13, leaving 2 to
+the breadboard.
