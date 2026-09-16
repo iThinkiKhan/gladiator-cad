@@ -34,7 +34,7 @@ A forward-facing sensor or the vehicle's front looks toward **negative Y**.
 | Driver board reference envelope | Built (2026-09-17) — closes a real gap, see Known Issues |
 | Power board shield | Built, but its *position* is still an open wiring question |
 | Antenna pylon | Built — real through-panel SMA bulkhead mount |
-| Mast head (sensor carrier, pan/tilt) | Separate workstream, v0.1 review candidate exists in `cad/head/v01/`, not yet installed on the master |
+| Mast head (sensor carrier, pan/tilt) | v0.1 review candidate **imported into the master** (2026-09-17) under `HeadCandidate_v01`, plus a mast anti-rotation key added to `MastTube` — see below |
 
 ## The aluminum lower deck is fixed hardware
 
@@ -115,6 +115,15 @@ reasoning.
   rear wall, still solid at the front.
 - Mast top is Z 120, a **placeholder** — see Mast Head section; the head workstream's sightline
   analysis suggests it may need to go taller.
+- **Anti-rotation index flat added (2026-09-17)**, at the user's direction ("modifications to the
+  mast are allowed if they improve the design"). The neck candidate needs a key to resist twist —
+  a round tube alone can't provide it. Rather than re-deriving the flat's geometry, the exact
+  cutting tool was extracted from the head candidate's own feature history
+  (`MastTubePinCut.Shape.cut(HeadMastIndexFlat.Shape)`, giving a precise 75.18 mm3 solid at
+  X 35.5-43.5, Y 122.1-123, Z 105-120) and applied to the real `MastTube` as a
+  `PartDesign::Boolean` cut. Volume matches the candidate's own mast exactly (22249.4686),
+  and the imported `Neck_Main` and `GH44_Fixed_Head_Adapter` both went from a small clash
+  (45.4 mm3 — see Known Issues) to zero.
 
 ## Driver mounts (motor driver + heatsink)
 
@@ -179,6 +188,12 @@ structural rebuild effort rather than a clearance ceiling.
 actually usable (the other 2 are buried under the rail feet) — corrected a note that had claimed
 all 4 were free for board mounts.
 
+**Also fixed this session (2026-09-17):** the head candidate's `Neck_Main` and
+`GH44_Fixed_Head_Adapter` clashed with the real `MastTube` by 45.4 mm3 — not a modeling error in
+either file, but a genuine missing feature: the neck's clamp geometry assumes the mast's
+anti-rotation index flat exists, which it didn't yet on the real mast. Resolved by adding that
+flat to the real mast (see Mast section) rather than papering over the clash.
+
 ## Open items
 
 1. **Power board shield position** — explicitly deferred, needs the wiring plan.
@@ -192,7 +207,36 @@ all 4 were free for board mounts.
 6. Anything the mast-head workstream's own "Exact measurements needed" and "Next design gate"
    sections still list (servo/sensor dimensions, harness design, interface freeze) — see below.
 
-## Mast head (modular sensor head) — separate workstream
+## Mast head (modular sensor head)
+
+**A copy of the v0.1 review candidate was brought into the master on 2026-09-17**, at the user's
+request, so the full assembly can be opened and reviewed in one file. This is an import of a
+snapshot, not a live link — the head workstream's own files (below) remain authoritative and will
+continue to change independently; re-import when their candidate is next revised.
+
+**What was imported, and what wasn't:**
+- The 30 actual head parts (neck, pan/tilt hardware, all 5 carrier variants, the fixed-adapter
+  alternative, hardware/sensor reference envelopes) were copied into a new `HeadCandidate_v01`
+  group in the master, preserving their own sub-grouping (`FixedNeck`, `PanAssembly`,
+  `TiltAssembly`, `CarrierVariants`, `HardwareReferences`, `CableReferences`, `FixedOption`,
+  `FitCoupons`).
+- Their file also contains a **complete duplicate copy of the whole robot** (their own
+  `ChassisDeck`, `MastTube`, etc., captured from `source-master.FCStd` for their internal
+  visualization) — this was deliberately **not** imported, since the master already has the
+  authoritative version of all of that.
+- The one exception: their candidate's mast anti-rotation index flat *was* brought over, as an
+  actual modification to the real `MastTube` — see the Mast section above.
+
+**Verified after import:** all 30 imported parts have valid single solids; re-checked every one of
+them against all 15 of the master's own robot solids (chassis, rails, mast, deck, driver mounts,
+antenna, driver board envelopes) — zero clashes anywhere, including the two mutually-exclusive
+neck-vs-fixed-adapter options (both check clean against the mast; they are alternatives to each
+other, not meant to be installed together).
+
+**This import does not mean the interface is frozen.** Everything about "provisional," "not yet
+measured," "assumed," and "no purchase made" in the source documents below still applies exactly
+as written there — importing the geometry doesn't resolve any of those open items, it just makes
+the current state reviewable in one file alongside the rest of the robot.
 
 Full detail, reasoning, and the evidence trail live in the mast-head workstream's own files,
 which this document does not duplicate and which continue to evolve independently:
