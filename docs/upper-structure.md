@@ -148,10 +148,17 @@ haunches and the material between them is gone.
 | Rear haunch | 5 chords, Y 97 -> 121, falling Z 24 -> 2 |
 | Rear foot | Y 121 .. 135, underside Z 2 |
 | Beam depth over battery | 16 |
-| Section | C-channel, opening inboard |
-| Raceway | 9.6 wide, continuous front to rear; 11.2 tall over the arch, 31.6 tall in the feet |
-| Wall / foot floor | 2.4 / 4.0 |
-| Volume | 15404 mm3 each (down from 17185) |
+| Section | **Solid member with a raceway worked into it**, not a hollow shell |
+| Raceway groove | Z 26..33 (7 tall) x 7 deep, open on the inboard face, full length |
+| Top slab | Z 33..40 (7 solid, full 12 width) — hosts the heat-set inserts |
+| Bottom flange over arch | Z 24..26 |
+| Outboard web | X 6..11 (5 solid) |
+| Volume | 23858 mm3 each |
+
+**Why solid rather than a shell.** v2 was a 2.4 thin-walled box section — structurally fine but it
+read as a wall with a hole in it, and worse, a 2.4 top wall cannot host an M3 heat-set insert
+(they need ~5.7 of depth). Making the member solid and cutting only a channel into it gives both
+the bridge-arch look and a 7 top slab with somewhere for the inserts to actually live.
 
 **The arch is asymmetric by necessity.** The battery sits 21 from the front deck edge but 43.5
 from the rear, and the soffit has to be at Z 24 before it reaches the battery. The front haunch
@@ -175,15 +182,29 @@ centred on the midpoint of the two screw positions so both slots keep equal edge
 The 3 lateral offset between the front and rear deck slots is absorbed by the feet, so the rail
 itself runs dead straight. Fastening is a plain M3 screw with a nut and washer under the deck.
 
-**Driver access:** a 7 dia hole through the top wall directly above each mounting screw. The
+**Wire retention.** Five tabs sit inside the raceway at Y 25, 45, 65, 85 and 105, each 4 long and
+2 thick at the groove opening, alternating bottom (Z 26..30) and top (Z 29..33). They leave a 3
+gap to press wire through and then hold it captive behind them; alternating sides makes the run a
+shallow labyrinth so nothing works its way back out. Printed with the rail on its side the groove
+opens upward, so the tabs need no support.
+
+**Heat-set inserts.** Three M3 bores per rail (4.2 dia, 6 deep from the top face) at Y 16, 68 and
+120, on the rail centreline X 12 — 3.9 of material either side. They sit in the 7 top slab with 1
+to spare above the raceway ceiling. Positions dodge the driver shafts at Y 10 and 127.
+
+**Foot wells.** At each foot the inboard face is opened out to 9 deep, from the floor at Z 6 up to
+the raceway, so a driver can reach the mounting screw. Front well Y 2..15, rear Y 119..135.
+
+**Driver access:** a 6 dia shaft through the top slab directly above each mounting screw. The
 raceway is continuous, so a driver drops straight down through the hole to the screw head. The
 upper deck covers these in normal use — they're only needed with the deck off, which is exactly
 when rails get adjusted.
 
 Verified: zero clash against the battery, the lower deck, or each other.
 
-**Still to add:** heat-set insert bosses in the top wall for the upper deck. Deferred until the
-deck is designed, since insert positions must match its hole pattern.
+Insert positions (Y 16, 68, 120) are provisional — the upper deck's hole pattern must be drilled
+to match them, or they get moved when the deck is laid out. Three per rail gives six fixings
+across a 140 deck.
 
 ## Open questions blocking modeling
 
