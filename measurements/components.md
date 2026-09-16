@@ -79,8 +79,8 @@ proud of the board face):
 | 45 deg | ~56 | ~56 |
 | 60 deg | ~50 | ~58 |
 
-At any of these the driver assemblies reach roughly 50-58 outboard of wherever they anchor, which
-may well make them the widest point on the vehicle. Track outer extent is still needed to confirm.
+At any of these the driver assemblies reach roughly 50-58 outboard of wherever they anchor. With
+tracks reaching 50 outboard (X -50 / 129), anchoring at the deck edge X 0 / 79 lands them right at the track line; anchoring further out makes them the widest point.
 
 Fallback if canting off the rails proves awkward: mounts that rise above and to the sides of the
 upper deck, carrying the drivers at the same angle but higher up.
@@ -105,13 +105,13 @@ upper deck, carrying the drivers at the same angle but higher up.
 
 - **Tracks extend about 50 outboard of each deck edge**, measured 2026-09-16. Deck is X 0..79, so
   the tracks occupy X -50..0 and X 79..129, and **overall vehicle width is 179**. Consequences:
-  the upper deck's 10.5 overhang each side is nowhere near the track edge; and a canted driver
+  the upper deck is now 79, flush with the aluminum, so it has no overhang at all; and a canted driver
   reaching ~50-58 outboard of its anchor becomes the widest point on the vehicle unless it is
   anchored at roughly X 0 / X 79 or further inboard.
 - The vehicle is **tracked** (skid-steer), with track runs flanking the deck on both sides. Any
   hardware projecting outboard of the deck edges — notably the motor driver heatsinks — has to
-  clear the track runs. Deck-edge-to-track clearance and track top height relative to the deck
-  are **not yet measured** and gate that idea.
+  clear the track runs laterally; vertically they sit low (tops near Z 7) so anything at deck
+  height or above is clear of them.
 - The "battery case" is an **open 4-cell 18650 holder**, not a sealed box. Cells sit in open
   channels on spring contacts and are extracted **vertically**. The 79 x 75.5 footprint is
   consistent with four cells side by side across the width (~19 each) with their 65 length
@@ -151,9 +151,8 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
 
 - Motor driver: total height standing on its fins, and PCB underside to fin tips (see note above)
 - C6 antenna connector position and pigtail length
-- Mast OD, height above lower deck, and whether it passes through the upper deck
 - ~~Track top height~~ - measured: ~5 above the deck, so tops sit near Z 7 (possibly more in motion).
-  but the height is not.
+- ~~Mast OD~~ - decided as a design choice, not measured: 20 OD / 12 bore, 13.8 base spigot.
 - Battery: true width (79 vs 80), holder height with cells seated, cable exit and connector
 - Vertical clearance needed above the holder to extract an 18650 (cells are 65 long; they may
   need to tip out rather than lift straight up)
