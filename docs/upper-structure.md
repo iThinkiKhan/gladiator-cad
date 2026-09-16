@@ -194,7 +194,7 @@ centred on the midpoint of the two screw positions so both slots keep equal edge
 The 3 lateral offset between the front and rear deck slots is absorbed by the feet, so the rail
 itself runs dead straight. Fastening is a plain M3 screw with a nut and washer under the deck.
 
-**Wire retention.** Five tabs sit inside the raceway at Y 25, 45, 65, 85 and 105, each 4 long and
+**Wire retention.** Six tabs sit inside the raceway at Y 25, 45, 65, 85, 105 and 125, each 4 long and
 2 thick at the groove opening, alternating bottom (Z 26..30) and top (Z 29..33). They leave a 3
 gap to press wire through and then hold it captive behind them; alternating sides makes the run a
 shallow labyrinth so nothing works its way back out. Printed with the rail on its side the groove
