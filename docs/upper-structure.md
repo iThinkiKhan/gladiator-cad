@@ -103,9 +103,43 @@ The inner long slits (X 23.5..27.5 and 51.5..55.5, running Y 58.75..132.5) are a
 just **5 from the bore edge**, offering a supplementary or alternative anchor — but they need nuts
 underneath, and under-deck clearance at that location is still unmeasured.
 
-**Open:** mast OD is a *design choice*, not a measurement, since the shape is not locked. Also
-open: whether the mast itself pans (servo at the base) or is fixed with any pan motion inside the
-head — that inverts the anti-rotation requirement.
+### Decided
+
+| | |
+| --- | --- |
+| Rotation | **Fixed mast**; any pan lives inside the swappable head |
+| Mast | **20 OD / 12 bore**, stepping to a **13.8 spigot** at the base |
+| Why 20 not 14 | Stiffness was never the constraint (14 deflects only 0.11 under a 100 g head at 100). A 4 wall gives real meat for head-interface features and a 12 wire path; 14 would leave 2.5 |
+
+### Mast — BUILT
+
+Three pieces: `MastBase`, `MastTube`, and a bearing collar added to `UpperDeck`.
+
+**MastBase.** Plate at Z 2..6, outline X 16..63 over Y 99..115 with a tongue X 26..53 out to
+Y 127 so the bore and collar stay fully supported. Fixed by **two M2 screws into the usable
+aluminum pilots at (19, 111) and (60, 111)** — 41 apart, straddling the bore, which is what
+supplies the anti-rotation a round spigot cannot. A 13.8 spigot drops through the aluminum to
+**Z -5, leaving 1 to the motor**. Above the plate, a 26 OD collar to Z 20 bored 20.4 forms the
+mast socket; the mast bottoms on the plate at Z 6. A 3.4 cross-hole at Z 13 through both collar
+walls takes a retaining pin or M3, so the mast pulls straight out.
+
+The wide section stops at Y 115 rather than 118: at Y 118 the rails' rear haunch underside is
+exactly Z 6, the same as the plate top, and the corners grazed it.
+
+**MastTube.** 20 OD / 12 bore, Z 6..120. A 10 x 12 wire window on the rear face at Z 24..36 lets
+the loom out into the rear zone, below the deck collar. Matching 3.4 cross-hole at Z 13.
+
+**UpperDeck bearing collar.** The mast bore is 20.4 through the deck, with a 28 OD collar hanging
+below to Z 38 — so the bearing is **14 long** rather than just the deck's 4.
+
+Bearing centres end up **32 apart** (socket centred Z 13, deck collar centred Z 45), which is the
+couple that resists head wobble. Clearances: spigot 0.10 per side in the aluminum, mast 0.20 per
+side in both socket and deck bore.
+
+Verified: zero clash against the aluminum, both rails, the battery, or between mast parts.
+
+**Still open:** head interface geometry, final mast height (120 is a placeholder giving 68 of
+cantilever above the deck), and servo placement.
 
 ## Consequences of those choices
 
@@ -347,7 +381,7 @@ where the canted driver mounts are expected to attach.
 
 Everything here is blocked on measurements or on layout decisions:
 
-1. **Mast collar** — needs mast OD. The deck is the mast's secondary lateral bearing.
+1. ~~Mast collar~~ — DONE, see the Mast section.
 2. **Board mounting patterns** — S3 + expander is a known 30.9 x 55 centre-to-centre; the
    breadboard, INA226 and power distro patterns are not measured.
 3. **Bus lanes** for the two 84 x 9.5 power rails, along the deck edges.
