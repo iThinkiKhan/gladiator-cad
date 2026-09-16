@@ -33,7 +33,7 @@ and wiring sitting on and around the battery.
 | Slot fastening | Plain M3 screw, nut and washer under the deck | A screw through a slot has nothing to self-tap into |
 | Upper deck width | **100**, wider than the 79 lower deck | Two 9.5 buses on the edges leave an 81 channel; S3 (42) + breadboard (35.5) = 77.5 fit side by side. At 95 they would not |
 | Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
-| Power distribution board | Hung from the **underside of the upper deck**, over the battery | Will not fit the rear zone — the mast bisects it; hanging it means it lifts away with the deck and exposes the cells |
+| Power distribution board | **Unresolved** — gets a clip-on backing shield over its solder side; location is a wiring question, tentatively rear | Will not fit the rear zone flat (the mast bisects it). Hanging under the deck remains an option but is no longer assumed |
 | Power rails | Fore-aft only; **placement unresolved** | At 84 long they exceed the 79 deck width, so they cannot run crosswise |
 
 ## Mast
@@ -400,7 +400,25 @@ top). Stack is deck 48..52 plus boss 52..58 = 10 of material, bore down to 50.5,
 The 6 boss height does double duty: it gives the 7.05 insert somewhere to live (the 4 deck alone
 cannot hold one, same problem the rails had) and lifts the board clear of its own pin tails.
 
-### Power board cradle — the 43 mm problem
+### Power board protection — concept corrected (2026-09-16)
+
+**It is a backing shield, not a tray.** A separate piece that covers the **back** of the board so
+the solder side cannot short, clipping into another part of the body. The board is not dropped
+into a deck-mounted carrier — the shield travels with the board.
+
+Requirements as stated:
+
+- Covers the rear/solder face of the board
+- Clips to the body rather than being screwed to the deck
+- **Connectors stay accessible but secure** — the board is not tall, so the constraint is edge
+  access to its connectors, not height
+- Position: **rear, tentatively** — but explicitly deferred, because where it lives is a wiring
+  question that is not ready to be answered
+
+**Not modeled.** Needs the wiring plan first, plus where the connectors sit on the board edges.
+The 43 analysis below still applies to anything that ends up hanging in the rail channel.
+
+### The 43 mm channel constraint
 
 Measured from the built geometry:
 
