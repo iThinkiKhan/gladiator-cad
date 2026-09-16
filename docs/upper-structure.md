@@ -31,7 +31,7 @@ and wiring sitting on and around the battery.
 | **Aluminum lower deck** | **Existing physical part — do not add features to it** | It is already fabricated. The CAD is a faithful reverse-model. New features would mean hand-machining a finished plate |
 | Lateral adjustment | Crosswise slots in the **printed rail feet**, not the aluminum | Some play, but not much. Keeps all tolerance absorption in the cheap-to-reprint part |
 | Slot fastening | Plain M3 screw, nut and washer under the deck | A screw through a slot has nothing to self-tap into |
-| Upper deck width | **79**, flush with the lower deck | Narrowed 2026-09-16. The 100 was driven by bus edge lanes that no longer exist; 79 still covers the rails with 6 to spare and keeps driver mounts inside the track envelope |
+| Upper deck width | **Tapered: 85 for Y 0..89, 79 for Y 89..140** | Widened 2026-09-16 to fix the S3/breadboard squeeze (was 1.5 total margin). Narrowed back to 79 exactly where the driver mounts start (Y89) -- widening the whole deck would have put the wider edge into the driver's PCB component clearance, forcing the drivers up rather than down (see FOV section) |
 | Motor drivers | One per side, **canted diagonally outward** | Fins (which hang below the board) aim down-and-out into moving air; flared "exhaust header" look; avoids a 49.5-tall vertical board punching through the upper deck |
 | Power distribution board | **Unresolved** — gets a clip-on backing shield over its solder side; location is a wiring question, tentatively rear | Will not fit the rear zone flat (the mast bisects it). Hanging under the deck remains an option but is no longer assumed |
 | Power rails | Fore-aft only; **placement unresolved** | At 84 long they exceed the 79 deck width, so they cannot run crosswise |
@@ -161,6 +161,24 @@ mast top. From a sensor at the mast top, that occupies the view below about **42
 depression** at those bearings. No physical clash (10.5 clearance to the mast tube itself), but if
 the head needs to see steeply downward to its sides, it will see these mounts. Worth knowing before
 finalizing sensor placement inside the head.
+
+**Follow-up (2026-09-16): dropping the driver height to help this was considered and shelved.**
+The driver's PCB component envelope (not modelled as a solid -- see the caution below) only has
+about 2.5 clearance over the current 79-wide deck edge before it interferes, so there was only
+about 2.5 of room to lower the assembly regardless -- not enough to meaningfully change a
+42-45 degree figure. A real fix would mean shrinking the board's standoff-from-frame offset or
+re-anchoring it further from the mast in Y, either of which is a proper redesign, not a parameter
+tweak. Not pursued for now; flagging here in case the head design finds it still matters.
+
+**Caution for whoever builds the head, or edits the driver mount:** the driver PCB's actual
+component envelope is **not modelled as a solid** anywhere in this file -- only the printed frame
+is. A boolean clash check against `DriverMountLeft/Right` will report zero even when the real board
+components would physically interfere (this happened here: widening the deck to X=-3 showed 0.0
+clash against the frame, but algebraically interfered with the component envelope by 2.66). If deck
+geometry near the driver zone (Y 89..140) changes again, redo the algebraic check in
+`check_widen_vs_drop.py` rather than trusting a clash report alone -- or better, model a
+`DriverBoard` reference envelope the way `S3Board`/`Breadboard` already exist, so this stops being
+a silent gap.
 
 **Coordination hazard.** Both workstreams would be editing the same
 `cad/master/Gladiator_Master.FCStd` on the same server. These scripts do open -> modify -> save on
@@ -608,21 +626,30 @@ the fins actually run the other way the board rotates 90 degrees. The square hol
 still fit unchanged, but the arms would have to move to the other axis, since a heatsink 51 long
 fore-aft would leave no clear board for them.
 
-### Deck width is now fully consumed
+### Deck widened at the front, board layout redistributed (2026-09-16)
 
-The S3 is inset 1 from the deck edge as asked, but that is all the room there is:
+The 1.5 total margin above was fixed by widening the deck to 85 for Y 0..89 (the board zone) while
+holding 79 for Y 89..140 (the driver zone) -- see the tapered-width entry in Decisions Locked. That
+freed 6mm, redistributed evenly:
 
-| | |
-| --- | ---: |
-| S3 | 42 |
-| Breadboard | 35.5 |
-| Total | 77.5 |
-| Deck | 79 |
-| **Slack to distribute** | **1.5** |
+| | X range | Margin |
+| --- | --- | ---: |
+| Left edge to S3 | -3 .. -0.5 | 2.5 |
+| S3 | -0.5 .. 41.5 | -- |
+| Gap | 41.5 .. 44.0 | 2.5 |
+| Breadboard | 44.0 .. 79.5 | -- |
+| Right edge | 79.5 .. 82 | 2.5 |
 
-Current split: S3 inset 1.0, gap between boards 0.5, breadboard flush at X 79. Any larger inset has
-to come out of the gap or push the breadboard off the edge. Real margins would need the deck back
-out to roughly 85, or the breadboard stacked above the S3.
+S3 pattern centre moved 21 -> 20.5, bb_x0 moved 43.5 -> 44.0. Verified zero clash against
+everything, including the driver mounts and rails.
+
+**A mistake worth recording:** the spreadsheet has `bb_x0` at row 80 and `bb_y0` at row 81. A script
+wrote "44.0" to row 81 under the belief it was `bb_x0`, which actually overwrote `bb_y0` (silently
+moving the breadboard's Y position from 15 to 44) while leaving the real `bb_x0` untouched. This
+surfaced immediately as a clash against `DriverMountRight` once the breadboard's Y crept close to
+Y89 -- caught by the same clash-check habit that has caught every other error in this build. Row
+labels should be re-read from the sheet before writing, not assumed from memory of an earlier
+script.
 
 ### Pass 2, still to add
 
