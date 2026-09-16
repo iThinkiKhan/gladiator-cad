@@ -666,6 +666,18 @@ roughly 0.02 static.
 Envelope is unchanged where it matters: the fins are still the widest point at X -47.7 with 2.3 to
 the track line, and the frame sits 10.4 inside them.
 
+**That thickening created a new problem, caught by inspection (2026-09-16).** Only the frame arms
+went to 12. The uprights and shoulders between the frame and the foot stayed at the original 6 --
+half the thickness -- while carrying essentially the same bending moment, since they sit close to
+the fixed support where moment is highest, not out near the free end. Thickening the outboard
+member and leaving the root at half its section just relocates the weak point to the root; it does
+not remove it.
+
+**Fixed:** uprights and shoulders brought to 12, matching the frame. Also found in the same pass:
+**the foot had no holes at all** -- it rested on the two deck bosses with no way to fasten down.
+Added 3.4 clearance holes at (14.5, 95) and (14.5, 135), matching the boss/insert positions exactly.
+Volume 18722 -> 22529, still one solid and one shell.
+
 **Antenna pylon replaces the block.** Tapered pylon 20 wide at the base narrowing to 14 at the top,
 Z 56..80, on a foot flange bolted to two new deck bosses at (64, 8) and (74, 8). The top face
 carries a vertical **6.5 SMA bulkhead** hole so the whip screws in pointing up, and a **10
