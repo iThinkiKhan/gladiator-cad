@@ -141,19 +141,19 @@ haunches and the material between them is gone.
 | Left rail X | 6 .. 18 (12 wide) |
 | Right rail X | 61 .. 73 (mirrored) |
 | Length | Y 2 .. 135 |
-| Top face | Z 40, flat full length — carries the upper deck |
+| Top face | Z 46, flat full length — carries the upper deck |
 | Front foot | Y 2 .. 13, underside Z 2 |
-| Front haunch | 4 chords, Y 13 -> 20, rising Z 2 -> 24 |
-| Soffit | Y 20 .. 112, flat at Z 24 (2.5 clear over battery top Z 21.5) |
-| Rear post | 4 chords, Y 112 -> 119, falling Z 24 -> 2 — 7 of run, matching the front |
+| Front haunch | 4 chords, Y 13 -> 20, rising Z 2 -> 30 |
+| Soffit | Y 20 .. 112, flat at Z 30 (8.5 clear over battery holder top Z 21.5) |
+| Rear post | 4 chords, Y 112 -> 119, falling Z 30 -> 2 — 7 of run, matching the front |
 | Rear foot | Y 119 .. 135, underside Z 2 |
 | Beam depth over battery | 16 |
 | Section | **Solid member with a raceway worked into it**, not a hollow shell |
-| Raceway groove | Z 26..33 (7 tall) x 8.5 deep = 59.5 mm2, open on the inboard face, full length |
-| Top slab | Z 33..40 (7 solid, full 12 width) — hosts the heat-set inserts |
-| Bottom flange over arch | Z 24..26 |
+| Raceway groove | Z 32..39 (7 tall) x 8.5 deep = 59.5 mm2, open on the inboard face, Y 5..132 |
+| Top slab | Z 39..46 (7 solid, full 12 width) — hosts the heat-set inserts |
+| Bottom flange over arch | Z 30..32 |
 | Outboard web | X 6..9.5 (3.5 solid) |
-| Volume | 20508 mm3 each |
+| Volume | 23163 mm3 each |
 
 **Posts at both ends, not a diagonal.** v3 ran the rear haunch as a 24-long rake from Y 97 down to
 Y 121, which meant the deck load was carried by that diagonal — the triangle was doing the work
@@ -166,6 +166,22 @@ groove is deepened to 8.5 (59.5 mm2 per rail, ~119 mm2 across both). At roughly 
 22 AWG wire including packing slop that is about 50 wires total. It cannot grow vertically — the
 7 top slab is needed for the inserts and the beam is only 16 deep — so any further capacity comes
 from depth, at the cost of the outboard web (now 3.5).
+
+**Battery clearance raised, and it moved the whole deck.** 2.5 over the holder left nothing for
+18650 cells sitting proud of their channels, nor for wires running over or around the pack. The
+soffit could not simply rise on its own: the beam needs 16 (7 insert slab + 7 groove + 2 flange),
+so with the rail top at Z 40 the soffit was already as low as it could go. Raising clearance
+therefore raises the deck with it. Soffit 24 -> 30 (clearance 2.5 -> **8.5**), rail top 40 -> 46.
+
+Knock-ons:
+
+- The **upper deck underside is now Z 46**, so the whole vehicle is 6 taller. If that hurts the CG
+  on a tracked chassis, `rail_soffit_z` and `rail_top_z` move together as a pair.
+- The power distribution board hanging under the deck now occupies roughly Z 30..46, level with
+  the rail beams. It has to pass **between** the rails, and the gap there is X 18..61 = 43. The
+  board is 40 x 60, so it fits only with its **40 dimension across X** — 1.5 clearance each side.
+- Actual cell protrusion above the 19.5 holder is still unmeasured, so 8.5 is an estimate, not a
+  verified fit.
 
 **Why solid rather than a shell.** v2 was a 2.4 thin-walled box section — structurally fine but it
 read as a wall with a hole in it, and worse, a 2.4 top wall cannot host an M3 heat-set insert
@@ -204,8 +220,14 @@ opens upward, so the tabs need no support.
 120, on the rail centreline X 12 — 3.9 of material either side. They sit in the 7 top slab with 1
 to spare above the raceway ceiling. Positions dodge the driver shafts at Y 10 and 127.
 
-**Foot wells.** At each foot the inboard face is opened out to 9 deep, from the floor at Z 6 up to
-the raceway, so a driver can reach the mounting screw. Front well Y 2..15, rear Y 119..135.
+**Foot wells.** At each foot the inboard face is opened out to 9.5 deep, from the floor at Z 6 up
+to the raceway, so a driver can reach the mounting screw. Front well Y 5..15, rear Y 119..132.
+
+**Ends are sealed.** Up to v4 both the raceway and the foot wells ran straight out through the
+rail's front and rear end faces. That made the front end a scoop: driving forward would funnel
+whatever the tracks throw up directly into the wire channel. Both now stop 3 short of each end,
+so the cavities are closed on the outside and open only inward, toward the sheltered arch. Cost
+is about 1500 mm3 of added material per rail; worth it to keep grit out of the loom.
 
 **Driver access:** a 6 dia shaft through the top slab directly above each mounting screw. The
 raceway is continuous, so a driver drops straight down through the hole to the screw head. The
