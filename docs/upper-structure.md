@@ -144,16 +144,28 @@ haunches and the material between them is gone.
 | Top face | Z 40, flat full length — carries the upper deck |
 | Front foot | Y 2 .. 13, underside Z 2 |
 | Front haunch | 4 chords, Y 13 -> 20, rising Z 2 -> 24 |
-| Soffit | Y 20 .. 97, flat at Z 24 (2.5 clear over battery top Z 21.5) |
-| Rear haunch | 5 chords, Y 97 -> 121, falling Z 24 -> 2 |
-| Rear foot | Y 121 .. 135, underside Z 2 |
+| Soffit | Y 20 .. 112, flat at Z 24 (2.5 clear over battery top Z 21.5) |
+| Rear post | 4 chords, Y 112 -> 119, falling Z 24 -> 2 — 7 of run, matching the front |
+| Rear foot | Y 119 .. 135, underside Z 2 |
 | Beam depth over battery | 16 |
 | Section | **Solid member with a raceway worked into it**, not a hollow shell |
-| Raceway groove | Z 26..33 (7 tall) x 7 deep, open on the inboard face, full length |
+| Raceway groove | Z 26..33 (7 tall) x 8.5 deep = 59.5 mm2, open on the inboard face, full length |
 | Top slab | Z 33..40 (7 solid, full 12 width) — hosts the heat-set inserts |
 | Bottom flange over arch | Z 24..26 |
-| Outboard web | X 6..11 (5 solid) |
-| Volume | 23858 mm3 each |
+| Outboard web | X 6..9.5 (3.5 solid) |
+| Volume | 20508 mm3 each |
+
+**Posts at both ends, not a diagonal.** v3 ran the rear haunch as a 24-long rake from Y 97 down to
+Y 121, which meant the deck load was carried by that diagonal — the triangle was doing the work
+rather than a post. The rear now drops in 7 of run, matching the front, and the soffit instead
+runs flat all the way to Y 112. Side effect: the rear zone gains usable volume, because the old
+rake cut down through exactly where the power hardware lives.
+
+**Raceway capacity.** Wire counts are large and will keep changing as the build iterates, so the
+groove is deepened to 8.5 (59.5 mm2 per rail, ~119 mm2 across both). At roughly 2.3 mm2 per
+22 AWG wire including packing slop that is about 50 wires total. It cannot grow vertically — the
+7 top slab is needed for the inserts and the beam is only 16 deep — so any further capacity comes
+from depth, at the cost of the outboard web (now 3.5).
 
 **Why solid rather than a shell.** v2 was a 2.4 thin-walled box section — structurally fine but it
 read as a wall with a hole in it, and worse, a 2.4 top wall cannot host an M3 heat-set insert
