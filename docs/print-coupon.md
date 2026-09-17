@@ -1,6 +1,6 @@
-# Fit + calibration coupon v1
+# Fit + calibration coupon v2
 
-`cad/coupons/Gladiator_FitCoupon_v1.stl` — 80 x 52 x 11 mm, ~25 g, prints flat with **no support**.
+`cad/coupons/Gladiator_FitCoupon_v2.stl` — 88 x 62 x 11 mm, ~31 g, prints flat with **no support**.
 
 One print answers the questions that would otherwise be answered by scrapping a rail or a deck.
 There are 16 heat-set insert bores across the rails and the upper deck, worth about 133 g of
@@ -8,14 +8,15 @@ filament between them, and all of them ride on one unverified number.
 
 ## What is on it
 
-Features are identified by the row of **small round pips** next to each one — count them.
+Features are identified by a **tick mark** beside each one: the tick gets longer as the size
+goes up (3 / 6 / 9 / 12 mm). Compare lengths rather than counting dots.
 
-| Pips | Feature | Nominal | What it tells you |
+| Tick | Feature | Nominal | What it tells you |
 | ---: | --- | ---: | --- |
-| 1 | Insert boss | bore **4.0** | Heat-set insert fit. Bosses are 9 dia x 6 tall on 4 of plate, bored 7.5 deep leaving a 2.5 floor — **identical to the real deck bosses**, which are the tightest case in the design. |
+| shortest | Insert boss | bore **4.0** | Heat-set insert fit. Bosses are 9 dia x 6 tall on 4 of plate, bored 7.5 deep leaving a 2.5 floor — **identical to the real deck bosses**, which are the tightest case in the design. |
 | 2 | Insert boss | bore **4.2** | |
 | 3 | Insert boss | bore **4.4** | This is what every part currently uses. |
-| 4 | Insert boss | bore **4.6** | |
+| longest | Insert boss | bore **4.6** | |
 | 1 | Spigot peg | **13.6** dia | Try these in the **real aluminium deck's 14.0 tower hole**. The mast base's spigot is 13.8 and drops through with only **1 mm to the motor** underneath — worth knowing before printing MastBase. |
 | 2 | Spigot peg | **13.8** dia | Current design value. |
 | 3 | Spigot peg | **14.0** dia | |
@@ -29,12 +30,12 @@ Unpipped features, left to right, smallest first:
 
 ## Using it as printer calibration
 
-The plate's own outline is the reference — **80.00 x 52.00 x 4.00** is a longer, more sensitive
+The plate's own outline is the reference — **88.00 x 62.00 x 4.00** is a longer, more sensitive
 baseline than a 20 mm test cube.
 
 Measure both of these, because **they will not match**, and the difference is the useful part:
 
-1. **An outside feature** — the plate's 80.00 and 52.00, and the peg diameters (13.60 / 13.80 / 14.00).
+1. **An outside feature** — the plate's 88.00 and 62.00, and the peg diameters (13.60 / 13.80 / 14.00).
    Outside features usually print **oversize** by roughly 0.05–0.2 mm.
 2. **An inside feature** — the clearance holes (3.20 / 3.40 / 3.60) and the bores.
    Holes usually print **undersize** by a similar amount.
@@ -86,3 +87,16 @@ Not yet: the **mast tube** (buy a 20/12 aluminium or carbon tube instead — pri
 layer lines run perpendicular to the bending load), the **driver mounts** (check the 2.7 self-tap
 holes against a real board first), and anything under **`HeadCandidate_v01`** (that interface is not
 frozen).
+
+
+## v1 is superseded
+
+v1 packed its features too tightly: the identification dots sat **1.50 mm** apart and 22 feature
+pairs were closer than 3.5 mm. At this profile a wall loop is 0.4-0.45 mm and there are four of
+them, so ~1.75 mm of perimeter grows in from each side — adjacent dots would have merged into a
+blur and been uncountable, defeating the point of marking them.
+
+v2 spreads everything out (88 x 62 rather than 80 x 52, +6 g) and swaps the counted dots for a
+single length-coded tick per feature. Measured on the solid, the tightest gap anywhere is now
+**4.05 mm** and nothing is under 3.5. The v1 STL has been removed from the incoming folder so there
+is no chance of slicing the cramped one.
