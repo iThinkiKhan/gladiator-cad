@@ -100,3 +100,30 @@ v2 spreads everything out (88 x 62 rather than 80 x 52, +6 g) and swaps the coun
 single length-coded tick per feature. Measured on the solid, the tightest gap anywhere is now
 **4.05 mm** and nothing is under 3.5. The v1 STL has been removed from the incoming folder so there
 is no chance of slicing the cramped one.
+
+
+## Which coupon was actually printed
+
+**The all-in-one v2 (88 x 62, ~31 g) is the one physically printed on 2026-09-17.** It is kept in
+`cad/coupons/` for traceability even though it has been superseded, so that when measurements come
+back there is no ambiguity about what geometry produced them.
+
+It remains fully valid: its insert bosses reproduce the real deck stack exactly (9 dia boss, 6 tall
+on 4 of plate, bored 7.5 deep leaving a 2.5 floor), identical to Coupon A, and it was exported at
+0.01 mm deflection so the holes are true size. It also covers the peg, clearance-hole and slot
+tests, so **Coupon B is not needed for this round**.
+
+## Going forward: one coupon per question
+
+The all-in-one was too slow to print - 86% of its volume was base plate that existed only to hold
+unrelated tests far enough apart not to merge, so every test added made every other test slower.
+Future coupons are split:
+
+| Coupon | Size | Answers |
+| --- | --- | --- |
+| `Gladiator_Coupon_A_InsertBores` | 62 x 17, ~6.5 g | Heat-set insert bore size - gates the rails and upper deck |
+| `Gladiator_Coupon_B_Fits` | 68 x 34, ~15 g | Spigot pegs, screw clearances, rail slot - needed before the mast base |
+
+Both use a **clipped corner** for orientation rather than tick marks or counted pips, which is what
+forced the old plate to be so large. On A the clipped end is the 4.0 bore; sizes increase away from
+it.
