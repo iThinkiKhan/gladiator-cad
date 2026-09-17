@@ -89,9 +89,11 @@ reasoning.
 
 2.5mm margin on every boundary (left edge, gap between boards, right edge).
 
-**Mast bearing collar**: Ø20.4 bore, Ø28 collar hanging to Z 38, giving a 14mm-long upper bearing
-(vs. the bare 4mm deck thickness) — paired with the lower socket in `MastBase`, bearing centres
-32mm apart.
+**Mast bearing collar**: Ø20.4 bore with a Ø28 collar standing **above** the plate to Z 62, giving
+a 14-long upper bearing (vs. the bare 4 of deck). Moved above the deck on 2026-09-17: it makes the
+deck single-sided so it prints flat with **zero support** (it previously needed 10893 mm2 of it,
+all landing on the face that mates with the rail tops), and it lengthens the bearing couple against
+the lower socket from 30 to 42, so it resists mast wobble better rather than worse.
 
 ## Mast
 
@@ -155,11 +157,43 @@ final position is explicitly an open wiring question, tentatively rear, not yet 
 
 ## Antenna pylon
 
-`AntennaPost`: tapered post, Y 1-13 (front-right of the deck, near the C6). Rebuilt once after a
-real bug was caught — the first version's "SMA hole" was a blind 10mm pocket with no path through
-for a connector or a shoulder for its nut to clamp against. Now a proper through-panel bulkhead
-mount: hollow cavity (Z 62-78) behind a solid top panel (Z 78-80) that the Ø6.5 SMA hole actually
-passes through, plus an Ø8 cable exit through the rear wall into the cavity.
+`AntennaPost` carries a **standard nut-type SMA bulkhead** connector. Rebuilt twice; the current
+design is driven by the real connector's dimensions rather than a guess at them.
+
+**What a standard SMA bulkhead actually needs** (1/4-36 UNS-2A thread, the common nut-mount type):
+
+| | |
+| --- | --- |
+| Panel cutout | 6.4 - 6.5 (thread major dia is 6.35) |
+| Nut | 8.0 across flats, ~9.2 across corners |
+| **Maximum panel thickness** | **about 2.2** -- there is only so much thread behind the shoulder |
+| Thread to leave proud for the nut | 2 - 3 |
+| Tail behind the panel | rigid body + crimp, then RG316 (2.5 OD, 15 min bend radius) or RG178 (1.8 OD, 9) |
+
+That last row is what drove the redesign. The connector's tail is long and stiff, and the earlier
+design tried to hide it inside a 16-deep cavity and then bend the cable inside the part -- it did
+not fit, and there was nowhere for the nut to clamp because the "SMA hole" was a blind pocket.
+
+**Current design: a vertical bulkhead plate, tail pointing where the cable already wants to go.**
+
+- **Plate** X 56..80, Z 58..86, **6 thick** (Y 2..8) -- stiff enough to take knocks on the antenna.
+- **Counterbore Ø11 x 4 deep from the rear face**, leaving a **2.0 clamping web** at the hole. The
+  connector is inserted from behind, its shoulder seats in the counterbore, and the 2.0 web is
+  inside the 2.2 limit a standard bulkhead can clamp. The plate is thick *and* the clamped section
+  is thin, which a plain 6 plate could not do.
+- **Ø6.5 through-hole** at X 68, Z 78. The nut goes on the **front face**, which is a clear flat
+  with full 360 degree spanner swing -- no counterbore to reach into.
+- **Tail runs straight out the back.** The axis at Z 78 clears the breadboard (top Z 73.5), so the
+  rigid tail and its cable head rearward over the breadboard straight to the C6. **No bend is
+  forced on the cable by the mount at all** -- the earlier version's whole problem.
+- **Base flange** X 56..80, Y 2..13, Z 58..62, on two deck bosses relocated to (60, 10) and
+  (76, 10) so their screws sit clear of the plate and are reachable from directly above.
+- **Two gussets** brace the plate back onto the flange, so the antenna load is not carried by the
+  plate/flange corner alone.
+
+Antenna points forward and hinges up, as these antennas are designed to. Verified by probe: open
+through on the hole axis, 2.0 of solid web either side of it inside the counterbore, full 6 plate
+outside it.
 
 ## Known issues, fixed and open
 
@@ -313,11 +347,11 @@ Support area excludes the face resting on the bed. "Height" is the build height 
 | --- | --- | ---: | ---: |
 | Side rails x2 | **on the outboard face** (X up) | 159 mm2 | 12 |
 | Mast tube | **vertical**, as modelled | 72 mm2 | 114 |
-| Antenna pylon | as modelled (Z up) | 77 mm2 | 24 |
+| Antenna mount | **on its front face** (Y up) | 29 mm2 | 11 |
 | Power shield | **on its side** (Y up) | 262 mm2 | 73 |
 | Mast base | **on its side** (X up) | 361 mm2 | 47 |
 | Driver mounts x2 | **inverted** (Z down) | 1053 mm2 | 72 |
-| Upper deck | plate flat, bosses up | **10893 mm2** | 20 |
+| Upper deck | plate flat, everything up | **0 mm2** | 14 |
 
 The rails are the standout: laid on the outboard face the whole arch profile is one layer outline,
 so it prints essentially support-free at only 12 tall. The trade-off is that the three M3 insert
@@ -328,24 +362,16 @@ between layers, so this should hold — but if an insert splits a rail, reprint 
 
 Everything fits a 220 x 220 bed; the largest footprint is the upper deck at 85 x 140.
 
-### Open: the upper deck needs support on a mating face
+### Resolved: the upper deck now prints support-free
 
-The deck is the one part that is not print-ready. It has features on **both** faces — bosses up
-(Z 52..58), mast bearing collar down (Z 38..48) — so no flat orientation is support-free, and the
-only sane one (plate flat, bosses up) rests on the Ø28 collar and leaves the entire 10893 mm2 plate
-underside floating. That underside is the surface that mates with the rail tops, so support scarring
-lands exactly where flatness matters.
+The deck used to have features on **both** faces -- bosses up, mast bearing collar down -- so no
+flat orientation was support-free, and the only sane one left the entire 10893 mm2 plate underside
+floating on support. That underside is the face that mates with the rail tops, so the scarring
+landed exactly where flatness matters.
 
-**Proposed fix: move the bearing collar from below the deck to above it.** The deck then becomes
-single-sided and prints flat with zero support. It also lengthens the bearing couple — the collar's
-bearing centre moves from Z 43 to Z 57, so the span from the lower socket at Z 13 goes from 30 to
-44, which resists mast wobble better, not worse. The space above the deck around the mast
-(X 29.5..49.5, Y 103..123) is unused; nothing is laid out there.
-
-**Not done unilaterally**, because the mast-head workstream has this interface written down and
-validated against it ("deck mast support, 20.4 bore, 28 OD, Z 38..52, 14 mm bearing length,
-centres about 32 mm apart"). Moving it changes a number they build to, so it wants a nod from both
-sides first.
+**Fixed 2026-09-17 by moving the collar above the deck** (see Upper deck). The deck is now
+single-sided: plate flat on the bed, bosses and collar both growing upward, **0 mm2 of support**.
+The mating face is now the bed face, which is the flattest surface a printer produces.
 
 ### Other observations, not changed
 
