@@ -284,3 +284,86 @@ treat the files above as authoritative for anything more specific:**
 - `scripts/` — every build script used to construct the master file, kept for reproducibility and
   as the actual source of truth for exact parametric relationships (the CAD file's `Parameters`
   spreadsheet is the runtime source of truth; the scripts are how it got there)
+
+## Print readiness (audited 2026-09-17)
+
+Audited every printed part for overhangs, minimum section, hole/insert geometry and bed fit by
+querying the solids directly. Method note: the first pass was wrong twice — `normalAt()` is
+already orientation-aware and was being flipped a second time, and the face resting **on the build
+plate** was being counted as needing support. Numbers below are from the corrected pass, which
+carries a built-in self-check against an independently measured figure.
+
+### Defects found and fixed
+
+| | Was | Now |
+| --- | --- | --- |
+| **Antenna insert bore floor.** Antenna bosses were built 4 tall while every other boss is 6, but all use the same 7.5 insert bore — so the bore broke through to 0.5 mm above the deck's underside. A heat-set insert would have pushed straight through. | 0.50 mm | **2.50 mm** (bosses now 6, matching the rest; pylon reseated +2 to suit) |
+| **Rail foot wells opened into the raceway.** The well ceiling and the raceway floor were both at Z 32, so over each foot the two cavities merged with no wall between them, leaving a 0.2 mm feather edge where the raceway floor ran out. | 0.20 mm | **2.00 mm continuous floor** (well ceiling lowered to Z 30) |
+| **Driver PCB screw holes too close to the arm edge.** 2.7 mm self-tap pilots in 6 mm arms left 1.70 mm walls — an M3 self-tapper would likely split them. | 1.70 mm | **2.20 mm** (arms widened 6 -> 8.5, out to the heatsink's edge at u 8.75/40.75) |
+
+The driver frame is now a single U-shaped profile rather than three overlapping rectangles. The
+overlapping version produced an invalid face that silently killed the feature chain — caught
+because the verification looked for the screw holes and found none.
+
+### Recommended print orientation
+
+Support area excludes the face resting on the bed. "Height" is the build height in that orientation.
+
+| Part | Lay it | Support | Height |
+| --- | --- | ---: | ---: |
+| Side rails x2 | **on the outboard face** (X up) | 159 mm2 | 12 |
+| Mast tube | **vertical**, as modelled | 72 mm2 | 114 |
+| Antenna pylon | as modelled (Z up) | 77 mm2 | 24 |
+| Power shield | **on its side** (Y up) | 262 mm2 | 73 |
+| Mast base | **on its side** (X up) | 361 mm2 | 47 |
+| Driver mounts x2 | **inverted** (Z down) | 1053 mm2 | 72 |
+| Upper deck | plate flat, bosses up | **10893 mm2** | 20 |
+
+The rails are the standout: laid on the outboard face the whole arch profile is one layer outline,
+so it prints essentially support-free at only 12 tall. The trade-off is that the three M3 insert
+bores then lie **in** the layer plane rather than across it, and a heat-set insert expanding
+sideways can wedge layers apart. There is 6 mm of material around each bore and PETG bonds well
+between layers, so this should hold — but if an insert splits a rail, reprint that rail standing up
+(Z up, 1051 mm2 of support) which puts the bores across the layers instead.
+
+Everything fits a 220 x 220 bed; the largest footprint is the upper deck at 85 x 140.
+
+### Open: the upper deck needs support on a mating face
+
+The deck is the one part that is not print-ready. It has features on **both** faces — bosses up
+(Z 52..58), mast bearing collar down (Z 38..48) — so no flat orientation is support-free, and the
+only sane one (plate flat, bosses up) rests on the Ø28 collar and leaves the entire 10893 mm2 plate
+underside floating. That underside is the surface that mates with the rail tops, so support scarring
+lands exactly where flatness matters.
+
+**Proposed fix: move the bearing collar from below the deck to above it.** The deck then becomes
+single-sided and prints flat with zero support. It also lengthens the bearing couple — the collar's
+bearing centre moves from Z 43 to Z 57, so the span from the lower socket at Z 13 goes from 30 to
+44, which resists mast wobble better, not worse. The space above the deck around the mast
+(X 29.5..49.5, Y 103..123) is unused; nothing is laid out there.
+
+**Not done unilaterally**, because the mast-head workstream has this interface written down and
+validated against it ("deck mast support, 20.4 bore, 28 OD, Z 38..52, 14 mm bearing length,
+centres about 32 mm apart"). Moving it changes a number they build to, so it wants a nod from both
+sides first.
+
+### Other observations, not changed
+
+- **Mast tube layer direction.** Printed vertically (the only sane orientation for a Ø20/Ø12 tube),
+  the layer lines run perpendicular to the bending stress a sensor head applies — the weakest
+  possible arrangement, and a mast that fails will fail at a layer line. Worth considering a bought
+  aluminium or carbon Ø20/Ø12 tube instead; the design already treats the mast as a removable,
+  standardised part, and the only features on it (wire window, cross-pin hole, index flat) are
+  straightforward to drill and file.
+- **Index flat engagement.** The head candidate's anti-rotation flat is only **0.9 mm deep** and,
+  being a tangential cut on a cylinder, feathers to about 0.07 mm at its edges. With a stated 0.2 mm
+  key clearance and normal PETG tolerance, the effective engagement could approach zero. Flagged for
+  the mast-head workstream — a bounded keyway with real side walls would engage more reliably than
+  a tangent flat.
+- **Antenna cavity is an open channel, not a closed cavity.** The geometry is a tunnel running
+  clean through the pylon front-to-back; the Ø8 "cable exit through the rear wall" documented
+  earlier cuts a face that is already open. This is good for assembly — the SMA connector slides in
+  from either end rather than having to be fed through an 8 mm hole into a sealed void — but the
+  earlier description in this document was wrong and has been corrected here.
+- The SMA clamping panel is 2 mm of PETG. That is within the normal panel range for an SMA
+  bulkhead, but use a washer under the nut so it does not dig in.
