@@ -34,6 +34,50 @@ See  for the numbers and the reasoning.
 If the winning bore is not 4.4, it is one spreadsheet parameter (`rail_insert_dia`) feeding all
 16 bores — tell me the number and re-exporting both plates takes a couple of minutes.
 
+## Readiness review, 2026-09-18
+
+Re-checked every plate against the first calibration round. **Two plates can run today; the rest
+wait on tests that take about ten minutes with the coupon already in hand.**
+
+| Plate | Verdict |
+| --- | --- |
+| 1 Coupon A | **Not needed.** The v2 coupon in hand has the same four bosses on the same stack. Do not reprint it. |
+| 2 Power shield | **Clear.** Its only fitted features are two M2 clearance holes. |
+| 2 Mast base | **Blocked** - the spigot prints 13.50-13.60 into a fixed 14.0 hole. 0.40-0.50 of slop against 0.20 intended. |
+| 2 Antenna post | **Blocked** - the SMA bore prints 6.10-6.30 against a 6.35 connector thread. |
+| 3 Side rails | **Blocked** - insert test, plus the foot slot (3.40 wide, prints 3.00-3.20, must pass and slide an M3). |
+| 4 Upper deck | **Blocked** - insert test, plus six M3 clearance holes down onto the rail inserts. |
+| 5 Mast tube | **Clear.** Every feature on it mates with printed parts only, so it scales along with them. |
+| 6 Driver mounts | **Blocked** - still the BTS7960 board check, and the 2.7 self-tap pilots print 2.30-2.50 where an M3 self-tapper wants 2.50-2.60. |
+
+### Size is affected; spacing may not be
+
+If the error is a constant contour offset, it changes how big each feature is but **not where
+features sit** - a hole's edge moves, its centre does not. Every mounting pattern in the design
+would still line up: the rail feet against the deck slits, the deck screws over the rail inserts,
+the 39.5 x 39.5 driver pattern.
+
+**If it is a scale error instead, spacing moves too, and nothing fits the aluminium.** The rail
+foot slots are 117 mm apart centre to centre; at the 0.978 factor a scale reading would imply,
+they land 2.6 mm short against slits that cannot move.
+
+This is why the plate outline measurement matters more than it first looked. It is not a tidy-up
+number - it decides whether any of these parts are printable as drawn.
+
+### The ten-minute test that unblocks most of this
+
+All of it can be answered on the coupon already in hand:
+
+1. **Plate outline** - 88.00 x 62.00. A constant offset predicts about 87.75; a scale error
+   predicts about 85.6.
+2. **Heat-set insert into each of the four bosses.** Gates plates 3 and 4.
+3. **Push an M3 screw through the 3.40 hole, and an M2 through the 2.40.** Those two holes stand in
+   for 14 M3 and 4 M2 clearance holes across the design, all of which print 3.00-3.20 and
+   2.00-2.20 - and an M3 screw does not pass a 3.00 hole.
+4. **M3 through the slot**, and check it slides the full 3.0 of travel. Stands in for the rail feet.
+5. **Each peg into the deck's real 14.0 hole.** The 14.0 peg measures 13.8, which is what the mast
+   base's spigot was meant to be - so if that one fits, the spigot's nominal goes to 14.0.
+
 ## The plates
 
 | Plate | Parts | Footprint | Tallest | Solid | Support | Status |
