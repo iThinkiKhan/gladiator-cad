@@ -343,24 +343,52 @@ because the verification looked for the screw holes and found none.
 
 Support area excludes the face resting on the bed. "Height" is the build height in that orientation.
 
+**Re-measured 2026-09-17 (evening)** against the mesh facets rather than sampled surface
+normals, with the method first checked against two shapes of known overhang area (a plain box:
+0 mm2; a T-beam: exactly 1200 mm2). The earlier figures in this table were low across the board
+and the mast base recommendation was wrong; both are corrected here.
+
 | Part | Lay it | Support | Height |
 | --- | --- | ---: | ---: |
-| Side rails x2 | **on the outboard face** (X up) | 159 mm2 | 12 |
-| Mast tube | **vertical**, as modelled | 72 mm2 | 114 |
-| Antenna mount | **on its front face** (Y up) | 29 mm2 | 11 |
-| Power shield | **on its side** (Y up) | 262 mm2 | 73 |
-| Mast base | **on its side** (X up) | 361 mm2 | 47 |
-| Driver mounts x2 | **inverted** (Z down) | 1053 mm2 | 72 |
+| Side rails x2 | **on the outboard face** (-X for the left rail, +X for the right) | 320 mm2 | 12 |
+| Mast tube | **vertical**, as modelled | 65 mm2 | 114 |
+| Antenna mount | **on its front face** (-Y down) | 21 mm2 | 11 |
+| Power shield | **on its side** (-Y down) | 281 mm2 | 73 |
+| Mast base | **upside down, spigot UP** (see below) | 878 mm2 | 25 |
+| Driver mounts x2 | **inverted** (+Z down) | 938 mm2 | 72 |
 | Upper deck | plate flat, everything up | **0 mm2** | 14 |
+
+**The mast base correction.** This table previously said to lay it on its side, at 361 mm2. Laid
+on a side face it actually needs 602 mm2, only 188 mm2 of it touches the bed, and — the real
+problem — the Ø13.8 spigot and the Ø20.4 mast socket both become horizontal bores, so the two
+fit-critical features on the part print out of round. Upside down costs more support (878 mm2)
+but keeps both coaxial with the build direction, and puts the deck-mating face upward where
+nothing scars it. The collar doubles as a pillar carrying the plate, so the support is only the
+plate's outer area, landing on the non-critical top face. Bed contact is a thin Ø26/Ø20.4 ring,
+so it needs a brim.
 
 The rails are the standout: laid on the outboard face the whole arch profile is one layer outline,
 so it prints essentially support-free at only 12 tall. The trade-off is that the three M3 insert
 bores then lie **in** the layer plane rather than across it, and a heat-set insert expanding
 sideways can wedge layers apart. There is 6 mm of material around each bore and PETG bonds well
 between layers, so this should hold — but if an insert splits a rail, reprint that rail standing up
-(Z up, 1051 mm2 of support) which puts the bores across the layers instead.
+(Z up, 1245 mm2 of support) which puts the bores across the layers instead.
 
 Everything fits a 220 x 220 bed; the largest footprint is the upper deck at 85 x 140.
+
+### Export orientation bug, found and fixed 2026-09-17
+
+`scripts/export_prints.py` chose the rail's print rotation by trying +90 and then -90 about Y
+and taking the first that produced a 12 mm build height. **Both rotations satisfy that test**, so
+it took +90 and laid the rail on its **inboard** face — raceway opening downward, 1448 mm2 of
+support instead of 320 — while writing the file as `..._print-on-outboard-face.stl`. The
+bounding box is identical either way, so no downstream check could have caught it.
+
+The exporter now names the direction that must end up facing the bed, computes the rotation from
+it, and **asserts the resulting bed-contact area matches the intended face** (outboard 3350 mm2
+vs inboard 2089 mm2), so the wrong face fails loudly instead of producing a plausible file. Every
+part is exported and checked through that one path; see `docs/print-plan.md` for the plate
+grouping and the order the plates have to run in.
 
 ### Resolved: the upper deck now prints support-free
 
