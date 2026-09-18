@@ -13,8 +13,18 @@ The head is deliberately excluded — its interface is not frozen.
 16 heat-set insert bores between them, about 130 g of filament, and every one of them is
 currently 4.4 mm on an unverified assumption. Measure first, then slice those two plates.
 
-Nothing else is gated on it: plate 2 has no insert bores in it at all, so it can run while the
-coupon is being measured.
+**Superseded 2026-09-18: plate 2 is gated as well.** It has no insert bores, which is why it was
+originally cleared to run, but the coupon measurements show outside features printing about
+0.25 mm undersize and holes 0.2-0.4 undersize. That lands on two parts on that plate:
+
+- **Antenna post** - the 6.5 SMA bore will print 6.1-6.3 against a 6.35 connector thread, so the
+  bulkhead will not pass through it.
+- **Mast base** - the 13.8 spigot will print about 13.55 in the deck's 14.0 hole, leaving 0.45 of
+  slop on the mast's primary structural bearing instead of the intended 0.20.
+
+The power shield on that plate is unaffected and can still run on its own.
+
+See  for the numbers and the reasoning.
 
 > If you still have the **all-in-one v2 coupon printed on 2026-09-17**, measuring that gives you
 > the same insert-bore answer *plus* the spigot-peg, clearance-hole and slot answers, and you can

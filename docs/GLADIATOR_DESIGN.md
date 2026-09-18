@@ -319,6 +319,14 @@ treat the files above as authoritative for anything more specific:**
   as the actual source of truth for exact parametric relationships (the CAD file's `Parameters`
   spreadsheet is the runtime source of truth; the scripts are how it got there)
 
+## Printer calibration
+
+** is the authoritative record of how the printer actually
+prints**, and anything in the CAD that depends on a real-world fit should be checked against it
+before being committed to. As of the first coupon measurement (2026-09-18, PLA) outside features
+run about 0.25 mm undersize and holes 0.2-0.4 undersize, which already affects the antenna post's
+SMA bore and the mast base's spigot. Build material is PLA until a deliberate move to PETG.
+
 ## Print readiness (audited 2026-09-17)
 
 Audited every printed part for overhangs, minimum section, hole/insert geometry and bed fit by
