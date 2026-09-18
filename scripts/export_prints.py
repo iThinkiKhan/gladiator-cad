@@ -35,11 +35,11 @@ DOWN = App.Vector(0, 0, -1)
 
 # plate, object, down-direction in the part's own coords, expected bed area, filename, note
 PARTS = [
-    (2, 'MastBase', App.Vector(0, 0, 1), 204.1,
+    (2, 'MastBase', App.Vector(0, 0, 1), 181.2,
      'Gladiator_P2_MastBase_print-spigot-UP.stl',
      'Upside down: spigot points UP, so the deck-mating face prints upward and clean. '
      'Only a thin ring touches the bed - USE A BRIM.'),
-    (2, 'AntennaPost', App.Vector(0, -1, 0), 638.8,
+    (2, 'AntennaPost', App.Vector(0, -1, 0), 636.2,
      'Gladiator_P2_AntennaPost_print-on-front-face.stl',
      'Lies on its front face (the flat the SMA nut tightens against). Nearly support-free, '
      'and the SMA bore prints vertical so it stays round.'),
@@ -53,11 +53,11 @@ PARTS = [
     (3, 'SideRailRight', App.Vector(1, 0, 0), 3350.2,
      'Gladiator_P3_SideRail_R_print-on-outboard-face.stl',
      'Mirror of the left, so its outboard face is +X. Raceway again opens upward.'),
-    (4, 'UpperDeck', App.Vector(0, 0, -1), 11182.0,
+    (4, 'UpperDeck', App.Vector(0, 0, -1), 11126.3,
      'Gladiator_P4_UpperDeck_print-flat-bosses-up.stl',
      'Flat as modelled, bosses and mast collar up. Zero support. The bed face is the '
      'rail-mating face, which is the flattest surface a printer makes.'),
-    (5, 'MastTube', App.Vector(0, 0, -1), 200.9,
+    (5, 'MastTube', App.Vector(0, 0, -1), 201.0,
      'Gladiator_P5_MastTube_print-vertical.stl',
      'Vertical - the only sane orientation for a 20/12 tube. Read the note about buying '
      'an aluminium or carbon tube instead before printing this.'),

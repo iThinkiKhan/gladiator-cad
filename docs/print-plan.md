@@ -1,4 +1,6 @@
-# Print plan — body and mast (prepared 2026-09-17 for 2026-09-18)
+# Print plan — body and mast
+
+Prepared 2026-09-17; revised 2026-09-18 after the first coupon results.
 
 Nine STLs are in `/home/buralien/Desktop/3D-Printer-Incoming/`, named `Gladiator_P<plate>_...`.
 Every one was exported at 0.01 mm deflection and passed: single closed solid, manifold, no
@@ -7,76 +9,52 @@ face is verifiably the one on the bed**.
 
 The head is deliberately excluded — its interface is not frozen.
 
-## The one thing that has to happen in order
+## Status
 
-**Plates 3 and 4 are gated on the insert-bore result.** The rails and the upper deck carry all
-16 heat-set insert bores between them, about 130 g of filament, and every one of them is
-currently 4.4 mm on an unverified assumption. Measure first, then slice those two plates.
+The coupon has been measured, the fits tested, and the results applied to the master. This section
+used to describe plates 3 and 4 waiting on the insert-bore answer; that answer is in, and the
+numbers behind it are in `measurements/printer-calibration.md`.
 
-**Superseded 2026-09-18: plate 2 is gated as well.** It has no insert bores, which is why it was
-originally cleared to run, but the coupon measurements show outside features printing about
-0.25 mm undersize and holes 0.2-0.4 undersize. That lands on two parts on that plate:
+**Coupon A is no longer needed.** Its question is answered. Keep the file — it will be wanted again
+when the build moves to PETG, which will not inherit this calibration.
 
-- **Antenna post** - the 6.5 SMA bore will print 6.1-6.3 against a 6.35 connector thread, so the
-  bulkhead will not pass through it.
-- **Mast base** - the 13.8 spigot will print about 13.55 in the deck's 14.0 hole, leaving 0.45 of
-  slop on the mast's primary structural bearing instead of the intended 0.20.
+## Readiness review, 2026-09-18 (updated after the coupon results came back)
 
-The power shield on that plate is unaffected and can still run on its own.
-
-See  for the numbers and the reasoning.
-
-> If you still have the **all-in-one v2 coupon printed on 2026-09-17**, measuring that gives you
-> the same insert-bore answer *plus* the spigot-peg, clearance-hole and slot answers, and you can
-> skip printing plate 1 entirely. Coupon A is there in case that print is gone or you want a
-> fresh one in the filament you are about to use.
-
-If the winning bore is not 4.4, it is one spreadsheet parameter (`rail_insert_dia`) feeding all
-16 bores — tell me the number and re-exporting both plates takes a couple of minutes.
-
-## Readiness review, 2026-09-18
-
-Re-checked every plate against the first calibration round. **Two plates can run today; the rest
-wait on tests that take about ten minutes with the coupon already in hand.**
+The coupon has been measured and the fits tested. **Every plate except the driver mounts is now
+clear to print.** All nine STLs were regenerated from the updated master and re-verified.
 
 | Plate | Verdict |
 | --- | --- |
-| 1 Coupon A | **Not needed.** The v2 coupon in hand has the same four bosses on the same stack. Do not reprint it. |
-| 2 Power shield | **Clear.** Its only fitted features are two M2 clearance holes. |
-| 2 Mast base | **Blocked** - the spigot prints 13.50-13.60 into a fixed 14.0 hole. 0.40-0.50 of slop against 0.20 intended. |
-| 2 Antenna post | **Blocked** - the SMA bore prints 6.10-6.30 against a 6.35 connector thread. |
-| 3 Side rails | **Blocked** - insert test, plus the foot slot (3.40 wide, prints 3.00-3.20, must pass and slide an M3). |
-| 4 Upper deck | **Blocked** - insert test, plus six M3 clearance holes down onto the rail inserts. |
-| 5 Mast tube | **Clear.** Every feature on it mates with printed parts only, so it scales along with them. |
-| 6 Driver mounts | **Blocked** - still the BTS7960 board check, and the 2.7 self-tap pilots print 2.30-2.50 where an M3 self-tapper wants 2.50-2.60. |
+| 1 Coupon A | **Not needed.** Its question is answered. Keep the file for the eventual PETG switch. |
+| 2 Mast base, antenna post, power shield | **Clear.** Spigot now 14.0, SMA bore now 6.75 (estimated - see below). |
+| 3 Side rails | **Clear.** Insert bores now 4.6; the foot slot was confirmed good and is unchanged. |
+| 4 Upper deck | **Clear.** Insert bores 4.6, M3 clearance 3.6, entrance relief on the bed face. |
+| 5 Mast tube | **Clear.** Still carries the "buy an aluminium tube instead" caveat. |
+| 6 Driver mounts | **Still blocked** - the 2.7 self-tap pattern has never been offered up to a real BTS7960. |
 
-### Size is affected; spacing may not be
+### What changed in the parts
 
-If the error is a constant contour offset, it changes how big each feature is but **not where
-features sit** - a hole's edge moves, its centre does not. Every mounting pattern in the design
-would still line up: the rail feet against the deck slits, the deck screws over the rail inserts,
-the 39.5 x 39.5 driver pattern.
+Every fit-critical round feature moved one step up, because round features print about 0.25 mm
+undersize on this printer. Full reasoning in `measurements/printer-calibration.md`.
 
-**If it is a scale error instead, spacing moves too, and nothing fits the aluminium.** The rail
-foot slots are 117 mm apart centre to centre; at the 0.978 factor a scale reading would imply,
-they land 2.6 mm short against slits that cannot move.
+| | Was | Now |
+| --- | ---: | ---: |
+| Insert bores (16) | 4.4 | **4.6** |
+| M3 clearance (14) | 3.4 | **3.6** |
+| M2 clearance (4) | 2.4 | **2.6** |
+| Mast spigot | 13.8 | **14.0** |
+| SMA bore | 6.5 | **6.75** |
+| Rail foot slot | 3.4 | **3.4, unchanged** |
 
-This is why the plate outline measurement matters more than it first looked. It is not a tidy-up
-number - it decides whether any of these parts are printable as drawn.
+Plus a 0.35 mm 45 degree entrance relief on the bores that start on the build plate - the upper
+deck's six M3 holes and both 20.4 mast bores - so an elephant's-foot lip cannot pinch them.
 
-### The ten-minute test that unblocks most of this
+### Two things to watch on the first parts off the bed
 
-All of it can be answered on the coupon already in hand:
-
-1. **Plate outline** - 88.00 x 62.00. A constant offset predicts about 87.75; a scale error
-   predicts about 85.6.
-2. **Heat-set insert into each of the four bosses.** Gates plates 3 and 4.
-3. **Push an M3 screw through the 3.40 hole, and an M2 through the 2.40.** Those two holes stand in
-   for 14 M3 and 4 M2 clearance holes across the design, all of which print 3.00-3.20 and
-   2.00-2.20 - and an M3 screw does not pass a 3.00 hole.
-4. **M3 through the slot**, and check it slides the full 3.0 of travel. Stands in for the rail feet.
-5. **Each peg into the deck's real 14.0 hole.** The 14.0 peg measures 13.8, which is what the mast
-   base's spigot was meant to be - so if that one fits, the spigot's nominal goes to 14.0.
+- **The SMA bore at 6.75 is an extrapolation, not a tested value.** If the connector will not pass,
+  run a 6.5 mm drill through it. Nothing else on the antenna post depends on it.
+- **Heat-set inserts in PLA want about 200 C**, not the 240-250 used for PETG, and should sink under
+  their own weight rather than being pushed.
 
 ## The plates
 

@@ -321,11 +321,25 @@ treat the files above as authoritative for anything more specific:**
 
 ## Printer calibration
 
-** is the authoritative record of how the printer actually
+`measurements/printer-calibration.md` **is the authoritative record of how the printer actually
 prints**, and anything in the CAD that depends on a real-world fit should be checked against it
-before being committed to. As of the first coupon measurement (2026-09-18, PLA) outside features
-run about 0.25 mm undersize and holes 0.2-0.4 undersize, which already affects the antenna post's
-SMA bore and the mast base's spigot. Build material is PLA until a deliberate move to PETG.
+before being committed to. Build material is PLA until a deliberate move to PETG.
+
+Round 1 (fit coupon v2, 2026-09-18, PLA): **flat walls print slightly over** (the 88.00 plate
+measured 88.25) while **every curved feature prints about 0.25 under, convex and concave alike**.
+The rail slot is the proof - 3.4 wide with flat walls takes an M3 comfortably, while a 3.4 round
+hole on the same plate will not pass one. That is toolpath under-shoot on curves, not flow and not
+a scale error.
+
+Every fit-critical round dimension was moved one step up to compensate, and the bores that start on
+the build plate got a 0.35 entrance relief so elephant's foot cannot pinch them. These are
+**calibration-compensated values for this printer as it prints today**; if the curve error is tuned
+out they should all be revisited together. The design intent behind each one is tabulated in the
+calibration log.
+
+**Those radii are now actually parametric.** They had been plain numbers in the sketches with no
+expression attached, so changing `rail_insert_dia` did nothing at all, despite this document saying
+it fed all 16 bores. 31 constraints across 13 features are now bound to the spreadsheet.
 
 ## Print readiness (audited 2026-09-17)
 
