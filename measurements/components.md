@@ -61,6 +61,28 @@ it needs to sit clear of the aluminum deck to radiate.
 
 No dupont pins on these boards — the tallest features are the screw terminals.
 
+### Mounting interface — NOT MEASURED (2026-09-18)
+
+**The driver mount's geometry depends on three numbers that appear nowhere in this file.**
+They were carried in the design document as statements of fact; tracing them found no
+measurement behind any of them. Until they are taken off a real board, the driver mount
+is not printable.
+
+| Number the design uses | Value assumed | Status |
+| --- | ---: | --- |
+| Mounting hole pitch, across the board | 39.5 | **assumed.** The only mention anywhere is one design-doc sentence. |
+| Mounting hole pitch, along the board | 39.5 | **assumed**, and assumed equal to the other. The board is 49.5 x 51, so a square hole pattern is a guess, not a given. |
+| Heatsink length | 32 | **assumed.** This file records the heatsink's width (51) and its protrusion (~28) but never its length. The mount's arms sit on the (49.5 - 32) / 2 = 8.75 of bare board it supposedly leaves at each end. |
+| Board mounting hole diameter | not used | needed anyway, to know what screw the pattern takes |
+
+Take all four with calipers off an actual BTS7960. For the pitches, measure outside-edge
+to outside-edge across a diagonal pair and subtract one hole diameter, or inside-to-inside
+and add one — and **measure the two directions separately** rather than assuming square.
+
+If the heatsink length is not 32, the arms move even if the hole pattern is right: they
+are positioned to land on bare board beyond the heatsink, not merely on the holes.
+
+
 **Orientation:** the heatsink is on the **underside** of the board — fins project from the face
 opposite the components, not from an edge.
 

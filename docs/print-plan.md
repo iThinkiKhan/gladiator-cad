@@ -63,9 +63,32 @@ do not treat it as final. Needs a brim.
 
 ## Plate D — driver mounts. Not yet.
 
-The 2.7 mm self-tap pilots on a 39.5 x 39.5 pattern have never been offered up to a real BTS7960.
-This is also the most expensive plate in the set — 64 cm3, 72 mm tall, 1875 mm2 of support. Check
-the board against the pattern before spending it.
+The most expensive plate in the set — 64 cm3, 72 mm tall, 1875 mm2 of support — and the one
+whose interface is least verified. Two separate things gate it.
+
+**1. Three numbers that were never measured.** The hole pitch in both directions and the heatsink
+length are assumptions, not measurements; see the "Mounting interface — NOT MEASURED" block in
+`measurements/components.md` for exactly what to put calipers on. Calipers only, no printing.
+
+**2. The self-tap pilot size.** `Gladiator_CouponC_SelfTapPilots_flat.stl` — 48 x 8.5 x 6 mm,
+about 2.7 g, prints flat with no support. It reproduces the real arm: 8.5 wide, the hole offset so
+the thin wall is 2.15, 12 mm of axial depth, and the holes canted 30 degrees from the bed to match
+how the layers will actually run across the screw in the printed part. A flat bar with vertical
+holes would be the easy case and would flatter the result.
+
+Three pilots, 2.7 / 2.9 / 3.1 nominal, which on this printer land near 2.45 / 2.65 / 2.85. An M3
+self-tapper in PLA generally wants 2.5-2.6, so the current 2.7 design value is probably one step
+small. The clipped corner marks the smallest.
+
+Drive an M3 self-tapper into each and look for the one that forms a thread and holds without
+splitting the 2.15 wall or stripping.
+
+**A caution on updating the pattern afterwards.** `drv_hole_pitch` exists in the spreadsheet but
+drives nothing — the four hole centres are literal coordinates in `DrvHoleSketch`. An attempt to
+bind them was backed out: the expression evaluates and moves the sketch, but the change does not
+propagate to the body's solid reliably in headless FreeCAD, and a half-working binding is worse
+than an obvious literal. When the measurements arrive the pattern gets updated by rebuilding that
+sketch in a script, with the resulting solid verified — not by editing a cell.
 
 ## Settings that apply to all of them
 
