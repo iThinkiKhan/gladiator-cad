@@ -1,0 +1,45 @@
+{
+  "source": "/home/buralien/projects/gladiator-cad/cad/head/v02-screen-180/Gladiator_Head_v02_Screen180.FCStd",
+  "derived_from": "v02-screen-180",
+  "drive": {
+    "concept": "step-up 2GT belt; SG90 works in its middle band",
+    "teeth_driven": 60,
+    "teeth_drive": 40,
+    "ratio_head_per_servo_deg": 1.5,
+    "pitch_mm": 2.0,
+    "belt_teeth": 90,
+    "belt_pitch_length_mm": 180.0,
+    "belt_width_mm": 6.0,
+    "pitch_dia_driven_mm": 38.197,
+    "pitch_dia_drive_mm": 25.465,
+    "shaft_spacing_mm": 39.745,
+    "servo_angle_deg_local": 225.0,
+    "servo_centre_local_xy": [
+      -28.1,
+      -28.1
+    ],
+    "head_travel_deg": [
+      -20.0,
+      180.0
+    ],
+    "required_servo_travel_deg": 133.33,
+    "wrap_angle_small_pulley_deg": 161.57,
+    "teeth_engaged_small_pulley": 17.95
+  },
+  "head_travel_deg": [
+    -20.0,
+    180.0
+  ],
+  "bearing": {
+    "designation_hint": "6804 / 20x32x7",
+    "centres_mm": 16.0,
+    "seat_bore_mm": 32.1,
+    "spindle_dia_mm": 19.95,
+    "retainer_bore_mm": 29.0
+  },
+  "tilt_axis_z": 205.0,
+  "manufacturing_release": false,
+  "print_ready": [
+    "Gladiator_HeadCoupon_BeltMesh_60deg.stl"
+  ]
+}

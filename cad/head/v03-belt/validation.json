@@ -1,0 +1,343 @@
+{
+  "source_sha256": {
+    "/home/buralien/projects/gladiator-cad/cad/head/v02-screen-180/Gladiator_Head_v02_Screen180.FCStd": "0b6ea07f194ae23fee60b86fc3fe17f8cd946691cc2772bb2594834523bf701f",
+    "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "a2363a8ee51d608e85291e596271368c036b0785f0d2ab49a713025f1f396437"
+  },
+  "release": "DESIGN CANDIDATE - fit coupons printable, full head is not released",
+  "drive": {
+    "concept": "step-up 2GT belt; SG90 works in its middle band",
+    "teeth_driven": 60,
+    "teeth_drive": 40,
+    "ratio_head_per_servo_deg": 1.5,
+    "pitch_mm": 2.0,
+    "belt_teeth": 90,
+    "belt_pitch_length_mm": 180.0,
+    "belt_width_mm": 6.0,
+    "pitch_dia_driven_mm": 38.197,
+    "pitch_dia_drive_mm": 25.465,
+    "shaft_spacing_mm": 39.745,
+    "servo_angle_deg_local": 225.0,
+    "servo_centre_local_xy": [
+      -28.1,
+      -28.1
+    ],
+    "head_travel_deg": [
+      -20.0,
+      180.0
+    ],
+    "required_servo_travel_deg": 133.33,
+    "wrap_angle_small_pulley_deg": 161.57,
+    "teeth_engaged_small_pulley": 17.95
+  },
+  "parts": [
+    {
+      "name": "Neck_Main",
+      "volume_mm3": 15564.43,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Neck_Clamp_Cap",
+      "volume_mm3": 2550.18,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Bearing_Lower",
+      "volume_mm3": 3430.62,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Bearing_Upper",
+      "volume_mm3": 3430.62,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Inner_Spacer",
+      "volume_mm3": 1215.73,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Circlip_Envelope",
+      "volume_mm3": 239.43,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Rotor",
+      "volume_mm3": 12607.63,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Retainer_Crank",
+      "volume_mm3": 1933.59,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Raised_Pedestal",
+      "volume_mm3": 19948.43,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Drive_Pulley",
+      "volume_mm3": 2814.5,
+      "valid": true,
+      "solids": 1,
+      "motion": "servo"
+    },
+    {
+      "name": "Pan_Belt_Reference",
+      "volume_mm3": 1083.03,
+      "valid": true,
+      "solids": 1,
+      "motion": "belt"
+    },
+    {
+      "name": "SG90_Pan_Reference",
+      "volume_mm3": 7891.34,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Horn_Reference",
+      "volume_mm3": 508.94,
+      "valid": true,
+      "solids": 1,
+      "motion": "servo"
+    },
+    {
+      "name": "Tilt_Yoke",
+      "volume_mm3": 12108.57,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "SG90_Tilt_Reference",
+      "volume_mm3": 7892.16,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Tilt_Horn_Reference",
+      "volume_mm3": 576.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Tilt_Idler_Bushing",
+      "volume_mm3": 27.49,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "GH44_Tilt_Receiver",
+      "volume_mm3": 11309.85,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "GH44_Dual_Carrier",
+      "volume_mm3": 12823.48,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Dual_ToF_Envelope",
+      "volume_mm3": 10933.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Dual_Radar_Envelope",
+      "volume_mm3": 9984.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Rear_Display_Frame",
+      "volume_mm3": 10796.91,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "ST7789_Board_62x29x3_2",
+      "volume_mm3": 5753.6,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    }
+  ],
+  "collisions": [],
+  "checks": {
+    "head_pair_pose_tests": 12197,
+    "robot_solids_compared": [
+      "MastTube",
+      "MastBase",
+      "UpperDeck",
+      "S3Board",
+      "Breadboard",
+      "DriverMountLeft",
+      "DriverMountRight",
+      "AntennaPost",
+      "ChassisDeck",
+      "SideRailLeft",
+      "SideRailRight",
+      "PowerShield"
+    ],
+    "robot_pair_pose_tests": 33948,
+    "cable_passage_11_9mm_overlap_mm3": 0.0,
+    "all_active_parts_single_valid_solid": true,
+    "bearing_centre_spacing_mm": 16.0,
+    "rotor_seat_bore_mm": 32.1,
+    "spindle_dia_mm": 19.95,
+    "retainer_bore_mm": 29.0,
+    "rear_overhang_mm": {
+      "Neck_Main": -1.0,
+      "SG90_Pan_Reference": -41.56,
+      "Pan_Drive_Pulley": -41.43,
+      "Pan_Belt_Reference": -7.0
+    },
+    "coupon_volume_mm3": 615.9,
+    "source_and_master_unchanged": true,
+    "sampled_geometry_pass": true
+  },
+  "limitations": [
+    "Ratio and travel are parameters. RATIO=1.500 assumes the SG90 delivers 133 deg of usable, repeatable travel. That has never been measured on Jim units.",
+    "2GT groove profile is an approximation (groove r=0.65, depth 0.75). The mesh coupon gates it. Do not print the pedestal before the coupon passes.",
+    "Bearing seat 0.10 mm and spindle 0.05 mm are nominal clearances, not print-verified. They need their own fit coupon once the bearings arrive.",
+    "Belt tension, tensioner and the pedestal-to-belt preload path are not designed.",
+    "Mast index flat is still the inherited 0.9 mm feature; the deeper dimple/grub proposal would be a change to the real master and was NOT made here.",
+    "Harness is still undesigned. About 14 conductors must pass the 12 mm bore and twist over 200 deg of pan.",
+    "Screen active window, mount holes and connector exit remain unmeasured.",
+    "Sampled rigid-solid checks at 5 deg pan steps do not prove continuous clearance.",
+    "No load, stiffness, creep or payload rating is claimed."
+  ],
+  "fov_intersections": [],
+  "stl": [
+    {
+      "file": "Gladiator_HeadCoupon_BeltMesh_60deg.stl",
+      "size_mm": [
+        8.4,
+        18.1,
+        6.0
+      ],
+      "volume_cm3": 0.62,
+      "orientation": "PRINT READY - flat bottom on the bed, teeth outward, axis vertical, no support"
+    },
+    {
+      "file": "Gladiator_Head_Neck_Main.stl",
+      "size_mm": [
+        67.7,
+        75.7,
+        43.0
+      ],
+      "volume_cm3": 15.56,
+      "orientation": "as-modelled, mast axis vertical; C arm and servo platform need support - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Neck_Clamp_Cap.stl",
+      "size_mm": [
+        36.0,
+        13.7,
+        16.0
+      ],
+      "volume_cm3": 2.55,
+      "orientation": "as-modelled; lay on the split face before slicing - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Pan_Rotor.stl",
+      "size_mm": [
+        41.0,
+        41.0,
+        23.0
+      ],
+      "volume_cm3": 12.61,
+      "orientation": "as-modelled, axis vertical; bearing seats print as true bores - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Pan_Retainer_Crank.stl",
+      "size_mm": [
+        41.0,
+        41.0,
+        3.0
+      ],
+      "volume_cm3": 1.93,
+      "orientation": "as-modelled, flat - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Pan_Raised_Pedestal.stl",
+      "size_mm": [
+        50.0,
+        50.5,
+        21.0
+      ],
+      "volume_cm3": 19.95,
+      "orientation": "as-modelled, axis vertical so the 2GT teeth print like the coupon - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Tilt_Yoke.stl",
+      "size_mm": [
+        60.0,
+        35.0,
+        60.0
+      ],
+      "volume_cm3": 12.11,
+      "orientation": "inherited from v0.2 - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_GH44_Tilt_Receiver.stl",
+      "size_mm": [
+        54.0,
+        40.0,
+        44.0
+      ],
+      "volume_cm3": 11.31,
+      "orientation": "inherited from v0.2 - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_GH44_Dual_Carrier.stl",
+      "size_mm": [
+        70.0,
+        7.4,
+        44.0
+      ],
+      "volume_cm3": 12.82,
+      "orientation": "inherited from v0.2 - orientation NOT validated"
+    },
+    {
+      "file": "Gladiator_Head_Rear_Display_Frame.stl",
+      "size_mm": [
+        76.0,
+        59.5,
+        44.0
+      ],
+      "volume_cm3": 10.8,
+      "orientation": "inherited from v0.2 - orientation NOT validated"
+    }
+  ]
+}
