@@ -1,0 +1,139 @@
+AUDIT_START
+PARAM deck_length 140.0 mm
+PARAM deck_width 79.0 mm
+PARAM deck_thickness 2.0 mm
+PARAM center_hole_diameter 14.0 mm
+PARAM center_hole_x 39.5 mm
+PARAM center_hole_y 113.0 mm
+PARAM mount_hole_diameter 4.0 mm
+PARAM center_hole_rear_edge_gap 20.0 mm
+PARAM battery_front_gap 21.0 mm
+PARAM battery_length 75.5 mm
+PARAM battery_width 79.0 mm
+PARAM battery_rear_gap 43.5 mm
+PARAM slit_width 4.0 mm
+PARAM slit_rear_gap 7.5 mm
+PARAM long_slit_front 58.75 mm
+PARAM short_slit_length 33.0 mm
+PARAM inner_slit_hole_gap 5.0 mm
+PARAM outer_slit_center_spacing 12.0 mm
+PARAM front_slit_side_gap 8.5 mm
+PARAM pilot_hole_diameter 1.6 mm
+PARAM front_hole_edge_gap 12.0 mm
+PARAM front_hole_slit_inset 3.0 mm
+PARAM pilot_hole_offset 1.0 mm
+PARAM rear_pilot_edge_gap 12.0 mm
+PARAM rear_pilot_spacing 17.0 mm
+PARAM rear_pilot_outside_bias 0.5 mm
+PARAM front_slit_edge_gap 7.5 mm
+PARAM front_slit_length 33.0 mm
+PARAM battery_box_height 19.5 mm
+PARAM rail_width 12.0 mm
+PARAM rail_top_z 48.0 mm
+PARAM rail_wall 2.4 mm
+PARAM rail_floor 4.0 mm
+PARAM rail_outer_x 6.0 mm
+PARAM rail_y_start 2.0 mm
+PARAM rail_y_end 135.0 mm
+PARAM rail_front_foot_end 13.0 mm
+PARAM rail_rear_foot_start 119.0 mm
+PARAM rail_soffit_z 30.0 mm
+PARAM rail_slot_width 3.4 mm
+PARAM rail_slot_travel 3.0 mm
+PARAM rail_access_dia 6.0 mm
+PARAM rail_soffit_start 20.0 mm
+PARAM rail_soffit_end 112.0 mm
+PARAM rail_groove_z0 32.0 mm
+PARAM rail_groove_z1 39.0 mm
+PARAM rail_groove_depth 8.5 mm
+PARAM rail_well_depth 9.5 mm
+PARAM rail_insert_dia 4.4 mm
+PARAM rail_insert_depth 7.5 mm
+PARAM rail_tab_thick 2.0 mm
+PARAM rail_groove_fillet 2.0 mm
+PARAM rail_end_wall 3.0 mm
+PARAM deck2_width 79.0 mm
+PARAM deck2_length 140.0 mm
+PARAM deck2_thickness 4.0 mm
+PARAM deck2_corner_r 6.0 mm
+PARAM deck2_screw_dia 3.4 mm
+PARAM mast_od 20.0 mm
+PARAM mast_id 12.0 mm
+PARAM mast_spigot_dia 13.8 mm
+PARAM mast_spigot_below 5.0 mm
+PARAM mast_plate_t 4.0 mm
+PARAM mast_collar_od 26.0 mm
+PARAM mast_socket_dia 20.4 mm
+PARAM mast_collar_top_z 20.0 mm
+PARAM mast_top_z 120.0 mm
+PARAM deck_collar_od 28.0 mm
+PARAM deck_collar_bot_z 38.0 mm
+PARAM mast_pin_dia 3.4 mm
+PARAM s3_hole_dx 30.9 mm
+PARAM s3_hole_dy 55.0 mm
+PARAM s3_centre_x 22.0 mm
+PARAM s3_centre_y 52.0 mm
+PARAM s3_boss_dia 9.0 mm
+PARAM s3_boss_h 6.0 mm
+PARAM bb_x0 43.5 mm
+PARAM bb_y0 15.0 mm
+PARAM drv_cant_deg 60.0 mm
+PARAM drv_inner_x 2.0 mm
+PARAM drv_inner_z 84.0 mm
+PARAM drv_y0 90.0 mm
+PARAM drv_standoff 15.0 mm
+PARAM shield_floor_z 24.0 mm
+PARAM ant_x 70.0 mm
+PARAM ant_y 8.0 mm
+PARAM drv_hole_pitch 39.5 mm
+PARAM drv_hs_len 32.0 mm
+PARAM drv_standoff_h 8.0 mm
+PARAM drv_arm_w 8.0 mm
+SHAPE {"name": "ChassisDeck", "label": "Chassis deck", "type": "PartDesign::Body", "bounds": [0.0, 79.0, 0.0, 140.0, 0.0, 2.0], "volume": 19501.73100591119, "valid": true}
+SHAPE {"name": "BatteryBox", "label": "Battery box (reference, empty)", "type": "Part::Box", "bounds": [0.0, 79.0, 21.0, 96.5, 2.0, 21.5], "volume": 116307.75, "valid": true}
+SHAPE {"name": "SideRailLeft", "label": "Side rail, left", "type": "PartDesign::Body", "bounds": [5.999999999999573, 18.000000000000053, 1.9999999999999416, 135.00000000000043, 1.99999999999973, 48.00000000000014], "volume": 26915.79801613084, "valid": true}
+SHAPE {"name": "SideRailRight", "label": "Side rail, right", "type": "Part::Mirroring", "bounds": [60.99999999999991, 73.0000000000003, 1.9999999999998905, 135.00000000000088, 1.9999999999993943, 48.00000000000018], "volume": 26915.798016130888, "valid": true}
+SHAPE {"name": "MastBase", "label": "Mast base", "type": "PartDesign::Body", "bounds": [16.0, 63.0, 99.0, 127.0, -5.0, 20.0], "volume": 8120.936864388778, "valid": true}
+SHAPE {"name": "MastTube", "label": "Mast tube", "type": "PartDesign::Body", "bounds": [29.49756626605746, 49.5, 103.0, 123.0, 6.0, 120.0], "volume": 22848.037807535402, "valid": true}
+SHAPE {"name": "UpperDeck", "label": "Upper deck", "type": "PartDesign::Body", "bounds": [0.0, 79.0, 0.0, 140.0, 38.0, 58.0], "volume": 47621.40143387398, "valid": true}
+SHAPE {"name": "S3Board", "label": "S3 + expander (reference envelope)", "type": "Part::Box", "bounds": [1.0, 43.0, 15.0, 89.0, 58.0, 86.3], "volume": 87956.4, "valid": true}
+SHAPE {"name": "Breadboard", "label": "Breadboard + C6 + BNO (reference envelope)", "type": "Part::Box", "bounds": [43.5, 79.0, 15.0, 61.3, 52.0, 73.5], "volume": 35338.475, "valid": true}
+SHAPE {"name": "PowerShield", "label": "Power board shield", "type": "PartDesign::Body", "bounds": [16.0, 63.0, 39.0, 112.00000000000003, 6.0, 30.0], "volume": 9732.24675213352, "valid": true}
+SHAPE {"name": "AntennaPost", "label": "Antenna post", "type": "PartDesign::Body", "bounds": [65.0, 75.0, 3.0, 13.0, 52.0, 78.0], "volume": 2599.999999999999, "valid": true}
+SHAPE {"name": "DriverMountLeft", "label": "Driver mount, left", "type": "PartDesign::Body", "bounds": [-31.33012701892224, 19.0, 89.99999999999999, 139.5, 33.77052658050257, 97.75833024919774], "volume": 12056.350022549683, "valid": true}
+SHAPE {"name": "DriverMountRight", "label": "Driver mount, right", "type": "Part::Mirroring", "bounds": [60.0, 110.33012701892225, 90.0, 139.50000000000006, 33.77052658050257, 97.75833024919774], "volume": 12056.350022549703, "valid": true}
+CLASH_MM3 MastTube MastBase 0.0
+CLASH_MM3 MastTube UpperDeck 0.0
+CLASH_MM3 MastBase ChassisDeck 0.0
+CLASH_MM3 MastTube PowerShield 0.0
+CLASH_MM3 MastTube S3Board 0.0
+CLASH_MM3 MastTube DriverMountLeft 0.0
+CLASH_MM3 MastTube DriverMountRight 0.0
+SOLID_AT base_closed_below_bore True
+SOLID_AT mast_bore False
+SOLID_AT rear_wire_window True
+SOLID_AT mast_rear_above_window True
+WINDOW_FEATURE MastPinCut PartDesign::Pocket [('Length', '48.0 mm'), ('Reversed', 'True'), ('Direction', 'Vector (-1.0, 1e-16, -1e-16)'), ('Placement', 'Placement [Pos=(0,0,2), Yaw-Pitch-Roll=(0,0,0)]'), ('Profile', '(<Sketcher::SketchObject>, [])')]
+WINDOW_FEATURE MastWindowSketch Sketcher::SketchObject [('Placement', 'Placement [Pos=(0,126,0), Yaw-Pitch-Roll=(0,0,90)]')]
+WINDOW_FEATURE MastWindowCut PartDesign::Pocket [('Length', '20.0 mm'), ('Reversed', 'False'), ('Direction', 'Vector (-0.0, 1.0, -2e-16)'), ('Placement', 'Placement [Pos=(0,0,6), Yaw-Pitch-Roll=(0,0,0)]'), ('Profile', '(<Sketcher::SketchObject>, [])')]
+WINDOW_FEATURE MastTubePinSketch Sketcher::SketchObject [('Placement', 'Placement [Pos=(16,0,0), Yaw-Pitch-Roll=(90,6.36111e-15,90)]')]
+WINDOW_FEATURE MastTubePinCut PartDesign::Pocket [('Length', '48.0 mm'), ('Reversed', 'True'), ('Direction', 'Vector (-1.0, 1e-16, -1e-16)'), ('Placement', 'Placement [Pos=(0,0,6), Yaw-Pitch-Roll=(0,0,0)]'), ('Profile', '(<Sketcher::SketchObject>, [])')]
+WIRE_PATH 25 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, True), (120.5, True), (121.5, True), (122.5, True)]
+WIRE_PATH 30 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, True), (120.5, True), (121.5, True), (122.5, True)]
+WIRE_PATH 35 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, True), (120.5, True), (121.5, True), (122.5, True)]
+PIN_PATH MastTube [(27, False), (30, False), (32, False), (39.5, False), (47, False), (49, False), (52, False)]
+PIN_PATH MastBase [(27, False), (30, False), (32, False), (39.5, False), (47, False), (49, False), (52, False)]
+FEATURE_VOLUME MastPlatePad 4303.999999999999
+FEATURE_VOLUME MastSpigotPad 5350.998583661872
+FEATURE_VOLUME MastCollarPad 12784.00680205532
+FEATURE_VOLUME MastSocketCut 8208.088606542573
+FEATURE_VOLUME MastPlateScrewCuts 8171.897459173217
+FEATURE_VOLUME MastPinCut 8120.936864388778
+FEATURE_VOLUME MastTubePad 22921.06000059113
+FEATURE_VOLUME MastWindowCut 22921.06000059113
+FEATURE_VOLUME MastTubePinCut 22848.037807535402
+TRIAL_WINDOW_CORRECTION True 1 22324.659903087108
+TRIAL_WIRE_PATH 25 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, False), (120.5, False), (121.5, False), (122.5, False)]
+TRIAL_WIRE_PATH 30 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, False), (120.5, False), (121.5, False), (122.5, False)]
+TRIAL_WIRE_PATH 35 [(103.5, True), (106, True), (108, False), (113, False), (118, False), (119.5, False), (120.5, False), (121.5, False), (122.5, False)]
+AUDIT_END

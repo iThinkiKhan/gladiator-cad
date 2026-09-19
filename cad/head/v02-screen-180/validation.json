@@ -1,0 +1,226 @@
+{
+  "source_sha256": {
+    "/home/buralien/projects/gladiator-cad/cad/head/v01/Gladiator_Head_v01.FCStd": "e8652a9194d571226369cb5c99a1d9e378b195484aef6a21b7d53ee16fbea10e",
+    "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "72f59928c515bef6587d4e7bf8f949a6c49f6f3f9cdfd7ec70b12c9d46b05044"
+  },
+  "release": "COMPARISON CAD - NOT A PRINT RELEASE",
+  "parts": [
+    {
+      "name": "Neck_Main",
+      "volume_mm3": 13475.224644818736,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Neck_Clamp_Cap",
+      "volume_mm3": 2672.0904615372065,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Bearing_Lower",
+      "volume_mm3": 3430.619177720054,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Bearing_Upper",
+      "volume_mm3": 3430.619177720054,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Inner_Spacer",
+      "volume_mm3": 540.3225204909079,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Circlip_Envelope",
+      "volume_mm3": 239.42705931538669,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Rotor",
+      "volume_mm3": 9631.97227945893,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Retainer_Crank",
+      "volume_mm3": 2322.3595373131816,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Raised_Pedestal",
+      "volume_mm3": 15997.415266759248,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Driven_Pulley_Envelope",
+      "volume_mm3": 2824.0381265319347,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Pan_Drive_Pulley_Envelope",
+      "volume_mm3": 5983.412194541052,
+      "valid": true,
+      "solids": 1,
+      "motion": "servo"
+    },
+    {
+      "name": "SG90_Pan_Reference",
+      "volume_mm3": 7891.340701482233,
+      "valid": true,
+      "solids": 1,
+      "motion": "fixed"
+    },
+    {
+      "name": "Pan_Horn_Reference",
+      "volume_mm3": 576.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "servo"
+    },
+    {
+      "name": "Tilt_Yoke",
+      "volume_mm3": 12108.570573480854,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "SG90_Tilt_Reference",
+      "volume_mm3": 7892.155047273103,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "Tilt_Horn_Reference",
+      "volume_mm3": 576.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Tilt_Idler_Bushing",
+      "volume_mm3": 27.48893571891073,
+      "valid": true,
+      "solids": 1,
+      "motion": "pan"
+    },
+    {
+      "name": "GH44_Tilt_Receiver",
+      "volume_mm3": 11309.85202907641,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "GH44_Dual_Carrier",
+      "volume_mm3": 12823.482396980726,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Dual_ToF_Envelope",
+      "volume_mm3": 10932.999999999996,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Dual_Radar_Envelope",
+      "volume_mm3": 9984.0,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "Rear_Display_Frame",
+      "volume_mm3": 10796.913278945947,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    },
+    {
+      "name": "ST7789_Board_62x29x3_2",
+      "volume_mm3": 5753.600000000001,
+      "valid": true,
+      "solids": 1,
+      "motion": "tilt"
+    }
+  ],
+  "collisions": [],
+  "checks": {
+    "head_pair_pose_tests": 5265,
+    "robot_pair_pose_tests": 10488,
+    "mast_neck_pedestal_11_9mm_passage_overlap_mm3": 0.0,
+    "all_active_parts_single_valid_solid": true,
+    "display_board_dimensions_mm": [
+      62.0,
+      29.0,
+      3.200000000000003
+    ],
+    "theoretical_stop_contact_deg": [
+      -5.439616305601682,
+      185.43961630560167
+    ],
+    "stop_overlap_samples_mm3": {
+      "-6": 1.2050894192990336,
+      "0": 0.0,
+      "180": 0.0,
+      "186": 1.2050894192990067
+    },
+    "source_and_master_unchanged": true,
+    "sampled_geometry_pass": true,
+    "saved_native_file_reopened_and_verified": true,
+    "both_pose_volumes_preserved": true,
+    "saved_visibility_verified": true,
+    "belt_nonpulley_intersections": [],
+    "pose_group_toggle_verified": true,
+    "step_roundtrip": {
+      "Gladiator_Head_v02_Screen180.step": {
+        "valid": true,
+        "solids": 23,
+        "volume_mm3": 151219.46355171662,
+        "volume_delta_mm3": -0.4398574482474942,
+        "volume_tolerance_mm3": 1.5121990340916487
+      },
+      "Gladiator_Head_v02_Screen180_Presented.step": {
+        "valid": true,
+        "solids": 23,
+        "volume_mm3": 151219.77301485313,
+        "volume_delta_mm3": -0.13039431173820049,
+        "volume_tolerance_mm3": 1.5121990340916487
+      }
+    }
+  },
+  "limitations": [
+    "Timing pulleys and belt are pitch/clearance envelopes, not teeth or a sourced belt.",
+    "1:1 drive needs 180 degrees usable actuator travel. Actual SG90 travel/load untested.",
+    "0 to 180 degree switching range; previous +/-40 degree travel scan not retained.",
+    "Display is confirmed whole-board 62 x 29 x 3.2 mm, not the active screen opening.",
+    "Display retention, active window, connectors, harness loop, mass and torque pending.",
+    "SG90 horn attachment is inherited provisional geometry; final pulley attachment pending.",
+    "Existing v0.1 bearing, sensor retention and print-fit limitations still apply.",
+    "Sampled rigid-solid checks do not establish continuous or cable clearance."
+  ],
+  "fov_intersections": []
+}

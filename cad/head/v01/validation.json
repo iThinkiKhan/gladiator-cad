@@ -1,0 +1,348 @@
+{
+  "master_sha256": "c9f2d62ef4b3939af1a1052fc2a64a1e2046a0a882399e7ff7ca2e5745480785",
+  "source_git_head": "5489d23d01c682d4162558234e7daf31ea24671e",
+  "config": {
+    "interface": "GH44-v0.1",
+    "carrier_width": 44.0,
+    "carrier_height": 44.0,
+    "carrier_hole_pitch": 32.0,
+    "carrier_screw_clearance": 3.4,
+    "register_width": 26.0,
+    "register_height": 22.0,
+    "register_chamfer": 5.0,
+    "register_depth": 1.4,
+    "register_total_clearance": 0.4,
+    "carrier_cable_width": 18.0,
+    "carrier_cable_height": 10.0,
+    "pan_limit_deg": 40.0,
+    "tilt_limit_deg": 25.0,
+    "pan_crank_radius": 12.0,
+    "pan_servo_offset": 42.0,
+    "tilt_axis_forward": 26.0,
+    "tilt_axis_z": 177.0,
+    "servo_body_fit_width": 12.0,
+    "servo_body_fit_length": 22.8,
+    "servo_ear_pitch": 27.2,
+    "servo_ear_span": 32.5,
+    "servo_ear_thickness": 2.5,
+    "servo_base_to_ear": 17.0,
+    "servo_ear_to_horn": 13.2,
+    "servo_shaft_end_offset": 8.3,
+    "servo_shaft_cross_offset_assumed": 6.0,
+    "pan_bearing_id": 20.0,
+    "pan_bearing_od": 32.0,
+    "pan_bearing_width": 7.0,
+    "mast_fit_diameter": 20.4,
+    "mast_key_flat_y": 9.1,
+    "prototype_only": true
+  },
+  "parts": [
+    {
+      "name": "Neck_Main",
+      "volume_mm3": 13514.293,
+      "solids": 1,
+      "role": "fixed",
+      "motion": "fixed",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Neck_Clamp_Cap",
+      "volume_mm3": 2672.09,
+      "solids": 1,
+      "role": "fixed",
+      "motion": "fixed",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Bearing_Lower",
+      "volume_mm3": 3430.619,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "fixed",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Bearing_Upper",
+      "volume_mm3": 3430.619,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "fixed",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Inner_Spacer",
+      "volume_mm3": 540.323,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "fixed",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Circlip_Envelope",
+      "volume_mm3": 239.427,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "fixed",
+      "variant": null,
+      "release": "hardware envelope; groove fit untested"
+    },
+    {
+      "name": "Pan_Rotor",
+      "volume_mm3": 12888.865,
+      "solids": 1,
+      "role": "pan",
+      "motion": "pan",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Retainer_Crank",
+      "volume_mm3": 2821.839,
+      "solids": 1,
+      "role": "pan",
+      "motion": "pan",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "Pan_Parallel_Link",
+      "volume_mm3": 818.015,
+      "solids": 1,
+      "role": "pan",
+      "motion": "link",
+      "variant": null,
+      "release": "M2 shoulder pivots/washers and horn hole check required"
+    },
+    {
+      "name": "Pan_Horn_Adapter",
+      "volume_mm3": 1428.96,
+      "solids": 1,
+      "role": "pan",
+      "motion": "servo",
+      "variant": null,
+      "release": "horn pattern provisional; retain supplied horn"
+    },
+    {
+      "name": "SG90_Pan_Reference",
+      "volume_mm3": 7891.341,
+      "solids": 1,
+      "role": "reference",
+      "motion": "fixed",
+      "variant": null,
+      "release": "measured and assumed envelope; not printable"
+    },
+    {
+      "name": "Pan_Horn_Reference",
+      "volume_mm3": 576.0,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "servo",
+      "variant": null,
+      "release": "horn thickness and symmetry assumed"
+    },
+    {
+      "name": "Tilt_Yoke",
+      "volume_mm3": 12108.571,
+      "solids": 1,
+      "role": "pan",
+      "motion": "pan",
+      "variant": null,
+      "release": "prototype"
+    },
+    {
+      "name": "SG90_Tilt_Reference",
+      "volume_mm3": 7892.155,
+      "solids": 1,
+      "role": "reference",
+      "motion": "pan",
+      "variant": null,
+      "release": "cross-width shaft centering and upper body are assumptions"
+    },
+    {
+      "name": "Tilt_Horn_Reference",
+      "volume_mm3": 576.0,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "tilt",
+      "variant": null,
+      "release": "horn thickness/symmetry assumed"
+    },
+    {
+      "name": "Tilt_Idler_Bushing",
+      "volume_mm3": 27.489,
+      "solids": 1,
+      "role": "hardware",
+      "motion": "pan",
+      "variant": null,
+      "release": "4 OD / 3 ID sleeve hardware required; verify fit"
+    },
+    {
+      "name": "GH44_Tilt_Receiver",
+      "volume_mm3": 11309.852,
+      "solids": 1,
+      "role": "tilt",
+      "motion": "tilt",
+      "variant": null,
+      "release": "interface prototype; horn holes provisional"
+    },
+    {
+      "name": "GH44_Blank_Carrier",
+      "volume_mm3": 5690.35,
+      "solids": 1,
+      "role": "carrier",
+      "motion": "tilt",
+      "variant": "blank",
+      "release": "interface fit prototype"
+    },
+    {
+      "name": "GH44_ToF_Carrier",
+      "volume_mm3": 8800.09,
+      "solids": 1,
+      "role": "carrier",
+      "motion": "tilt",
+      "variant": "tof",
+      "release": "carrier layout prototype; add measured standoffs/edge clamps before installation"
+    },
+    {
+      "name": "GH44_Radar_Carrier",
+      "volume_mm3": 8640.577,
+      "solids": 1,
+      "role": "carrier",
+      "motion": "tilt",
+      "variant": "radar",
+      "release": "carrier layout prototype; add measured standoffs/edge clamps before installation"
+    },
+    {
+      "name": "GH44_Camera_Carrier",
+      "volume_mm3": 10239.573,
+      "solids": 1,
+      "role": "carrier",
+      "motion": "tilt",
+      "variant": "camera",
+      "release": "carrier layout prototype; add measured standoffs/edge clamps before installation"
+    },
+    {
+      "name": "GH44_Dual_Carrier",
+      "volume_mm3": 12877.769,
+      "solids": 1,
+      "role": "carrier",
+      "motion": "tilt",
+      "variant": "dual",
+      "release": "carrier layout prototype; add measured standoffs/edge clamps before installation"
+    },
+    {
+      "name": "SEN0628_Envelope",
+      "volume_mm3": 10933.0,
+      "solids": 1,
+      "role": "reference",
+      "motion": "tilt",
+      "variant": "tof",
+      "release": "clearance envelope only"
+    },
+    {
+      "name": "SEN0610_Envelope",
+      "volume_mm3": 9984.0,
+      "solids": 1,
+      "role": "reference",
+      "motion": "tilt",
+      "variant": "radar",
+      "release": "clearance envelope only"
+    },
+    {
+      "name": "ESP32_CAM_Envelope",
+      "volume_mm3": 17955.0,
+      "solids": 1,
+      "role": "reference",
+      "motion": "tilt",
+      "variant": "camera",
+      "release": "clearance envelope only"
+    },
+    {
+      "name": "Dual_ToF_Envelope",
+      "volume_mm3": 10933.0,
+      "solids": 1,
+      "role": "reference",
+      "motion": "tilt",
+      "variant": "dual",
+      "release": "clearance envelope only"
+    },
+    {
+      "name": "Dual_Radar_Envelope",
+      "volume_mm3": 9984.0,
+      "solids": 1,
+      "role": "reference",
+      "motion": "tilt",
+      "variant": "dual",
+      "release": "clearance envelope only"
+    },
+    {
+      "name": "GH44_Fixed_Head_Adapter",
+      "volume_mm3": 14455.668,
+      "solids": 1,
+      "role": "fixed",
+      "motion": "fixed",
+      "variant": "fixed_option",
+      "release": "fixed interface prototype; pairs with Neck Clamp Cap"
+    },
+    {
+      "name": "GH44_Receiver_Fit_Coupon",
+      "volume_mm3": 6042.354,
+      "solids": 1,
+      "role": "tilt",
+      "motion": "fixed",
+      "variant": "coupon",
+      "release": "print coupon before full parts"
+    }
+  ],
+  "collisions": [],
+  "checks": {
+    "structural_pose_pair_tests": 468,
+    "neutral_carrier_receiver_overlap_mm3": 0.0,
+    "reversed_carrier_receiver_overlap_mm3": 14.812000000000086,
+    "master_unchanged": true,
+    "all_generated_parts_single_valid_solid": true,
+    "robot_pose_pair_tests": 1440,
+    "pan_link_center_distance_mm": 42.0,
+    "pan_cranks_equal_radius_mm": 12,
+    "neutral_wire_bore_free": true,
+    "mast_neck_11_9mm_passage_overlap_mm3": 0.0,
+    "receiver_17_8x9_8mm_passage_overlap_mm3": 0.0,
+    "carrier_passage_overlap_mm3": {
+      "GH44_Blank_Carrier": 0.0,
+      "GH44_ToF_Carrier": 0.0,
+      "GH44_Radar_Carrier": 0.0,
+      "GH44_Camera_Carrier": 0.0,
+      "GH44_Dual_Carrier": 0.0
+    },
+    "fixed_adapter_robot_overlap_mm3": {
+      "MastTube": 0.0,
+      "MastBase": 0.0,
+      "UpperDeck": 0.0,
+      "S3Board": 0.0,
+      "Breadboard": 0.0,
+      "DriverMountLeft": 0.0,
+      "DriverMountRight": 0.0,
+      "AntennaPost": 0.0
+    },
+    "fixed_adapter_carrier_overlap_mm3": 0.0,
+    "master_unchanged_after_save": true,
+    "geometry_review_pass": true
+  },
+  "assumptions": [
+    "SG90 cross-width shaft center assumed 6 mm; verify before servo cradle print.",
+    "Horn thickness 2 mm and central boss 6 mm diameter are envelope assumptions.",
+    "Slotted horn adapters require measured horn hole locations and actual screw choice.",
+    "SEN0610 thickness is a 13 mm placeholder, not a measured dimension.",
+    "Two 20x32x7 pan bearings, 20 mm circlip and tilt bushing are additional hardware.",
+    "Bearing seats, spindle/circlip groove and captive nuts need PETG fit coupons.",
+    "Carrier sensor retention clips/standoffs remain device-specific; no guessed PCB holes.",
+    "No firmware servo control or physical load/cable validation has been performed."
+  ],
+  "fov_intersections": [],
+  "release": "GEOMETRY REVIEW / INTERFACE FIT PROTOTYPES ONLY"
+}

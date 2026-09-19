@@ -1,0 +1,29 @@
+{
+  "source": "/home/buralien/projects/gladiator-cad/cad/head/v01/Gladiator_Head_v01.FCStd",
+  "display_mm": [
+    62,
+    29,
+    3.2
+  ],
+  "display_orientation": "landscape",
+  "pan_operating_deg": [
+    0,
+    180
+  ],
+  "tilt_review_deg": [
+    -25,
+    25
+  ],
+  "tilt_axis_z": 205.0,
+  "tilt_raise_mm": 28.0,
+  "display_frame_outer_mm": [
+    76,
+    44
+  ],
+  "drive": "1:1 timing belt pitch envelopes",
+  "pulley_teeth_each": 50,
+  "pitch_mm": 2,
+  "shaft_spacing_mm": 42.0,
+  "theoretical_pitch_loop_mm": 184,
+  "manufacturing_release": false
+}

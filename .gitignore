@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 *.FCBak
+cad/head/*/build-log.txt
+cad/head/*/style-log.txt
+cad/head/Gladiator_Head_v01_Review.zip
+cad/head/*-build.log
+cad/head/*/package-check-log.txt
