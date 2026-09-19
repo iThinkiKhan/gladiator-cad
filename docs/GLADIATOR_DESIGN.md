@@ -228,9 +228,46 @@ either file, but a genuine missing feature: the neck's clamp geometry assumes th
 anti-rotation index flat exists, which it didn't yet on the real mast. Resolved by adding that
 flat to the real mast (see Mast section) rather than papering over the clash.
 
+## Build state — what exists as physical hardware
+
+**Plate A was printed on 2026-09-18 (PLA): both side rails and the upper deck.** Those three parts
+are now real objects, not just geometry, and the same rule that applies to the aluminium deck now
+applies to them: **do not solve a new problem by adding features to them.** Anything that needs to
+attach must either work with them as printed, or wait for a deliberate v2 reprint.
+
+Printed so far: side rails x2, upper deck. Everything else is still only geometry.
+
+### Consequence: the power distribution board needs a different answer
+
+The board (60 x 40 x 16) does not fit anywhere on the lower deck, and the standing candidate was to
+hang it from the **upper deck's underside**. That underside is completely bare — verified, 0.000
+mm3 below the plate plane — which is exactly why the deck prints support-free, and it is now
+printed that way.
+
+So for this build the mount has to attach without new deck features. What the printed deck actually
+offers from below:
+
+- four Ø12 holes through the plate at its corners, near (3, 6), (76, 6), (6, 134), (73, 134)
+- six Ø3.6 deck-to-rail screws at (12/67, 16/68/120), which land on the rail tops — no space
+  beneath them
+- a large bare flat region between the rails, X roughly 18..61, which is the bed face and therefore
+  the flattest surface on the part
+
+A bracket using the corner Ø12 holes, a clamp onto the rails' inboard faces, or bonding to that
+flat bed face are all workable without touching either printed part. Not yet designed.
+
+### For a v2 deck, eventually
+
+If the deck is ever reprinted, design the power board mount into it properly — but note the
+trade-off it forces: underside features cost the deck its zero-support print **and** put support
+scarring on the face that mates with the rail tops. A v2 should solve the mount and that print
+orientation together, not bolt the mount on and accept the scarring.
+
 ## Open items
 
-1. **Power board shield position** — explicitly deferred, needs the wiring plan.
+1. **Power board mounting** — the board has no mount at all, and the upper deck it was going to
+   hang from is now printed with a bare underside. Needs a bracket that works with the printed
+   parts; see the Build state section. The shield's own position also still needs the wiring plan.
 2. **Mast top height (Z 120)** — placeholder; the mast-head sightline analysis suggests a ToF
    sensor may need more height to clear the S3 board's front/top corner in its lower FOV cone.
    Coordinate with the mast-head workstream before changing.
