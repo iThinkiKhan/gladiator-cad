@@ -121,8 +121,13 @@ So the arms do **not** sit on bare board at the two ends of the 49.5 axis. They 
 beside the heatsink along the long edges, the model assumes those strips are
 (51 - 32) / 2 = 9.5 wide, and an 8.5 arm in a 9.5 strip leaves **0.24 mm per side**.
 
+**Verified against the built solid 2026-09-19**, with the heatsink now confirmed at 32 and centred:
+the frame's two arms occupy B 0.76..9.26 and B 41.76..50.26, each 8.5 wide, sitting inside the
+9.5 bare strips with **0.24 mm clearance to the heatsink on one side and 0.26 on the other**, and
+0.76 / 0.74 to the board edges. The arms fit — on a perfectly flat board face.
+
 **Reported by Jim 2026-09-19, one caliper reading each:** board 49.5 x 51, hole pitch 39.5 both
-directions, hole diameter 3.0. The outline agrees with the 2026-09-15/16 caliper work and the hole
+directions, hole diameter 3.0, heatsink 32 across the 51 axis and dead centre. The outline agrees with the 2026-09-15/16 caliper work and the hole
 diameter is genuinely new. **Both pitches are logged as reported, not confirmed** — they came back
 exactly equal to values the model had already assumed, which is the shape the S3 failure had. The
 two-reading check below settles the pitch and the diameter against each other and costs a minute.
@@ -138,8 +143,11 @@ dia = `(O-I)/2`, and the two directions must derive the *same* diameter or somet
 | 2 | Hole pitch along the board — `I` and `O`, **measured separately** | The board is 49.5 x 51, so a square pattern is a guess | 39.5 |
 | 3 | Hole diameter, measured directly | Confirms 1 and 2, and picks the screw | not recorded |
 | 4 | Is the hole block centred on the 49.5 x 51 outline? If not, board edge to the nearest hole's near edge, on all four sides | The model assumes centred — the same assumption that went unstated for the S3 | centred |
-| 5 | Heatsink extent across the board's **51** direction | This is the one the arms actually depend on. At 0.24 mm clearance per side, a heatsink a half-millimetre wider than assumed makes the mount unbuildable | 32 |
-| 6 | Bare board along each **long edge**, measured separately | Tells you whether the heatsink is centred across the board, which 5 alone does not. Also check nothing else — components, solder, a retaining clip — intrudes into those two 8.5-wide strips on the heatsink face | 9.5 each |
+| ~~5~~ | ~~Heatsink extent across the **51** direction~~ | **MEASURED 2026-09-19: 32, and dead centre.** | 32 ✓ |
+| ~~6~~ | ~~Bare board along each **long edge**~~ | **Resolved by 5**: centred, so (51 - 32) / 2 = 9.5 each. *Derived, not measured directly.* | 9.5 ✓ |
+| **8** | **Header pin tail protrusion** — how far the solder tails stand proud of the mounting face | **NEW BLOCKER, 2026-09-19.** Jim: the mounting face (away from the GPIO side) carries nothing but the bottoms of the header pins; some are fatter than others but **all the same length**. The arms currently bolt dead flat to that face, so any protrusion holds the board off the frame. A single number covers it, since they are all the same length. **Reported as remeasured but the value did not come through — still outstanding.** | nothing — the model assumes a flat face |
+| **9** | Where the tails sit across the 9.5 strip, and whether the area within ~4 mm of each of the four mounting holes is clear of them | Decides whether the arm gets a full-face relief with raised pads at the screws, or a channel down the middle with contact rails at the edges | unknown |
+| **10** | The fattest tail, across its solder blob | Sets the relief width | unknown |
 | 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
 
 Also note whether the four holes fall on bare board or inside the heatsink's footprint — the
