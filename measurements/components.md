@@ -35,27 +35,57 @@ dimensional source for anything.
   span 44.7 (at 4.6 dia) to 48.0 (at 6.25 dia) across their outer edges, and the board has to be at
   least that wide.
 
-**Still open — one contradiction.** The derived 6.25 disagrees with the 4.6 hole diameter measured
-directly on 2026-09-15, and c-t-c depends entirely on which is right:
+**Board outline measured 2026-09-20: 48 wide x 74 tall.** Jim, with the board in hand — and a
+correction to how this has been described: **there is no bare S3 board in this project, it is just
+the expander.** The recorded 42 width was wrong; 74 was right. Holes are large and in the corners,
+and the two boards *do* just fit side by side on the deck.
 
-| If hole dia is | c-t-c width | c-t-c length | Min board width | Fits beside the breadboard? |
-| ---: | ---: | ---: | ---: | --- |
-| 4.6 (measured directly) | 40.1 | 64.1 | 44.7 | Yes — 1.15 clear to the deck edge and to the breadboard |
-| 6.25 (derived from I and O) | 41.75 | 65.75 | 48.0 | No — 0.5 over the deck edge and 0.5 into the breadboard |
+### The contradiction, re-read against a real 48 x 74
 
-The user's own observation that the S3 and breadboard sit side by side on the printed deck as
-expected is evidence for the 4.6 row, but that is an inference and **must not be recorded as
-confirmed** — that is exactly the mistake that produced 30.9 x 55.0. Resolve it directly:
+| Direction | `I` | `O` | dia = (O-I)/2 | c-t-c | Board material outside each hole |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Across width | 35.5 | 48.0 | 6.25 | 41.75 | **0.00** |
+| Along length | 59.5 | 72.0 | 6.25 | 65.75 | 1.00 |
 
-1. **Hole diameter, measured on its own** — largest drill shank or screw that passes through one
-   hole (3.0? 4.0? 5.0? 6.0?), or the caliper's internal jaws in a single hole.
-2. **Board outline, length x width**, over the bare PCB, ignoring any connector overhang.
+**The 6.25 reading requires zero material between the hole and the board edge across the width.
+That is impossible on a real PCB** — a hole cannot be tangent to the edge. So the `O = 48.0` across
+the width is almost certainly **the board width itself**, recorded as an outer-hole span by
+mistake. That the two directions then "agree" on 6.25 is an artefact of that error, not the
+protocol's cross-check passing.
 
-Cross-check before recording: width must be at least `35.5 + 2 x dia`, length at least
-`59.5 + 2 x dia`. If it is not, something in the set is still wrong.
+Against the directly measured 4.6:
 
-Once dia is known, c-t-c = `I + dia` in each direction, and the two-reading values above must
-agree.
+| Direction | c-t-c | Outer span | Material outside each hole |
+| --- | ---: | ---: | ---: |
+| Across width | 40.10 | 44.70 | 1.65 |
+| Along length | 64.10 | 68.70 | 2.65 |
+
+Both plausible. **4.6 is the reading that survives.**
+
+### And only 4.6 fits the deck
+
+Checked against the 85-wide front of the deck, with the breadboard taking 35.5 and the bosses at
+Ø9:
+
+| Pattern | Boss span | + breadboard | Verdict |
+| --- | ---: | ---: | --- |
+| 4.6 -> c-t-c 40.10 | 49.10 | 84.60 | **fits, 0.40 to spare** |
+| midpoint 40.925 | 49.92 | 85.42 | over by 0.42 |
+| 6.25 -> c-t-c 41.75 | 50.75 | 86.25 | over by 1.25 |
+
+**This kills the midpoint dodge.** Splitting the difference was proposed on 2026-09-20 because the
+board's own holes are bigger than the M3 screws, so a 0.583 offset is absorbed. That is still true
+of the *screws* — but the *bosses* do not fit at 40.925. The boss width constraint was never
+checked when the midpoint was proposed. It is checked now, and only 40.10 works.
+
+Note also that the bosses are wider than the board at every candidate, standing 0.55 proud of each
+edge at 4.6. That is fine, but it means the deck, not the board, is what runs out of room.
+
+### One look settles it, and the board is in hand
+
+**How much board material is there between a hole's edge and the nearest board edge?** About 1.65
+means 4.6 and the design proceeds. About 0 means something else is going on and the whole set needs
+re-taking.
 
 ## Breadboard with C6 + BNO (logic, upper deck)
 
