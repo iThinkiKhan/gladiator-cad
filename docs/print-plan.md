@@ -2,6 +2,30 @@
 
 Prepared 2026-09-17; rebuilt 2026-09-18 as actual arranged plates after the first coupon results.
 
+## Live queue (2026-09-20)
+
+The printer's incoming folder now holds **three plates and nothing else**; everything
+else is filed under `_archive/` there, with a `README.txt` explaining the layout.
+Nothing was deleted.
+
+| Plate | State |
+| --- | --- |
+| **B** mast base, power shield, antenna post | live |
+| **D** driver mounts | live — unblocked 2026-09-20 |
+| **F** all remaining coupons | live |
+| A body (rails + upper deck) | printed 2026-09-18 |
+| C mast tube | not queued — buy a 20/12 tube instead |
+| E coupons | superseded by F |
+
+**Plate F = plate E, minus coupon C, plus coupon D.** Coupon C tested self-tapping
+pilots and became obsolete when Jim settled on nuts and washers; coupon D was
+committed two minutes after plate E was built, so plate E never carried it. The head
+coupons are lifted out of plate E unchanged, so they stay byte-identical to what
+`build_coupon_plate.py` produced — `build_plate_f.py` only re-packs the bed.
+
+**Run F before B.** Coupon D settles the antenna's SMA bore, which is the last
+guessed dimension on plate B.
+
 ## The plates
 
 Four 3MF files in `/home/buralien/Desktop/3D-Printer-Incoming/`. **Each one is a complete build
@@ -61,10 +85,20 @@ mast as a removable, standardised part and its only features (wire window, cross
 flat) are easy to drill and file. Print this if you want the assembly complete for fit-checking;
 do not treat it as final. Needs a brim.
 
-## Plate D — driver mounts. Not yet.
+## Plate D — driver mounts
 
-The most expensive plate in the set — 64 cm3, 72 mm tall, 1875 mm2 of support — and the one
-whose interface is least verified. Two separate things gate it.
+**Unblocked 2026-09-20.** The board interface is measured and closed, and both gates below are
+resolved. Recorded here for the reasoning trail.
+
+**Hardware it needs: M3 x 18-20, with a nut and washer behind the frame.** The holes are 3.6
+clearance, not self-tapping pilots — Jim has no self-tappers, and a heat-set insert would leave
+only 1.21 of wall against the heatsink where the coupon's working boss had 2.2. A nut loads that
+wall in compression instead. The space behind each hole is clear: a Ø12 x 10 probe finds 0.0 mm3.
+
+**Still true, and worth knowing:** the arms sit 0.24 mm from the heatsink, in PLA, which softens
+near 60 C. A fit prototype, not something to drive hard on.
+
+It remains the most expensive plate in the set — 61 cm3, 72 mm tall, 1943 mm2 of support.
 
 **1. Three numbers that were never measured.** The hole pitch in both directions and the heatsink
 length are assumptions, not measurements; see the "Mounting interface — NOT MEASURED" block in

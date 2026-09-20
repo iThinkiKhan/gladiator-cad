@@ -57,10 +57,12 @@ PLATES = [
      'Plate C - mast tube, on its own (see the buy-a-tube note)',
      [('MastTube', V(0, 0, -1), 'mast tube, vertical, needs a brim')]),
 
-    ('Gladiator_PlateD_DRIVER-MOUNTS_BLOCKED.3mf',
-     'Plate D - driver mounts. BLOCKED: check a real BTS7960 against the hole pattern first',
-     [('DriverMountLeft', V(0, 0, 1), 'driver mount L, inverted'),
-      ('DriverMountRight', V(0, 0, 1), 'driver mount R, inverted')]),
+    ('Gladiator_PlateD_DRIVER-MOUNTS.3mf',
+     'Plate D - driver mounts. Board interface measured and closed 2026-09-20',
+     [('DriverMountLeft', V(0, 0, 1),
+       'driver mount L, inverted. Arms relieved 2.0 for the header tails; '
+       '3.6 clearance holes - needs M3 x 18-20 with nuts and washers behind the frame'),
+      ('DriverMountRight', V(0, 0, 1), 'driver mount R, inverted, same hardware')]),
 ]
 
 
