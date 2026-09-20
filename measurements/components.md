@@ -145,8 +145,32 @@ The rear face is not clear, though. It carries the undersides of the headers, in
 
 | Strip | What is on it | Consequence for the arm |
 | --- | --- | --- |
-| **Screw-terminal side** | a straight, shallow line of tails running **dead centre of the strip** | a relief channel down the middle, leaving a contact rail either side |
+| **Screw-terminal side** | a straight, shallow line of tails, **5.3 from the heatsink edge** (corrected 2026-09-20; the earlier "dead centre" was wrong) | a relief channel, but see the collision below — it lands almost exactly on the mounting hole |
 | **GPIO side** | a block **8.6 long by the entire 9.5 strip width** | no contact is possible across those 8.6 mm; needs a full-width pocket, with contact only before and after it |
+
+**The terminal-side line collides with the mounting hole.** Checked on the solid, in strip
+coordinates (board edge B=0, heatsink edge B=9.5):
+
+| | |
+| --- | ---: |
+| arm contact face | B 0.76 .. 9.26 |
+| mounting hole, Ø2.7 pilot | centre B 5.75, edges 4.40 .. 7.10 |
+| pin line at 5.3 from the heatsink | **B 4.20** |
+| gap from the pin line to the hole **edge** | **0.20 mm** |
+
+A relief channel over that line therefore undercuts the screw at every plausible row width — at a
+1.0 row the channel already reaches B 4.70, past the hole edge at 4.40, and it only gets worse as
+the row widens. The board would be unsupported on the outer side of each screw, so tightening it
+bends the PCB instead of clamping it.
+
+**This may be moot, and that is the next thing to find out.** The collision only exists where the
+pin line actually runs. If the line stops short of the screw positions along the 49.5 axis (holes
+are at A 5.0 and A 44.5), the channel can simply stop short too and the screws keep full bearing.
+Hence item 11.
+
+**Also unresolved: what the 5.3 was measured to.** Centre of the pin row, or its near edge? Those
+differ by half a row width, which is the whole margin here. Same class of ambiguity as the S3
+spans — see [[feedback-gladiator-never-confirm-an-inference]]. Logged as reported, not resolved.
 
 Agreed approach (Jim): **recess the arm faces to clear the tails.** The alternative he raised —
 redesigning the mount to hop over the heatsink entirely — stays on the shelf unless the recesses
@@ -172,7 +196,9 @@ dia = `(O-I)/2`, and the two directions must derive the *same* diameter or somet
 | ~~6~~ | ~~Bare board along each **long edge**~~ | **Resolved by 5**: centred, so (51 - 32) / 2 = 9.5 each. *Derived, not measured directly.* | 9.5 ✓ |
 | **8** | **Header pin tail protrusion** — how far the tails stand proud of the rear face | Sets the recess **depth**. One number covers it: Jim reports some tails are fatter than others but **all the same length**. Asked twice; still has not arrived. The 8.6 supplied on 2026-09-20 is a footprint length, not this. | nothing — the model assumes a flat face |
 | **9** | Where the GPIO-side 8.6 block sits **along the 49.5 axis** | Places the full-width pocket. The block spans the whole 9.5 strip width, so across those 8.6 mm the arm can carry no contact at all | unknown |
-| **10** | Width of the screw-terminal line **across the 9.5 strip**, and how far it runs along 49.5 | Sizes the centre channel and tells us how much contact rail is left either side of it | unknown |
+| **10** | Width of the screw-terminal pin row across the strip | Sizes the channel. With the row at B 4.20 and the hole edge at B 4.40, every extra 0.4 of width eats another 0.2 into the screw bearing | unknown |
+| **11** | **How far the terminal-side line runs along the 49.5 axis** — specifically, does it reach the screw positions at A 5.0 and A 44.5, or stop short? | **The crux.** If it stops short, the relief channel stops short too and the screws keep full bearing. If it runs past them, the screw bosses have to be redesigned or moved | unknown |
+| **12** | Was the 5.3 measured to the centre of the pin row, or to its near edge? | Half a row width, which is more than the entire remaining margin | unknown |
 | 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
 
 Also note whether the four holes fall on bare board or inside the heatsink's footprint — the
