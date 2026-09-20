@@ -240,4 +240,18 @@ prediction lines up with his 1.3 reading.
 | Bearing seat + post | Pan rotor, retainer — 14.5 cm3 |
 | Belt mesh | The pedestal — 20 cm3. Needs a real 2GT belt to test against. |
 | Screen gauge | The display frame — 10.8 cm3, still also needs the active window measured |
-| Coupon C | Driver mounts, plate D, and the M2 self-tap pilots in the pan rotor |
+| ~~Coupon C~~ | **Dropped from plate F 2026-09-20 — read the note below.** |
+
+**Coupon C is off plate F, and that leaves one thing hanging.** It was carrying two jobs. The
+first, the driver mount pilots, is moot: Jim has no self-tapping screws, so those became 3.6
+clearance holes for nuts and washers and there is no thread to form.
+
+The second job does not go away. **The pan rotor's M2 self-tap pilots assume self-tapping screws
+that do not exist in this build.** No coupon settles that — coupon C tested M3 at 2.7 / 2.9 / 3.1
+and was only ever a proxy for the M2 case. It is a design question: the pan rotor needs M2
+clearance holes with nuts, or M2 heat-set inserts, or machine screws formed into plastic and
+accepted as consumable. The driver mounts took the nut route because the space behind them was
+clear; whether the pan rotor has that room is for the head workstream to check.
+
+Printing coupon C now would answer a question nobody has, so it stays off the plate — flagged
+here rather than quietly dropped.
