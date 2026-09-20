@@ -138,3 +138,72 @@ These are calibration-compensated for this printer — see `measurements/printer
 
 The SMA bore is the one number nothing tested. If the connector will not pass, run a 6.5 mm drill
 through it; nothing else on that part depends on it.
+
+## Plate E — all remaining coupons
+
+`Gladiator_PlateE_ALL-COUPONS.3mf`, built 2026-09-20. 13 pieces, 24.5 cm3,
+about 30 g. Everything left that gates a real part, on one bed.
+
+**Turn on a brim.** Several pieces have small footprints — each belt arc has
+about 100 mm2, less than the mast base that already calls for one.
+
+**Do not let Orca auto-orient.** Every piece is already on its correct face.
+
+| Pieces | Question it answers | Marking |
+| --- | --- | --- |
+| 3 x belt mesh arc | Which 2GT groove width grips a real belt? | scallops on the inner face, 1 = narrowest (r 0.60 / 0.65 / 0.70) |
+| 3 x bearing seat ring | Which modelled bore gives a real 32.00 bearing OD a firm seat? | notches on the rim, 1 = smallest (32.20 / 32.35 / 32.50) |
+| 3 x spindle post | Which modelled post slides into a real 20.00 bearing bore without slop? | notches on the wall, 1 = smallest (20.05 / 20.20 / 20.35) |
+| 1 x screen mount gauge | Is the ST7789 hole pattern really 26.00 x 58.25 centres? | — |
+| 1 x coupon C | Which self-tap pilot holds an M3 without splitting? | clipped corner marks the smallest |
+| GH44 blank carrier + receiver | Does the carrier interface seat, index and reject a reversed fit? | — |
+
+### The brackets are calibration-compensated, not nominal
+
+Round features on this printer come out about **0.25 mm under**, convex and
+concave alike — see `measurements/printer-calibration.md`. So the bearing
+brackets are deliberately modelled oversize:
+
+| Piece | Modelled | Expected printed | Target |
+| --- | ---: | ---: | --- |
+| Seat, 1 notch | 32.20 | ~31.95 | too tight |
+| Seat, 2 notches | 32.35 | ~32.10 | **the prediction** |
+| Seat, 3 notches | 32.50 | ~32.25 | too loose |
+| Post, 1 notch | 20.05 | ~19.80 | too loose |
+| Post, 2 notches | 20.20 | ~19.95 | **the prediction** |
+| Post, 3 notches | 20.35 | ~20.10 | will not enter |
+
+If 2 notches wins on both, the curve error is still 0.25 and the numbers go
+straight into v0.3. If a different one wins, that is new calibration data and
+`printer-calibration.md` gets updated first.
+
+The seat wants the bearing to press in and stay without rocking. The post wants
+the bearing to slide on by hand and not wobble. Do not force either — a bearing
+hammered into an undersized printed pocket will hold until the PLA creeps.
+
+### Screen mount gauge
+
+Hole centres are **26.00 wide x 58.25 long**, derived from Jim's two clean
+inside-to-inside readings (24 and 56.25) plus the confirmed M2 hole diameter.
+Holes are 2.6, the calibrated M2 clearance — 2.2 and 2.4 would not pass a screw
+on this printer.
+
+This settles the disagreement in the raw readings physically instead of by
+argument: lay the board on the gauge and see whether four M2 screws drop
+through. If they do, the pattern is confirmed and the display frame can be cut.
+If they do not, measure the offset and that is the correction.
+
+It predicts outside-to-outside of 28.00 and 60.25, with 0.500 and 1.125 mm of
+board outboard of the holes. Jim's readings of 29 and "maybe 61.5" disagree, but
+the 29 was annotated as the board edge and the 61.5 was hedged; the 1.125
+prediction lines up with his 1.3 reading.
+
+### What each result unblocks
+
+| Result | Unblocks |
+| --- | ---: |
+| GH44 pair | Tilt yoke, tilt receiver, dual carrier, clamp cap, the fixed head — 39 cm3 |
+| Bearing seat + post | Pan rotor, retainer — 14.5 cm3 |
+| Belt mesh | The pedestal — 20 cm3. Needs a real 2GT belt to test against. |
+| Screen gauge | The display frame — 10.8 cm3, still also needs the active window measured |
+| Coupon C | Driver mounts, plate D, and the M2 self-tap pilots in the pan rotor |

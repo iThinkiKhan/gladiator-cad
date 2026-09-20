@@ -146,3 +146,38 @@ coupons, the way `docs/print-plan.md` does it for the body.
 
 `generator/build_head_v03.py`, run with `freecadcmd` on the CAD server. It opens the
 v0.2 file read-only and writes only this directory.
+
+## Calibration gap — every fastener hole in v0.3 is at nominal
+
+Found 2026-09-20. The head candidates were built on 2026-09-16 and 09-17.
+`measurements/printer-calibration.md` landed on 09-18 and was applied to the
+master only. **The head never inherited it.**
+
+On this printer, round features print about 0.25 mm under, and the fit coupon
+established that a modelled 3.4 and 2.4 will not pass an M3 or M2 screw at all.
+So as it stands:
+
+| Feature in v0.3 | Modelled | Calibrated value | Effect if printed now |
+| --- | ---: | ---: | --- |
+| Mast clamp bolts | 3.4 | **3.6** | M3 will not pass |
+| Pedestal to tilt yoke | 3.4 | **3.6** | M3 will not pass |
+| GH44 carrier screws | 3.4 | **3.6** | M3 will not pass |
+| Servo ear screws | 2.4 | **2.6** | M2 will not pass |
+| Pedestal / retainer M2 | 2.2 | **2.6** | M2 will not pass |
+| Bearing seat in the rotor | 32.10 | pending plate E | prints ~31.85, bearing will not enter |
+| Spindle post on the neck | 19.95 | pending plate E | prints ~19.70, bearing will be loose |
+| Rotor M2 self-tap pilot | 1.6 | pending coupon C | unknown |
+
+Nothing here changes design intent — the intent is still an M3 clearance, an M2
+clearance, and a firm bearing seat. These are compensations for how this printer
+prints today, exactly as the master's `deck2_screw_dia` and `m2_screw_dia`
+already are.
+
+**All of it is applied in the same rebuild as the belt ratio**, so the head is
+rebuilt once rather than three times. Until then, treat every STL in `stl/` as
+geometry for inspection only.
+
+The GH44 fit coupons in `cad/head/v01/fit-prototypes/` carry the same 3.4 holes.
+That does not invalidate the coupon — it tests the register, the indexing and
+the seating, none of which depend on the screw holes — but expect the four M3
+holes on it to need a drill.
