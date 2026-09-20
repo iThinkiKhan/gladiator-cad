@@ -10,45 +10,52 @@ dimensional source for anything.
 
 | Feature | Value | Notes |
 | --- | ---: | --- |
-| Board length | 74 | |
-| Board width | 42 | |
+| Board length | 74 | Re-check alongside the width |
+| Board width | 42 | **Wrong. Disproved 2026-09-19** — the holes alone span 44.7-48 across |
 | Height, S3 mounted | 17.5 | |
 | Height, tallest dupont pins | 28.3 | Governs upper-deck headroom |
-| Mounting holes | 4.6 dia | One in each corner |
-| Hole span across width, raw caliper reading | 35.5 | Convention never pinned down |
-| Hole span along length, raw caliper reading | 59.6 | Convention never pinned down |
-| **Hole pattern, center-to-center** | **UNKNOWN** | Re-measure required, see below |
+| Mounting holes | 4.6 dia | **Contradicted by the 2026-09-19 readings — see below** |
 
-> **The 30.9 x 55.0 pattern recorded here on 2026-09-15 is wrong.** It was an *inference*, not a
-> measurement: the raw readings 35.5 / 59.6 were reported as taken "from nearest edges of the
-> circles," the literal reading was rejected as geometrically impossible across the width, and
-> outer-edge-to-outer-edge was substituted instead. That inference was then marked "Confirmed"
-> without any confirming measurement. It was cut into the upper deck, and the deck was printed on
-> 2026-09-18 with bosses at 30.9 x 55.0. **The real board does not fit them** (reported
-> 2026-09-19). Do not restore these numbers.
+### Two-reading measurement, 2026-09-19
 
-The three readings the raw 35.5 / 59.6 could represent, and what each implies:
+| Direction | Inside span `I` | Outside span `O` | c-t-c = (I+O)/2 | dia = (O-I)/2 |
+| --- | ---: | ---: | ---: | ---: |
+| Across width | 35.5 | 48 | **41.75** | 6.25 |
+| Along length | 59.5 | 72 | **65.75** | 6.25 |
 
-| Caliper convention | c-t-c across width | c-t-c along length | Edge margin at hole outer edge |
-| --- | ---: | ---: | --- |
-| Outer edge to outer edge (what was built) | 30.9 | 55.0 | 3.25 width / 7.2 length |
-| Center to center (raw numbers taken as-is) | 35.5 | 59.6 | 0.95 width / 4.9 length |
-| Inner edge to inner edge (as originally described) | 40.1 | 64.2 | -1.35 width — impossible |
+**Settled by these readings:**
 
-Since the built pattern is the smallest of the three, the printed bosses are almost certainly
-**too close together in both directions** — by 4.6 total (2.3 per side) if the true reading is
-center-to-center, or 9.2 total if the width figure is right but the 42 board width is wrong.
+- The original 2026-09-15 figures (35.5 / 59.6) were **inside-edge-to-inside-edge**, exactly as
+  they were first described. The reinterpretation to outer-edge-to-outer-edge was backwards, and
+  the 30.9 x 55.0 pattern it produced is smaller than the truth by about 10 in *both* directions.
+  The printed deck's bosses cannot be rescued by re-drilling.
+- Both directions independently derive the same hole diameter, 6.25. A consistent derived diameter
+  across two independent measurements is the protocol working as intended.
+- **The recorded board width of 42 is wrong.** Whichever hole diameter is right, the four holes
+  span 44.7 (at 4.6 dia) to 48.0 (at 6.25 dia) across their outer edges, and the board has to be at
+  least that wide.
 
-**How to re-measure so this cannot happen again.** For one pair of holes, take *two* readings and
-report both:
+**Still open — one contradiction.** The derived 6.25 disagrees with the 4.6 hole diameter measured
+directly on 2026-09-15, and c-t-c depends entirely on which is right:
 
-1. Caliper jaws spread **inside** the two holes, touching the facing inner edges — call it `I`.
-2. Caliper jaws **outside** the two holes, touching the far outer edges — call it `O`.
+| If hole dia is | c-t-c width | c-t-c length | Min board width | Fits beside the breadboard? |
+| ---: | ---: | ---: | ---: | --- |
+| 4.6 (measured directly) | 40.1 | 64.1 | 44.7 | Yes — 1.15 clear to the deck edge and to the breadboard |
+| 6.25 (derived from I and O) | 41.75 | 65.75 | 48.0 | No — 0.5 over the deck edge and 0.5 into the breadboard |
 
-Then center-to-center is `(I + O) / 2` and the hole diameter is `(O - I) / 2`, with no convention
-to guess at, and the derived hole diameter cross-checks against the direct 4.6 reading. Do this
-once across the width and once along the length. Also confirm whether the four holes are centered
-on the board outline or shifted toward one end — the model currently assumes centered.
+The user's own observation that the S3 and breadboard sit side by side on the printed deck as
+expected is evidence for the 4.6 row, but that is an inference and **must not be recorded as
+confirmed** — that is exactly the mistake that produced 30.9 x 55.0. Resolve it directly:
+
+1. **Hole diameter, measured on its own** — largest drill shank or screw that passes through one
+   hole (3.0? 4.0? 5.0? 6.0?), or the caliper's internal jaws in a single hole.
+2. **Board outline, length x width**, over the bare PCB, ignoring any connector overhang.
+
+Cross-check before recording: width must be at least `35.5 + 2 x dia`, length at least
+`59.5 + 2 x dia`. If it is not, something in the set is still wrong.
+
+Once dia is known, c-t-c = `I + dia` in each direction, and the two-reading values above must
+agree.
 
 ## Breadboard with C6 + BNO (logic, upper deck)
 
@@ -101,12 +108,29 @@ is not printable.
 | Heatsink length | 32 | **assumed.** This file records the heatsink's width (51) and its protrusion (~28) but never its length. The mount's arms sit on the (49.5 - 32) / 2 = 8.75 of bare board it supposedly leaves at each end. |
 | Board mounting hole diameter | not used | needed anyway, to know what screw the pattern takes |
 
-Take all four with calipers off an actual BTS7960. For the pitches, measure outside-edge
-to outside-edge across a diagonal pair and subtract one hole diameter, or inside-to-inside
-and add one — and **measure the two directions separately** rather than assuming square.
+What the mount currently cuts, so you can see what each number moves: four Ø2.7 holes at
+39.5 x 39.5 (`DrvHoleSketch`), and frame arms occupying the first and last 8.5 of the board's
+49.5 length (`DrvFrameSketch`), straddling an assumed 32-long heatsink.
 
-If the heatsink length is not 32, the arms move even if the hole pattern is right: they
-are positioned to land on bare board beyond the heatsink, not merely on the holes.
+**Measure these seven, in this order.** Use the same two-reading method that just caught the S3
+error — for each hole pair, an inside span `I` and an outside span `O`, then c-t-c = `(I+O)/2` and
+dia = `(O-I)/2`, and the two directions must derive the *same* diameter or something is wrong:
+
+| # | Measurement | Why it matters | Currently assumed |
+| ---: | --- | --- | ---: |
+| 1 | Hole pitch across the board — `I` and `O` | Sets the frame's hole positions | 39.5 |
+| 2 | Hole pitch along the board — `I` and `O`, **measured separately** | The board is 49.5 x 51, so a square pattern is a guess | 39.5 |
+| 3 | Hole diameter, measured directly | Confirms 1 and 2, and picks the screw | not recorded |
+| 4 | Is the hole block centred on the 49.5 x 51 outline? If not, board edge to the nearest hole's near edge, on all four sides | The model assumes centred — the same assumption that went unstated for the S3 | centred |
+| 5 | Heatsink length, along the board's 49.5 direction | The arms land on the bare board beyond it; if it isn't 32 the arms move even when the holes are right | 32 |
+| 6 | Bare board left at each end, measured separately | Tells you whether the heatsink is centred along its length, which 5 alone does not | 8.75 each |
+| 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
+
+Also note whether the four holes fall on bare board or inside the heatsink's footprint — the
+open-frame design depends on the screws being reachable from the component side.
+
+**None of these may be recorded as confirmed unless they were measured.** If a number has to be
+derived, mark it derived and keep it out of anything that gets printed.
 
 
 **Orientation:** the heatsink is on the **underside** of the board — fins project from the face
@@ -197,8 +221,9 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
 
 ## Still to measure
 
-- **S3 + expander hole pattern, center-to-center** — the built 30.9 x 55.0 is disproved by
-  physical fit; see the two-reading protocol in the S3 section above.
+- **S3 + expander: hole diameter and true board outline** — the two-reading spans are in hand
+  (41.75 / 65.75 c-t-c at 6.25 dia, 40.1 / 64.1 at 4.6); one direct hole-diameter measurement and
+  one board-outline measurement close it. See the S3 section.
 
 - Motor driver: total height standing on its fins, and PCB underside to fin tips (see note above)
 - C6 antenna connector position and pigtail length
