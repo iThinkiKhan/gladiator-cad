@@ -259,6 +259,12 @@ tracks reaching 50 outboard (X -50 / 129), anchoring at the deck edge X 0 / 79 l
 Fallback if canting off the rails proves awkward: mounts that rise above and to the sides of the
 upper deck, carrying the drivers at the same angle but higher up.
 
+## Display (ST7789)
+
+| Feature | Value | Notes |
+| --- | ---: | --- |
+| Active area | **51.2 wide x 25.6 high** | Jim, 2026-09-20. Closes the second half of the display-frame gate; the hole pattern is what the plate F gauge tests. |
+
 ## Power distribution board (power)
 
 | Feature | Value | Notes |
@@ -266,17 +272,33 @@ upper deck, carrying the drivers at the same angle but higher up.
 | Board length | 60 | |
 | Board width | 40 | |
 | Height, tallest point | ~16 | |
-| Mounting holes | **none** | Jim, 2026-09-20: it is a bare through-hole PCB with no mounting provision at all |
+| PCB thickness | 1.6 | Jim, 2026-09-20 |
+| Mounting holes | **yes, 4, M2** | Corrected 2026-09-20 — an earlier note that it had none was wrong |
+| Underside protrusion | **~6** | Longest lead today; Jim asks for room to grow, so design to 8-10 |
 
-**Consequence: it cannot be bolted to anything.** Any mount has to be a cradle or clamp that holds
-it by its edges, which also means the bracket has to resist it sliding out rather than relying on
-fasteners. Still to establish before that can be designed:
+### Mounting hole pattern, two-reading, 2026-09-20
 
-- PCB thickness itself (sets the slot width — the ~16 above is the tallest component, not the board)
-- how far the through-hole leads and solder joints protrude on the underside, since the cradle must
-  not press on them
-- which edge the wires land on and which way they exit
-- whether it has to come out without dismantling the upper deck
+| Direction | Inside span `I` | Outside span `O` | c-t-c = (I+O)/2 | dia = (O-I)/2 |
+| --- | ---: | ---: | ---: | ---: |
+| Across width | 33 | 36 | **34.5** | 1.5 |
+| Along length | 52.5 | 56 | **54.25** | 1.75 |
+
+**Centre-to-centre 34.5 x 54.25 is solid** and cross-checks against the outline: on a 60 x 40
+board that leaves 2.75 and 2.875 of margin, near enough symmetric, which is what a sane layout
+looks like.
+
+**The derived diameters disagree, and neither matches the description.** 1.5 across the width
+against 1.75 along the length, where the protocol says both directions must derive the *same*
+diameter or a reading is off; and Jim describes them as "exactly M2 sized", which would be about
+2.0. A true 2.0 hole with c-t-c 34.5 / 54.25 predicts spans of 32.5/36.5 and 52.25/56.25 — within
+about half a millimetre of the readings in every case, so the likeliest story is a 2.0 hole with
+±0.25-0.5 of measurement noise.
+
+**That is an inference and is not recorded as settled.** One direct caliper reading across a single
+hole closes it. It does not block the bracket either way: c-t-c positions the standoffs and is
+robust, while the diameter only has to accept an M2 screw, which Jim has confirmed it does.
+
+Still open: which edge the wires land on and which way they exit.
 
 ## Breadboard power rails x2 (buses)
 
