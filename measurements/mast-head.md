@@ -67,3 +67,62 @@ The saved wire-window pocket does not actually open the tube. An unsaved trial w
 ## Harness
 
 Not yet designed. Preserve the 12 mm mast bore; develop conductors, accessible disconnects and flex loops alongside the neck. There are no actual bundle/connector dimensions to report yet. Reserve separate provision for future camera/data wiring rather than assuming a four-wire sensor connection covers it.
+
+## ST7789 display — Jim's measurements, 2026-09-20
+
+Board outline **62.5 long x 29 wide**. Thickness not re-read; the 2026-09-17
+record says 3.2 and that is still what the CAD uses. Mounting holes are M2 size.
+
+Raw readings as given:
+
+| Reading | Value |
+| --- | ---: |
+| Board, long | 62.5 |
+| Board, wide | 29 |
+| Hole inside-to-inside, widthwise | 24 |
+| Hole outside-to-outside, widthwise | 29 |
+| Hole inside-to-inside, lengthwise | 56.25 |
+| Hole outside-to-outside, lengthwise | 61.5 ("maybe") |
+| Hole edge to board edge, lengthwise | 1.3 |
+
+### These do not reconcile — NOT resolved, NOT in the CAD
+
+The same hole cannot have three diameters. Derived from each pair:
+
+| From | Hole dia | Centre spacing |
+| --- | ---: | ---: |
+| Widthwise 24 / 29 | **2.50** | 26.50 |
+| Lengthwise 56.25 / 61.5 | **2.625** | 58.875 |
+| Lengthwise 56.25 with the 1.3 edge gap (outside = 62.5 - 2.6 = 59.9) | **1.825** | 58.075 |
+
+Two separate problems:
+
+1. **Lengthwise is self-contradictory.** Outside-to-outside 61.5 implies a 0.5 mm
+   gap to the board edge, not 1.3. Either the 61.5 or the 1.3 is wrong. The two
+   candidate centre spacings differ by 0.8 mm.
+2. **Widthwise outside-to-outside equals the board width exactly** (29 and 29),
+   which puts the hole's outer edge flush with the board edge. Possible, but
+   unusual, and it decides whether a bezel opening has to dodge the screws or
+   can run past them.
+
+**Do not build the display frame from these.** See
+[[feedback-gladiator-never-confirm-an-inference]] — an inferred hole pattern has
+already cost one printed part on this project.
+
+### Still needed for the frame
+
+- Hole diameter, measured directly. Two readings.
+- Outside-to-outside both directions, re-read. Two readings each. Centres are
+  then outside-to-outside minus one hole diameter.
+- Whether there is any board material outboard of the widthwise holes.
+- **Active window rectangle** — position and size within the 62.5 x 29 outline.
+  Completely unmeasured, and the bezel opening is meaningless without it. The
+  current CAD opening is the whole-board rectangle, which is a placeholder.
+- Header/connector side and its projection.
+
+## SG90 stock
+
+Jim reports **about six SG90s** in stock, 2026-09-20. Pan and tilt need two.
+This closes the open "confirm how many servos are available" item.
+
+Usable travel per unit remains **unmeasured**, and it still sets the belt ratio.
