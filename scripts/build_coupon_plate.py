@@ -70,6 +70,54 @@ def write_3mf(path, title, items):
         z.writestr('_rels/.rels', rels)
         z.writestr('3D/3dmodel.model', NL.join(md))
 
+
+# ---- bed-plane entrance relief ---------------------------------------------
+# Every hole and post on these coupons starts on the build plate, and the first
+# layer squashes out. On a fit coupon that is not cosmetic: a pinched entrance
+# makes a screw refuse a gauge hole, or a bearing refuse a seat, and the coupon
+# then reports the wrong answer to the exact question it exists to ask.
+#
+# 0.5 at 45 degrees, up from the 0.35 used on the upper deck and mast base
+# (`hole_entry_chamfer`) - Jim asked for slightly more here.
+BED_RELIEF = 0.5
+
+
+def bed_chamfer(shape, size=BED_RELIEF):
+    """Chamfer every full-circle edge lying in the bed plane."""
+    z0 = shape.BoundBox.ZMin
+    edges = []
+    for e in shape.Edges:
+        if len(e.Vertexes) != 1:                 # a full circle closes on one vertex
+            continue
+        try:
+            if e.Curve.TypeId != 'Part::GeomCircle':
+                continue
+        except Exception:
+            continue
+        bb = e.BoundBox
+        if abs(bb.ZMin - z0) > 1e-6 or abs(bb.ZMax - z0) > 1e-6:
+            continue
+        edges.append(e)
+    if not edges:
+        return shape, 0
+    try:
+        out = shape.makeChamfer(size, edges)
+        if out.isValid() and len(out.Solids) == 1:
+            return out, len(edges)
+    except Exception:
+        pass
+    # fall back to one at a time so a single awkward edge cannot lose the rest
+    out, n = shape, 0
+    for e in edges:
+        try:
+            cand = out.makeChamfer(size, [e])
+            if cand.isValid() and len(cand.Solids) == 1:
+                out, n = cand, n + 1
+        except Exception:
+            pass
+    return out, n
+
+
 pieces = []
 
 # ---- 1. belt mesh, three groove widths ------------------------------------
@@ -140,14 +188,50 @@ pieces.append(('ScreenMountGauge_26.0x58.25', g))
 
 EXT = [('CouponC_SelfTapPilots',
         ROOT / 'cad/print-ready/Gladiator_CouponC_SelfTapPilots_flat.stl'),
-       ('GH44_Blank_Carrier',
-        ROOT / 'cad/head/v01/fit-prototypes/GH44_Blank_Carrier.stl'),
-       ('GH44_Receiver_Fit',
-        ROOT / 'cad/head/v01/fit-prototypes/GH44_Receiver_Fit_Coupon.stl')]
+       ]
+
+# these two have BREP sources, so they can be relieved like the rest rather than
+# meshed straight from a pre-made STL
+BREP = [('GH44_Blank_Carrier',
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Blank_Carrier.brep'),
+        ('GH44_Receiver_Fit',
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Receiver_Fit_Coupon.brep')]
+for _n, _f in BREP:
+    if not _f.exists():
+        p('  MISSING %s' % _f)
+        continue
+    _sh = Part.Shape()
+    _sh.read(str(_f))
+    # the STLs these replace were already laid flat; the BREPs are in their
+    # native orientation, standing on edge. Lay the thinnest axis into Z, or the
+    # carrier prints as a 44 mm tower on a 4.4 mm edge and nothing reaches the bed.
+    _b = _sh.BoundBox
+    _d = [_b.XLength, _b.YLength, _b.ZLength]
+    _thin = _d.index(min(_d))
+    if _thin == 0:
+        _sh.rotate(A.Vector(0, 0, 0), A.Vector(0, 1, 0), 90)
+    elif _thin == 1:
+        _sh.rotate(A.Vector(0, 0, 0), A.Vector(1, 0, 0), 90)
+    _b = _sh.BoundBox
+    _sh.translate(A.Vector(-_b.XMin, -_b.YMin, -_b.ZMin))
+    _b = _sh.BoundBox
+    assert _b.ZLength <= min(_b.XLength, _b.YLength) + 1e-6, \
+        '%s did not lay flat: %.1f x %.1f x %.1f' % (_n, _b.XLength, _b.YLength, _b.ZLength)
+    if _sh.isValid() and len(_sh.Solids) == 1:
+        p('  %-30s laid flat -> %.1f x %.1f x %.1f'
+          % (_n, _b.XLength, _b.YLength, _b.ZLength))
+        pieces.append((_n, _sh))
+    else:
+        p('  %s: BREP is not a single valid solid, skipping' % _n)
 
 items = []
+p('')
+p('BED-PLANE ENTRANCE RELIEF (%.2f at 45 deg)' % BED_RELIEF)
 for name, sh in pieces:
     assert sh.isValid() and len(sh.Solids) == 1, name
+    sh, nch = bed_chamfer(sh)
+    p('  %-30s %d edge(s) relieved' % (name, nch))
+    assert sh.isValid() and len(sh.Solids) == 1, name + ' after chamfer'
     m = MeshPart.meshFromShape(Shape=sh, LinearDeflection=LIN,
                                AngularDeflection=ANG, Relative=False)
     b = m.BoundBox

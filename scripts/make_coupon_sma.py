@@ -59,9 +59,16 @@ print('   current bore      %.2f  <- the untested extrapolation' % NOMINAL)
 
 DIAS = [6.5, 6.75, 7.0]
 PITCH = CBORE + 3.5          # keep 3.5 between counterbore walls
-END = 6.0
+# END must clear the counterbore RADIUS, not its edge. At 6.0 the first
+# counterbore left only 6.0 - 5.5 = 0.5 mm of wall at the end of the part - about
+# one perimeter, and far too little to chamfer into. Caught when the 0.5 bed
+# relief produced an invalid solid.
+END = CBORE / 2.0 + 2.5
 LEN = END * 2 + PITCH * (len(DIAS) - 1)
 WID = CBORE + 5.0
+
+assert END - CBORE / 2.0 >= 2.0, \
+    'only %.2f of wall at the end of the part - the relief will break through' % (END - CBORE / 2.0)
 
 V = App.Vector
 
@@ -121,8 +128,59 @@ for i, d in enumerate(DIAS):
     if abs(t - WEB) > 0.05:
         ok = False
 
+print('   checks passed: %s' % ok)
 if not ok:
     raise SystemExit('coupon failed its own checks - nothing written')
+
+# ---- bed-plane entrance relief ---------------------------------------------
+# This prints counterbore-side down, so the 11 counterbore mouths are the first
+# layer. A pinched mouth stops the connector's shoulder seating and the coupon
+# then reports a fit problem that is really elephant's foot. 0.5 at 45 deg, to
+# match the coupon plate.
+import traceback
+BED_RELIEF = 0.5
+print('   starting bed relief')
+z0 = shape.BoundBox.ZMin
+edges = []
+for e in shape.Edges:
+    if len(e.Vertexes) != 1:
+        continue
+    try:
+        if e.Curve.TypeId != 'Part::GeomCircle':
+            continue
+    except Exception:
+        continue
+    bb = e.BoundBox
+    if abs(bb.ZMin - z0) > 1e-6 or abs(bb.ZMax - z0) > 1e-6:
+        continue
+    edges.append(e)
+print('   found %d candidate bed edges' % len(edges))
+if edges:
+    try:
+        cand = shape.makeChamfer(BED_RELIEF, edges)
+    except Exception:
+        print('   makeChamfer threw:')
+        traceback.print_exc()
+        sys.stdout.flush()
+        raise
+    print('   chamfer built: valid=%s solids=%d' % (cand.isValid(), len(cand.Solids)))
+    if not (cand.isValid() and len(cand.Solids) == 1):
+        raise SystemExit('bed relief broke the coupon')
+    shape = cand
+print()
+print('   bed-plane relief: %d counterbore mouth(s) chamfered at %.2f' % (len(edges), BED_RELIEF))
+if len(edges) != len(DIAS):
+    raise SystemExit('expected one bed edge per bore, found %d' % len(edges))
+
+# the through-bores must still measure full size - they start at the counterbore
+# floor, well clear of the relief
+post = {}
+for f in shape.Faces:
+    if f.Surface.TypeId == 'Part::GeomCylinder':
+        post[round(f.Surface.Radius * 2, 2)] = 1
+print('   bores after relief: %s' % sorted(k for k in post if k < 9))
+if sorted(k for k in post if k < 9) != sorted(DIAS):
+    raise SystemExit('a through-bore was damaged by the relief')
 
 cdoc = App.newDocument('CouponD')
 o = cdoc.addObject('Part::Feature', 'CouponD_SmaBore')

@@ -294,8 +294,8 @@ diameter or a reading is off; and Jim describes them as "exactly M2 sized", whic
 about half a millimetre of the readings in every case, so the likeliest story is a 2.0 hole with
 ±0.25-0.5 of measurement noise.
 
-**That is an inference and is not recorded as settled.** One direct caliper reading across a single
-hole closes it. It does not block the bracket either way: c-t-c positions the standoffs and is
+**Confirmed by Jim 2026-09-20: the holes are 2.0.** The 1.5 / 1.75 disagreement was measurement
+noise, as the prediction suggested. Pattern and diameter are both settled. It does not block the bracket either way: c-t-c positions the standoffs and is
 robust, while the diameter only has to accept an M2 screw, which Jim has confirmed it does.
 
 Still open: which edge the wires land on and which way they exit.
