@@ -15,14 +15,40 @@ dimensional source for anything.
 | Height, S3 mounted | 17.5 | |
 | Height, tallest dupont pins | 28.3 | Governs upper-deck headroom |
 | Mounting holes | 4.6 dia | One in each corner |
-| Hole span across width, outer edge to outer edge | 35.5 | → 30.9 center-to-center |
-| Hole span along length, outer edge to outer edge | 59.6 | → 55.0 center-to-center |
-| **Hole pattern, center-to-center** | **30.9 x 55.0** | Confirmed 2026-09-15 |
+| Hole span across width, raw caliper reading | 35.5 | Convention never pinned down |
+| Hole span along length, raw caliper reading | 59.6 | Convention never pinned down |
+| **Hole pattern, center-to-center** | **UNKNOWN** | Re-measure required, see below |
 
-Spans were measured across the outer edges of the holes, so center-to-center = span − hole
-diameter: 35.5 − 4.6 = 30.9 across the width, 59.6 − 4.6 = 55.0 along the length. That places
-hole centers 5.55 in from each long edge and 9.5 in from each end, leaving 3.25 and 7.2 of
-material outboard respectively. Self-consistent with the 42 x 74 outline.
+> **The 30.9 x 55.0 pattern recorded here on 2026-09-15 is wrong.** It was an *inference*, not a
+> measurement: the raw readings 35.5 / 59.6 were reported as taken "from nearest edges of the
+> circles," the literal reading was rejected as geometrically impossible across the width, and
+> outer-edge-to-outer-edge was substituted instead. That inference was then marked "Confirmed"
+> without any confirming measurement. It was cut into the upper deck, and the deck was printed on
+> 2026-09-18 with bosses at 30.9 x 55.0. **The real board does not fit them** (reported
+> 2026-09-19). Do not restore these numbers.
+
+The three readings the raw 35.5 / 59.6 could represent, and what each implies:
+
+| Caliper convention | c-t-c across width | c-t-c along length | Edge margin at hole outer edge |
+| --- | ---: | ---: | --- |
+| Outer edge to outer edge (what was built) | 30.9 | 55.0 | 3.25 width / 7.2 length |
+| Center to center (raw numbers taken as-is) | 35.5 | 59.6 | 0.95 width / 4.9 length |
+| Inner edge to inner edge (as originally described) | 40.1 | 64.2 | -1.35 width — impossible |
+
+Since the built pattern is the smallest of the three, the printed bosses are almost certainly
+**too close together in both directions** — by 4.6 total (2.3 per side) if the true reading is
+center-to-center, or 9.2 total if the width figure is right but the 42 board width is wrong.
+
+**How to re-measure so this cannot happen again.** For one pair of holes, take *two* readings and
+report both:
+
+1. Caliper jaws spread **inside** the two holes, touching the facing inner edges — call it `I`.
+2. Caliper jaws **outside** the two holes, touching the far outer edges — call it `O`.
+
+Then center-to-center is `(I + O) / 2` and the hole diameter is `(O - I) / 2`, with no convention
+to guess at, and the derived hole diameter cross-checks against the direct 4.6 reading. Do this
+once across the width and once along the length. Also confirm whether the four holes are centered
+on the board outline or shifted toward one end — the model currently assumes centered.
 
 ## Breadboard with C6 + BNO (logic, upper deck)
 
@@ -170,6 +196,9 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
   the lower deck. That is the current leading constraint on overall height.
 
 ## Still to measure
+
+- **S3 + expander hole pattern, center-to-center** — the built 30.9 x 55.0 is disproved by
+  physical fit; see the two-reading protocol in the S3 section above.
 
 - Motor driver: total height standing on its fins, and PCB underside to fin tips (see note above)
 - C6 antenna connector position and pigtail length

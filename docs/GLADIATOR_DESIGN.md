@@ -29,7 +29,7 @@ A forward-facing sensor or the vehicle's front looks toward **negative Y**.
 | Side rails (x2) | Built — faceted arch, raceway, retention tabs, M3 inserts |
 | Upper deck | Built — tapered width (85 front / 79 rear), rail fixings, mast collar |
 | Mast base + tube | Built — see Mast section for the wire-window bug fix |
-| S3 + breadboard | Laid out on the upper deck, reference envelopes modeled |
+| S3 + breadboard | Laid out on the upper deck, but the S3 hole pattern is wrong in the printed deck — see Known Issues |
 | Driver mounts (x2) | Built — open frame, PCB-flush mounting, gusseted joint |
 | Driver board reference envelope | Built (2026-09-17) — closes a real gap, see Known Issues |
 | Power board shield | Built, but its *position* is still an open wiring question |
@@ -197,6 +197,28 @@ outside it.
 
 ## Known issues, fixed and open
 
+**Open, and it has already cost a print (2026-09-19): the S3 hole pattern in the printed upper
+deck is wrong.** The four `S3BossSketch` bosses sit at 30.9 x 55.0 center-to-center, centered on
+the board envelope at (20.5, 52) — deck coords (5.05/35.95, 24.5/79.5). The printed part was
+verified to match the model exactly (boss tops clustered from
+`Gladiator_P4_UpperDeck_print-flat-bosses-up.stl`: 8.05/38.95 x 24.5/79.5 in STL coords, which is
+the model shifted by the export's +3 in X). So this is not an export bug or a print bug — the
+**input measurement was wrong**, and the model faithfully built the wrong number.
+
+The failure mode is worth naming, because it is the same one `measurements/` was supposed to
+prevent: an *ambiguous* caliper reading (35.5 / 59.6, reported "from nearest edges of the
+circles") was resolved by **inference** rather than by going back to the board, the inference was
+written into the table as "Confirmed 2026-09-15", and from then on nothing downstream could tell
+it apart from a real measurement. See `measurements/components.md` for the three candidate
+readings and the two-reading (inside span + outside span) protocol that makes the convention
+self-evident.
+
+**Rule this earns:** a derived or inferred dimension never gets marked confirmed. It stays flagged
+until a measurement confirms it, and no irreversible step — certainly not a print — consumes it
+while it is flagged.
+
+Recovery options for the deck as printed are in the Build state section.
+
 **Fixed this session:**
 - Mast wire window cut the wrong way (see Mast section).
 - Antenna mount was a blind hole with no clamping mechanism (see Antenna section).
@@ -237,6 +259,25 @@ attach must either work with them as printed, or wait for a deliberate v2 reprin
 
 Printed so far: side rails x2, upper deck. Everything else is still only geometry.
 
+### The printed deck's S3 bosses do not fit the board (2026-09-19)
+
+The bosses are at 30.9 x 55.0; the board's real pattern is not that (see Known Issues). Because
+the true pattern is almost certainly *larger* in both directions, re-drilling the existing Ø9
+bosses is unlikely to work: moving a Ø4.6 bore 2.3 in X and 2.3 in Y is a 3.25 diagonal shift on a
+4.5-radius boss, which puts the bore edge 5.55 out — it breaks out of the boss. Options, in the
+order they should be considered:
+
+1. **Adapter plate** — a thin printed plate that bolts down to the four existing bosses at
+   30.9 x 55.0 (M3 into the heat-set inserts already designed for them) and carries its own four
+   standoffs at the board's true pattern. Small, fast, and it obeys the rule about not modifying
+   printed parts. Costs a few mm of stack height, which the deck has.
+2. **Two-screw mount plus a bonded or clamped third point**, if the true pattern happens to share
+   one usable axis with the printed one.
+3. **v2 deck reprint** — only worth it bundled with the power-board mount problem the v2 note
+   below already describes, not on its own.
+
+Do not pick one until the re-measure lands: the offset magnitude decides between them.
+
 ### Consequence: the power distribution board needs a different answer
 
 The board (60 x 40 x 16) does not fit anywhere on the lower deck, and the standing candidate was to
@@ -265,17 +306,20 @@ orientation together, not bolt the mount on and accept the scarring.
 
 ## Open items
 
-1. **Power board mounting** — the board has no mount at all, and the upper deck it was going to
+1. **S3 mounting pattern** — blocking. The printed deck's bosses are wrong; the board's true
+   center-to-center pattern needs the two-reading re-measure in `measurements/components.md`
+   before either an adapter plate or a v2 deck can be designed.
+2. **Power board mounting** — the board has no mount at all, and the upper deck it was going to
    hang from is now printed with a bare underside. Needs a bracket that works with the printed
    parts; see the Build state section. The shield's own position also still needs the wiring plan.
-2. **Mast top height (Z 120)** — placeholder; the mast-head sightline analysis suggests a ToF
+3. **Mast top height (Z 120)** — placeholder; the mast-head sightline analysis suggests a ToF
    sensor may need more height to clear the S3 board's front/top corner in its lower FOV cone.
    Coordinate with the mast-head workstream before changing.
-3. **Driver height / mast FOV** — see the corrected finding above; real room exists if this
+4. **Driver height / mast FOV** — see the corrected finding above; real room exists if this
    becomes a priority again.
-4. **Antenna whip/pigtail exact envelope** — not yet measured against the pylon's cable exit.
-5. **INA226 placement** — deliberately not designed yet, per earlier instruction.
-6. Anything the mast-head workstream's own "Exact measurements needed" and "Next design gate"
+5. **Antenna whip/pigtail exact envelope** — not yet measured against the pylon's cable exit.
+6. **INA226 placement** — deliberately not designed yet, per earlier instruction.
+7. Anything the mast-head workstream's own "Exact measurements needed" and "Next design gate"
    sections still list (servo/sensor dimensions, harness design, interface freeze) — see below.
 
 ## Mast head (modular sensor head)
