@@ -57,52 +57,11 @@ for sub, entries in MOVES.items():
             log.append('  (absent)       %-52s %s' % (fn, why))
 
 leftover = [f for f in sorted(os.listdir(INC))
-            if os.path.isfile(os.path.join(INC, f)) and f not in KEEP and f != 'README.txt']
+            if os.path.isfile(os.path.join(INC, f)) and f not in KEEP]
 
-readme = """GLADIATOR - PRINT QUEUE
-=======================
-
-Three plates are live. Open one in Orca, check the notes, slice.
-Everything else is filed under _archive/ - nothing has been deleted.
-
-  Gladiator_PlateB_MAST-AND-FITTINGS.3mf
-      Mast base, power shield, antenna post.
-      BRIM on the mast base and the power shield - both sit on under 260 mm2.
-      Minimum layer time ON: above 25 mm only the power shield is still printing.
-      The antenna's SMA bore is the one dimension still guessed - coupon D on
-      plate F settles it, so plate F is worth running first.
-
-  Gladiator_PlateD_DRIVER-MOUNTS.3mf
-      Both driver mounts. Board interface measured and closed 2026-09-20.
-      Arms are relieved 2.0 deep for the header tails; the board bears on a pad
-      at each screw.
-      HARDWARE: M3 x 18-20, with a NUT AND WASHER behind the frame. These are
-      3.6 clearance holes, not self-tapping pilots. The space behind each hole is
-      clear, so a nut and driver both fit.
-      CAUTION: the arms sit 0.24 mm from the heatsink and this is PLA, which
-      softens near 60 C. Treat as a fit prototype, not something to drive hard.
-
-  Gladiator_PlateF_ALL-COUPONS.3mf
-      Every coupon still worth printing - 13 of them, 200 x 115 of bed.
-      Plate F = plate E, minus coupon C (obsolete once nuts were chosen), plus
-      coupon D (the SMA bore, which postdated plate E).
-
-ARCHIVE
--------
-  _archive/done/          printed, or the question is answered
-  _archive/superseded/    replaced by something newer
-  _archive/not-queued/    deliberately not printing (the mast tube - buy one)
-  _archive/single-parts/  individual STLs for every part now carried on a plate;
-                          pull one out to reprint a single part
-
-Regenerate any of this from the repo:
-  scripts/build_plates.py       plates A-D
-  scripts/build_plate_f.py      plate F
-  scripts/build_coupon_plate.py plate E (the head workstream's coupon geometry)
-"""
-
-with open(os.path.join(INC, 'README.txt'), 'w') as f:
-    f.write(readme)
+# No README is written here. Jim deleted the one this script used to drop in the
+# incoming folder and asked for it not to come back - the plate notes live in
+# docs/print-plan.md, and a second copy in the print folder just goes stale.
 
 print('moved:')
 for line in log:
