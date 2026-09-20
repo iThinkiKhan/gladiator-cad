@@ -1,81 +1,85 @@
-"""Tidy the printer incoming folder: three live plates at the top, everything else
-filed under _archive/. Nothing is deleted - every move is reversible.
+"""Set the printer queue: exactly the live plates at the top, everything else filed.
+
+Why this exists in this form. `export_prints.py` and `build_plates.py` used to write
+straight into the printer's incoming folder, so every re-export dumped all nine part
+STLs and all five plates back on top of a curated queue - three times in one session.
+Those scripts now write only to `cad/print-ready/`, and the queue is set here,
+deliberately, by naming what is live.
+
+Nothing is deleted. Everything not live is moved under `_archive/`.
 """
 import os
 import shutil
+import sys
 
+REPO = '/home/buralien/projects/gladiator-cad'
+SRC = os.path.join(REPO, 'cad/print-ready')
 INC = '/home/buralien/Desktop/3D-Printer-Incoming'
 
-KEEP = {
-    'Gladiator_PlateB_MAST-AND-FITTINGS.3mf',
-    'Gladiator_PlateD_DRIVER-MOUNTS.3mf',
-    'Gladiator_PlateF_ALL-COUPONS.3mf',
+# What is actually queued right now, and why. Edit this list; it is the whole point.
+LIVE = [
+    ('Gladiator_PlateG_MASTBASE-AND-DRIVERS.3mf',
+     'mast base + both driver mounts - everything with no pending result'),
+    ('Gladiator_REPRINT_GH44_Receiver_recess-UP.stl',
+     'replaces the one piece that came off plate F upside down'),
+]
+
+BUCKETS = {
+    'done': ['PlateA', 'PlateC', 'PlateF', 'CouponA', 'P1_Coupon'],
+    'superseded': ['PlateD', 'PlateE', 'CouponC', 'BeltMesh_60deg'],
+    'blocked': ['PlateB'],
 }
 
-MOVES = {
-    'done': [
-        ('Gladiator_PlateA_BODY_rails-and-upper-deck.3mf', 'printed 2026-09-18'),
-        ('Gladiator_P1_CouponA_InsertBores_flat.stl', 'insert bore answered: 4.6'),
-        ('Gladiator_CouponC_SelfTapPilots_flat.stl', 'obsolete - nuts and washers chosen instead'),
-    ],
-    'superseded': [
-        ('Gladiator_PlateE_ALL-COUPONS.3mf', 'replaced by plate F'),
-        ('Gladiator_PlateD_DRIVER-MOUNTS_BLOCKED.3mf', 'old name, no longer blocked'),
-        ('Gladiator_HeadCoupon_BeltMesh_60deg.stl', 'replaced by the 3-up belt coupon on plate F'),
-    ],
-    'not-queued': [
-        ('Gladiator_PlateC_MAST-TUBE.3mf', 'buy a 20/12 aluminium or carbon tube instead'),
-    ],
-    'single-parts': [
-        ('GH44_Blank_Carrier.stl', 'on plate F'),
-        ('GH44_Receiver_Fit_Coupon.stl', 'on plate F'),
-        ('Gladiator_HeadCoupon_BeltMesh_3up.stl', 'on plate F'),
-        ('Gladiator_CouponD_SmaBore_counterbore-DOWN.stl', 'on plate F'),
-        ('Gladiator_P2_AntennaPost_print-on-front-face.stl', 'on plate B'),
-        ('Gladiator_P2_MastBase_print-spigot-UP.stl', 'on plate B'),
-        ('Gladiator_P2_PowerShield_print-on-side.stl', 'on plate B'),
-        ('Gladiator_P3_SideRail_L_print-on-outboard-face.stl', 'on plate A, printed'),
-        ('Gladiator_P3_SideRail_R_print-on-outboard-face.stl', 'on plate A, printed'),
-        ('Gladiator_P4_UpperDeck_print-flat-bosses-up.stl', 'on plate A, printed'),
-        ('Gladiator_P5_MastTube_print-vertical.stl', 'on plate C'),
-        ('Gladiator_P6_DriverMount_L_print-inverted.stl', 'on plate D'),
-        ('Gladiator_P6_DriverMount_R_print-inverted.stl', 'on plate D'),
-    ],
-}
 
-log = []
-for sub, entries in MOVES.items():
-    d = os.path.join(INC, '_archive', sub)
-    if not os.path.isdir(d):
-        os.makedirs(d)
-    for fn, why in entries:
-        src = os.path.join(INC, fn)
-        if os.path.exists(src):
-            shutil.move(src, os.path.join(d, fn))
-            log.append('  _archive/%-14s %-52s %s' % (sub + '/', fn, why))
+def bucket_for(fn):
+    for b, keys in BUCKETS.items():
+        for k in keys:
+            if k in fn:
+                return b
+    return 'single-parts'
+
+
+def main():
+    live_names = set(n for n, _ in LIVE)
+    for b in list(BUCKETS) + ['single-parts']:
+        d = os.path.join(INC, '_archive', b)
+        if not os.path.isdir(d):
+            os.makedirs(d)
+
+    # 1. file away anything at the top level that is not live
+    moved = 0
+    for fn in sorted(os.listdir(INC)):
+        p = os.path.join(INC, fn)
+        if not os.path.isfile(p) or fn in live_names:
+            continue
+        dest = os.path.join(INC, '_archive', bucket_for(fn), fn)
+        shutil.move(p, dest)
+        print('  filed    %-52s -> _archive/%s' % (fn, bucket_for(fn)))
+        moved += 1
+
+    # 2. make sure every live file is present and current
+    for fn, why in LIVE:
+        src = os.path.join(SRC, fn)
+        dst = os.path.join(INC, fn)
+        if not os.path.exists(src):
+            print('  *** MISSING from cad/print-ready: %s' % fn)
+            continue
+        if not os.path.exists(dst) or os.path.getmtime(src) > os.path.getmtime(dst):
+            shutil.copy2(src, dst)
+            print('  queued   %-52s %s' % (fn, why))
         else:
-            log.append('  (absent)       %-52s %s' % (fn, why))
+            print('  current  %-52s %s' % (fn, why))
 
-leftover = [f for f in sorted(os.listdir(INC))
-            if os.path.isfile(os.path.join(INC, f)) and f not in KEEP]
-
-# No README is written here. Jim deleted the one this script used to drop in the
-# incoming folder and asked for it not to come back - the plate notes live in
-# docs/print-plan.md, and a second copy in the print folder just goes stale.
-
-print('moved:')
-for line in log:
-    print(line)
-print()
-print('left at the top level:')
-for f in sorted(os.listdir(INC)):
-    p = os.path.join(INC, f)
-    if os.path.isfile(p):
-        print('  %-48s %8.0f kB' % (f, os.path.getsize(p) / 1024.0))
-    else:
-        print('  %s/' % f)
-if leftover:
     print()
-    print('NOT filed (unrecognised - left alone):')
-    for f in leftover:
-        print('  %s' % f)
+    print('queue:')
+    for fn in sorted(os.listdir(INC)):
+        p = os.path.join(INC, fn)
+        if os.path.isfile(p):
+            print('   %-52s %7.0f kB' % (fn, os.path.getsize(p) / 1024.0))
+        else:
+            print('   %s/' % fn)
+    print()
+    print('%d file(s) filed away' % moved)
+
+
+main()

@@ -29,7 +29,10 @@ def print(*a, **k):
 
 REPO = '/home/buralien/projects/gladiator-cad'
 MASTER = REPO + '/cad/master/Gladiator_Master.FCStd'
-OUT = '/home/buralien/Desktop/3D-Printer-Incoming'
+# Writes to the repo only. The printer queue is set deliberately by
+# scripts/tidy_incoming.py - re-exports used to dump every part and plate
+# back on top of a curated queue.
+OUT = REPO + '/cad/print-ready'
 MIRROR = REPO + '/cad/print-ready'
 
 LIN, ANG = 0.01, 0.05

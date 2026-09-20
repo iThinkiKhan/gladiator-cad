@@ -22,7 +22,10 @@ import FreeCAD as App
 import MeshPart
 
 REPO = '/home/buralien/projects/gladiator-cad'
-OUT = '/home/buralien/Desktop/3D-Printer-Incoming'
+# Writes to the repo only. The printer queue is set deliberately by
+# scripts/tidy_incoming.py - re-exports used to dump every part and plate
+# back on top of a curated queue.
+OUT = REPO + '/cad/print-ready'
 MASTER = REPO + '/cad/master/Gladiator_Master.FCStd'
 COUPON_A = REPO + '/cad/coupons/Gladiator_Coupon_A_InsertBores.FCStd'
 MIRROR = REPO + '/cad/print-ready'
