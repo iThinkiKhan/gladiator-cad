@@ -57,6 +57,16 @@ PLATES = [
      'Plate C - mast tube, on its own (see the buy-a-tube note)',
      [('MastTube', V(0, 0, -1), 'mast tube, vertical, needs a brim')]),
 
+    ('Gladiator_PlateG_MASTBASE-AND-DRIVERS.3mf',
+     'Plate G - everything currently unblocked: mast base and both driver mounts',
+     [('DriverMountLeft', V(0, 0, 1),
+       'driver mount L, inverted. Arms relieved 2.0 for the header tails; 3.6 clearance '
+       'holes - needs M3 x 18-20 with nuts and washers behind the frame'),
+      ('DriverMountRight', V(0, 0, 1), 'driver mount R, inverted, same hardware'),
+      ('MastBase', V(0, 0, 1),
+       'mast base, spigot UP. Spigot is 14.0, confirmed against the real deck hole by the '
+       'peg test. Thin ring on the bed - USE A BRIM.')]),
+
     ('Gladiator_PlateD_DRIVER-MOUNTS.3mf',
      'Plate D - driver mounts. Board interface measured and closed 2026-09-20',
      [('DriverMountLeft', V(0, 0, 1),
