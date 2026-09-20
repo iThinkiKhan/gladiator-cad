@@ -1,98 +1,81 @@
 # Upper deck v2 — design spec
 
-Started 2026-09-20. **Not yet cut.** Two things block the geometry; the power board mount is
-specified here and can be cut as soon as one of them clears.
+Started 2026-09-20, **revised the same day**. Not yet cut.
 
-## Why v2 exists
+## Revision: the power board does NOT hang from the deck
 
-1. **The S3 boss pattern on the printed deck is wrong** and cannot be rescued by re-drilling —
-   see `measurements/components.md`. That alone forces a reprint.
-2. The power distribution board has never had a mount.
+The first version of this spec had the board hanging under the deck on four M2 through-holes.
+**That was wrong.** It was built on the assumption that the board could face either way, and it
+cannot: Jim, 2026-09-20 —
 
-Since the deck is being reprinted anyway, the power board mount is free to fold in. That is the
-whole argument for doing it here rather than bolting legs to the aluminium deck.
+> The main thing we want is lots of space at the TOP of the power board, because that is where all
+> the connections plug in. It should be comfortable to move/remove plugs, JSTs, and duponts.
+> Everything plugs down into it vertically.
 
-## The envelope, measured on the solids
+A board hung under the deck has its top face 2-3 mm from the deck underside. Nothing can plug into
+it, either way round: connectors up means they hit the deck, connectors down means they point into
+the battery. The mount has to sit the board on something with open air above it.
+
+**So deck v2 goes back to being only the S3 fix**, and the power board keeps a leg mount. That is
+the option Jim raised as the alternative, and it is the right one.
+
+## What the leg mount gives, measured on the solids
+
+`PowerShield` already implements it and is clear of everything — zero clash against the battery,
+both rails, the mast base and tube, and both decks. Probing straight up through the board footprint
+(X 20..60, Y 29..89) finds **nothing overhead but the upper deck at Z 48**.
 
 | | |
 | --- | ---: |
-| Deck underside | Z 48.00 |
 | Battery top | Z 21.50 |
-| **Headroom** | **26.50** |
-| Clear span across X between the rails (at Z 34.8) | **9.75 .. 69.50 = 59.75** |
-| Battery footprint | X 0..79, Y 21.0..96.5 |
+| Upper deck underside | Z 48.00 |
+| **Total budget** | **26.50** |
+| Board top if it sits on the shield lip at Z 30 | Z 31.60 |
+| **Clear air above the board, installed** | **~20.4** |
 
-**The board can only go one way round.** At 60 x 40 it needs 60 along Y and 40 across X. Turning
-it to put 60 across X fails by a quarter of a millimetre — the clear span is 59.75. So it spans the
-battery lengthwise, which is exactly why it has to lift away with the deck.
+And with the deck off — six M3 screws — access from above is unlimited, which is what makes
+plugging and unplugging comfortable.
 
-## Why not legs to the aluminium deck
+## The budget is tight, and the current shield does not fit the board
 
-`PowerShield` already implements that, and it is geometrically sound — checked against the battery,
-both rails, the mast base and tube, and both decks: **zero clash with anything**.
+The stack from the battery up: solder side **6.0**, PCB **1.6**, then whatever the connectors stand
+once plugged in. Against 26.50 of budget that leaves about **4.9 mm** to spend on clearance under
+the board, clearance over the connectors, and the shield floor itself — assuming connectors of
+about 14, which is a Dupont-sized guess and **not measured**.
 
-The objection is not fit, it is the battery. The cells come out vertically, and the shield sits
-directly over them at Z 6..30 spanning Y 39..112. Anything fixed above the battery has to come off
-before a cell can be swapped, which is the constraint `measurements/components.md` recorded in the
-first place. Hanging the board from the deck keeps that access.
+A workable arrangement, if 14 holds:
 
-## The mount: through-holes only, no underside features
-
-**The deck gets four M2 clearance holes and nothing else.** The board hangs below on spacers; the
-deck itself stays single-sided.
-
-That matters more than it sounds. The deck prints with **zero support** precisely because every
-feature is on the top face, and the face on the bed is the one that mates with the rail tops — the
-flattest surface a printer makes. Putting standoffs on the underside would cost both: support
-scarring on the mating face, and roughly 10000 mm2 of support. Through-holes cost neither.
-
-It also makes the spacer height tunable without touching the deck, which matters because the stack
-is tight (below), and it allows bought M2 standoffs instead of printed ones.
-
-### Hole positions
-
-Board centred across the clear span and along the battery:
-
-| | |
+| | Z |
 | --- | ---: |
-| Board occupies | X 19.63 .. 59.63, Y 28.75 .. 88.75 |
-| Hole pattern (c-t-c, confirmed) | 34.5 across X, 54.25 along Y |
-| **Hole centres** | **X 22.38 and 56.88, Y 31.63 and 85.88** |
-| Hole diameter | 2.6, the calibrated M2 clearance |
+| Battery top | 21.50 |
+| Shield floor (thinned to 1.0) | 22.50 .. 23.50 |
+| Solder blobs, 6 proud | 24.00 .. 30.00 |
+| PCB | 30.00 .. 31.60 |
+| Connectors, ~14 | 31.60 .. 45.60 |
+| Upper deck underside | 48.00 |
 
-Clear of the six rail-fixing holes at X 12 / 67, and clear of the mast collar.
+**`PowerShield` as drawn does not accommodate this.** Its floor sits at Z 24..26 and its lip at
+Z 26..30, so a board resting on the lip has only **4.0 mm** of space beneath it for **6.0 mm** of
+solder. The floor has to drop and thin, and at 1.0 thick starting at Z 22.5 it clears the battery
+by only 1.0. Every gap in that table is between 0.5 and 2.4 — there is no comfortable version of
+this.
 
-## Two problems that need deciding
+## The one number that decides it
 
-### 1. The stack is tight
+**How tall is the tallest connector, measured from the PCB top surface, plugged in?**
 
-Board envelope is leads + PCB + components. Against 26.50 of headroom:
+At 14 the arrangement above works with about 2.4 to spare. At 17 it does not fit at all and
+something else has to give — a thinner shield floor, dropping the board closer to the battery, or
+accepting that the upper deck has to come off before anything can be unplugged.
 
-| If "~16 tallest point" means | Stack | Slack |
-| --- | ---: | ---: |
-| 16 above the PCB (so 6 + 1.6 + 16) | 23.60 | **2.90** |
-| 16 including the PCB (so 6 + 16) | 22.00 | **4.50** |
+Also still open: **which edge the wires exit**, which decides the board's rotation and whether the
+shield's open sides face the right way.
 
-That slack has to cover clearance at the deck, clearance to the battery, **and** the growth room
-Jim asked for on the 6 mm lead protrusion. At the pessimistic reading there is not much left.
+## Deck v2 itself
 
-**Needed:** is the ~16 measured from the PCB surface or from its underside? One caliper reading.
+With the power board mount removed from its scope, v2 is back to one job: **fix the S3 boss
+pattern**. That remains blocked on the contradiction in `measurements/components.md` — the hole
+diameter measured directly (4.6) disagrees with the diameter derived from the two-reading spans
+(6.25), and the boss positions depend entirely on which is right.
 
-### 2. The screws land under the top-side boards
-
-The S3 occupies X -0.5..41.5 and the breadboard X 44..79.5, so *any* hole in the X 22..57 band sits
-under one of them. There is no gap between those two boards to exploit — it is 2.5 wide.
-
-M2 heads are about 3.5 across and 1.5 tall, and the S3 stands on 6 mm bosses, so they physically
-fit underneath. But it fixes the assembly order: **power board and its four screws go in before the
-S3 and the breadboard.**
-
-Alternative if that is unacceptable: a printed spacer that snaps into the deck hole from below, so
-no top-side access is ever needed. More design, no assembly-order constraint.
-
-## Still blocking the cut
-
-- **S3 hole diameter and board outline** — the contradiction in `components.md`. Without it the
-  bosses cannot be placed, and that is v2's main purpose.
-- **Which edge the power board's wires exit** — decides whether the board needs rotating 180 in Y,
-  and whether the spacers need to clear a connector.
+Two measurements clear it: the S3 hole diameter on its own, and the bare board outline.
