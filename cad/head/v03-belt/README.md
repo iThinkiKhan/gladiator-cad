@@ -92,18 +92,34 @@ ratio changes both.
 
 ## Print this, and only this, for now
 
-`stl/Gladiator_HeadCoupon_BeltMesh_60deg.stl` — a 60 deg arc of the driven ring,
-8.4 x 18.1 x 6 mm, 0.62 cm3. Flat bottom on the bed, teeth outward, axis vertical,
-no support, a few minutes.
+`stl/Gladiator_HeadCoupon_BeltMesh_3up.stl` — three 60 deg arcs of the driven
+ring side by side, 48.4 x 18.1 x 6 mm, 1.79 cm3 total, a few minutes.
+**Use a brim**: each piece has only ~100 mm2 of bed contact, less than the mast
+base that already needs one.
 
-**One question: do the printed 2GT grooves mesh with a real 2GT belt?** Press a
-length of belt into the arc and check it seats fully, does not ride high on the
-tooth tips, and does not rattle. The groove profile in the generator is an
-approximation (groove radius 0.65, depth 0.75, land about 0.69 mm) and this coupon
-is what decides whether it is good enough.
+**One question: which groove width meshes with a real 2GT belt?** Depth is held
+at the 2GT nominal 0.75 mm on all three, so width is the only variable. The
+scallop count on the inner face identifies each — 1 is narrowest:
 
-Do not print the pedestal until it passes — the pedestal is 20 cm3 and its teeth
-come from the same code.
+| Scallops | Groove radius | Width at OD | Tooth land at OD |
+| ---: | ---: | ---: | ---: |
+| 1 | 0.60 | 1.162 | 0.812 |
+| 2 | 0.65 | 1.285 | 0.689 |
+| 3 | 0.70 | 1.396 | 0.577 |
+
+Press a length of belt into each arc. You want the one where the belt seats
+fully to the root, does not ride up on the tooth tips, and does not rock
+sideways. Note that the tooth land is the thinnest printed feature here — at
+0.58 to 0.81 mm it is one to two extrusion widths on a 0.4 mm nozzle, so if a
+variant fails, check whether the teeth came out mushy (a slicer resolution
+problem) or crisp but the wrong size (a profile problem). Those need different
+fixes.
+
+The single-arc `Gladiator_HeadCoupon_BeltMesh_60deg.stl` is the 0.65 variant
+alone, kept for reprinting one.
+
+Do not print the pedestal until one of these passes — the pedestal is 20 cm3
+and its teeth come from the same code.
 
 The other STLs are exported **in their as-modelled orientation, which is not a
 validated print orientation.** They exist so the geometry can be inspected and
