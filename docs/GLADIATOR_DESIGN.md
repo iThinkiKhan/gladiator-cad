@@ -135,9 +135,25 @@ S3 (Y 90-139.5).
 
 - **Open frame, not a backing plate**: after an early solid-plate version blocked airflow around
   the heatsink, the mount was rebuilt so the PCB bolts flat to a frame lying in its own plane —
-  the heatsink passes clean through the frame's open middle into open air, using the true
-  square 39.5x39.5mm hole pattern and the 8.75mm of bare board the 32mm heatsink leaves at each
-  end.
+  the heatsink passes clean through the frame's open middle into open air, on a 39.5 x 39.5 hole
+  pattern.
+
+  **Corrected 2026-09-19.** This paragraph used to say the arms sat on "the 8.75mm of bare board
+  the 32mm heatsink leaves at each end", i.e. at the two ends of the 49.5 axis. **The geometry does
+  not do that**, and the error sent a measurement request after the wrong dimension. Probing the
+  built solid at its board contact face, in board coordinates:
+
+  | | |
+  | --- | --- |
+  | Frame touches the board | two strips at **B 0.76..9.26 and B 41.76..50.26** — along the **51** axis |
+  | Each strip | 8.5 wide, running the full length of the 49.5 axis (A -2 to 52, slightly proud at both ends) |
+  | Opening between them | **32.5 wide in B**, full length — this is what the heatsink passes through |
+
+  So the model assumes the heatsink is **32 across the 51 axis**, leaving (51 - 32) / 2 = **9.5 of
+  bare board along each long edge**, and the 8.5 arms sit in those strips. The relevant clearance
+  is **0.24 mm per side**, not a comfortable margin.
+
+  `drv_hs_len = 32` is therefore the heatsink's width across the 51 direction, despite its name.
 - **Joint reinforced twice**: first by matching the root members' thickness to the frame (they'd
   been left at half the section while the frame was thickened, silently moving the weak point
   inboard); then by enlarging the transition into a real gusset that engulfs the frame's inboard

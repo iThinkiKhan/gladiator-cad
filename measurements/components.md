@@ -94,7 +94,7 @@ it needs to sit clear of the aluminum deck to radiate.
 
 No dupont pins on these boards — the tallest features are the screw terminals.
 
-### Mounting interface — NOT MEASURED (2026-09-18)
+### Mounting interface — partly measured (updated 2026-09-19)
 
 **The driver mount's geometry depends on three numbers that appear nowhere in this file.**
 They were carried in the design document as statements of fact; tracing them found no
@@ -105,12 +105,28 @@ is not printable.
 | --- | ---: | --- |
 | Mounting hole pitch, across the board | 39.5 | **assumed.** The only mention anywhere is one design-doc sentence. |
 | Mounting hole pitch, along the board | 39.5 | **assumed**, and assumed equal to the other. The board is 49.5 x 51, so a square hole pattern is a guess, not a given. |
-| Heatsink length | 32 | **assumed.** This file records the heatsink's width (51) and its protrusion (~28) but never its length. The mount's arms sit on the (49.5 - 32) / 2 = 8.75 of bare board it supposedly leaves at each end. |
+| Heatsink extent across the **51** axis | 32 | **assumed.** Corrected 2026-09-19: this, not the dimension along 49.5, is what the mount depends on. The frame's arms sit in the (51 - 32) / 2 = **9.5** strips along the long edges, and they are 8.5 wide — **0.24 mm clearance per side.** |
 | Board mounting hole diameter | not used | needed anyway, to know what screw the pattern takes |
 
 What the mount currently cuts, so you can see what each number moves: four Ø2.7 holes at
-39.5 x 39.5 (`DrvHoleSketch`), and frame arms occupying the first and last 8.5 of the board's
-49.5 length (`DrvFrameSketch`), straddling an assumed 32-long heatsink.
+39.5 x 39.5 (`DrvHoleSketch`), and two frame arms 8.5 wide.
+
+**Corrected 2026-09-19 by probing the built solid**, because the description here and in the design
+document was wrong about which axis the arms lie on. At the board contact face, in board
+coordinates, the frame touches the board at **B 0.76..9.26 and B 41.76..50.26** — two strips along
+the **51** axis, each running the full length of the 49.5 axis. The opening between them is
+**32.5 wide in B**, and that is what the heatsink passes through.
+
+So the arms do **not** sit on bare board at the two ends of the 49.5 axis. They sit in the strips
+beside the heatsink along the long edges, the model assumes those strips are
+(51 - 32) / 2 = 9.5 wide, and an 8.5 arm in a 9.5 strip leaves **0.24 mm per side**.
+
+**Reported by Jim 2026-09-19, one caliper reading each:** board 49.5 x 51, hole pitch 39.5 both
+directions, hole diameter 3.0. The outline agrees with the 2026-09-15/16 caliper work and the hole
+diameter is genuinely new. **Both pitches are logged as reported, not confirmed** — they came back
+exactly equal to values the model had already assumed, which is the shape the S3 failure had. The
+two-reading check below settles the pitch and the diameter against each other and costs a minute.
+Items 5 and 6 are still completely open, and they are the ones that gate the print.
 
 **Measure these seven, in this order.** Use the same two-reading method that just caught the S3
 error — for each hole pair, an inside span `I` and an outside span `O`, then c-t-c = `(I+O)/2` and
@@ -122,8 +138,8 @@ dia = `(O-I)/2`, and the two directions must derive the *same* diameter or somet
 | 2 | Hole pitch along the board — `I` and `O`, **measured separately** | The board is 49.5 x 51, so a square pattern is a guess | 39.5 |
 | 3 | Hole diameter, measured directly | Confirms 1 and 2, and picks the screw | not recorded |
 | 4 | Is the hole block centred on the 49.5 x 51 outline? If not, board edge to the nearest hole's near edge, on all four sides | The model assumes centred — the same assumption that went unstated for the S3 | centred |
-| 5 | Heatsink length, along the board's 49.5 direction | The arms land on the bare board beyond it; if it isn't 32 the arms move even when the holes are right | 32 |
-| 6 | Bare board left at each end, measured separately | Tells you whether the heatsink is centred along its length, which 5 alone does not | 8.75 each |
+| 5 | Heatsink extent across the board's **51** direction | This is the one the arms actually depend on. At 0.24 mm clearance per side, a heatsink a half-millimetre wider than assumed makes the mount unbuildable | 32 |
+| 6 | Bare board along each **long edge**, measured separately | Tells you whether the heatsink is centred across the board, which 5 alone does not. Also check nothing else — components, solder, a retaining clip — intrudes into those two 8.5-wide strips on the heatsink face | 9.5 each |
 | 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
 
 Also note whether the four holes fall on bare board or inside the heatsink's footprint — the
