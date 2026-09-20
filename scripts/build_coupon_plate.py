@@ -192,19 +192,43 @@ EXT = [('CouponC_SelfTapPilots',
 
 # these two have BREP sources, so they can be relieved like the rest rather than
 # meshed straight from a pre-made STL
+def _stl_centroid_frac(path):
+    """Normalised height of a mesh's volumetric centroid: 0 = bottom, 1 = top."""
+    m = Mesh.Mesh(str(path))
+    pts, fcs = m.Topology
+    V = 0.0
+    Cz = 0.0
+    for ia, ib, ic in fcs:
+        a, b, c = pts[ia], pts[ib], pts[ic]
+        v = a.dot(b.cross(c)) / 6.0
+        V += v
+        Cz += v * (a.z + b.z + c.z) / 4.0
+    zs = [q.z for q in pts]
+    return (Cz / V - min(zs)) / (max(zs) - min(zs))
+
+
+def _shape_centroid_frac(sh):
+    # CenterOfMass lives on the solid, not on a bare Shape
+    solid = sh.Solids[0] if sh.Solids else sh
+    b = sh.BoundBox
+    return (solid.CenterOfMass.z - b.ZMin) / b.ZLength
+
+
+# name, BREP to build from, and the ALREADY-CORRECTLY-ORIENTED STL to match against
 BREP = [('GH44_Blank_Carrier',
-         ROOT / 'cad/head/v01/fit-prototypes/GH44_Blank_Carrier.brep'),
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Blank_Carrier.brep',
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Blank_Carrier.stl'),
         ('GH44_Receiver_Fit',
-         ROOT / 'cad/head/v01/fit-prototypes/GH44_Receiver_Fit_Coupon.brep')]
-for _n, _f in BREP:
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Receiver_Fit_Coupon.brep',
+         ROOT / 'cad/head/v01/fit-prototypes/GH44_Receiver_Fit_Coupon.stl')]
+for _n, _f, _ref in BREP:
     if not _f.exists():
         p('  MISSING %s' % _f)
         continue
     _sh = Part.Shape()
     _sh.read(str(_f))
-    # the STLs these replace were already laid flat; the BREPs are in their
-    # native orientation, standing on edge. Lay the thinnest axis into Z, or the
-    # carrier prints as a 44 mm tower on a 4.4 mm edge and nothing reaches the bed.
+    # The STLs these replace were already laid flat; the BREPs are in their native
+    # orientation, standing on edge. Lay the thinnest axis into Z first.
     _b = _sh.BoundBox
     _d = [_b.XLength, _b.YLength, _b.ZLength]
     _thin = _d.index(min(_d))
@@ -212,14 +236,28 @@ for _n, _f in BREP:
         _sh.rotate(A.Vector(0, 0, 0), A.Vector(0, 1, 0), 90)
     elif _thin == 1:
         _sh.rotate(A.Vector(0, 0, 0), A.Vector(1, 0, 0), 90)
+
+    # "Thinnest axis down" does NOT say WHICH face is down, and a 180 flip
+    # satisfies it just as well. That shipped a GH44_Receiver_Fit with its
+    # female recess against the bed - it printed with no recess at all. So match
+    # the reference STL's centroid height and flip if it is the mirror.
+    _want = _stl_centroid_frac(_ref)
+    if _shape_centroid_frac(_sh) is not None:
+        _got = _shape_centroid_frac(_sh)
+        if abs((1.0 - _want) - _got) < abs(_want - _got):
+            _sh.rotate(A.Vector(0, 0, 0), A.Vector(1, 0, 0), 180)
+            p('  %-30s flipped to match the reference orientation' % _n)
     _b = _sh.BoundBox
     _sh.translate(A.Vector(-_b.XMin, -_b.YMin, -_b.ZMin))
     _b = _sh.BoundBox
+    _got = _shape_centroid_frac(_sh)
     assert _b.ZLength <= min(_b.XLength, _b.YLength) + 1e-6, \
         '%s did not lay flat: %.1f x %.1f x %.1f' % (_n, _b.XLength, _b.YLength, _b.ZLength)
+    assert abs(_got - _want) < 0.02, \
+        '%s is upside down: centroid %.4f, reference %.4f' % (_n, _got, _want)
     if _sh.isValid() and len(_sh.Solids) == 1:
-        p('  %-30s laid flat -> %.1f x %.1f x %.1f'
-          % (_n, _b.XLength, _b.YLength, _b.ZLength))
+        p('  %-30s laid flat -> %.1f x %.1f x %.1f  centroid %.4f vs ref %.4f'
+          % (_n, _b.XLength, _b.YLength, _b.ZLength, _got, _want))
         pieces.append((_n, _sh))
     else:
         p('  %s: BREP is not a single valid solid, skipping' % _n)
