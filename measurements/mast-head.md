@@ -126,3 +126,25 @@ Jim reports **about six SG90s** in stock, 2026-09-20. Pan and tilt need two.
 This closes the open "confirm how many servos are available" item.
 
 Usable travel per unit remains **unmeasured**, and it still sets the belt ratio.
+
+## Hardware in hand (Jim, 2026-09-20)
+
+Measured or purchased, not assumed. This is the head workstream's file; recorded here by the
+chassis side because Jim reported it while we were on the deck, and the belt spec in particular
+gates the pedestal.
+
+| Item | Value | Note |
+| --- | --- | --- |
+| **Servo usable sweep** | **160 degrees, measured** | An actual sweep on the real units, not a datasheet figure. The v0.1 candidate asks for +-40 pan and +-25 tilt, i.e. 80 and 50 total, so both sit well inside this with room for horn indexing. |
+| **Timing belt** | **GT2, 2 mm pitch, 6 mm wide, 180 mm long, x5** | A **closed loop of fixed length** - the pedestal's centre distance is now a constraint, not a free variable. Five of them, so one can be cut/sacrificed for a fit test. |
+| Ball bearings | purchased | The three bearing-seat and three spindle-post coupons on plate F can be read as soon as it comes off. |
+| Circlips | purchased | |
+
+**What the belt length forces.** A 180 mm closed loop around two pulleys of pitch radius `r1` and
+`r2` fixes the centre distance: for equal pulleys, `180 = 2C + pi*d`, so `C = (180 - pi*d) / 2`.
+That is a single number once the pulley is chosen, and the pedestal has to be built around it
+rather than the other way round. If the geometry wants a different centre distance, the options are
+a different belt length or an idler - not a small adjustment.
+
+**Still open on the belt:** tooth count and pitch diameter of the pulleys the design intends, which
+is what turns the 180 into a centre distance.
