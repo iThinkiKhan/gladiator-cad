@@ -133,6 +133,31 @@ exactly equal to values the model had already assumed, which is the shape the S3
 two-reading check below settles the pitch and the diameter against each other and costs a minute.
 Items 5 and 6 are still completely open, and they are the ones that gate the print.
 
+### Mounting is rear-face only (Jim, 2026-09-20)
+
+**The component/GPIO face of the board cannot be mounted to at all** — too many components. The
+mount must bear on the **rear face**, in the two 9.5 strips flanking the heatsink, and the heatsink
+passes through the frame opening from the underside. The frame already works this way, so this is a
+confirmation of the architecture, not a change to it. The front of the board will not be held.
+
+The rear face is not clear, though. It carries the undersides of the headers, in two distinct zones
+— one per strip, since the screw terminals and the GPIO header are on opposite long edges:
+
+| Strip | What is on it | Consequence for the arm |
+| --- | --- | --- |
+| **Screw-terminal side** | a straight, shallow line of tails running **dead centre of the strip** | a relief channel down the middle, leaving a contact rail either side |
+| **GPIO side** | a block **8.6 long by the entire 9.5 strip width** | no contact is possible across those 8.6 mm; needs a full-width pocket, with contact only before and after it |
+
+Agreed approach (Jim): **recess the arm faces to clear the tails.** The alternative he raised —
+redesigning the mount to hop over the heatsink entirely — stays on the shelf unless the recesses
+prove unworkable.
+
+**Open thermal caution.** The arms already sit **0.24 mm from the heatsink**, which is contact for
+practical purposes, and the current build material is PLA with a softening point near 60 C. A
+BTS7960 heatsink under sustained load will pass that. This does not block the geometry, but a PLA
+driver mount should be treated as a fit prototype rather than something to drive hard on. See
+`printer-calibration.md` on the PLA-to-PETG move.
+
 **Measure these seven, in this order.** Use the same two-reading method that just caught the S3
 error — for each hole pair, an inside span `I` and an outside span `O`, then c-t-c = `(I+O)/2` and
 dia = `(O-I)/2`, and the two directions must derive the *same* diameter or something is wrong:
@@ -145,9 +170,9 @@ dia = `(O-I)/2`, and the two directions must derive the *same* diameter or somet
 | 4 | Is the hole block centred on the 49.5 x 51 outline? If not, board edge to the nearest hole's near edge, on all four sides | The model assumes centred — the same assumption that went unstated for the S3 | centred |
 | ~~5~~ | ~~Heatsink extent across the **51** direction~~ | **MEASURED 2026-09-19: 32, and dead centre.** | 32 ✓ |
 | ~~6~~ | ~~Bare board along each **long edge**~~ | **Resolved by 5**: centred, so (51 - 32) / 2 = 9.5 each. *Derived, not measured directly.* | 9.5 ✓ |
-| **8** | **Header pin tail protrusion** — how far the solder tails stand proud of the mounting face | **NEW BLOCKER, 2026-09-19.** Jim: the mounting face (away from the GPIO side) carries nothing but the bottoms of the header pins; some are fatter than others but **all the same length**. The arms currently bolt dead flat to that face, so any protrusion holds the board off the frame. A single number covers it, since they are all the same length. **Reported as remeasured but the value did not come through — still outstanding.** | nothing — the model assumes a flat face |
-| **9** | Where the tails sit across the 9.5 strip, and whether the area within ~4 mm of each of the four mounting holes is clear of them | Decides whether the arm gets a full-face relief with raised pads at the screws, or a channel down the middle with contact rails at the edges | unknown |
-| **10** | The fattest tail, across its solder blob | Sets the relief width | unknown |
+| **8** | **Header pin tail protrusion** — how far the tails stand proud of the rear face | Sets the recess **depth**. One number covers it: Jim reports some tails are fatter than others but **all the same length**. Asked twice; still has not arrived. The 8.6 supplied on 2026-09-20 is a footprint length, not this. | nothing — the model assumes a flat face |
+| **9** | Where the GPIO-side 8.6 block sits **along the 49.5 axis** | Places the full-width pocket. The block spans the whole 9.5 strip width, so across those 8.6 mm the arm can carry no contact at all | unknown |
+| **10** | Width of the screw-terminal line **across the 9.5 strip**, and how far it runs along 49.5 | Sizes the centre channel and tells us how much contact rail is left either side of it | unknown |
 | 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
 
 Also note whether the four holes fall on bare board or inside the heatsink's footprint — the
