@@ -18,14 +18,15 @@ INC = '/home/buralien/Desktop/3D-Printer-Incoming'
 
 # What is actually queued right now, and why. Edit this list; it is the whole point.
 LIVE = [
+    ('Gladiator_PlateH_DECK-AND-GH44.3mf',
+     'the fast one - upper deck v2 and the corrected GH44 receiver, both flat and low'),
     ('Gladiator_PlateG_MASTBASE-AND-DRIVERS.3mf',
-     'mast base + both driver mounts - everything with no pending result'),
-    ('Gladiator_REPRINT_GH44_Receiver_recess-UP.stl',
-     'replaces the one piece that came off plate F upside down'),
+     'mast base + both driver mounts, REBUILT with the flat-footed mounts'),
 ]
 
 BUCKETS = {
     'done': ['PlateA', 'PlateC', 'PlateF', 'CouponA', 'P1_Coupon'],
+    'superseded_plates': ['PlateD', 'PlateE'],
     'superseded': ['PlateD', 'PlateE', 'CouponC', 'BeltMesh_60deg'],
     'blocked': ['PlateB'],
 }
