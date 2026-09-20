@@ -126,12 +126,39 @@ the frame's two arms occupy B 0.76..9.26 and B 41.76..50.26, each 8.5 wide, sitt
 9.5 bare strips with **0.24 mm clearance to the heatsink on one side and 0.26 on the other**, and
 0.76 / 0.74 to the board edges. The arms fit — on a perfectly flat board face.
 
-**Reported by Jim 2026-09-19, one caliper reading each:** board 49.5 x 51, hole pitch 39.5 both
-directions, hole diameter 3.0, heatsink 32 across the 51 axis and dead centre. The outline agrees with the 2026-09-15/16 caliper work and the hole
+**Measured by Jim 2026-09-19/20:** board 49.5 x 51, hole pitch 39.5 both directions, hole
+diameter 3.0, heatsink 32 across the 51 axis and dead centre.
+
+These were carried as "reported, not confirmed" for a day on the strength of the S3 lesson. That
+flag is **withdrawn 2026-09-20**: the set is internally consistent (a 27.2 terminal row centred
+between holes 39.5 apart leaves 6.15 either side, and holes 5.0 / 5.75 in from the edges of a
+49.5 x 51 board is a coherent centred pattern), and nothing in it contradicts anything else. The
+S3 failure was an *inference* made on the user's behalf, not a measurement the user took — a
+different thing, and it was wrong to keep treating a direct reading as suspect. The one figure that
+still does not close is the GPIO block position, and the arm relief was sized to cover it either
+way, so it blocks nothing. The outline agrees with the 2026-09-15/16 caliper work and the hole
 diameter is genuinely new. **Both pitches are logged as reported, not confirmed** — they came back
 exactly equal to values the model had already assumed, which is the shape the S3 failure had. The
 two-reading check below settles the pitch and the diameter against each other and costs a minute.
 Items 5 and 6 are still completely open, and they are the ones that gate the print.
+
+### Fastening: no self-tapping screws available (Jim, 2026-09-20)
+
+The mount's four Ø2.7 pilots were drawn for M3 **self-tapping** screws. Jim does not have any, so
+that route is out. Checked against the solid, with the arm spanning B 0.76..9.26, the hole centre
+at B 5.75 and the heatsink edge at B 9.50:
+
+| Option | Hole | Wall on the heatsink side | Verdict |
+| --- | ---: | ---: | --- |
+| Heat-set insert | 4.6 | **1.21** | **Out.** The coupon's working boss had 2.2, and an insert expands as it seats. |
+| M3 clearance, nut behind the frame | 3.4 | **1.81** | **Recommended.** A nut loads the wall in compression rather than expanding it. |
+| M3 machine screw formed into the plastic | 2.7 (as built) | 2.16 | Works, but strips after a few removals. |
+
+**The space behind every hole is clear** — a Ø12 x 10 probe centred behind each pilot finds
+0.0 mm3 of material, so a nut and a driver both fit. A through-bolt needs roughly **M3 x 18-20**:
+1.6 of PCB, 12 of frame, a nut and a head.
+
+Not yet changed in CAD — it alters the hardware needed, so it is Jim's call.
 
 ### Mounting is rear-face only (Jim, 2026-09-20)
 
@@ -239,6 +266,17 @@ upper deck, carrying the drivers at the same angle but higher up.
 | Board length | 60 | |
 | Board width | 40 | |
 | Height, tallest point | ~16 | |
+| Mounting holes | **none** | Jim, 2026-09-20: it is a bare through-hole PCB with no mounting provision at all |
+
+**Consequence: it cannot be bolted to anything.** Any mount has to be a cradle or clamp that holds
+it by its edges, which also means the bracket has to resist it sliding out rather than relying on
+fasteners. Still to establish before that can be designed:
+
+- PCB thickness itself (sets the slot width — the ~16 above is the tallest component, not the board)
+- how far the through-hole leads and solder joints protrude on the underside, since the cradle must
+  not press on them
+- which edge the wires land on and which way they exit
+- whether it has to come out without dismantling the upper deck
 
 ## Breadboard power rails x2 (buses)
 
