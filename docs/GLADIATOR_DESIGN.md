@@ -154,6 +154,21 @@ S3 (Y 90-139.5).
   is **0.24 mm per side**, not a comfortable margin.
 
   `drv_hs_len = 32` is therefore the heatsink's width across the 51 direction, despite its name.
+
+- **Arm relief for the header tails (2026-09-20).** The board's rear face is the only mountable
+  one, and it carries header undersides 1.5-1.7 proud. Rather than a channel for the terminal row
+  and a pocket for the GPIO block, the arms are relieved **2.0 deep across a single span,
+  A 8.0..39.5**, leaving a **bearing pad at each screw** (contact survives at A -4..8.02 and
+  39.52..54). Four discrete pads is how a PCB normally mounts, and it does not depend on which
+  strip is the terminal side — which has never been established — nor on the unresolved
+  centre-vs-edge reading of the GPIO block's position. 1071 mm3 removed, verified against the
+  solid.
+
+  **Trap for whoever edits `DrvHoleSketch` next: its local axes are not the board axes.** Sketch x
+  is the 51 axis and sketch y is the 49.5 axis *reversed* (`B = sketch_x + 0.75`,
+  `A = 50.25 - sketch_y`). Because the hole pattern is square, a transposed rectangle looks
+  entirely plausible — the first attempt at this relief removed 23 mm3 instead of 1071 and the
+  geometry still checked out as valid.
 - **Joint reinforced twice**: first by matching the root members' thickness to the frame (they'd
   been left at half the section while the frame was thickened, silently moving the weak point
   inboard); then by enlarging the transition into a real gusset that engulfs the frame's inboard

@@ -194,11 +194,11 @@ dia = `(O-I)/2`, and the two directions must derive the *same* diameter or somet
 | 4 | Is the hole block centred on the 49.5 x 51 outline? If not, board edge to the nearest hole's near edge, on all four sides | The model assumes centred — the same assumption that went unstated for the S3 | centred |
 | ~~5~~ | ~~Heatsink extent across the **51** direction~~ | **MEASURED 2026-09-19: 32, and dead centre.** | 32 ✓ |
 | ~~6~~ | ~~Bare board along each **long edge**~~ | **Resolved by 5**: centred, so (51 - 32) / 2 = 9.5 each. *Derived, not measured directly.* | 9.5 ✓ |
-| **8** | **Header pin tail protrusion** — how far the tails stand proud of the rear face | Sets the recess **depth**. One number covers it: Jim reports some tails are fatter than others but **all the same length**. Asked twice; still has not arrived. The 8.6 supplied on 2026-09-20 is a footprint length, not this. | nothing — the model assumes a flat face |
-| **9** | Where the GPIO-side 8.6 block sits **along the 49.5 axis** | Places the full-width pocket. The block spans the whole 9.5 strip width, so across those 8.6 mm the arm can carry no contact at all | unknown |
-| **10** | Width of the screw-terminal pin row across the strip | Sizes the channel. With the row at B 4.20 and the hole edge at B 4.40, every extra 0.4 of width eats another 0.2 into the screw bearing | unknown |
-| **11** | **How far the terminal-side line runs along the 49.5 axis** — specifically, does it reach the screw positions at A 5.0 and A 44.5, or stop short? | **The crux.** If it stops short, the relief channel stops short too and the screws keep full bearing. If it runs past them, the screw bosses have to be redesigned or moved | unknown |
-| **12** | Was the 5.3 measured to the centre of the pin row, or to its near edge? | Half a row width, which is more than the entire remaining margin | unknown |
+| ~~8~~ | ~~Tail protrusion~~ | **MEASURED 2026-09-20: 1.5 - 1.7 tall.** Relief cut to 2.0, giving 0.3 clearance on the worst case. | 2.0 relief ✓ |
+| ~~9~~ | ~~GPIO block position~~ | **MEASURED: 8.6 long, 3.75 from one hole, 23 from the other.** Those do not quite close against the 39.5 hole spacing (3.75 + 8.6 + 23 = 35.35), and the reading closes best if the 3.75 and 23 were taken from hole *edges*, putting the block at A 10.25..18.85. **Inference, not confirmed** — so the relief was sized to cover the block under either reading. | covered ✓ |
+| ~~10~~ | ~~Terminal row width~~ | **MEASURED: widest pins about 2.0.** With the near edge 5.3 from the heatsink the row sits at B 2.20..4.20. | covered ✓ |
+| ~~11~~ | ~~Does the terminal line reach the screws?~~ | **MEASURED: 27.2 long, centred between the holes** — so A 11.15..38.35, clearing each screw hole edge by **4.65 mm**. The collision is resolved; the screws keep full bearing. | clear ✓ |
+| ~~12~~ | ~~5.3 to centre or near edge?~~ | **ANSWERED: near edge, to the heatsink.** Row therefore runs B 2.20..4.20, away from the hole. | ✓ |
 | 7 | PCB underside to fin tips, and total height standing on the fins | Closes the 28 + 1.6 + 18.7 ≈ 48 vs 41 contradiction above | 28 / 41 |
 
 Also note whether the four holes fall on bare board or inside the heatsink's footprint — the

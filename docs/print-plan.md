@@ -70,7 +70,9 @@ whose interface is least verified. Two separate things gate it.
 length are assumptions, not measurements; see the "Mounting interface — NOT MEASURED" block in
 `measurements/components.md` for exactly what to put calipers on. Calipers only, no printing.
 
-**2. The self-tap pilot size.** `Gladiator_CouponC_SelfTapPilots_flat.stl` — 48 x 8.5 x 6 mm,
+**2. The self-tap pilot size.** *(The pin-clearance problem is solved — the arms now carry a
+2.0 deep relief across A 8.0..39.5, leaving a bearing pad at each screw. See the calibration and
+components notes. This item is what remains.)* `Gladiator_CouponC_SelfTapPilots_flat.stl` — 48 x 8.5 x 6 mm,
 about 2.7 g, prints flat with no support. It reproduces the real arm: 8.5 wide, the hole offset so
 the thin wall is 2.15, 12 mm of axial depth, and the holes canted 30 degrees from the bed to match
 how the layers will actually run across the screw in the printed part. A flat bar with vertical
