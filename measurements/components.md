@@ -263,7 +263,17 @@ upper deck, carrying the drivers at the same angle but higher up.
 
 | Feature | Value | Notes |
 | --- | ---: | --- |
-| Active area | **51.2 wide x 25.6 high** | Jim, 2026-09-20. Closes the second half of the display-frame gate; the hole pattern is what the plate F gauge tests. |
+| Active area | **51.2 wide x 25.6 high** | Jim, 2026-09-20 |
+| Mounting hole pattern | **26.00 x 58.25 centres, CONFIRMED** | Plate F gauge, 2026-09-20: "fits the back of the board perfectly". The pattern is settled. |
+
+**Two things the gauge did not cover, and the frame must.**
+
+- **The pin header stands proud on the back.** Jim: the gauge fits the back "not counting for any
+  connections rising on the pin side". The frame has to relieve that, or it will sit on the header
+  instead of the board. Height not yet measured.
+- **There is no opening for the active area**, which is why the gauge cannot be mounted from the
+  front. The frame needs a **51.2 x 25.6** window, positioned against the hole pattern — and the
+  offset between the window and the holes has not been measured either. Centred is an assumption.
 
 ## Power distribution board (power)
 

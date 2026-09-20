@@ -71,10 +71,53 @@ accepting that the upper deck has to come off before anything can be unplugged.
 Also still open: **which edge the wires exit**, which decides the board's rotation and whether the
 shield's open sides face the right way.
 
+
+## Wire pass-through (Jim, 2026-09-20)
+
+A rectangular opening forward of the mast, to route wires through the deck.
+
+**The clear band, mapped against every obstruction** — deck bosses, the mast collar, and the S3,
+breadboard, mast, antenna and driver envelopes:
+
+| Y | Clear X |
+| ---: | --- |
+| 90.0 | 0.0 .. 79.2 |
+| 92.0 | 0.0..11.2, **18.0..61.2**, 68.0..79.2 |
+| 95.0 | 0.0..10.0, 12.2..17.0, **19.2..60.0**, 62.2..67.0, 69.2..79.2 |
+| 98.0 | 0.0..11.2, **18.0..61.2**, 68.0..79.2 |
+| 100.0 | 0.0..34.5, 44.8..79.2 (the mast collar has started) |
+
+So the usable window is bounded by the **S3 board's rear edge at Y 89**, the **mast collar at
+Y 99**, and the **two driver-mount bosses at X 10..19 and X 60..69**. That gives roughly
+**X 19.5..60, Y 89.5..99** — about 40 x 9.5 at most.
+
+Three candidates were checked against everything; **all three are clear and fully on the plate**:
+
+| Option | Rectangle | Size |
+| --- | --- | ---: |
+| On the S3 side | X 20.0..41.5, Y 90..98 | 21.5 x 8.0 |
+| Centred on the mast axis | X 29.5..49.5, Y 90..98 | 20.0 x 8.0 |
+| Full width between the driver bosses | X 20.0..59.0, Y 90..98 | 39.0 x 8.0 |
+
+**Needs picking.** "Centered and forward of the mast, on the S3 side" reads two ways: centred on the
+deck, or sitting on the S3 side of the mast axis. The first and third options are the S3-side and
+maximum readings; the middle one is the centred-on-the-mast reading.
+
+Only 8-9.5 mm of depth is available whichever is chosen, because the S3 and the mast collar close
+in from both sides. If a deeper opening is wanted, the alternative is to put it **under the S3
+board** — the board stands on 6 mm bosses, so wires can run in that gap — but that trades easy
+access for depth.
+
 ## Deck v2 itself
 
-With the power board mount removed from its scope, v2 is back to one job: **fix the S3 boss
-pattern**. That remains blocked on the contradiction in `measurements/components.md` — the hole
+With the power board mount removed from its scope, v2 has two jobs: **fix the S3 boss pattern**
+and **add the wire pass-through**.
+
+**The S3 pattern is still the blocker, and it is worth being clear about what did and did not clear
+it.** The plate F gauge confirmed the **display's** hole pattern (26.00 x 58.25) — that is the
+ST7789, a different board. The **S3 + expander** pattern is untouched by that result and still
+carries the contradiction below. The deck as printed has its S3 bosses at 30.9 x 55.0, which is the
+figure already disproved. That remains blocked on the contradiction in `measurements/components.md` — the hole
 diameter measured directly (4.6) disagrees with the diameter derived from the two-reading spans
 (6.25), and the boss positions depend entirely on which is right.
 
