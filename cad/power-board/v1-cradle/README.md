@@ -12,7 +12,7 @@ master assembly.
 - surrounds the complete PCB perimeter to protect every edge of the solder side;
 - supports both long rear rails on the top rim of the mast base without using
   either mast fastener;
-- carries its load on two short, exposed M3 bolts in low tabs at the rear ends
+- carries its load on two short, exposed M2 bolts in low tabs at the rear ends
   of the long deck slots;
 - uses the rear M2 pair as anti-lift/anti-rotation fasteners; and
 - does not share either mast-base mounting screw.
@@ -20,13 +20,13 @@ master assembly.
 ## Hardware and assembly
 
 1. Fit the cradle after the mast base and rails are installed.
-2. Put short M3 screws and ordinary washers through the exposed 3.6 mm holes in
+2. Put short M2 screws and ordinary washers through the exposed 2.2 mm holes in
    the deck-level tabs at `(25.5, 130.5)` and `(53.5, 130.5)`, then through the
    long deck slots. Use washers/nuts below the deck. The support columns are
    offset sideways, so nothing obstructs a driver above either screw.
 3. Drive short M2 thread-forming screws upward through the deck's 1.6 mm rear
    pilots at `(19, 128)` and `(60, 128)` into the matching blind foot pilots.
-   These are secondary anti-lift/anti-rotation restraints; the M3 bolts carry
+   These are secondary anti-lift/anti-rotation restraints; the slot bolts carry
    the structural load.
 4. Fasten the board from above with four M2 screws into the 1.6 mm blind
    thread-forming pilots. Start gently and do not bottom the screws into the
@@ -43,7 +43,7 @@ master assembly.
   for solder/leads below the PCB. Verify no lead exceeds 7.0 mm.
 - Confirm the selected M2 screws form cleanly in the deck and foot pilots
   without splitting the edge beside either rail. They are secondary restraints;
-  the M3 slot bolts carry the structural load.
+  the exposed M2 slot bolts carry the structural load.
 
 ## Printing
 

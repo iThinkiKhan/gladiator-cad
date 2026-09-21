@@ -1,7 +1,7 @@
 {
   "cradle_valid": true,
   "cradle_solids": 1,
-  "cradle_volume_cm3": 7.92,
+  "cradle_volume_cm3": 8.35,
   "board_outline_mm": [
     60.0,
     40.0,
@@ -38,7 +38,7 @@
   "underside_clearance_mm": 7.0,
   "pcb_top_z": 31.8,
   "connector_budget_to_upper_deck_mm": 16.2,
-  "m3_slot_anchors": [
+  "m2_slot_anchors": [
     [
       25.5,
       130.5
@@ -68,14 +68,14 @@
     "60.0,128.0": 0.0
   },
   "top_bearing_mm2": {
-    "M3 25.5,130.5": 27.43,
-    "M3 53.5,130.5": 27.43
+    "M2 slot 25.5,130.5": 15.83,
+    "M2 slot 53.5,130.5": 15.83
   },
   "pilot_thread_wall_mm3": {
     "M2 19.0,128.0": 14.64,
     "M2 60.0,128.0": 14.64
   },
-  "m3_driver_access_clear": {
+  "slot_driver_access_clear": {
     "25.5,130.5": true,
     "53.5,130.5": true
   },
@@ -92,5 +92,5 @@
     30.6,
     106.4
   ],
-  "print_bed_contact_mm2": 204.0
+  "print_bed_contact_mm2": 245.8
 }
