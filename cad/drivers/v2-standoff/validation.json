@@ -1,0 +1,68 @@
+{
+  "master_sha256_before": "654e7a8fdc58a9e653a62605d147a75ab638582d86d32c9999e7a796c0a976a8",
+  "params": {
+    "board_offset_mm": 12.0,
+    "standoff_len_mm": 15.0,
+    "boss_od": 9.0,
+    "boss_bore": 4.6,
+    "m3_clear": 3.6
+  },
+  "checks": {
+    "single_solid": true,
+    "solids": 1,
+    "volume_mm3": 22357.4,
+    "bbox": [
+      -11.51,
+      23.03,
+      88.0,
+      141.5,
+      26.6,
+      78.23
+    ],
+    "boss_tops_global": [
+      {
+        "u": 5.0,
+        "v": 5.75,
+        "X": 12.12,
+        "Y": 95.0,
+        "Z": 71.52
+      },
+      {
+        "u": 5.0,
+        "v": 45.25,
+        "X": -7.63,
+        "Y": 95.0,
+        "Z": 37.31
+      },
+      {
+        "u": 44.5,
+        "v": 5.75,
+        "X": 12.12,
+        "Y": 134.5,
+        "Z": 71.52
+      },
+      {
+        "u": 44.5,
+        "v": 45.25,
+        "X": -7.63,
+        "Y": 134.5,
+        "Z": 37.31
+      }
+    ],
+    "fin_tip_X": -45.77,
+    "track_outer_X": -50.0,
+    "fins_inside_track_by_mm": 4.23,
+    "clashes": {},
+    "standoff_paths_clear": true,
+    "deck_bearing_mm2": 776.4,
+    "deck_bearing_was_mm2": 342.0,
+    "insert_wall_mm": 2.0,
+    "insert_wall_was_mm": 0.75,
+    "boss_depth_vs_insert": "8.0 bore for a 7.05 insert",
+    "master_unchanged": true
+  },
+  "notes": [
+    "cut 804.6 mm3 against UpperDeck at ZERO clearance - a running clearance still has to be added before this is printed",
+    "cut 42.2 mm3 against SideRailLeft at ZERO clearance - a running clearance still has to be added before this is printed"
+  ]
+}
