@@ -250,3 +250,52 @@ master, once the numbers are in.
 Do not update the hole pattern by editing `drv_hole_pitch`; it drives nothing.
 `DrvHoleSketch` carries literal coordinates and must be rebuilt in a script with
 the resulting solid verified.
+
+#### Correction to the frame description, 2026-09-20 (probe: `scripts/drv_axis_check.py`)
+
+Both earlier descriptions of this frame were wrong, including the one in
+`measurements/components.md` dated 2026-09-19. Swept in global coordinates:
+
+The frame does **not** touch the board in two strips. It touches it at **four
+corner pads**, and the four screw holes land exactly in them:
+
+| Region (u = 49.5 / global Y, v = 51 / cant) | State |
+| --- | --- |
+| u 0..9 and 41..49.5, **crossed with** v 0..11 and 42..51 | four solid pads, board seats here, screws here |
+| u 0..9 and 41..49.5, v 11..42 | 2 mm recess — the solder-tail relief |
+| **u 9..41, all v** | clear through, no material |
+
+So the clear opening is bounded **in u**, the 49.5 / global Y axis, and it is
+**32 mm wide**. Confirmed independently by the frame's own faces normal to Y, at
+Y 89, 101, 128.5 and 140.5 — structure at the fore and aft ends of the board,
+with nothing between.
+
+`measurements/components.md` computes the arm fit as `(51 - 32) / 2 = 9.5`
+strips along the **51** axis, and concludes 0.24 mm clearance per side. That
+calculation is against the wrong axis. The heatsink figure that was measured —
+**32 across the 51 axis** — is not the dimension this window constrains.
+
+**The dimension that constrains it is the heatsink's extent along the 49.5 /
+global Y axis, and that has never been measured.** If it exceeds 32 mm the
+heatsink does not pass, and no amount of clearance on the other axis helps.
+
+#### Which makes the flip more attractive, not less
+
+With the board flipped to heatsink-outboard, the heatsink passes through
+**nothing** — it stands in free air, verified clear of the frame and every robot
+solid out past 45 mm. The unmeasured Y extent stops mattering for fit entirely,
+and only the 13 mm component stack has to clear the window.
+
+So the flip Jim wants:
+
+1. puts the GPIO face inboard, 8.4 mm from the deck edge at S3 height
+2. puts the fins in clean air, as the mounting intent always specified
+3. **removes an unmeasured dimension from the critical path**
+4. costs a re-cut of the four corner pads' relief, sized to the component side
+
+#### Consequence for the print queue
+
+`Gladiator_PlateG_MASTBASE-AND-DRIVERS.3mf` is in the printer queue and contains
+both driver mounts. They are built heatsink-inboard. If the flip is accepted,
+that geometry changes and the plate should be pulled before it is sliced —
+64 cm3 and the tallest parts in the set.
