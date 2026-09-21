@@ -165,87 +165,88 @@ width at Y 21..96.5, leaving two exposed zones: **front Y 0..21 (21 deep)** and 
 
 ### Board orientation — Jim's test fit, 2026-09-20
 
-Jim dropped a real driver into the mount and found the **GPIO header ends up on
-the outboard edge**, where the wires would have to climb back over the heatsink
-to reach the S3. He wants it on the interior edge. He is right, and the mount
-already allows it.
+Jim dropped a real driver into the mount and found the **GPIO face ends up
+pointing outboard**. He wants it facing the vehicle interior. He is right, and
+the mount as built cannot give him that — this is a real geometry change, not an
+assembly choice.
 
-**Measured off `DriverMountLeft`, in the PCB's own frame** (u = 0..49.5
-fore-aft, v = 0..51 along the cant, w = 0 at the PCB plane, +w outboard toward
-the fins):
+**First reading of this was wrong** and is corrected here. It claimed the board
+only needed turning 180 degrees in its own plane. That is false: an in-plane
+rotation cannot change which *face* points outboard, and the face is the whole
+problem.
 
-| Board edge | Where it actually sits | Wire run to the S3 |
-| --- | --- | --- |
-| **v = 0** | X -8.39, Z 90.0 — inboard and HIGH, 8.4 mm outboard of the deck edge | short, straight over the deck edge into the S3 envelope (tops out at Z 86.3) |
-| **v = 51** | X -33.89, Z 45.83 — outboard and LOW, out over the track | has to climb back over the full heatsink |
+#### What the frame was actually built for
 
-So the cant runs inboard-high to outboard-low, and the fins point outboard-up.
-The GPIO belongs at v = 0.
+Measured off `DriverMountLeft` in the PCB's own frame (u = 0..49.5 fore-aft,
+v = 0..51 along the cant, w = 0 at the PCB plane, +w outboard):
 
-**The fix needs no change to the mount.** The four PCB screw holes are a
-rectangle — 39.5 x 39.5 as currently modelled — and any four-corner rectangle is
-centrally symmetric, so a **180 degree rotation of the board in its own plane
-always re-registers on the same holes**, whatever the real pitch turns out to
-be. Verified against the sketch: the pattern maps exactly onto itself.
-
-An in-plane rotation also keeps the same face outboard, so the heatsink stays in
-free air. Turning the board around moves the GPIO from v = 51 to v = 0 and does
-nothing else.
-
-**The frame is symmetric too**, so the flip costs nothing:
-
-| Feature | Extent | Symmetric under the flip? |
-| --- | --- | --- |
-| Fore arm | u 0..8.5 | yes, maps to the aft arm |
-| Aft arm | u 41..49.5 | yes |
-| Open window | u 8.5..41, full v | yes |
-| Relief pocket in each arm | v 10.75..42.25, 2 mm deep | **nearly** — centre is 26.5 against a board centre of 25.5, so it is biased 1 mm outboard |
-
-That 1 mm bias is the only thing that weakly favours the current orientation. It
-should be re-centred on v = 25.5 so neither orientation is preferred. Folded into
-the same edit as the hole-pattern update rather than done on its own, since the
-master gets touched once.
-
-### Manoeuvrability — what actually constrains getting the board in
-
-The board approaches from outboard-up and moves inboard-down along -w, straight
-onto the frame face. Checked against ChassisDeck, UpperDeck, both side rails,
-MastTube, MastBase, PowerShield, AntennaPost, S3Board, Breadboard and the
-opposite driver mount: **the seated board is clear of all of them**, and so is
-the approach.
-
-The real constraint is the frame itself. Measured clearance inboard of the PCB
-face:
-
-| Region | Clearance |
+| Test | Clash |
 | --- | ---: |
-| u 9..40.5, all v — the open window | **13 mm**, clear through |
-| u 0..9 and 41..49.5, v 13..38 — the relief | **2 mm** |
-| u 0..9 and 41..49.5, v 0..13 and 38..51 — solid arm | **0 mm** |
+| 2 mm strip over both arms, v 10.75..42.25 | **0.0 mm3** |
+| Heatsink block 28 mm inboard through the window | 434.6 mm3 frame, **111 mm3 into the UpperDeck** |
+| Heatsink 28 mm outboard | **0.0 mm3**, clear past 45 mm |
+| Component block 13 mm inboard, inside the window | 26.7 mm3, effectively clear |
 
-So **anything on the component face standing more than 2 mm proud must lie
-within u 9..40.5** — a 31.5 mm window in the 49.5 mm length. That is symmetric,
-so the flip does not change it.
+The relief pockets returning **exactly zero** against a 2 mm strip is the
+evidence. They were cut to clear a 2 mm feature in that precise band, and the
+only thing 2 mm proud in that band is the **solder tails flanking the heatsink**
+on the back of the board. So the frame assumes the heatsink goes INBOARD through
+the window, which puts the component and GPIO face outboard.
 
-The screw holes sit at v 5.75 and 45.25, inside the solid strips, which is
-correct — the board needs to seat flat where it is bolted.
+#### That contradicts the documented intent, and the intent is right
 
-### Still not measured, and this is the moment
+The "Mounting intent" paragraph above says the heatsink faces **outward** with
+fins up in clean air, and the component face looks down-and-inward putting the
+terminals toward the interior. The built frame does the opposite. Two
+independent reasons the documented intent wins:
 
-Plate D has been blocked since 2026-09-18 on numbers that were assumed. Jim now
-has a board in his hands, so:
+1. **Wiring.** With the component face inboard, the v=0 board edge sits at
+   X -8.39, Z 90.0 — 8.4 mm outboard of the deck edge and level with the top of
+   the S3 envelope (Z 86.3). A very short run. Outboard-facing, every wire has to
+   come back over the heatsink.
+2. **Heat.** Inboard the fins are buried against the upper deck in dead air, and
+   they already clip it by 111 mm3 at full depth. Outboard they are in clean
+   moving air, which is what the intent paragraph asked for.
 
-- **Hole pitch, both directions.** 39.5 x 39.5 is an assumption. Two readings.
-- **Where the GPIO header and the screw terminals sit** relative to the holes,
-  and which edge each runs along.
-- **What projects more than 2 mm from the component face within 9 mm of either
-  short edge** — that is exactly what the relief pockets have to clear, and
-  nobody has checked what is actually there.
-- **Heatsink length along u**, still never measured.
-- **Screw access.** The PCB bolts to the frame's outboard face, so check which
-  side the screw head and nut can actually be reached from with the board in
-  place.
+#### The flip is feasible
 
-Do not update the hole pattern by editing `drv_hole_pitch` — it drives nothing.
-`DrvHoleSketch` carries literal coordinates and has to be rebuilt in a script
-with the resulting solid verified.
+Verified against the solid, not assumed:
+
+- Heatsink outboard: clear of the frame and of every robot solid out past 45 mm.
+- Components 13 mm inboard, inside the u 9..41 window: 26.7 mm3, effectively
+  clear, and clear of the chassis deck, upper deck, rails, mast, power shield,
+  antenna post, S3 and breadboard.
+- The window stays clear to about 22 mm inboard before frame material appears
+  and 28 mm before the upper deck does, so 13 mm of components has real margin.
+- The four screw holes are a rectangle, so they re-register under a face-over
+  flip exactly as they do under an in-plane rotation.
+
+#### What has to change in CAD
+
+The arms and screw pattern stay. The **relief pockets have to be re-cut for
+whatever is on the component face near the short edges**, because after the flip
+it is the component side, not the solder side, that sits over the arms. Their
+current position and 2 mm depth were sized for tails and carry no information
+about the component side.
+
+That cannot be designed until the board is measured, and it is the same edit
+that will rebuild `DrvHoleSketch` for the real hole pitch. One edit to the
+master, once the numbers are in.
+
+#### Needed from the board, which is now in hand
+
+1. **Hole pitch, both directions.** Two readings. 39.5 x 39.5 is still an assumption.
+2. **On the COMPONENT face:** what stands within 9 mm of each short edge, and how
+   tall. This sets the new relief pockets and is the item that actually gates the
+   change.
+3. **Tallest component overall**, to confirm 13 mm.
+4. **Which edge the GPIO header runs along, which the screw terminals**, and how
+   far in from the holes.
+5. **Heatsink footprint** — length along u and width along v, plus how proud it
+   stands. Still never measured, and it decides whether the u 9..41 window is
+   even the right size once it is on the outboard side.
+6. **Screw access** with the board seated — which side a driver and nut can reach.
+
+Do not update the hole pattern by editing `drv_hole_pitch`; it drives nothing.
+`DrvHoleSketch` carries literal coordinates and must be rebuilt in a script with
+the resulting solid verified.
