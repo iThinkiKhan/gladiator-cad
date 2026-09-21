@@ -46,13 +46,32 @@ standoff axes clear, fins 6.6 mm inside the track line.
 5. 4 × M3 horizontally from inboard, counterbored
 6. Board onto four M3 male-female standoffs, GPIO inboard
 
+## Print package
+
+Run `scripts/build_drv_v5_plate.py`. It writes:
+
+- `Gladiator_DriverV5_INTERLOCK-FIT-COUPON.3mf` — print this first, with no
+  supports, to check the untested 0.2 mm tongue/groove clearance.
+- `Gladiator_PlateI_DRIVER-V5-INTERLOCK.3mf` — both left/right bases and wedges,
+  already oriented and arranged for the Ender-3 Neo.
+
+Plate I uses the existing calibrated PLA profile: 0.20 mm layers, 4 walls,
+30% infill, a 5 mm brim, and automatic normal supports from the build plate.
+The bases sit on their deck faces. The wedges sit on a full end face, the
+orientation selected by OrcaSlicer 2.4.2 after comparing the candidate faces.
+Do not auto-orient the finished plate.
+
+`orca-v5-process.json` records those Plate I overrides. The fit coupon should
+use the normal PLA process with supports off; a brim is optional for the coupon.
+
 ## Still open
 
 1. Zero running clearance on the deck cut, and **the tongue/groove pair is
    modelled at 0.2 mm clearance which has never been print-tested.** That fit
    wants a coupon.
 2. `STANDOFF` 15 mm is a placeholder until the plugged connector is measured.
-3. No print orientation.
+3. ~~No print orientation.~~ Closed by the Plate I package above. The wedge
+   needs support for its horizontal bosses in the selected end-face orientation.
 4. **The load split is designed, not proved.** The tongue is intended to take
    shear and the screws to clamp; nothing here calculates how much each actually
    carries.

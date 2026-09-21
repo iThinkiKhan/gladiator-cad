@@ -1,0 +1,15 @@
+{
+  "type": "process",
+  "name": "Gladiator Driver v5 PLA",
+  "from": "User",
+  "inherits": "0.20mm Standard @ First Print",
+  "enable_support": "1",
+  "support_type": "normal(auto)",
+  "support_style": "default",
+  "support_on_build_plate_only": "1",
+  "support_threshold_angle": "30",
+  "brim_type": "outer_only",
+  "brim_width": "5",
+  "wall_loops": "4",
+  "sparse_infill_density": "30%"
+}

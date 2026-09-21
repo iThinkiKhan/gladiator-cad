@@ -2,17 +2,35 @@
 
 Prepared 2026-09-17; rebuilt 2026-09-18 as actual arranged plates after the first coupon results.
 
-## Live queue (2026-09-20)
+## Live queue (2026-09-21)
 
-The printer's incoming folder now holds **three plates and nothing else**; everything
-else is filed under `_archive/` there, with a `README.txt` explaining the layout.
-Nothing was deleted.
+### Driver v5 print prep (2026-09-21)
+
+The old Plate D/G driver parts are the superseded one-piece mount. Do not print
+those for the current design. The v5 tongue-and-groove mount has its own queue:
+
+1. `Gladiator_DriverV5_INTERLOCK-FIT-COUPON.3mf` — run first; no supports.
+   The exact 4.00 mm tongue / 4.40 x 4.20 mm groove reproduces the model's
+   untested 0.20 mm clearance.
+2. `Gladiator_PlateI_DRIVER-V5-INTERLOCK.3mf` — left/right bases and wedges.
+   Use PLA, 0.20 mm layers, 4 walls, 30% infill, 5 mm brim, and automatic
+   normal supports from the build plate only. Do not auto-orient.
+
+The bases print deck-face-down. OrcaSlicer 2.4.2 selected a full end face for
+the wedges; this leaves the standoff pockets accessible and supports the
+horizontal bosses. Plate I is the current driver-mount plate.
+
+The printer's incoming folder now holds the **v5 fit coupon and Plate I**. The
+older body/mast/coupon plates remain in the printer library; Plate D/G's driver
+geometry is superseded. Nothing was deleted by this v5 print-prep pass.
 
 | Plate | State |
 | --- | --- |
-| **B** mast base, power shield, antenna post | live |
-| **D** driver mounts | live — unblocked 2026-09-20 |
-| **F** all remaining coupons | live |
+| **I** v5 driver bases + wedges | live — print only after the v5 interlock coupon fits |
+| Driver v5 interlock coupon | live — print first |
+| B mast base, power shield, antenna post | library |
+| D/G old driver mounts | superseded by v5 Plate I |
+| F all remaining coupons | library |
 | A body (rails + upper deck) | printed 2026-09-18 |
 | C mast tube | not queued — buy a 20/12 tube instead |
 | E coupons | superseded by F |

@@ -1,0 +1,84 @@
+{
+  "driver_plate": "Gladiator_PlateI_DRIVER-V5-INTERLOCK.3mf",
+  "driver_plate_used_mm": [
+    164.23,
+    51.5
+  ],
+  "parts": [
+    {
+      "name": "Base_L",
+      "x_mm": 23.0,
+      "y_mm": 51.5,
+      "z_mm": 28.0,
+      "volume_cm3": 16.59,
+      "solid": true,
+      "self_intersections": false,
+      "orientation": "flat deck face down"
+    },
+    {
+      "name": "Base_R",
+      "x_mm": 23.0,
+      "y_mm": 51.5,
+      "z_mm": 28.0,
+      "volume_cm3": 16.59,
+      "solid": true,
+      "self_intersections": false,
+      "orientation": "flat deck face down"
+    },
+    {
+      "name": "Wedge_L",
+      "x_mm": 47.12,
+      "y_mm": 44.9,
+      "z_mm": 51.5,
+      "volume_cm3": 24.38,
+      "solid": true,
+      "self_intersections": false,
+      "orientation": "rear end face down; brim + supports"
+    },
+    {
+      "name": "Wedge_R",
+      "x_mm": 47.12,
+      "y_mm": 44.9,
+      "z_mm": 51.5,
+      "volume_cm3": 24.38,
+      "solid": true,
+      "self_intersections": false,
+      "orientation": "rear end face down; brim + supports"
+    }
+  ],
+  "coupon_plate": "Gladiator_DriverV5_INTERLOCK-FIT-COUPON.3mf",
+  "coupon_plate_used_mm": [
+    28.0,
+    20.0
+  ],
+  "coupon_parts": [
+    {
+      "name": "Tongue",
+      "x_mm": 10.0,
+      "y_mm": 20.0,
+      "z_mm": 7.0,
+      "volume_cm3": 0.92,
+      "solid": true,
+      "self_intersections": false
+    },
+    {
+      "name": "Groove",
+      "x_mm": 10.0,
+      "y_mm": 20.0,
+      "z_mm": 7.0,
+      "volume_cm3": 1.04,
+      "solid": true,
+      "self_intersections": false
+    }
+  ],
+  "settings": {
+    "printer": "Ender-3 Neo, 0.4 mm nozzle",
+    "material": "PLA",
+    "layer_height_mm": 0.2,
+    "walls": 4,
+    "infill": "30%",
+    "brim_mm": 5,
+    "supports": "normal(auto), build plate only; driver plate only",
+    "auto_orient": false
+  }
+}
