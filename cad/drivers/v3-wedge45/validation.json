@@ -1,0 +1,82 @@
+{
+  "cant_deg": 45.0,
+  "standoff_mm": 15.0,
+  "board_origin": [
+    8.0,
+    90.0,
+    100.0
+  ],
+  "stages": [
+    {
+      "stage": "foot",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 8.73
+    },
+    {
+      "stage": "foot+ribs",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 17.58
+    },
+    {
+      "stage": "foot+ribs+plate",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 19.7
+    },
+    {
+      "stage": "with bosses",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 21.13
+    },
+    {
+      "stage": "after clearance cuts",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 21.02
+    },
+    {
+      "stage": "final",
+      "solids": 1,
+      "valid": true,
+      "single": true,
+      "vol_cm3": 20.41
+    }
+  ],
+  "checks": {
+    "boss_line_Z_eq_X_plus": 70.787,
+    "single_solid": true,
+    "volume_cm3": 20.41,
+    "bbox": [
+      -18.79,
+      24.09,
+      88.0,
+      141.5,
+      47.85,
+      88.51
+    ],
+    "screw_hole_open_95": true,
+    "boss_pocket_clear_95": true,
+    "driver_access_95_mm3": 211.3,
+    "screw_hole_open_135": true,
+    "boss_pocket_clear_135": true,
+    "driver_access_135_mm3": 211.5,
+    "fin_tip_X": -43.41,
+    "fins_inside_track_mm": 6.59,
+    "fin_top_Z": 115.34,
+    "clashes": {},
+    "standoff_clear": true,
+    "deck_bearing_mm2": 1411.1,
+    "master_unchanged": true
+  },
+  "notes": [
+    "cut 111.7 mm3 against UpperDeck at zero offset"
+  ]
+}
