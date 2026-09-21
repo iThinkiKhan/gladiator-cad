@@ -1,0 +1,76 @@
+{
+  "cant_deg": 45.0,
+  "standoff_mm": 15.0,
+  "stages": [
+    {
+      "stage": "base raw",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 13.08
+    },
+    {
+      "stage": "base final",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 11.81
+    },
+    {
+      "stage": "wedge ribs+spine",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 25.67
+    },
+    {
+      "stage": "wedge + merged bosses",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 28.07
+    },
+    {
+      "stage": "wedge + flange",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 28.8
+    },
+    {
+      "stage": "wedge after cuts",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 26.27
+    },
+    {
+      "stage": "wedge final",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 25.23
+    }
+  ],
+  "checks": {
+    "boss_plane_Z_eq_X_plus": 70.79,
+    "base_single": true,
+    "wedge_single": true,
+    "base_cm3": 11.81,
+    "wedge_cm3": 25.23,
+    "total_cm3": 37.05,
+    "base_wedge_overlap": 0.0,
+    "boss_support_mm3": {
+      "u5_v6": 277.2,
+      "u5_v45": 409.9,
+      "u44_v6": 277.2,
+      "u44_v45": 409.9
+    },
+    "deck_screw_access_95": 0.0,
+    "deck_screw_open_95": true,
+    "deck_screw_access_135": 0.0,
+    "deck_screw_open_135": true,
+    "fin_tip_X": -43.41,
+    "fins_inside_track_mm": 6.59,
+    "clashes": {},
+    "standoff_clear": true,
+    "deck_bearing_mm2": 803.1,
+    "master_unchanged": true
+  },
+  "notes": [
+    "wedge: cut 0.6 mm3 against UpperDeck"
+  ]
+}
