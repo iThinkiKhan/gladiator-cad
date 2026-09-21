@@ -299,3 +299,41 @@ So the flip Jim wants:
 both driver mounts. They are built heatsink-inboard. If the flip is accepted,
 that geometry changes and the plate should be pulled before it is sliced —
 64 cm3 and the tallest parts in the set.
+
+### How the driver mount fastens to the deck — settled 2026-09-20
+
+Probed the deck solid with a D3.0 column down the boss axis at (14.5, 95),
+1 mm at a time (`scripts/drv_deck_boss_probe.py`):
+
+| Z band | Deck material | State |
+| --- | ---: | --- |
+| 48..50.5 | solid | **2.5 mm floor** |
+| 50.5..58 | none | open pocket |
+
+So the D4.6 feature in each deck boss is a **blind pocket opening upward at the
+boss top**, 7.5 mm deep, closed underneath by 2.5 mm of deck slab. D4.6 is this
+printer's calibrated heat-set bore and 7.5 mm suits the 7.05 mm insert.
+
+**That is an insert pocket in the DECK, not a clearance hole.** As printed, it
+wants the insert in the deck boss and the screw coming DOWN from the mount.
+
+Jim's recollection was the opposite — insert in the foot, screw up through the
+deck — and that is why it never worked: nothing was ever cut to make it work. It
+also explains why v1's column above the boss is 95 percent solid. That is not a
+defect, it is the clearance hole that was never added, because the intended
+direction was never settled.
+
+**The deck is already printed, so this is now a fork, not a preference.**
+
+| | Works with the deck as printed | What the mount needs |
+| --- | --- | --- |
+| **A. Screw down** | yes, no modification | a D3.6 clearance hole from the mount's top face to Z 58, and driver access above it |
+| **B. Screw up** | needs the 2.5 mm pocket floor drilled through | a heat-set insert in the foot above Z 58; the existing D4.6 then serves as clearance |
+
+B is a two-minute drill on a part that lifts off anyway, and it puts the insert
+in a part being designed fresh rather than relying on a pocket that is already
+committed. A costs nothing but needs real driver access designed, which v1 never
+had either.
+
+Either way the mount needs a feature at those two points that neither v1 nor the
+v2 candidate has.

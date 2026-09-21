@@ -27,7 +27,7 @@ that property.
 | Heatsink | inboard, through the window, clipping the upper deck | **outboard, free air** |
 | Fin tip vs the track line | **3.4 mm proud** | **4.2 mm inside** |
 | Material around each insert | 0.75 mm | **2.0 mm** |
-| Bearing on the deck | 342 mm² | **776 mm²** |
+| Bearing on the deck | 591 mm² | **776 mm²** |
 | Volume | 33.4 cm³ | **22.4 cm³** |
 | Relief pockets | 2 mm, for the solder tails | gone — the standoff gives that clearance |
 
