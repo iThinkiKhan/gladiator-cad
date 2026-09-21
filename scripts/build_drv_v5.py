@@ -223,7 +223,7 @@ rep['checks']['master_unchanged'] = (
     hashlib.sha256(MASTER.read_bytes()).hexdigest() == before)
 
 if rep['checks']['base_single'] and rep['checks']['wedge_single']:
-    doc = A.newDocument('DriverMount_v4')
+    doc = A.newDocument('DriverMount_v5')
     for nm, sh in [('Base_Left', base), ('Wedge_Left', wedge)]:
         o = doc.addObject('Part::Feature', nm)
         o.Shape = sh
@@ -232,8 +232,8 @@ if rep['checks']['base_single'] and rep['checks']['wedge_single']:
         o2 = doc.addObject('Part::Feature', nm.replace('Left', 'Right'))
         o2.Shape = mir
     doc.recompute()
-    doc.saveAs(str(OUT / 'DriverMount_v4.FCStd'))
-    Part.export(doc.Objects, str(OUT / 'DriverMount_v4.step'))
+    doc.saveAs(str(OUT / 'DriverMount_v5.FCStd'))
+    Part.export(doc.Objects, str(OUT / 'DriverMount_v5.step'))
     for nm, sh in [('Base_Left', base), ('Wedge_Left', wedge)]:
         s = sh.copy()
         s.translate(A.Vector(0, 0, -s.BoundBox.ZMin))
