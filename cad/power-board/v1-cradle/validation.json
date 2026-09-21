@@ -1,7 +1,7 @@
 {
   "cradle_valid": true,
   "cradle_solids": 1,
-  "cradle_volume_cm3": 9.75,
+  "cradle_volume_cm3": 7.92,
   "board_outline_mm": [
     60.0,
     40.0,
@@ -35,9 +35,9 @@
   ],
   "battery_top_z": 21.5,
   "battery_to_shield_gap_mm": 0.7,
-  "underside_clearance_mm": 8.0,
-  "pcb_top_z": 32.8,
-  "connector_budget_to_upper_deck_mm": 15.2,
+  "underside_clearance_mm": 7.0,
+  "pcb_top_z": 31.8,
+  "connector_budget_to_upper_deck_mm": 16.2,
   "m3_slot_anchors": [
     [
       25.5,
@@ -68,25 +68,29 @@
     "60.0,128.0": 0.0
   },
   "top_bearing_mm2": {
-    "M3 25.5,130.5": 28.31,
-    "M3 53.5,130.5": 28.31
+    "M3 25.5,130.5": 27.43,
+    "M3 53.5,130.5": 27.43
   },
   "pilot_thread_wall_mm3": {
-    "M2 19.0,128.0": 40.38,
-    "M2 60.0,128.0": 40.38
+    "M2 19.0,128.0": 14.64,
+    "M2 60.0,128.0": 14.64
+  },
+  "m3_driver_access_clear": {
+    "25.5,130.5": true,
+    "53.5,130.5": true
   },
   "board_post_thread_wall_mm3": {
-    "22.250,31.875": 173.34,
-    "22.250,86.125": 173.34,
-    "56.750,31.875": 173.34,
-    "56.750,86.125": 173.34
+    "22.250,31.875": 139.2,
+    "22.250,86.125": 139.2,
+    "56.750,31.875": 139.2,
+    "56.750,86.125": 139.2
   },
   "mast_support_contact_mm2": 55.05,
   "master_unchanged": true,
   "print_bbox_mm": [
-    42.9,
-    31.6,
+    42.8,
+    30.6,
     106.4
   ],
-  "print_bed_contact_mm2": 492.28
+  "print_bed_contact_mm2": 204.0
 }

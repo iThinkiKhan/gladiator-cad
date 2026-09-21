@@ -25,11 +25,13 @@ BOARD_X0, BOARD_Y0 = 19.5, 29.0
 BOARD_W, BOARD_L, PCB_T = 40.0, 60.0, 1.6
 HOLE_DX, HOLE_DY = 34.5, 54.25
 FLOOR_Z, FLOOR_T = 22.2, 1.0
-BOARD_Z = 31.2                  # PCB underside; 8 mm clear over the shield
+BOARD_Z = 30.2                  # PCB underside; 7 mm clear over the shield
 WALL_TOP = BOARD_Z + PCB_T + 1.0
 M2_PILOT = 1.6                 # thread-forming pilot in the printed standoffs
 M2_CLEAR = 2.2                 # board-reference clearance only
 M3_CLEAR = 3.6
+BOARD_PILOT_DEPTH = 5.5
+TAB_TOP = 5.2
 
 board_holes = [
     (BOARD_X0 + (BOARD_W - HOLE_DX) / 2 + ix * HOLE_DX,
@@ -79,34 +81,40 @@ for x, y in board_holes:
     cradle = cradle.fuse(boss)
 cradle = cradle.removeSplitter()
 for x, y in board_holes:
-    pilot = Part.makeCylinder(M2_PILOT / 2, 6.8,
-                              App.Vector(x, y, BOARD_Z - 6.7))
+    pilot = Part.makeCylinder(M2_PILOT / 2, BOARD_PILOT_DEPTH + 0.1,
+                              App.Vector(x, y, BOARD_Z - BOARD_PILOT_DEPTH))
     cradle = cradle.cut(pilot)
 
-# Two overhead rails now run over the mast-base rim.  Pads beneath them land on
-# the rim's Z20 top surface, so the long spans are supported instead of acting
-# as cantilevers.  They merge into rear foot blocks independent of mast screws.
+# Two overhead rails run over the mast-base rim. Pads beneath them land on the
+# rim's Z20 top surface. At the rear, doglegs reach narrow support columns that
+# are offset sideways from the primary screws, leaving open screwdriver paths.
 arm_z1 = FLOOR_Z + 3.0
-cradle = cradle.fuse(box(25.0, 29.1, 89.4, 134.0, FLOOR_Z, arm_z1))
-cradle = cradle.fuse(box(49.9, 54.0, 89.4, 134.0, FLOOR_Z, arm_z1))
+cradle = cradle.fuse(box(25.0, 29.1, 89.4, 126.8, FLOOR_Z, arm_z1))
+cradle = cradle.fuse(box(49.9, 54.0, 89.4, 126.8, FLOOR_Z, arm_z1))
 cradle = cradle.fuse(box(26.5, 29.1, 100.0, 126.0, 20.0, FLOOR_Z))
 cradle = cradle.fuse(box(49.9, 52.5, 100.0, 126.0, 20.0, FLOOR_Z))
-cradle = cradle.fuse(box(18.4, 29.0, 127.4, 134.0, 2.2, arm_z1))
-cradle = cradle.fuse(box(50.0, 60.6, 127.4, 134.0, 2.2, arm_z1))
-# Full top lands support ordinary M3 washers and connect the inboard rails.
-cradle = cradle.fuse(box(18.05, 29.1, 126.8, 134.0, 20.0, arm_z1))
-cradle = cradle.fuse(box(49.9, 60.95, 126.8, 134.0, 20.0, arm_z1))
+# Low mounting tabs keep both screw heads exposed just above the deck.
+cradle = cradle.fuse(box(18.4, 32.4, 127.4, 134.0, 2.2, TAB_TOP))
+cradle = cradle.fuse(box(46.6, 60.6, 127.4, 134.0, 2.2, TAB_TOP))
+# Offset columns and short doglegs avoid covering either M3 screw axis.
+cradle = cradle.fuse(box(29.4, 32.4, 127.4, 134.0, TAB_TOP, arm_z1))
+cradle = cradle.fuse(box(46.6, 49.6, 127.4, 134.0, TAB_TOP, arm_z1))
+cradle = cradle.fuse(box(25.0, 32.4, 126.5, 126.9, FLOOR_Z, arm_z1))
+cradle = cradle.fuse(box(46.6, 54.0, 126.5, 126.9, FLOOR_Z, arm_z1))
+# Above the mast-base top only, extend the offset columns forward to meet the
+# doglegs; the screw/driver cylinders remain completely open.
+cradle = cradle.fuse(box(29.4, 32.4, 126.5, 134.0, 20.0, arm_z1))
+cradle = cradle.fuse(box(46.6, 49.6, 126.5, 134.0, 20.0, arm_z1))
 cradle = cradle.removeSplitter()
 
-# M3 bolts with ordinary washers through the long slots carry the load.  Their
-# top holes are simple 3.6 mm clearances—no ambiguous stepped counterbores.  The
-# deck's rear M2 features are 1.6 mm pilots, so matching blind pilots in the
-# feet take thread-forming screws from below.
+# Short M3 bolts with ordinary washers through the low tabs and deck slots carry
+# the load. The deck's rear M2 features are 1.6 mm pilots, so matching blind
+# pilots in the low tabs take short thread-forming screws from below.
 for x, y in m3_anchors:
-    cradle = cradle.cut(Part.makeCylinder(M3_CLEAR / 2, arm_z1 - 2.0,
+    cradle = cradle.cut(Part.makeCylinder(M3_CLEAR / 2, TAB_TOP - 2.0,
                                            App.Vector(x, y, 2.1)))
 for x, y in m2_anchors:
-    cradle = cradle.cut(Part.makeCylinder(M2_PILOT / 2, 8.1,
+    cradle = cradle.cut(Part.makeCylinder(M2_PILOT / 2, TAB_TOP - 2.3,
                                            App.Vector(x, y, 2.1)))
 
 cradle = cradle.removeSplitter()
@@ -165,21 +173,26 @@ for x, y in m3_anchors + m2_anchors:
 # Bearing retained under standard-size heads/washers at the top of the feet.
 checks['top_bearing_mm2'] = {}
 checks['pilot_thread_wall_mm3'] = {}
+checks['m3_driver_access_clear'] = {}
 for x, y in m3_anchors:
-    ring = Part.makeCylinder(3.5, 0.3, App.Vector(x, y, arm_z1 - 0.3)).cut(
+    ring = Part.makeCylinder(3.5, 0.3, App.Vector(x, y, TAB_TOP - 0.3)).cut(
         Part.makeCylinder(M3_CLEAR / 2, 0.4,
-                          App.Vector(x, y, arm_z1 - 0.35)))
+                          App.Vector(x, y, TAB_TOP - 0.35)))
     checks['top_bearing_mm2']['M3 %.1f,%.1f' % (x, y)] = round(hit(ring, cradle) / 0.3, 2)
+    driver = Part.makeCylinder(3.5, 43.0, App.Vector(x, y, TAB_TOP + 0.1))
+    checks['m3_driver_access_clear']['%.1f,%.1f' % (x, y)] = hit(driver, cradle) < 0.05
 for x, y in m2_anchors:
-    shell = Part.makeCylinder(2.2, 8.0, App.Vector(x, y, 2.2)).cut(
-        Part.makeCylinder(M2_PILOT / 2, 8.1, App.Vector(x, y, 2.15)))
+    shell = Part.makeCylinder(2.2, TAB_TOP - 2.3, App.Vector(x, y, 2.2)).cut(
+        Part.makeCylinder(M2_PILOT / 2, TAB_TOP - 2.2, App.Vector(x, y, 2.15)))
     checks['pilot_thread_wall_mm3']['M2 %.1f,%.1f' % (x, y)] = round(hit(shell, cradle), 2)
 
 # Board-post material and mast-rim bearing are explicit release checks.
 checks['board_post_thread_wall_mm3'] = {}
 for x, y in board_holes:
-    shell = Part.makeCylinder(3.0, 6.6, App.Vector(x, y, BOARD_Z - 6.6)).cut(
-        Part.makeCylinder(M2_PILOT / 2, 6.7, App.Vector(x, y, BOARD_Z - 6.65)))
+    shell = Part.makeCylinder(3.0, BOARD_PILOT_DEPTH - 0.2,
+                              App.Vector(x, y, BOARD_Z - BOARD_PILOT_DEPTH)).cut(
+        Part.makeCylinder(M2_PILOT / 2, BOARD_PILOT_DEPTH - 0.1,
+                          App.Vector(x, y, BOARD_Z - BOARD_PILOT_DEPTH - 0.05)))
     checks['board_post_thread_wall_mm3']['%.3f,%.3f' % (x, y)] = round(hit(shell, cradle), 2)
 mast = master.getObject('MastBase').Shape
 left_contact = box(26.5, 29.1, 100.0, 126.0, 19.8, 20.0)
