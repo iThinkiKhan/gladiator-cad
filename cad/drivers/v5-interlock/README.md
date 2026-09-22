@@ -32,6 +32,9 @@ thing Jim called out. v5 moves the load into the plastic:
 - **High bosses have conventional solid supports.** Each high standoff boss
   keeps its Ø9 insertion face, steps into a compact Ø12 × 3 mm collar, and sits
   on a full 9 mm-wide triangular pedestal tied directly into the rib and seat.
+  The pedestal stays 0.5 mm inside the removable base wall, so the joint
+  clearance cut cannot carve a gap in it. The adjacent round opening remains
+  accessible for the M3 screw that joins the two mount pieces.
   The Ø4.6 × 8 mm insert pocket remains blind with solid material behind it;
   there are no longer any clipped cone or petal-like fragments.
 

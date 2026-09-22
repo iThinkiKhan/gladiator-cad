@@ -30,7 +30,7 @@
       "x_mm": 47.12,
       "y_mm": 45.25,
       "z_mm": 51.5,
-      "volume_cm3": 24.47,
+      "volume_cm3": 24.45,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
@@ -40,7 +40,7 @@
       "x_mm": 47.12,
       "y_mm": 45.25,
       "z_mm": 51.5,
-      "volume_cm3": 24.47,
+      "volume_cm3": 24.45,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"

@@ -24,25 +24,25 @@
       "stage": "wedge + boss pedestals",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.94
+      "vol_cm3": 28.21
     },
     {
       "stage": "wedge + seat + flange + groove",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.85
+      "vol_cm3": 28.14
     },
     {
       "stage": "wedge after cuts",
       "solids": 1,
       "single": true,
-      "vol_cm3": 25.53
+      "vol_cm3": 25.42
     },
     {
       "stage": "wedge final",
       "solids": 1,
       "single": true,
-      "vol_cm3": 24.47
+      "vol_cm3": 24.45
     }
   ],
   "checks": {
@@ -50,8 +50,8 @@
     "base_single": true,
     "wedge_single": true,
     "base_cm3": 17.27,
-    "wedge_cm3": 24.47,
-    "total_cm3": 41.74,
+    "wedge_cm3": 24.45,
+    "total_cm3": 41.72,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
       "u5_v6": 317.6,
@@ -76,6 +76,11 @@
       "Y134_Z76": 14.75
     },
     "counterbore_depth_mm": 3.5,
+    "high_pedestal_base_overlap_mm3": 0.0,
+    "high_pedestal_retained_mm3": [
+      93.5,
+      93.5
+    ],
     "high_boss_support": {
       "style": "full-width triangular pedestal with cylindrical collar",
       "pedestal_width_mm": 9.0,
@@ -106,7 +111,6 @@
     "master_unchanged": true
   },
   "notes": [
-    "wedge: cut 0.6 mm3 against UpperDeck",
-    "wedge: removed 86.5 mm3 isolated pedestal tips"
+    "wedge: cut 0.6 mm3 against UpperDeck"
   ]
 }

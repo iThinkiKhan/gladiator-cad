@@ -47,7 +47,6 @@ SEAT_T = 7.0                  # 2.7 mm roof remains above the 4.3 mm groove
 FLANGE_X0 = 8.0               # wedge flange 9 mm thick, takes a 7.05 insert
 CBORE_D, CBORE_DEPTH = 6.0, 3.5
 STOP = (10.0, 14.0, 113.0, 117.0, 2.0)  # x0, x1, y0, y1, height
-GUSSET_INSET = 3.0           # overlaps 4.5 mm-radius boss by 1.5 mm
 GUSSET_WIDTH = BOSS_OD       # full-width solid pedestal under each high boss
 BOSS_COLLAR_R = 6.0          # compact, conventional shoulder behind high boss
 BOSS_COLLAR_H = 3.0
@@ -159,28 +158,28 @@ stage('wedge ribs+spine', wedge)
 for u, v in HOLES:
     wedge = wedge.fuse(Part.makeCylinder(BOSS_OD / 2, slabt + 2.0,
                                          at(u, v, W_BOSS - slabt - 2.0), N))
-# The high pair carries the longer lever arm.  A full-width triangular
-# pedestal connects the underside of each boss column directly to the rib and
-# seat.  This replaces the clipped cones that left petal-like fragments.
+# The high pair carries the longer lever arm. The web stays at X <= 16.5,
+# clear of the removable base wall at X >= 17, and joins the wedge flange below
+# Z82. Its upper edge bites into the boss while staying behind the board face.
+high_pedestals = []
 for u in (5.0, 44.5):
     v = 5.75
     wedge = wedge.fuse(Part.makeCylinder(
         BOSS_COLLAR_R, BOSS_COLLAR_H,
         at(u, v, W_BOSS - BOSS_COLLAR_SETBACK - BOSS_COLLAR_H), N))
     face_center = at(u, v, W_BOSS)
-    root_center = at(u, v, W_BOSS - slabt - 2.0)
-    face_bite = face_center + VV * GUSSET_INSET
-    root_bite = root_center + VV * GUSSET_INSET
-    anchor = A.Vector(WALL_X0 - 1.0, face_center.y, FOOT_TOP)
+    wall_side = WALL_X0 - 0.5
     pedestal_profile = [
-        (face_bite.x, face_bite.z),
-        (root_bite.x, root_bite.z),
-        (anchor.x, anchor.z),
+        (face_center.x - 2.1, face_center.z - 2.4),
+        (wall_side, face_center.z - 1.0),
+        (wall_side, WALL_TOP - 4.0),
     ]
-    wedge = wedge.fuse(xz_prism(
+    pedestal = xz_prism(
         pedestal_profile,
         face_center.y - GUSSET_WIDTH / 2,
-        face_center.y + GUSSET_WIDTH / 2))
+        face_center.y + GUSSET_WIDTH / 2)
+    high_pedestals.append(pedestal)
+    wedge = wedge.fuse(pedestal)
 wedge = wedge.removeSplitter()
 stage('wedge + boss pedestals', wedge)
 
@@ -223,14 +222,6 @@ for y, z in JOINT:
     wedge = wedge.cut(Part.makeCylinder(INS_BORE / 2, INS_DEPTH,
                                         A.Vector(WALL_X0 + 0.1, y, z), A.Vector(-1, 0, 0)))
 wedge = wedge.removeSplitter()
-# Boolean cutting can isolate the two tiny pedestal tips inside the insert
-# pockets. They have no load path or printable purpose; retain the connected
-# mount body only.
-if len(wedge.Solids) > 1:
-    keep = max(wedge.Solids, key=lambda s: s.Volume)
-    dropped = wedge.Volume - keep.Volume
-    rep['notes'].append('wedge: removed %.1f mm3 isolated pedestal tips' % dropped)
-    wedge = keep.removeSplitter()
 stage('wedge final', wedge)
 
 # Cut the coupon from the final printable parts, after all installed-clearance
@@ -298,6 +289,10 @@ for y, z in JOINT:
             wall += 0.25
     rep['checks']['insert_room']['Y%.0f_Z%.0f' % (y, z)] = round(wall, 2)
 rep['checks']['counterbore_depth_mm'] = CBORE_DEPTH
+rep['checks']['high_pedestal_base_overlap_mm3'] = round(
+    sum(hit(pedestal, base) for pedestal in high_pedestals), 3)
+rep['checks']['high_pedestal_retained_mm3'] = [
+    round(hit(pedestal, wedge), 1) for pedestal in high_pedestals]
 rep['checks']['high_boss_support'] = {
     'style': 'full-width triangular pedestal with cylindrical collar',
     'pedestal_width_mm': GUSSET_WIDTH,
@@ -336,6 +331,8 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['base_wedge_overlap'] < 0.001 and
         rep['checks']['coupon_base_single'] and rep['checks']['coupon_wedge_single'] and
         rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
+        rep['checks']['high_pedestal_base_overlap_mm3'] < 0.001 and
+        min(rep['checks']['high_pedestal_retained_mm3']) > 25.0 and
         rep['checks']['groove_min_edge_web_mm'] >= 1.0 and
         rep['checks']['seat_roof_above_groove_mm'] >= 2.7 and
         rep['checks']['upper_counterbore_wall_above_mm'] >= 3.0 and
