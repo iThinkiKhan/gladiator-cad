@@ -47,7 +47,11 @@ SEAT_T = 7.0                  # 2.7 mm roof remains above the 4.3 mm groove
 FLANGE_X0 = 8.0               # wedge flange 9 mm thick, takes a 7.05 insert
 CBORE_D, CBORE_DEPTH = 6.0, 3.5
 STOP = (10.0, 14.0, 113.0, 117.0, 2.0)  # x0, x1, y0, y1, height
-BOSS_FLARE_R, BOSS_FLARE_H = 7.5, 6.0
+GUSSET_INSET = 3.0           # overlaps 4.5 mm-radius boss by 1.5 mm
+GUSSET_WIDTH = BOSS_OD       # full-width solid pedestal under each high boss
+BOSS_COLLAR_R = 6.0          # compact, conventional shoulder behind high boss
+BOSS_COLLAR_H = 3.0
+BOSS_COLLAR_SETBACK = 1.0    # retain the Ø9 insertion face for the last 1 mm
 
 th = math.radians(CANT)
 N = A.Vector(-math.sin(th), 0.0, math.cos(th))
@@ -77,8 +81,11 @@ rep = {'cant_deg': CANT, 'standoff_mm': STANDOFF, 'stages': [], 'checks': {}, 'n
 
 def stage(name, sh):
     ok = sh.isValid() and len(sh.Solids) == 1
-    rep['stages'].append({'stage': name, 'solids': len(sh.Solids), 'single': ok,
-                          'vol_cm3': round(sh.Volume / 1000.0, 2)})
+    row = {'stage': name, 'solids': len(sh.Solids), 'single': ok,
+           'vol_cm3': round(sh.Volume / 1000.0, 2)}
+    if not ok:
+        row['solid_vol_cm3'] = [round(s.Volume / 1000.0, 3) for s in sh.Solids]
+    rep['stages'].append(row)
     return ok
 
 C_LINE = at(0, 0, W_BOSS).z - at(0, 0, W_BOSS).x
@@ -152,15 +159,30 @@ stage('wedge ribs+spine', wedge)
 for u, v in HOLES:
     wedge = wedge.fuse(Part.makeCylinder(BOSS_OD / 2, slabt + 2.0,
                                          at(u, v, W_BOSS - slabt - 2.0), N))
-# The high pair carries the longer lever arm.  Taper each boss into the spine
-# rather than ending the cylindrical boss at an abrupt shoulder.
+# The high pair carries the longer lever arm.  A full-width triangular
+# pedestal connects the underside of each boss column directly to the rib and
+# seat.  This replaces the clipped cones that left petal-like fragments.
 for u in (5.0, 44.5):
     v = 5.75
-    wedge = wedge.fuse(Part.makeCone(BOSS_FLARE_R, BOSS_OD / 2,
-                                     BOSS_FLARE_H,
-                                     at(u, v, W_BOSS - BOSS_FLARE_H), N))
+    wedge = wedge.fuse(Part.makeCylinder(
+        BOSS_COLLAR_R, BOSS_COLLAR_H,
+        at(u, v, W_BOSS - BOSS_COLLAR_SETBACK - BOSS_COLLAR_H), N))
+    face_center = at(u, v, W_BOSS)
+    root_center = at(u, v, W_BOSS - slabt - 2.0)
+    face_bite = face_center + VV * GUSSET_INSET
+    root_bite = root_center + VV * GUSSET_INSET
+    anchor = A.Vector(WALL_X0 - 1.0, face_center.y, FOOT_TOP)
+    pedestal_profile = [
+        (face_bite.x, face_bite.z),
+        (root_bite.x, root_bite.z),
+        (anchor.x, anchor.z),
+    ]
+    wedge = wedge.fuse(xz_prism(
+        pedestal_profile,
+        face_center.y - GUSSET_WIDTH / 2,
+        face_center.y + GUSSET_WIDTH / 2))
 wedge = wedge.removeSplitter()
-stage('wedge + flared bosses', wedge)
+stage('wedge + boss pedestals', wedge)
 
 # joint flange against the base wall
 seat = Part.makeBox(WALL_X0, 51.5, SEAT_T, A.Vector(0.0, 89.0, FOOT_TOP))
@@ -201,6 +223,14 @@ for y, z in JOINT:
     wedge = wedge.cut(Part.makeCylinder(INS_BORE / 2, INS_DEPTH,
                                         A.Vector(WALL_X0 + 0.1, y, z), A.Vector(-1, 0, 0)))
 wedge = wedge.removeSplitter()
+# Boolean cutting can isolate the two tiny pedestal tips inside the insert
+# pockets. They have no load path or printable purpose; retain the connected
+# mount body only.
+if len(wedge.Solids) > 1:
+    keep = max(wedge.Solids, key=lambda s: s.Volume)
+    dropped = wedge.Volume - keep.Volume
+    rep['notes'].append('wedge: removed %.1f mm3 isolated pedestal tips' % dropped)
+    wedge = keep.removeSplitter()
 stage('wedge final', wedge)
 
 # Cut the coupon from the final printable parts, after all installed-clearance
@@ -268,6 +298,15 @@ for y, z in JOINT:
             wall += 0.25
     rep['checks']['insert_room']['Y%.0f_Z%.0f' % (y, z)] = round(wall, 2)
 rep['checks']['counterbore_depth_mm'] = CBORE_DEPTH
+rep['checks']['high_boss_support'] = {
+    'style': 'full-width triangular pedestal with cylindrical collar',
+    'pedestal_width_mm': GUSSET_WIDTH,
+    'collar_diameter_mm': 2 * BOSS_COLLAR_R,
+    'collar_length_mm': BOSS_COLLAR_H,
+    'insert_pocket_diameter_mm': BOSS_BORE,
+    'insert_pocket_depth_mm': BOSS_DEPTH + 0.2,
+    'solid_backing_mm': round(slabt + 2.0 - (BOSS_DEPTH + 0.2), 2),
+}
 rep['checks']['upper_counterbore_wall_above_mm'] = round(
     WALL_TOP - (max(z for _, z in JOINT) + CBORE_D / 2), 2)
 rep['checks']['seat_roof_above_groove_mm'] = round(

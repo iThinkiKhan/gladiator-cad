@@ -21,28 +21,28 @@
       "vol_cm3": 25.67
     },
     {
-      "stage": "wedge + flared bosses",
+      "stage": "wedge + boss pedestals",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.41
+      "vol_cm3": 28.94
     },
     {
       "stage": "wedge + seat + flange + groove",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.34
+      "vol_cm3": 28.85
     },
     {
       "stage": "wedge after cuts",
       "solids": 1,
       "single": true,
-      "vol_cm3": 25.59
+      "vol_cm3": 25.53
     },
     {
       "stage": "wedge final",
       "solids": 1,
       "single": true,
-      "vol_cm3": 24.63
+      "vol_cm3": 24.47
     }
   ],
   "checks": {
@@ -50,13 +50,13 @@
     "base_single": true,
     "wedge_single": true,
     "base_cm3": 17.27,
-    "wedge_cm3": 24.63,
-    "total_cm3": 41.9,
+    "wedge_cm3": 24.47,
+    "total_cm3": 41.74,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
-      "u5_v6": 305.7,
+      "u5_v6": 317.6,
       "u5_v45": 409.9,
-      "u44_v6": 305.7,
+      "u44_v6": 317.6,
       "u44_v45": 409.9
     },
     "deck_screw_access_95": 0.0,
@@ -76,6 +76,15 @@
       "Y134_Z76": 14.75
     },
     "counterbore_depth_mm": 3.5,
+    "high_boss_support": {
+      "style": "full-width triangular pedestal with cylindrical collar",
+      "pedestal_width_mm": 9.0,
+      "collar_diameter_mm": 12.0,
+      "collar_length_mm": 3.0,
+      "insert_pocket_diameter_mm": 4.6,
+      "insert_pocket_depth_mm": 8.2,
+      "solid_backing_mm": 6.8
+    },
     "upper_counterbore_wall_above_mm": 3.0,
     "seat_roof_above_groove_mm": 2.7,
     "tongue_top_lead_mm": 0.6,
@@ -97,6 +106,7 @@
     "master_unchanged": true
   },
   "notes": [
-    "wedge: cut 0.6 mm3 against UpperDeck"
+    "wedge: cut 0.6 mm3 against UpperDeck",
+    "wedge: removed 86.5 mm3 isolated pedestal tips"
   ]
 }

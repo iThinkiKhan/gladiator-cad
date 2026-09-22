@@ -29,15 +29,17 @@ thing Jim called out. v5 moves the load into the plastic:
   to Z82 leaves **3.0 mm above the upper counterbore** instead of 1.0 mm.
 - **Inserts in the wedge, with room.** The flange is 9 mm thick and there is
   **15.0 mm of material behind each bore** against the 7.05 mm insert.
-- **High bosses flare into the spine.** Each high standoff boss transitions
-  through a 6 mm-long conical gusset to a 15 mm-diameter root instead of ending
-  at an abrupt cylindrical shoulder.
+- **High bosses have conventional solid supports.** Each high standoff boss
+  keeps its Ø9 insertion face, steps into a compact Ø12 × 3 mm collar, and sits
+  on a full 9 mm-wide triangular pedestal tied directly into the rib and seat.
+  The Ø4.6 × 8 mm insert pocket remains blind with solid material behind it;
+  there are no longer any clipped cone or petal-like fragments.
 
 ## Measured
 
 | | v3 | v4 | v5 |
 | --- | ---: | ---: | ---: |
-| Boss support, high pair | 0.0 mm³ | 277 | **306** |
+| Boss support, high pair | 0.0 mm³ | 277 | **318** |
 | Boss support, low pair | 129 | 410 | **410** |
 | Seat contact | n/a | none | **536 mm²** after lead-in + locator reliefs |
 | Interlock | none | none | **4 mm, full 51.5 mm length** |
@@ -46,7 +48,7 @@ thing Jim called out. v5 moves the load into the plastic:
 | Seat roof above groove | n/a | 0.4 mm | **2.7 mm** |
 | Material behind insert | n/a | 4 mm flange | **15.0 mm** |
 | Deck bearing | 1411 mm² | 803 | **954** |
-| Volume | 20.4 cm³ | 37.0 | **41.9** |
+| Volume | 20.4 cm³ | 37.0 | **41.7** |
 
 Both pieces single valid solids at every build stage, zero overlap between them,
 zero clashes against eleven robot solids, both deck screws open, all four
