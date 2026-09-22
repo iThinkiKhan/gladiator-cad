@@ -12,7 +12,7 @@
       "stage": "base final",
       "solids": 1,
       "single": true,
-      "vol_cm3": 17.27
+      "vol_cm3": 16.61
     },
     {
       "stage": "wedge ribs+spine",
@@ -24,40 +24,70 @@
       "stage": "wedge + boss pedestals",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.21
+      "vol_cm3": 27.06
     },
     {
       "stage": "wedge + seat + flange + groove",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.14
+      "vol_cm3": 27.0
     },
     {
       "stage": "wedge after cuts",
       "solids": 1,
       "single": true,
-      "vol_cm3": 25.42
+      "vol_cm3": 24.8
     },
     {
       "stage": "wedge final",
       "solids": 1,
       "single": true,
-      "vol_cm3": 24.45
+      "vol_cm3": 23.74
     }
   ],
   "checks": {
     "boss_plane_Z_eq_X_plus": 70.79,
     "base_single": true,
     "wedge_single": true,
-    "base_cm3": 17.27,
-    "wedge_cm3": 24.45,
-    "total_cm3": 41.72,
+    "base_cm3": 16.61,
+    "wedge_cm3": 23.74,
+    "total_cm3": 40.35,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
-      "u5_v6": 317.6,
+      "u5_v6": 282.3,
       "u5_v45": 409.9,
-      "u44_v6": 317.6,
+      "u44_v6": 282.3,
       "u44_v45": 409.9
+    },
+    "boss_wall_fraction_by_depth": {
+      "u5_v6": {
+        "0.2": 1.0,
+        "2.0": 1.0,
+        "4.0": 1.0,
+        "6.0": 1.0,
+        "8.0": 1.0
+      },
+      "u5_v45": {
+        "0.2": 1.0,
+        "2.0": 1.0,
+        "4.0": 1.0,
+        "6.0": 1.0,
+        "8.0": 1.0
+      },
+      "u44_v6": {
+        "0.2": 1.0,
+        "2.0": 1.0,
+        "4.0": 1.0,
+        "6.0": 1.0,
+        "8.0": 1.0
+      },
+      "u44_v45": {
+        "0.2": 1.0,
+        "2.0": 1.0,
+        "4.0": 1.0,
+        "6.0": 1.0,
+        "8.0": 1.0
+      }
     },
     "deck_screw_access_95": 0.0,
     "deck_screw_open_95": true,
@@ -71,24 +101,24 @@
     "flange_thickness_mm": 9.0,
     "insert_room": {
       "Y95_Z68": 15.0,
-      "Y95_Z76": 14.75,
+      "Y105_Z76": 14.75,
       "Y134_Z68": 15.0,
-      "Y134_Z76": 14.75
+      "Y124_Z76": 14.75
     },
     "counterbore_depth_mm": 3.5,
     "high_pedestal_base_overlap_mm3": 0.0,
     "high_pedestal_retained_mm3": [
-      93.5,
-      93.5
+      93.6,
+      93.6
     ],
+    "upper_joint_boss_clearance_web_mm": 2.1,
     "high_boss_support": {
-      "style": "full-width triangular pedestal with cylindrical collar",
+      "style": "constant-diameter boss with planar triangular web",
       "pedestal_width_mm": 9.0,
-      "collar_diameter_mm": 12.0,
-      "collar_length_mm": 3.0,
+      "boss_diameter_mm": 9.0,
       "insert_pocket_diameter_mm": 4.6,
       "insert_pocket_depth_mm": 8.2,
-      "solid_backing_mm": 6.8
+      "solid_backing_mm": 2.8
     },
     "upper_counterbore_wall_above_mm": 3.0,
     "seat_roof_above_groove_mm": 2.7,
@@ -110,7 +140,5 @@
     "deck_bearing_mm2": 953.8,
     "master_unchanged": true
   },
-  "notes": [
-    "wedge: cut 0.6 mm3 against UpperDeck"
-  ]
+  "notes": []
 }

@@ -24,6 +24,8 @@ OUT = ROOT / 'cad/drivers/v5-interlock'
 
 CANT, X0, Z0, STANDOFF = 45.0, 8.0, 100.0, 15.0
 BOSS_OD, BOSS_BORE, BOSS_DEPTH = 9.0, 4.6, 8.0
+BOSS_COLUMN_H = BOSS_DEPTH + 3.0
+BOSS_BASE_CLEARANCE = 0.4
 DECK_TOP, FOOT_TOP = 52.0, 62.0
 DECK_BOSS_D, DECK_BOSS_TOP = 9.0, 58.0
 SCREWS = [(14.5, 95.0), (14.5, 135.0)]
@@ -35,7 +37,7 @@ HOLES = [(u, v) for u in (5.0, 44.5) for v in (5.75, 45.25)]
 HS_V0, HS_V1, HS_U0, HS_U1 = 9.5, 41.5, 8.75, 40.75
 PCB_T, HS_PROUD = 3.2, 28.0
 WALL_X0, WALL_X1, WALL_TOP = 17.0, 23.0, 82.0
-JOINT = [(95.0, 68.0), (95.0, 76.0), (134.5, 68.0), (134.5, 76.0)]
+JOINT = [(95.0, 68.0), (105.0, 76.0), (134.5, 68.0), (124.5, 76.0)]
 RIBS = [(89.0, 98.0), (131.5, 140.5)]
 FOOT_X1 = 23.0
 TONGUE = (2.0, 6.0, 4.0)      # X0, X1, height above FOOT_TOP - full length in Y
@@ -48,9 +50,6 @@ FLANGE_X0 = 8.0               # wedge flange 9 mm thick, takes a 7.05 insert
 CBORE_D, CBORE_DEPTH = 6.0, 3.5
 STOP = (10.0, 14.0, 113.0, 117.0, 2.0)  # x0, x1, y0, y1, height
 GUSSET_WIDTH = BOSS_OD       # full-width solid pedestal under each high boss
-BOSS_COLLAR_R = 6.0          # compact, conventional shoulder behind high boss
-BOSS_COLLAR_H = 3.0
-BOSS_COLLAR_SETBACK = 1.0    # retain the Ø9 insertion face for the last 1 mm
 
 th = math.radians(CANT)
 N = A.Vector(-math.sin(th), 0.0, math.cos(th))
@@ -128,6 +127,12 @@ for y, z in JOINT:
                                       A.Vector(WALL_X1 + 0.2, y, z), A.Vector(-1, 0, 0)))
     base = base.cut(Part.makeCylinder(CBORE_D / 2, CBORE_DEPTH,
                                       A.Vector(WALL_X1 + 0.01, y, z), A.Vector(-1, 0, 0)))
+# Open the base wall around the two upper boss columns. The upper M3 joint
+# screws are offset along Y so these clearances do not cut into counterbores.
+for u in (5.0, 44.5):
+    base = base.cut(Part.makeCylinder(
+        BOSS_OD / 2 + BOSS_BASE_CLEARANCE, BOSS_COLUMN_H + 0.4,
+        at(u, 5.75, W_BOSS - BOSS_COLUMN_H - 0.2), N))
 base = base.removeSplitter()
 stage('base final', base)
 
@@ -154,19 +159,16 @@ spine = spine.cut(Part.makeBox(90.0, 60.0, 40.0, A.Vector(-70.0, 85.0, DECK_TOP 
 wedge = wedge.fuse(spine).removeSplitter()
 stage('wedge ribs+spine', wedge)
 
-# bosses merged: a column from the boss face down through the spine
+# Boss columns have a full wall for the insert pocket and 3 mm of backing.
 for u, v in HOLES:
-    wedge = wedge.fuse(Part.makeCylinder(BOSS_OD / 2, slabt + 2.0,
-                                         at(u, v, W_BOSS - slabt - 2.0), N))
+    wedge = wedge.fuse(Part.makeCylinder(BOSS_OD / 2, BOSS_COLUMN_H,
+                                         at(u, v, W_BOSS - BOSS_COLUMN_H), N))
 # The high pair carries the longer lever arm. The web stays at X <= 16.5,
 # clear of the removable base wall at X >= 17, and joins the wedge flange below
 # Z82. Its upper edge bites into the boss while staying behind the board face.
 high_pedestals = []
 for u in (5.0, 44.5):
     v = 5.75
-    wedge = wedge.fuse(Part.makeCylinder(
-        BOSS_COLLAR_R, BOSS_COLLAR_H,
-        at(u, v, W_BOSS - BOSS_COLLAR_SETBACK - BOSS_COLLAR_H), N))
     face_center = at(u, v, W_BOSS)
     wall_side = WALL_X0 - 0.5
     pedestal_profile = [
@@ -242,11 +244,20 @@ rep['checks']['base_wedge_overlap'] = round(hit(base, wedge), 2)
 
 # the thing that broke v3: material around each boss base
 rep['checks']['boss_support_mm3'] = {}
+rep['checks']['boss_wall_fraction_by_depth'] = {}
 for u, v in HOLES:
     b0 = at(u, v, W_BOSS - 3.0)
     ring = Part.makeCylinder(9.0, 3.0, b0, N).cut(
         Part.makeCylinder(4.5, 4.0, at(u, v, W_BOSS - 3.5), N))
     rep['checks']['boss_support_mm3']['u%.0f_v%.0f' % (u, v)] = round(hit(ring, wedge), 1)
+    fractions = {}
+    for depth in (0.2, 2.0, 4.0, 6.0, 8.0):
+        ring_slice = Part.makeCylinder(
+            BOSS_OD / 2, 0.2, at(u, v, W_BOSS - depth - 0.1), N).cut(
+                Part.makeCylinder(BOSS_BORE / 2, 0.4,
+                                  at(u, v, W_BOSS - depth - 0.2), N))
+        fractions[str(depth)] = round(hit(ring_slice, wedge) / ring_slice.Volume, 3)
+    rep['checks']['boss_wall_fraction_by_depth']['u%.0f_v%.0f' % (u, v)] = fractions
 
 for x, y in SCREWS:
     ac = Part.makeCylinder(2.0, 60.0, A.Vector(x, y, FOOT_TOP))
@@ -293,14 +304,16 @@ rep['checks']['high_pedestal_base_overlap_mm3'] = round(
     sum(hit(pedestal, base) for pedestal in high_pedestals), 3)
 rep['checks']['high_pedestal_retained_mm3'] = [
     round(hit(pedestal, wedge), 1) for pedestal in high_pedestals]
+rep['checks']['upper_joint_boss_clearance_web_mm'] = round(
+    min(abs(y - (ORG.y + u)) for y, z in JOINT if z == 76.0
+        for u in (5.0, 44.5)) - (BOSS_OD / 2 + BOSS_BASE_CLEARANCE) - CBORE_D / 2, 2)
 rep['checks']['high_boss_support'] = {
-    'style': 'full-width triangular pedestal with cylindrical collar',
+    'style': 'constant-diameter boss with planar triangular web',
     'pedestal_width_mm': GUSSET_WIDTH,
-    'collar_diameter_mm': 2 * BOSS_COLLAR_R,
-    'collar_length_mm': BOSS_COLLAR_H,
+    'boss_diameter_mm': BOSS_OD,
     'insert_pocket_diameter_mm': BOSS_BORE,
     'insert_pocket_depth_mm': BOSS_DEPTH + 0.2,
-    'solid_backing_mm': round(slabt + 2.0 - (BOSS_DEPTH + 0.2), 2),
+    'solid_backing_mm': round(BOSS_COLUMN_H - (BOSS_DEPTH + 0.2), 2),
 }
 rep['checks']['upper_counterbore_wall_above_mm'] = round(
     WALL_TOP - (max(z for _, z in JOINT) + CBORE_D / 2), 2)
@@ -333,6 +346,9 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
         rep['checks']['high_pedestal_base_overlap_mm3'] < 0.001 and
         min(rep['checks']['high_pedestal_retained_mm3']) > 25.0 and
+        rep['checks']['upper_joint_boss_clearance_web_mm'] >= 2.0 and
+        all(min(fractions.values()) >= 0.99 for fractions in
+            rep['checks']['boss_wall_fraction_by_depth'].values()) and
         rep['checks']['groove_min_edge_web_mm'] >= 1.0 and
         rep['checks']['seat_roof_above_groove_mm'] >= 2.7 and
         rep['checks']['upper_counterbore_wall_above_mm'] >= 3.0 and

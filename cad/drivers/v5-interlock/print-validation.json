@@ -1,7 +1,7 @@
 {
   "driver_plate": "Gladiator_PlateI_DRIVER-V5-INTERLOCK.3mf",
   "driver_plate_used_mm": [
-    164.23,
+    158.58,
     51.5
   ],
   "parts": [
@@ -10,7 +10,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 17.27,
+      "volume_cm3": 16.61,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -20,27 +20,27 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 17.27,
+      "volume_cm3": 16.61,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
     },
     {
       "name": "Wedge_L",
-      "x_mm": 47.12,
-      "y_mm": 45.25,
+      "x_mm": 44.29,
+      "y_mm": 42.07,
       "z_mm": 51.5,
-      "volume_cm3": 24.45,
+      "volume_cm3": 23.74,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
     },
     {
       "name": "Wedge_R",
-      "x_mm": 47.12,
-      "y_mm": 45.25,
+      "x_mm": 44.29,
+      "y_mm": 42.07,
       "z_mm": 51.5,
-      "volume_cm3": 24.45,
+      "volume_cm3": 23.74,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"

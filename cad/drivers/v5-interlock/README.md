@@ -29,20 +29,19 @@ thing Jim called out. v5 moves the load into the plastic:
   to Z82 leaves **3.0 mm above the upper counterbore** instead of 1.0 mm.
 - **Inserts in the wedge, with room.** The flange is 9 mm thick and there is
   **15.0 mm of material behind each bore** against the 7.05 mm insert.
-- **High bosses have conventional solid supports.** Each high standoff boss
-  keeps its Ø9 insertion face, steps into a compact Ø12 × 3 mm collar, and sits
-  on a full 9 mm-wide triangular pedestal tied directly into the rib and seat.
-  The pedestal stays 0.5 mm inside the removable base wall, so the joint
-  clearance cut cannot carve a gap in it. The adjacent round opening remains
-  accessible for the M3 screw that joins the two mount pieces.
-  The Ø4.6 × 8 mm insert pocket remains blind with solid material behind it;
-  there are no longer any clipped cone or petal-like fragments.
+- **High bosses are complete cylinders.** Each Ø9 boss has an Ø4.6 × 8.2 mm
+  blind insert pocket and 2.8 mm of solid backing. A flat 9 mm-wide web ties it
+  to the flange. The base wall has matching clearance pockets around the upper
+  boss columns, so none of the boss wall is carved away during assembly. The
+  two upper M3 joint screws moved inward along Y to preserve a 2.1 mm web
+  between their counterbores and these clearances. Print the new base and wedge
+  together; their upper screw locations differ from earlier v5 parts.
 
 ## Measured
 
 | | v3 | v4 | v5 |
 | --- | ---: | ---: | ---: |
-| Boss support, high pair | 0.0 mm³ | 277 | **318** |
+| Boss support, high pair | 0.0 mm³ | 277 | **282** |
 | Boss support, low pair | 129 | 410 | **410** |
 | Seat contact | n/a | none | **536 mm²** after lead-in + locator reliefs |
 | Interlock | none | none | **4 mm, full 51.5 mm length** |
@@ -51,7 +50,7 @@ thing Jim called out. v5 moves the load into the plastic:
 | Seat roof above groove | n/a | 0.4 mm | **2.7 mm** |
 | Material behind insert | n/a | 4 mm flange | **15.0 mm** |
 | Deck bearing | 1411 mm² | 803 | **954** |
-| Volume | 20.4 cm³ | 37.0 | **41.7** |
+| Volume | 20.4 cm³ | 37.0 | **40.4** |
 
 Both pieces single valid solids at every build stage, zero overlap between them,
 zero clashes against eleven robot solids, both deck screws open, all four
