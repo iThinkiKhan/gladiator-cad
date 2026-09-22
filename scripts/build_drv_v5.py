@@ -1,4 +1,4 @@
-"""Driver mount v4 - two pieces. Base bolts to the deck, wedge bolts to the base.
+"""Driver mount v5 - interlocked two-piece structural mount.
 
 Splitting it removes the conflict that broke v3: the board's high bosses land at
 X 14.54 / Y 95 and 135, which is exactly where the deck screws are. In one piece
@@ -34,14 +34,20 @@ BU, BV = 49.5, 51.0
 HOLES = [(u, v) for u in (5.0, 44.5) for v in (5.75, 45.25)]
 HS_V0, HS_V1, HS_U0, HS_U1 = 9.5, 41.5, 8.75, 40.75
 PCB_T, HS_PROUD = 3.2, 28.0
-WALL_X0, WALL_X1, WALL_TOP = 17.0, 23.0, 80.0   # wall thick enough to counterbore
+WALL_X0, WALL_X1, WALL_TOP = 17.0, 23.0, 82.0
 JOINT = [(95.0, 68.0), (95.0, 76.0), (134.5, 68.0), (134.5, 76.0)]
 RIBS = [(89.0, 98.0), (131.5, 140.5)]
 FOOT_X1 = 23.0
 TONGUE = (2.0, 6.0, 4.0)      # X0, X1, height above FOOT_TOP - full length in Y
-SEAT_T = 4.5                  # wedge bottom plate thickness
+TONGUE_TOP_LEAD = 0.6
+TONGUE_ROOT_R = 0.8
+GROOVE_CLEAR = 0.2
+GROOVE_LEAD_H = 1.1
+SEAT_T = 7.0                  # 2.7 mm roof remains above the 4.3 mm groove
 FLANGE_X0 = 8.0               # wedge flange 9 mm thick, takes a 7.05 insert
 CBORE_D, CBORE_DEPTH = 6.0, 3.5
+STOP = (10.0, 14.0, 113.0, 117.0, 2.0)  # x0, x1, y0, y1, height
+BOSS_FLARE_R, BOSS_FLARE_H = 7.5, 6.0
 
 th = math.radians(CANT)
 N = A.Vector(-math.sin(th), 0.0, math.cos(th))
@@ -60,6 +66,11 @@ def hit(a, c):
     except Exception:
         return 0.0
 
+def xz_prism(profile, y0, y1):
+    pts = [A.Vector(x, y0, z) for x, z in profile]
+    return Part.Face(Part.makePolygon(pts + [pts[0]])).extrude(
+        A.Vector(0, y1 - y0, 0))
+
 before = hashlib.sha256(MASTER.read_bytes()).hexdigest()
 d = A.openDocument(str(MASTER))
 rep = {'cant_deg': CANT, 'standoff_mm': STANDOFF, 'stages': [], 'checks': {}, 'notes': []}
@@ -76,8 +87,24 @@ rep['checks']['boss_plane_Z_eq_X_plus'] = round(C_LINE, 2)
 
 # ============================== PIECE 1: BASE ==============================
 base = Part.makeBox(FOOT_X1, 51.5, FOOT_TOP - DECK_TOP, A.Vector(0.0, 89.0, DECK_TOP))
-base = base.fuse(Part.makeBox(TONGUE[1] - TONGUE[0], 51.5, TONGUE[2],
-                              A.Vector(TONGUE[0], 89.0, FOOT_TOP)))
+# Chamfered tongue top supplies the vertical assembly lead-in.
+tongue_profile = [
+    (TONGUE[0], FOOT_TOP), (TONGUE[1], FOOT_TOP),
+    (TONGUE[1], FOOT_TOP + TONGUE[2] - TONGUE_TOP_LEAD),
+    (TONGUE[1] - TONGUE_TOP_LEAD, FOOT_TOP + TONGUE[2]),
+    (TONGUE[0] + TONGUE_TOP_LEAD, FOOT_TOP + TONGUE[2]),
+    (TONGUE[0], FOOT_TOP + TONGUE[2] - TONGUE_TOP_LEAD),
+]
+base = base.fuse(xz_prism(tongue_profile, 89.0, 140.5))
+# Positive root fillets remove the two sharp tongue-to-foot stress risers.
+for x in TONGUE[:2]:
+    base = base.fuse(Part.makeCylinder(TONGUE_ROOT_R, 51.5,
+                                       A.Vector(x, 89.0, FOOT_TOP),
+                                       A.Vector(0, 1, 0)))
+# One compact peg/pocket pair provides fore/aft registration.
+sx0, sx1, sy0, sy1, sh = STOP
+base = base.fuse(Part.makeBox(sx1 - sx0, sy1 - sy0, sh,
+                              A.Vector(sx0, sy0, FOOT_TOP)))
 base = base.fuse(Part.makeBox(WALL_X1 - WALL_X0, 51.5, WALL_TOP - FOOT_TOP,
                               A.Vector(WALL_X0, 89.0, FOOT_TOP)))
 base = base.removeSplitter()
@@ -125,17 +152,38 @@ stage('wedge ribs+spine', wedge)
 for u, v in HOLES:
     wedge = wedge.fuse(Part.makeCylinder(BOSS_OD / 2, slabt + 2.0,
                                          at(u, v, W_BOSS - slabt - 2.0), N))
+# The high pair carries the longer lever arm.  Taper each boss into the spine
+# rather than ending the cylindrical boss at an abrupt shoulder.
+for u in (5.0, 44.5):
+    v = 5.75
+    wedge = wedge.fuse(Part.makeCone(BOSS_FLARE_R, BOSS_OD / 2,
+                                     BOSS_FLARE_H,
+                                     at(u, v, W_BOSS - BOSS_FLARE_H), N))
 wedge = wedge.removeSplitter()
-stage('wedge + merged bosses', wedge)
+stage('wedge + flared bosses', wedge)
 
 # joint flange against the base wall
 seat = Part.makeBox(WALL_X0, 51.5, SEAT_T, A.Vector(0.0, 89.0, FOOT_TOP))
 flange = Part.makeBox(WALL_X0 - FLANGE_X0, 51.5, WALL_TOP - FOOT_TOP,
                       A.Vector(FLANGE_X0, 89.0, FOOT_TOP))
 wedge = wedge.fuse(seat).fuse(flange).removeSplitter()
-# full-length groove for the base tongue: the interlock that takes the shear
-wedge = wedge.cut(Part.makeBox(TONGUE[1] - TONGUE[0] + 0.4, 52.0, TONGUE[2] + 0.2,
-                               A.Vector(TONGUE[0] - 0.2, 88.5, FOOT_TOP - 0.1)))
+# Full-length groove with a flared lower mouth.  The flare clears the tongue's
+# root fillets during vertical assembly, while the upper straight section keeps
+# the established 0.2 mm per-side running clearance.
+gx0 = TONGUE[0] - GROOVE_CLEAR
+gx1 = TONGUE[1] + GROOVE_CLEAR
+mouth_x0, mouth_x1 = 0.2, 7.8
+groove_profile = [
+    (mouth_x0, FOOT_TOP - 0.1), (mouth_x1, FOOT_TOP - 0.1),
+    (gx1, FOOT_TOP + GROOVE_LEAD_H),
+    (gx1, FOOT_TOP + TONGUE[2] + 0.3),
+    (gx0, FOOT_TOP + TONGUE[2] + 0.3),
+    (gx0, FOOT_TOP + GROOVE_LEAD_H),
+]
+wedge = wedge.cut(xz_prism(groove_profile, 88.5, 141.0))
+# Matching clearance pocket for the single fore/aft locator.
+wedge = wedge.cut(Part.makeBox((sx1 - sx0) + 0.4, (sy1 - sy0) + 0.4, sh + 0.3,
+                               A.Vector(sx0 - 0.2, sy0 - 0.2, FOOT_TOP - 0.1)))
 wedge = wedge.removeSplitter()
 stage('wedge + seat + flange + groove', wedge)
 
@@ -157,6 +205,14 @@ for y, z in JOINT:
                                         A.Vector(WALL_X0 + 0.1, y, z), A.Vector(-1, 0, 0)))
 wedge = wedge.removeSplitter()
 stage('wedge final', wedge)
+
+# Cut the coupon from the final printable parts, after all installed-clearance
+# and screw-bore operations.  It therefore preserves the exact joint profile,
+# full 51.5 mm length, lead-ins, locator, and any reliefs used by production.
+coupon_base = base.common(
+    Part.makeBox(16.0, 51.5, 11.0, A.Vector(0.0, 89.0, 58.0))).removeSplitter()
+coupon_wedge = wedge.common(
+    Part.makeBox(16.0, 51.5, 7.5, A.Vector(0.0, 89.0, FOOT_TOP - 0.2))).removeSplitter()
 
 # ============================== CHECKS =====================================
 rep['checks']['base_single'] = base.isValid() and len(base.Solids) == 1
@@ -215,6 +271,19 @@ for y, z in JOINT:
             wall += 0.25
     rep['checks']['insert_room']['Y%.0f_Z%.0f' % (y, z)] = round(wall, 2)
 rep['checks']['counterbore_depth_mm'] = CBORE_DEPTH
+rep['checks']['upper_counterbore_wall_above_mm'] = round(
+    WALL_TOP - (max(z for _, z in JOINT) + CBORE_D / 2), 2)
+rep['checks']['seat_roof_above_groove_mm'] = round(
+    FOOT_TOP + SEAT_T - (FOOT_TOP + TONGUE[2] + 0.3), 2)
+rep['checks']['tongue_top_lead_mm'] = TONGUE_TOP_LEAD
+rep['checks']['tongue_root_fillet_mm'] = TONGUE_ROOT_R
+rep['checks']['groove_lead_height_mm'] = GROOVE_LEAD_H
+rep['checks']['fore_aft_stop_clearance_mm'] = 0.2
+rep['checks']['coupon_base_single'] = coupon_base.isValid() and len(coupon_base.Solids) == 1
+rep['checks']['coupon_wedge_single'] = coupon_wedge.isValid() and len(coupon_wedge.Solids) == 1
+rep['checks']['coupon_base_wedge_overlap'] = round(hit(coupon_base, coupon_wedge), 4)
+rep['checks']['coupon_joint_length_mm'] = 51.5
+rep['checks']['standoff_status'] = 'provisional pending plugged-connector measurement'
 rep['checks']['standoff_clear'] = all(
     hit(Part.makeCylinder(3.0, STANDOFF, at(u, v, W_BOSS), N), wedge) < 0.05 for u, v in HOLES)
 sl = Part.makeBox(70, 60, 0.4, A.Vector(-25, 85, DECK_TOP - 0.01))
@@ -222,18 +291,26 @@ rep['checks']['deck_bearing_mm2'] = round(hit(sl, base) / 0.4, 1)
 rep['checks']['master_unchanged'] = (
     hashlib.sha256(MASTER.read_bytes()).hexdigest() == before)
 
-if rep['checks']['base_single'] and rep['checks']['wedge_single']:
+if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
+        rep['checks']['coupon_base_single'] and rep['checks']['coupon_wedge_single'] and
+        rep['checks']['coupon_base_wedge_overlap'] < 0.001):
     doc = A.newDocument('DriverMount_v5')
+    main_objects = []
     for nm, sh in [('Base_Left', base), ('Wedge_Left', wedge)]:
         o = doc.addObject('Part::Feature', nm)
         o.Shape = sh
+        main_objects.append(o)
         mir = sh.copy()
         mir.transformShape(A.Matrix(-1, 0, 0, 79.0, 0, 1, 0, 0, 0, 0, 1, 0))
         o2 = doc.addObject('Part::Feature', nm.replace('Left', 'Right'))
         o2.Shape = mir
+        main_objects.append(o2)
+    for nm, sh in [('Coupon_Base', coupon_base), ('Coupon_Wedge', coupon_wedge)]:
+        o = doc.addObject('Part::Feature', nm)
+        o.Shape = sh
     doc.recompute()
     doc.saveAs(str(OUT / 'DriverMount_v5.FCStd'))
-    Part.export(doc.Objects, str(OUT / 'DriverMount_v5.step'))
+    Part.export(main_objects, str(OUT / 'DriverMount_v5.step'))
     for nm, sh in [('Base_Left', base), ('Wedge_Left', wedge)]:
         s = sh.copy()
         s.translate(A.Vector(0, 0, -s.BoundBox.ZMin))
@@ -241,4 +318,4 @@ if rep['checks']['base_single'] and rep['checks']['wedge_single']:
                                Relative=False).write(str(OUT / 'stl' / (nm + '.stl')))
     (OUT / 'validation.json').write_text(json.dumps(rep, indent=2) + chr(10))
 
-Path('/tmp/drv4.json').write_text(json.dumps(rep, indent=2))
+Path('/tmp/drv5.json').write_text(json.dumps(rep, indent=2))

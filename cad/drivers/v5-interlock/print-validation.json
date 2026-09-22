@@ -9,8 +9,8 @@
       "name": "Base_L",
       "x_mm": 23.0,
       "y_mm": 51.5,
-      "z_mm": 28.0,
-      "volume_cm3": 16.59,
+      "z_mm": 30.0,
+      "volume_cm3": 17.27,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -19,8 +19,8 @@
       "name": "Base_R",
       "x_mm": 23.0,
       "y_mm": 51.5,
-      "z_mm": 28.0,
-      "volume_cm3": 16.59,
+      "z_mm": 30.0,
+      "volume_cm3": 17.27,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -29,8 +29,8 @@
       "name": "Wedge_L",
       "x_mm": 47.12,
       "y_mm": 44.9,
-      "z_mm": 51.5,
-      "volume_cm3": 24.38,
+      "z_mm": 54.5,
+      "volume_cm3": 24.6,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
@@ -39,8 +39,8 @@
       "name": "Wedge_R",
       "x_mm": 47.12,
       "y_mm": 44.9,
-      "z_mm": 51.5,
-      "volume_cm3": 24.38,
+      "z_mm": 54.5,
+      "volume_cm3": 24.6,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
@@ -48,27 +48,29 @@
   ],
   "coupon_plate": "Gladiator_DriverV5_INTERLOCK-FIT-COUPON.3mf",
   "coupon_plate_used_mm": [
-    28.0,
-    20.0
+    40.0,
+    51.5
   ],
   "coupon_parts": [
     {
-      "name": "Tongue",
-      "x_mm": 10.0,
-      "y_mm": 20.0,
-      "z_mm": 7.0,
-      "volume_cm3": 0.92,
+      "name": "BaseSection",
+      "x_mm": 16.0,
+      "y_mm": 51.5,
+      "z_mm": 8.0,
+      "volume_cm3": 4.11,
       "solid": true,
-      "self_intersections": false
+      "self_intersections": false,
+      "orientation": "full 51.5 mm length; production base orientation"
     },
     {
-      "name": "Groove",
-      "x_mm": 10.0,
-      "y_mm": 20.0,
-      "z_mm": 7.0,
-      "volume_cm3": 1.04,
+      "name": "WedgeSection",
+      "x_mm": 16.0,
+      "y_mm": 7.3,
+      "z_mm": 51.5,
+      "volume_cm3": 4.72,
       "solid": true,
-      "self_intersections": false
+      "self_intersections": false,
+      "orientation": "full 51.5 mm length; production wedge end-face orientation"
     }
   ],
   "settings": {

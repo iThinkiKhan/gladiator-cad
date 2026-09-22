@@ -1,4 +1,4 @@
-"""Build the print-ready driver-v5 plate and a separate interlock fit coupon.
+"""Build the print-ready driver-v5 plate and representative interlock coupon.
 
 The bases print on their deck faces.  OrcaSlicer 2.4.2's orientation analysis
 selects an end face for the wedges; that keeps the four standoff bores open and
@@ -36,10 +36,13 @@ def oriented_mesh(shape, down):
     d = V(down)
     d.normalize()
     s.Placement = App.Placement(V(), App.Rotation(d, V(0, 0, -1))).multiply(s.Placement)
-    bb = s.BoundBox
-    s.translate(V(-bb.XMin, -bb.YMin, -bb.ZMin))
-    return MeshPart.meshFromShape(Shape=s, LinearDeflection=LIN,
+    mesh = MeshPart.meshFromShape(Shape=s, LinearDeflection=LIN,
                                   AngularDeflection=ANG, Relative=False)
+    # Place the tessellated result, not just the B-rep, on the bed.  Curved
+    # fillets/cones can move the mesh bound by numerical microns.
+    bb = mesh.BoundBox
+    mesh.translate(-bb.XMin, -bb.YMin, -bb.ZMin)
+    return mesh
 
 
 def write_3mf(path, title, items):
@@ -141,18 +144,29 @@ def build_driver_plate(doc):
     return plate_name, report, used_x, used_y
 
 
-def build_coupon():
-    # Exact v5 pair: 4.00 tongue in a 4.40 x 4.20 groove (0.20 per side,
-    # 0.20 over the tongue).  Both print open-side-up without support.
-    tongue = Part.makeBox(10, 20, 3).fuse(
-        Part.makeBox(4, 20, 4, V(3, 0, 3))).removeSplitter()
-    receiver = Part.makeBox(10, 20, 7).cut(
-        Part.makeBox(4.4, 20.2, 4.2, V(2.8, -0.1, 2.9))).removeSplitter()
+def build_coupon(doc):
+    # These are full-length sections cut from the actual v5 joint by
+    # build_drv_v5.py.  Each uses the production part's print orientation so
+    # layer direction, accumulated length error, lead-ins and locator all match.
+    specs = [
+        ('BaseSection', 'Coupon_Base', V(0, 0, -1),
+         'full 51.5 mm length; production base orientation'),
+        ('WedgeSection', 'Coupon_Wedge', V(0, 1, 0),
+         'full 51.5 mm length; production wedge end-face orientation'),
+    ]
+    # These flat 20 mm samples were superseded by the representative sections.
+    for legacy in ['Gladiator_DriverV5_Coupon_Tongue.stl',
+                   'Gladiator_DriverV5_Coupon_Groove.stl']:
+        path = os.path.join(OUT, legacy)
+        if os.path.exists(path):
+            os.remove(path)
     items = []
     report = []
-    for name, shape in [('Tongue', tongue), ('Groove', receiver)]:
-        mesh = oriented_mesh(shape, V(0, 0, -1))
-        report.append(validate_mesh(name, mesh))
+    for name, obj_name, down, note in specs:
+        mesh = oriented_mesh(doc.getObject(obj_name).Shape, down)
+        row = validate_mesh(name, mesh)
+        row['orientation'] = note
+        report.append(row)
         mesh.write(os.path.join(OUT, 'Gladiator_DriverV5_Coupon_%s.stl' % name))
         items.append((name, mesh))
     placed, used_x, used_y = arrange_one_row(items)
@@ -168,7 +182,7 @@ def main():
     os.makedirs(INCOMING, exist_ok=True)
     doc = App.openDocument(SOURCE)
     plate_name, parts, plate_x, plate_y = build_driver_plate(doc)
-    coupon_name, coupons, coupon_x, coupon_y = build_coupon()
+    coupon_name, coupons, coupon_x, coupon_y = build_coupon(doc)
     report = {
         'driver_plate': plate_name,
         'driver_plate_used_mm': [plate_x, plate_y],
