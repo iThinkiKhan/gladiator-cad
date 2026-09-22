@@ -42,7 +42,7 @@ TONGUE = (2.0, 6.0, 4.0)      # X0, X1, height above FOOT_TOP - full length in Y
 TONGUE_TOP_LEAD = 0.6
 TONGUE_ROOT_R = 0.8
 GROOVE_CLEAR = 0.2
-GROOVE_LEAD_H = 1.1
+GROOVE_ROOT_R = TONGUE_ROOT_R + GROOVE_CLEAR
 SEAT_T = 7.0                  # 2.7 mm roof remains above the 4.3 mm groove
 FLANGE_X0 = 8.0               # wedge flange 9 mm thick, takes a 7.05 insert
 CBORE_D, CBORE_DEPTH = 6.0, 3.5
@@ -167,20 +167,17 @@ seat = Part.makeBox(WALL_X0, 51.5, SEAT_T, A.Vector(0.0, 89.0, FOOT_TOP))
 flange = Part.makeBox(WALL_X0 - FLANGE_X0, 51.5, WALL_TOP - FOOT_TOP,
                       A.Vector(FLANGE_X0, 89.0, FOOT_TOP))
 wedge = wedge.fuse(seat).fuse(flange).removeSplitter()
-# Full-length groove with a flared lower mouth.  The flare clears the tongue's
-# root fillets during vertical assembly, while the upper straight section keeps
-# the established 0.2 mm per-side running clearance.
+# Full-length groove with root-following entry relief.  R1.0 cylindrical cuts
+# clear the tongue's R0.8 roots by 0.2 mm without the former X0.2..7.8 flare,
+# leaving a full 1.0 mm edge web at the seat entrance.
 gx0 = TONGUE[0] - GROOVE_CLEAR
 gx1 = TONGUE[1] + GROOVE_CLEAR
-mouth_x0, mouth_x1 = 0.2, 7.8
-groove_profile = [
-    (mouth_x0, FOOT_TOP - 0.1), (mouth_x1, FOOT_TOP - 0.1),
-    (gx1, FOOT_TOP + GROOVE_LEAD_H),
-    (gx1, FOOT_TOP + TONGUE[2] + 0.3),
-    (gx0, FOOT_TOP + TONGUE[2] + 0.3),
-    (gx0, FOOT_TOP + GROOVE_LEAD_H),
-]
-wedge = wedge.cut(xz_prism(groove_profile, 88.5, 141.0))
+wedge = wedge.cut(Part.makeBox(gx1 - gx0, 52.5, TONGUE[2] + 0.4,
+                               A.Vector(gx0, 88.5, FOOT_TOP - 0.1)))
+for x in TONGUE[:2]:
+    wedge = wedge.cut(Part.makeCylinder(GROOVE_ROOT_R, 52.5,
+                                        A.Vector(x, 88.5, FOOT_TOP),
+                                        A.Vector(0, 1, 0)))
 # Matching clearance pocket for the single fore/aft locator.
 wedge = wedge.cut(Part.makeBox((sx1 - sx0) + 0.4, (sy1 - sy0) + 0.4, sh + 0.3,
                                A.Vector(sx0 - 0.2, sy0 - 0.2, FOOT_TOP - 0.1)))
@@ -277,7 +274,12 @@ rep['checks']['seat_roof_above_groove_mm'] = round(
     FOOT_TOP + SEAT_T - (FOOT_TOP + TONGUE[2] + 0.3), 2)
 rep['checks']['tongue_top_lead_mm'] = TONGUE_TOP_LEAD
 rep['checks']['tongue_root_fillet_mm'] = TONGUE_ROOT_R
-rep['checks']['groove_lead_height_mm'] = GROOVE_LEAD_H
+rep['checks']['groove_root_relief_radius_mm'] = GROOVE_ROOT_R
+rep['checks']['groove_mouth_x_mm'] = [
+    round(TONGUE[0] - GROOVE_ROOT_R, 2),
+    round(TONGUE[1] + GROOVE_ROOT_R, 2),
+]
+rep['checks']['groove_min_edge_web_mm'] = round(TONGUE[0] - GROOVE_ROOT_R, 2)
 rep['checks']['fore_aft_stop_clearance_mm'] = 0.2
 rep['checks']['coupon_base_single'] = coupon_base.isValid() and len(coupon_base.Solids) == 1
 rep['checks']['coupon_wedge_single'] = coupon_wedge.isValid() and len(coupon_wedge.Solids) == 1
@@ -292,8 +294,13 @@ rep['checks']['master_unchanged'] = (
     hashlib.sha256(MASTER.read_bytes()).hexdigest() == before)
 
 if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
+        rep['checks']['base_wedge_overlap'] < 0.001 and
         rep['checks']['coupon_base_single'] and rep['checks']['coupon_wedge_single'] and
-        rep['checks']['coupon_base_wedge_overlap'] < 0.001):
+        rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
+        rep['checks']['groove_min_edge_web_mm'] >= 1.0 and
+        rep['checks']['seat_roof_above_groove_mm'] >= 2.7 and
+        rep['checks']['upper_counterbore_wall_above_mm'] >= 3.0 and
+        not rep['checks']['clashes']):
     doc = A.newDocument('DriverMount_v5')
     main_objects = []
     for nm, sh in [('Base_Left', base), ('Wedge_Left', wedge)]:

@@ -10,10 +10,11 @@ thing Jim called out. v5 moves the load into the plastic:
 - **Full-length tongue and groove.** A 4 mm rib runs the whole Y length of the
   base's foot top (X 2..6); the wedge's seat plate carries the matching groove.
   It engages by lowering the wedge on, and it takes the outboard shear.
-- **Guided entry and relieved root.** The tongue has 0.6 mm top chamfers, its
-  two roots blend into the foot with R0.8 fillets, and the groove has a 1.1 mm
-  flared mouth that clears those fillets during vertical assembly.
-- **Full-length L seat.** The wedge beds on the foot top (Z 62) over 493 mm²
+- **Guided entry and relieved root.** The tongue has 0.6 mm top chamfers and
+  its two roots blend into the foot with R0.8 fillets. Matching R1.0 reliefs in
+  the groove preserve 0.2 mm clearance while narrowing the mouth to X 1..7;
+  that leaves a 1.0 mm edge web instead of the original 0.2 mm feather edge.
+- **Full-length L seat.** The wedge beds on the foot top (Z 62) over 536 mm²
   after the entry and locator reliefs, and against the wall's outboard face
   (X 17). Two faces, both full length.
 - **Structural roof over the groove.** The seat is 7.0 mm thick, leaving
@@ -38,7 +39,7 @@ thing Jim called out. v5 moves the load into the plastic:
 | --- | ---: | ---: | ---: |
 | Boss support, high pair | 0.0 mm³ | 277 | **306** |
 | Boss support, low pair | 129 | 410 | **410** |
-| Seat contact | n/a | none | **493 mm²** after lead-in + locator reliefs |
+| Seat contact | n/a | none | **536 mm²** after lead-in + locator reliefs |
 | Interlock | none | none | **4 mm, full 51.5 mm length** |
 | Screw heads | n/a | proud | **recessed 3.5 mm** |
 | Wall above upper counterbore | n/a | 1 mm | **3.0 mm** |

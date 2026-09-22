@@ -30,19 +30,19 @@
       "stage": "wedge + seat + flange + groove",
       "solids": 1,
       "single": true,
-      "vol_cm3": 28.45
+      "vol_cm3": 28.34
     },
     {
       "stage": "wedge after cuts",
       "solids": 1,
       "single": true,
-      "vol_cm3": 25.57
+      "vol_cm3": 25.59
     },
     {
       "stage": "wedge final",
       "solids": 1,
       "single": true,
-      "vol_cm3": 24.6
+      "vol_cm3": 24.63
     }
   ],
   "checks": {
@@ -50,8 +50,8 @@
     "base_single": true,
     "wedge_single": true,
     "base_cm3": 17.27,
-    "wedge_cm3": 24.6,
-    "total_cm3": 41.87,
+    "wedge_cm3": 24.63,
+    "total_cm3": 41.9,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
       "u5_v6": 305.7,
@@ -67,7 +67,7 @@
     "fins_inside_track_mm": 6.59,
     "clashes": {},
     "tongue_groove_engagement_mm": 4.0,
-    "seat_contact_mm2": 492.6,
+    "seat_contact_mm2": 536.1,
     "flange_thickness_mm": 9.0,
     "insert_room": {
       "Y95_Z68": 15.0,
@@ -80,7 +80,12 @@
     "seat_roof_above_groove_mm": 2.7,
     "tongue_top_lead_mm": 0.6,
     "tongue_root_fillet_mm": 0.8,
-    "groove_lead_height_mm": 1.1,
+    "groove_root_relief_radius_mm": 1.0,
+    "groove_mouth_x_mm": [
+      1.0,
+      7.0
+    ],
+    "groove_min_edge_web_mm": 1.0,
     "fore_aft_stop_clearance_mm": 0.2,
     "coupon_base_single": true,
     "coupon_wedge_single": true,
