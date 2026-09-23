@@ -1,0 +1,103 @@
+{
+  "cradle_valid": true,
+  "cradle_solids": 1,
+  "cradle_volume_cm3": 11.38,
+  "board_outline_mm": [
+    60.0,
+    40.0,
+    1.6
+  ],
+  "board_hole_pattern_mm": [
+    54.25,
+    34.5
+  ],
+  "board_hole_centres": [
+    [
+      22.25,
+      31.875
+    ],
+    [
+      22.25,
+      86.125
+    ],
+    [
+      56.75,
+      31.875
+    ],
+    [
+      56.75,
+      86.125
+    ]
+  ],
+  "shield_floor_z": [
+    22.2,
+    23.2
+  ],
+  "battery_top_z": 21.5,
+  "battery_to_shield_gap_mm": 0.7,
+  "underside_clearance_mm": 7.0,
+  "pcb_top_z": 31.8,
+  "connector_budget_to_upper_deck_mm": 16.2,
+  "m2_slot_anchors": [
+    [
+      25.5,
+      130.5
+    ],
+    [
+      53.5,
+      130.5
+    ]
+  ],
+  "m2_rear_anchors": [
+    [
+      19.0,
+      128.0
+    ],
+    [
+      60.0,
+      128.0
+    ]
+  ],
+  "mast_fasteners_shared": false,
+  "continuous_perimeter_wall": true,
+  "front_extra_mm": 2.5,
+  "back_extra_mm": 2.5,
+  "overall_length_mm": 111.4,
+  "clashes": {},
+  "deck_axis_passages": {
+    "25.5,130.5": 0.0,
+    "53.5,130.5": 0.0,
+    "19.0,128.0": 0.0,
+    "60.0,128.0": 0.0
+  },
+  "top_bearing_mm2": {
+    "M2 slot 25.5,130.5": 15.83,
+    "M2 slot 53.5,130.5": 15.83
+  },
+  "pilot_thread_wall_mm3": {
+    "M2 19.0,128.0": 14.64,
+    "M2 60.0,128.0": 14.64
+  },
+  "slot_driver_access_clear": {
+    "25.5,130.5": true,
+    "53.5,130.5": true
+  },
+  "board_post_thread_wall_mm3": {
+    "22.250,31.875": 139.2,
+    "22.250,86.125": 139.2,
+    "56.750,31.875": 139.2,
+    "56.750,86.125": 139.2
+  },
+  "mast_support_contact_mm2": 55.05,
+  "arm_root_bond_mm2": {
+    "left": 78.78,
+    "right": 78.78
+  },
+  "master_unchanged": true,
+  "print_bbox_mm": [
+    42.8,
+    30.6,
+    111.4
+  ],
+  "print_bed_contact_mm2": 252.2
+}
