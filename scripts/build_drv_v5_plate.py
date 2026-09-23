@@ -59,7 +59,7 @@ def write_3mf(path, title, items):
         model.append('<object id="%d" type="model" name="%s"><mesh><vertices>'
                      % (oid, name))
         for p in pts:
-            model.append('<vertex x="%.4f" y="%.4f" z="%.4f"/>' % (p.x, p.y, p.z))
+            model.append('<vertex x="%.6f" y="%.6f" z="%.6f"/>' % (p.x, p.y, p.z))
         model.append('</vertices><triangles>')
         for f in facets:
             model.append('<triangle v1="%d" v2="%d" v3="%d"/>' % (f[0], f[1], f[2]))

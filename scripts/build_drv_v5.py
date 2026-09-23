@@ -7,7 +7,9 @@ do not - the base goes down first with clear sky above it, then the wedge bolts
 on and may be solid right through that region.
 
 Assembly: insert into each deck boss -> base plate down, 2x M3 from above ->
-wedge onto the base, 4x M3 horizontally from inboard into inserts in the wedge.
+wedge dropped straight onto the base, 4x M3 from inboard into inserts in the
+wedge (upper pair splayed 22 deg to clear the mast). Removal reverses this with
+the mast left in place; the checks at the end prove each path is clear.
 
 Bosses are merged into the wedge body, not stuck on its face.
 """
@@ -37,7 +39,14 @@ HOLES = [(u, v) for u in (5.0, 44.5) for v in (5.75, 45.25)]
 HS_V0, HS_V1, HS_U0, HS_U1 = 9.5, 41.5, 8.75, 40.75
 PCB_T, HS_PROUD = 3.2, 28.0
 WALL_X0, WALL_X1, WALL_TOP = 17.0, 23.0, 82.0
-JOINT = [(95.0, 68.0), (105.0, 76.0), (134.5, 68.0), (124.5, 76.0)]
+# (Y, Z, yaw deg).  The upper pair sits between the boss slots and the mast
+# tube's shadow, so it is splayed in plan: the driver path runs beside the mast
+# and the mount comes off with the mast still fitted.
+JOINT_YAW = 22.0
+JOINT = [(95.0, 68.0, 0.0), (105.0, 76.0, -JOINT_YAW),
+         (134.5, 68.0, 0.0), (124.5, 76.0, JOINT_YAW)]
+ASSEMBLY_LIFT = 5.0           # vertical travel to engage tongue and locator
+SLOT_RISE = 14.0              # vertical sweep of the boss clearance to the wall top
 RIBS = [(89.0, 98.0), (131.5, 140.5)]
 FOOT_X1 = 23.0
 TONGUE = (2.0, 6.0, 4.0)      # X0, X1, height above FOOT_TOP - full length in Y
@@ -67,6 +76,16 @@ def hit(a, c):
         return a.common(c).Volume
     except Exception:
         return 0.0
+
+def joint_dir(yaw):
+    """Unit vector from the seat toward the screw head (inboard)."""
+    a = math.radians(yaw)
+    return A.Vector(math.cos(a), math.sin(a), 0.0)
+
+def joint_point(y, z, yaw, x):
+    """Point on a joint screw axis at the given X."""
+    D = joint_dir(yaw)
+    return A.Vector(WALL_X1, y, z) + D * ((x - WALL_X1) / D.x)
 
 def xz_prism(profile, y0, y1):
     pts = [A.Vector(x, y0, z) for x, z in profile]
@@ -122,17 +141,49 @@ for x, y in SCREWS:
 rx, ry, rd, rz = RAIL_RELIEF
 base = base.cut(Part.makeCylinder(rd / 2 + CLR / 2, rz - DECK_TOP + 0.05,
                                   A.Vector(rx, ry, DECK_TOP - 0.05)))
-for y, z in JOINT:
-    base = base.cut(Part.makeCylinder(M3_CLEAR / 2, WALL_X1 - WALL_X0 + 0.4,
-                                      A.Vector(WALL_X1 + 0.2, y, z), A.Vector(-1, 0, 0)))
-    base = base.cut(Part.makeCylinder(CBORE_D / 2, CBORE_DEPTH,
-                                      A.Vector(WALL_X1 + 0.01, y, z), A.Vector(-1, 0, 0)))
-# Open the base wall around the two upper boss columns. The upper M3 joint
-# screws are offset along Y so these clearances do not cut into counterbores.
+joint_cuts = []
+for y, z, yaw in JOINT:
+    D = joint_dir(yaw)
+    run = (WALL_X1 - WALL_X0) / D.x
+    hole = Part.makeCylinder(M3_CLEAR / 2, run + 0.4, A.Vector(WALL_X1, y, z) + D * 0.2, -D)
+    # Start the counterbore outside the face so a splayed mouth is fully open;
+    # its floor is CBORE_DEPTH below the face along the screw axis.
+    lead = CBORE_D / 2 * math.tan(abs(math.radians(yaw))) + 0.01
+    cbore = Part.makeCylinder(CBORE_D / 2, CBORE_DEPTH + lead,
+                              A.Vector(WALL_X1, y, z) + D * lead, -D)
+    joint_cuts.append(hole.fuse(cbore))
+    base = base.cut(hole).cut(cbore)
+# Open the base wall around the two upper boss columns.  The clearance is swept
+# straight up to the wall top, because the wedge is lowered vertically onto the
+# tongue: a tilted pocket traps the tilted column and blocks assembly.
+def swept_up(cyl, axis_mid, rise):
+    """Exact volume swept by a tilted cylinder moving straight up by *rise*.
+
+    For a convex solid the sweep is the solid plus a prism of every face that
+    faces the direction of travel: the upper half of the lateral face (split
+    on the silhouette plane) and the upper end disc.
+    """
+    V = A.Vector(0, 0, rise)
+    w = A.Vector(-VV.x, 0.0, -VV.z)        # radial direction pointing up
+    half_space = Part.makeBox(60.0, 60.0, 30.0, A.Vector(-30.0, -30.0, 0.0))
+    half_space.Placement = A.Placement(axis_mid, A.Rotation(A.Vector(0, 0, 1), w))
+    upper = cyl.common(half_space)
+    out = cyl
+    for f in upper.Faces:
+        u0, u1, v0, v1 = f.ParameterRange
+        n = f.normalAt((u0 + u1) / 2, (v0 + v1) / 2)
+        if n.dot(V) > 1e-6:
+            out = out.fuse(f.extrude(V))
+    return out.removeSplitter()
+
+boss_slots = []
 for u in (5.0, 44.5):
-    base = base.cut(Part.makeCylinder(
-        BOSS_OD / 2 + BOSS_BASE_CLEARANCE, BOSS_COLUMN_H + 0.4,
-        at(u, 5.75, W_BOSS - BOSS_COLUMN_H - 0.2), N))
+    h = BOSS_COLUMN_H + 0.4
+    p0 = at(u, 5.75, W_BOSS - BOSS_COLUMN_H - 0.2)
+    c = Part.makeCylinder(BOSS_OD / 2 + BOSS_BASE_CLEARANCE, h, p0, N)
+    slot = swept_up(c, p0 + N * (h / 2), SLOT_RISE)
+    boss_slots.append(slot)
+    base = base.cut(slot)
 base = base.removeSplitter()
 stage('base final', base)
 
@@ -220,9 +271,10 @@ stage('wedge after cuts', wedge)
 for u, v in HOLES:
     wedge = wedge.cut(Part.makeCylinder(BOSS_BORE / 2, BOSS_DEPTH + 0.2,
                                         at(u, v, W_BOSS - BOSS_DEPTH), N))
-for y, z in JOINT:
-    wedge = wedge.cut(Part.makeCylinder(INS_BORE / 2, INS_DEPTH,
-                                        A.Vector(WALL_X0 + 0.1, y, z), A.Vector(-1, 0, 0)))
+for y, z, yaw in JOINT:
+    D = joint_dir(yaw)
+    wedge = wedge.cut(Part.makeCylinder(INS_BORE / 2, INS_DEPTH + 1.0,
+                                        joint_point(y, z, yaw, WALL_X0) + D * 1.0, -D))
 wedge = wedge.removeSplitter()
 stage('wedge final', wedge)
 
@@ -292,11 +344,12 @@ rep['checks']['seat_contact_mm2'] = round(hit(
     Part.makeBox(WALL_X0, 51.5, 0.4, A.Vector(0.0, 89.0, FOOT_TOP - 0.01)), wedge) / 0.4, 1)
 rep['checks']['flange_thickness_mm'] = WALL_X0 - FLANGE_X0
 rep['checks']['insert_room'] = {}
-for y, z in JOINT:
+for y, z, yaw in JOINT:
+    D = joint_dir(yaw)
+    p0 = joint_point(y, z, yaw, WALL_X0)
     wall = 0.0
     for i in range(0, 60):
-        x = WALL_X0 - 0.25 * i
-        if hit(Part.makeCylinder(3.0, 0.25, A.Vector(x, y, z), A.Vector(-1, 0, 0)), wedge) > 0.05:
+        if hit(Part.makeCylinder(3.0, 0.25, p0 - D * (0.25 * i), -D), wedge) > 0.05:
             wall += 0.25
     rep['checks']['insert_room']['Y%.0f_Z%.0f' % (y, z)] = round(wall, 2)
 rep['checks']['counterbore_depth_mm'] = CBORE_DEPTH
@@ -304,9 +357,94 @@ rep['checks']['high_pedestal_base_overlap_mm3'] = round(
     sum(hit(pedestal, base) for pedestal in high_pedestals), 3)
 rep['checks']['high_pedestal_retained_mm3'] = [
     round(hit(pedestal, wedge), 1) for pedestal in high_pedestals]
-rep['checks']['upper_joint_boss_clearance_web_mm'] = round(
-    min(abs(y - (ORG.y + u)) for y, z in JOINT if z == 76.0
-        for u in (5.0, 44.5)) - (BOSS_OD / 2 + BOSS_BASE_CLEARANCE) - CBORE_D / 2, 2)
+# Measured on the solids: thinnest web between any joint screw cut and a boss slot.
+rep['checks']['joint_to_boss_slot_web_mm'] = round(
+    min(jc.distToShape(s)[0] for jc in joint_cuts for s in boss_slots), 2)
+rep['checks']['joint_yaw_deg'] = {'Y%.1f_Z%.0f' % (y, z): yaw for y, z, yaw in JOINT}
+
+# ---- assembly and service paths -------------------------------------------
+# Obstacles: the robot as modelled in the master (including the head candidate
+# above the mast) plus the mirrored right-hand mount.  Stale DrvV5_* copies in
+# the master are deliberately excluded.
+OBST_NAMES = ['UpperDeck', 'SideRailLeft', 'SideRailRight', 'ChassisDeck', 'BatteryBox',
+              'MastTube', 'MastBase', 'PowerShield', 'AntennaPost', 'S3Board', 'Breadboard',
+              'Neck_Main', 'Neck_Clamp_Cap', 'Pan_Rotor', 'Pan_Retainer_Crank',
+              'Pan_Parallel_Link', 'Pan_Horn_Adapter', 'Tilt_Yoke', 'GH44_Tilt_Receiver',
+              'Pan_Bearing_Lower', 'Pan_Bearing_Upper', 'Pan_Inner_Spacer',
+              'Pan_Circlip_Envelope', 'SG90_Pan_Reference', 'Pan_Horn_Reference',
+              'SG90_Tilt_Reference', 'Tilt_Horn_Reference', 'GH44_Fixed_Head_Adapter']
+MIRROR = A.Matrix(-1, 0, 0, 79.0, 0, 1, 0, 0, 0, 0, 1, 0)
+def mirrored(sh):
+    s = sh.copy()
+    s.transformShape(MIRROR)
+    return s
+robot = [(nm, d.getObject(nm).Shape) for nm in OBST_NAMES
+         if d.getObject(nm) and not d.getObject(nm).Shape.isNull()]
+right_mount = [('Base_Right', mirrored(base)), ('Wedge_Right', mirrored(wedge)),
+               ('Board_Right', mirrored(board)), ('Fins_Right', mirrored(fins))]
+rep['checks']['service_obstacles'] = [nm for nm, _ in robot] + [nm for nm, _ in right_mount]
+
+def blockers(sh, obstacles):
+    return {nm: round(hit(sh, o), 2) for nm, o in obstacles if hit(sh, o) > 0.01}
+
+def moved(sh, v):
+    s = sh.copy()
+    s.translate(v)
+    return s
+
+# 1. The wedge must drop straight onto the base (tongue, locator, boss slots).
+lift = {}
+for i in range(1, int((ASSEMBLY_LIFT + SLOT_RISE) / 0.5) + 1):
+    dz = 0.5 * i
+    lift[str(dz)] = round(hit(moved(wedge, A.Vector(0, 0, dz)), base), 3)
+rep['checks']['assembly_lift_overlap_mm3'] = lift
+rep['checks']['assembly_lift_clear'] = max(lift.values()) < 0.001
+
+# 2. Every joint screw reachable with the robot fully assembled.
+access = {}
+for y, z, yaw in JOINT:
+    D = joint_dir(yaw)
+    run = None
+    for i in range(1, 81):
+        L = 0.5 * i
+        if blockers(Part.makeCylinder(3.0, L, A.Vector(WALL_X1, y, z), D),
+                    robot + right_mount):
+            run = L
+            break
+    access['Y%.1f_Z%.0f' % (y, z)] = run if run else 40.0
+rep['checks']['joint_driver_free_run_mm'] = access
+
+# 3. Wedge (with board and heatsink attached) comes off: up off the tongue,
+#    then out along the board normal, clear of the robot and the base.
+unit = wedge.fuse(board).fuse(fins)
+path = {}
+for i in range(1, 13):
+    v = A.Vector(0, 0, 0.5 * i)
+    path['up %.1f' % (0.5 * i)] = blockers(moved(unit, v), robot + right_mount + [('base', base)])
+for i in range(1, 9):
+    v = A.Vector(0, 0, 6.0) + N * (5.0 * i)
+    path['up 6 + out %.0f' % (5.0 * i)] = blockers(moved(unit, v), robot + right_mount + [('base', base)])
+rep['checks']['wedge_removal_path'] = {k: v for k, v in path.items() if v}
+rep['checks']['wedge_removal_clear'] = not any(path.values())
+
+# 4. With the wedge off: deck screws reachable from above and base lifts out.
+deck_run = {}
+for x, y in SCREWS:
+    run = None
+    for i in range(1, 121):
+        L = 0.5 * i
+        if blockers(Part.makeCylinder(3.0, L, A.Vector(x, y, FOOT_TOP), A.Vector(0, 0, 1)),
+                    robot + right_mount):
+            run = L
+            break
+    deck_run['Y%.0f' % y] = run if run else 60.0
+rep['checks']['deck_screw_driver_free_run_mm'] = deck_run
+base_path = {}
+for i in range(1, 25):
+    v = A.Vector(0, 0, 0.5 * i)
+    base_path['up %.1f' % (0.5 * i)] = blockers(moved(base, v), robot + right_mount)
+rep['checks']['base_removal_path'] = {k: v for k, v in base_path.items() if v}
+rep['checks']['base_removal_clear'] = not any(base_path.values())
 rep['checks']['high_boss_support'] = {
     'style': 'constant-diameter boss with planar triangular web',
     'pedestal_width_mm': GUSSET_WIDTH,
@@ -316,7 +454,7 @@ rep['checks']['high_boss_support'] = {
     'solid_backing_mm': round(BOSS_COLUMN_H - (BOSS_DEPTH + 0.2), 2),
 }
 rep['checks']['upper_counterbore_wall_above_mm'] = round(
-    WALL_TOP - (max(z for _, z in JOINT) + CBORE_D / 2), 2)
+    WALL_TOP - (max(z for _, z, _ in JOINT) + CBORE_D / 2), 2)
 rep['checks']['seat_roof_above_groove_mm'] = round(
     FOOT_TOP + SEAT_T - (FOOT_TOP + TONGUE[2] + 0.3), 2)
 rep['checks']['tongue_top_lead_mm'] = TONGUE_TOP_LEAD
@@ -346,7 +484,10 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
         rep['checks']['high_pedestal_base_overlap_mm3'] < 0.001 and
         min(rep['checks']['high_pedestal_retained_mm3']) > 25.0 and
-        rep['checks']['upper_joint_boss_clearance_web_mm'] >= 2.0 and
+        rep['checks']['joint_to_boss_slot_web_mm'] >= 2.0 and
+        rep['checks']['assembly_lift_clear'] and
+        rep['checks']['wedge_removal_clear'] and rep['checks']['base_removal_clear'] and
+        min(rep['checks']['joint_driver_free_run_mm'].values()) >= 30.0 and
         all(min(fractions.values()) >= 0.99 for fractions in
             rep['checks']['boss_wall_fraction_by_depth'].values()) and
         rep['checks']['groove_min_edge_web_mm'] >= 1.0 and

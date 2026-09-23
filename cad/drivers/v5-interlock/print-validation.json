@@ -10,7 +10,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.61,
+      "volume_cm3": 16.59,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -20,7 +20,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.61,
+      "volume_cm3": 16.59,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -30,7 +30,7 @@
       "x_mm": 44.29,
       "y_mm": 42.07,
       "z_mm": 51.5,
-      "volume_cm3": 23.74,
+      "volume_cm3": 23.73,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
@@ -40,7 +40,7 @@
       "x_mm": 44.29,
       "y_mm": 42.07,
       "z_mm": 51.5,
-      "volume_cm3": 23.74,
+      "volume_cm3": 23.73,
       "solid": true,
       "self_intersections": false,
       "orientation": "rear end face down; brim + supports"
@@ -67,7 +67,7 @@
       "x_mm": 16.0,
       "y_mm": 7.3,
       "z_mm": 51.5,
-      "volume_cm3": 4.75,
+      "volume_cm3": 4.74,
       "solid": true,
       "self_intersections": false,
       "orientation": "full 51.5 mm length; production wedge end-face orientation"

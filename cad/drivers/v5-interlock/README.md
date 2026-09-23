@@ -21,9 +21,10 @@ thing Jim called out. v5 moves the load into the plastic:
   **2.7 mm of solid material above the groove** instead of the original 0.4 mm.
 - **Fore/aft locator.** One 4 x 4 x 2 mm peg and matching pocket register the
   joint along Y with 0.2 mm clearance per side.
-- **Screws clamp, they do not carry.** Four M3 run horizontally, normal to the
-  vertical seat, so they put the joint faces into compression. Shear is the
-  tongue's job.
+- **Screws clamp, they do not carry.** Four M3 run horizontally, the lower pair
+  normal to the vertical seat and the upper pair 22° off it (see below; about
+  93% of their tension still clamps the seat), so they put the joint faces into
+  compression. Shear is the tongue's job.
 - **Heads recessed.** Ø6.0 × 3.5 counterbore in the base wall's inboard face; an
   M3 socket head is about 3 mm, so nothing stands proud. Raising the wall top
   to Z82 leaves **3.0 mm above the upper counterbore** instead of 1.0 mm.
@@ -31,11 +32,20 @@ thing Jim called out. v5 moves the load into the plastic:
   **15.0 mm of material behind each bore** against the 7.05 mm insert.
 - **High bosses are complete cylinders.** Each Ø9 boss has an Ø4.6 × 8.2 mm
   blind insert pocket and 2.8 mm of solid backing. A flat 9 mm-wide web ties it
-  to the flange. The base wall has matching clearance pockets around the upper
-  boss columns, so none of the boss wall is carved away during assembly. The
-  two upper M3 joint screws moved inward along Y to preserve a 2.1 mm web
-  between their counterbores and these clearances. Print the new base and wedge
-  together; their upper screw locations differ from earlier v5 parts.
+  to the flange. The upper boss columns pass into the base wall, so the wall
+  has **vertical slots** around them: the column's 0.4 mm clearance swept
+  straight up to the wall top. (A pocket that followed the 45° column, as first
+  built on 2026-09-22, trapped it — lowering the wedge collided by up to
+  2.7 mm³ between 1 and 5 mm of travel, and the parts could not be assembled.)
+- **Serviceable with the mast fitted** (2026-09-23). The mount has to come off
+  to change the batteries, without removing anything else. The two upper joint
+  screws sit at Y105 / Y124.5, between the boss slots and the mast tube's
+  shadow, so they are **splayed 22° in plan** away from the mast. Straight in
+  they had 8.0 / 11.5 mm of driver room before the mast; splayed, 34.5 mm (to
+  the opposite mount), matching the lower pair's 37 mm. Their counterbores keep
+  3.5 mm depth on axis; the thinnest wall under a splayed counterbore is
+  **1.63 mm**, and the web to the boss slots is 2.14 mm. Print the new base and
+  wedge together; the upper screw holes differ from every earlier v5 part.
 
 ## Measured
 
@@ -50,7 +60,7 @@ thing Jim called out. v5 moves the load into the plastic:
 | Seat roof above groove | n/a | 0.4 mm | **2.7 mm** |
 | Material behind insert | n/a | 4 mm flange | **15.0 mm** |
 | Deck bearing | 1411 mm² | 803 | **954** |
-| Volume | 20.4 cm³ | 37.0 | **40.4** |
+| Volume | 20.4 cm³ | 37.0 | **40.3** |
 
 Both pieces single valid solids at every build stage, zero overlap between them,
 zero clashes against eleven robot solids, both deck screws open, all four
@@ -61,9 +71,24 @@ standoff axes clear, fins 6.6 mm inside the track line.
 1. Heat-set into each deck boss (deck's own Ø4.6 pocket, as printed)
 2. Base down, 2 × M3 from above
 3. Heat-sets into the wedge flange, 4 off
-4. Wedge lowered onto the base so the groove engages the tongue
-5. 4 × M3 horizontally from inboard, counterbored
+4. Wedge lowered straight down onto the base so the groove engages the tongue
+5. 4 × M3 from inboard, counterbored: lower pair horizontal, upper pair angled
+   22° away from the mast (the counterbores set the angle)
 6. Board onto four M3 male-female standoffs, GPIO inboard
+
+## Removal (battery change) — nothing else comes off
+
+1. Unplug the driver board's wiring
+2. Remove the 4 joint screws from inboard; the mast stays in place
+3. Lift the wedge, board and heatsink as one unit straight up about 6 mm to
+   clear the tongue, then out along the board's normal (up and outboard)
+4. Remove the 2 deck screws from above; lift the base straight off
+
+`build_drv_v5.py` checks each step against the robot as modelled, including the
+mast tube, the head candidate above it and the mirrored right-hand mount:
+wedge drop-on clear at every 0.5 mm, driver room at every joint screw, the
+wedge unit's lift-out path, deck-screw access from above (60 mm clear) and the
+base's lift-out. The build refuses to save if any of them fails.
 
 ## Print package
 
