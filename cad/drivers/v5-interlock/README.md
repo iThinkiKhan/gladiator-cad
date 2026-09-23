@@ -37,8 +37,9 @@ thing Jim called out. v5 moves the load into the plastic:
   straight up to the wall top. (A pocket that followed the 45° column, as first
   built on 2026-09-22, trapped it — lowering the wedge collided by up to
   2.7 mm³ between 1 and 5 mm of travel, and the parts could not be assembled.)
-- **Serviceable with the mast fitted** (2026-09-23). The mount has to come off
-  to change the batteries, without removing anything else. The two upper joint
+- **Serviceable with the mast fitted** (2026-09-23). Battery changes do not
+  need the mount off (Jim, 2026-09-23), but it is still worth being able to
+  remove it without disturbing anything else. The two upper joint
   screws sit at Y105 / Y124.5, between the boss slots and the mast tube's
   shadow, so they are **splayed 22° in plan** away from the mast. Straight in
   they had 8.0 / 11.5 mm of driver room before the mast; splayed, 34.5 mm (to
@@ -76,7 +77,7 @@ standoff axes clear, fins 6.6 mm inside the track line.
    22° away from the mast (the counterbores set the angle)
 6. Board onto four M3 male-female standoffs, GPIO inboard
 
-## Removal (battery change) — nothing else comes off
+## Removal — nothing else comes off
 
 1. Unplug the driver board's wiring
 2. Remove the 4 joint screws from inboard; the mast stays in place
