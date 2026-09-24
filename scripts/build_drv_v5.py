@@ -33,10 +33,19 @@ BOSS_BASE_CLEARANCE = 0.4     # trims the wedge only; see CUP_RELIEF_* for the b
 # The cups locate nothing (the tongue does), so the base slot is opened well
 # beyond the cup in the seating directions (down, inboard, along the axis) and
 # less toward the side joint screws, whose counterbore walls set the limit.
-CUP_RELIEF_RADIAL = 1.2
-CUP_RELIEF_SIDE = 0.6
+CUP_RELIEF_RADIAL = 1.7
+CUP_RELIEF_SIDE = 0.6         # toward the upper joint screw only
 CUP_RELIEF_AXIAL = 1.0
-MIN_JOINT_WEB = 1.6           # matches the thinnest wall v5 already accepted
+MIN_SIDE_WEB = 1.6            # to the splayed upper joint counterbores
+# v5c base (2026-09-24, Jim): the wall behind and beside each cup is not
+# structural. The bore continues down its own 45 deg axis out through the
+# inboard face, and the wall ends beyond the cups are dropped, instead of the
+# wall rising behind the cup. The floor stops 1 mm above the lower joint
+# counterbore under each cup; that screw's head seats on the counterbore
+# floor, which is untouched.
+CUP_RELIEF_BACK = 10.0
+LOWER_CBORE_WEB = 1.0
+RELIEF_FLOOR_Z = 68.0 + 3.0 + LOWER_CBORE_WEB
 DECK_TOP, FOOT_TOP = 52.0, 62.0
 DECK_BOSS_D, DECK_BOSS_TOP = 9.0, 58.0
 SCREWS = [(14.5, 95.0), (14.5, 135.0)]
@@ -297,14 +306,31 @@ stage('wedge final', wedge)
 # Each relief is a larger cylinder clipped in Y to a smaller side clearance,
 # swept straight up like the original slot so the wedge still drops on.
 cup_reliefs = []
-for u in (5.0, 44.5):
-    h = BOSS_COLUMN_H + 2 * CUP_RELIEF_AXIAL
-    p0 = at(u, 5.75, W_BOSS - BOSS_COLUMN_H - CUP_RELIEF_AXIAL)
-    c = Part.makeCylinder(BOSS_OD / 2 + CUP_RELIEF_RADIAL, h, p0, N)
+Y_AX = A.Vector(0, 1, 0)
+for u, outward in ((5.0, -1.0), (44.5, 1.0)):
+    rr = BOSS_OD / 2 + CUP_RELIEF_RADIAL
+    h = BOSS_COLUMN_H + CUP_RELIEF_AXIAL + CUP_RELIEF_BACK
+    p0 = at(u, 5.75, W_BOSS - BOSS_COLUMN_H - CUP_RELIEF_BACK)
+    cyl = Part.makeCylinder(rr, h, p0, N)
+    # Everything above the cylinder's lower half: the axis-plane rectangle
+    # extruded straight up.  This is the exact vertical sweep of the cylinder
+    # (bar the far ends, which lie outside the base), with no face filtering.
+    rect = Part.Face(Part.makePolygon([p0 - Y_AX * rr, p0 + Y_AX * rr,
+                                       p0 + N * h + Y_AX * rr, p0 + N * h - Y_AX * rr,
+                                       p0 - Y_AX * rr]))
+    relief = cyl.fuse(rect.extrude(A.Vector(0, 0, 30.0)))
+    yc = ORG.y + u
     half_y = BOSS_OD / 2 + CUP_RELIEF_SIDE
-    c = c.common(Part.makeBox(80.0, 2 * half_y, 80.0,
-                              A.Vector(-20.0, ORG.y + u - half_y, 40.0)))
-    relief = swept_up(c, p0 + N * (h / 2), SLOT_RISE)
+    y_in = yc - outward * half_y
+    y_far = yc + outward * 20.0
+    relief = relief.common(Part.makeBox(80.0, abs(y_far - y_in), 60.0,
+                                        A.Vector(-20.0, min(y_in, y_far), RELIEF_FLOOR_Z)))
+    # Past the cup's outer edge the wall end drops to the floor, taking the fin.
+    y_edge = yc + outward * BOSS_OD / 2
+    relief = relief.fuse(Part.makeBox(WALL_X1 - WALL_X0 + 2.0, abs(y_far - y_edge), 60.0,
+                                      A.Vector(WALL_X0 - 1.0, min(y_edge, y_far),
+                                               RELIEF_FLOOR_Z)))
+    relief = relief.removeSplitter()
     cup_reliefs.append(relief)
     base = base.cut(relief)
 base = base.removeSplitter()
@@ -391,8 +417,15 @@ rep['checks']['high_pedestal_base_overlap_mm3'] = round(
 rep['checks']['high_pedestal_retained_mm3'] = [
     round(hit(pedestal, wedge), 1) for pedestal in high_pedestals]
 # Measured on the solids: thinnest web between any joint screw cut and a boss slot.
-rep['checks']['joint_to_boss_slot_web_mm'] = round(
-    min(jc.distToShape(s)[0] for jc in joint_cuts for s in boss_slots), 2)
+rep['checks']['joint_to_boss_slot_web_mm'] = {
+    'Y%.1f_Z%.0f' % (y, z): round(min(jc.distToShape(s)[0] for s in boss_slots), 2)
+    for (y, z, _), jc in zip(JOINT, joint_cuts)}
+upper_webs = [w for (y, z, _), w in zip(JOINT, rep['checks']['joint_to_boss_slot_web_mm'].values())
+              if z > 70.0]
+lower_webs = [w for (y, z, _), w in zip(JOINT, rep['checks']['joint_to_boss_slot_web_mm'].values())
+              if z <= 70.0]
+rep['checks']['joint_webs_ok'] = (min(upper_webs) >= MIN_SIDE_WEB - 0.01 and
+                                  min(lower_webs) >= LOWER_CBORE_WEB - 0.01)
 rep['checks']['joint_yaw_deg'] = {'Y%.1f_Z%.0f' % (y, z): yaw for y, z, yaw in JOINT}
 rep['checks']['wedge_vs_printed_diff_mm3'] = round(
     wedge.cut(PRINTED_WEDGE).Volume + PRINTED_WEDGE.cut(wedge).Volume, 4)
@@ -540,7 +573,7 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
         rep['checks']['high_pedestal_base_overlap_mm3'] < 0.001 and
         min(rep['checks']['high_pedestal_retained_mm3']) > 25.0 and
-        rep['checks']['joint_to_boss_slot_web_mm'] >= MIN_JOINT_WEB and
+        rep['checks']['joint_webs_ok'] and
         rep['checks']['wedge_matches_printed'] and
         rep['checks']['min_cup_clearance_mm'] >= 0.6 and
         rep['checks']['assembly_lift_clear'] and

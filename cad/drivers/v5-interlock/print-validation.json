@@ -10,7 +10,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.41,
+      "volume_cm3": 16.03,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -20,7 +20,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.41,
+      "volume_cm3": 16.03,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down"
@@ -46,7 +46,7 @@
       "orientation": "rear end face down; brim + supports"
     }
   ],
-  "base_reprint_plate": "Gladiator_PlateJ_DRIVER-V5b-BASES-ONLY_deck-face-down.3mf",
+  "base_reprint_plate": "Gladiator_PlateJ_DRIVER-V5c-BASES-ONLY_deck-face-down.3mf",
   "base_reprint_plate_used_mm": [
     54.0,
     51.5
@@ -57,7 +57,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.41,
+      "volume_cm3": 16.03,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down; no supports needed"
@@ -67,7 +67,7 @@
       "x_mm": 23.0,
       "y_mm": 51.5,
       "z_mm": 30.0,
-      "volume_cm3": 16.41,
+      "volume_cm3": 16.03,
       "solid": true,
       "self_intersections": false,
       "orientation": "flat deck face down; no supports needed"

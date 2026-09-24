@@ -145,7 +145,7 @@ def build_driver_plate(doc):
 
 
 def build_base_reprint(doc):
-    # v5b: only the bases changed (cup relief); the printed wedges are reused.
+    # v5c: only the bases changed (cup relief); the printed wedges are reused.
     items = []
     report = []
     for short, obj_name in [('Base_L', 'Base_Left'), ('Base_R', 'Base_Right')]:
@@ -155,9 +155,9 @@ def build_base_reprint(doc):
         report.append(row)
         items.append((short, mesh))
     placed, used_x, used_y = arrange_one_row(items)
-    name = 'Gladiator_PlateJ_DRIVER-V5b-BASES-ONLY_deck-face-down.3mf'
+    name = 'Gladiator_PlateJ_DRIVER-V5c-BASES-ONLY_deck-face-down.3mf'
     path = os.path.join(OUT, name)
-    write_3mf(path, 'Gladiator Plate J - v5b driver bases with cup relief', placed)
+    write_3mf(path, 'Gladiator Plate J - v5c driver bases with cup relief', placed)
     shutil.copy2(path, os.path.join(INCOMING, name))
     return name, report, used_x, used_y
 

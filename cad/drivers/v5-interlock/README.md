@@ -48,33 +48,39 @@ thing Jim called out. v5 moves the load into the plastic:
   **1.63 mm**, and the web to the boss slots is 2.14 mm. Print the new base and
   wedge together; the upper screw holes differ from every earlier v5 part.
 
-## v5b base: cup relief (2026-09-24)
+## v5c base: cup relief (2026-09-24)
 
-The printed 2026-09-23 wedges would not seat: the two upper cups (the high boss
-columns) struck the base slots. The slot had 0.4 mm radial clearance, but at the
-edge where the tilted cup exits the wall's inboard face it came down to
-0.25-0.3 mm, which print error and wedge support scars close.
+The printed 2026-09-23 wedges would not seat. The two upper heat-set cups (the
+high boss columns) hit the base: the joint stayed open by roughly a millimetre.
+The slot had 0.4 mm nominal clearance, but the wall behind each cup's closed end
+rose parallel to its 45 deg face with only 0.25-0.3 mm to spare, and print error
+closed that.
 
-The cups locate nothing; the tongue and groove does. So the **base only** is
-changed, and the printed wedges are reused as they are:
+The cups locate nothing; the tongue and groove does. Jim, 2026-09-24: the wall
+behind the cups is not structural, drop it. So the **base only** changes, and
+the printed wedges are reused as they are:
 
-- Each slot is a Ø(9 + 2 x 1.2) cylinder, 1.0 mm longer at each end, clipped in
-  Y to 0.6 mm either side of the cup, and swept straight up as before.
-- Seated cup clearance: **1.45 mm down and inboard, 1.05 mm along the cup axis,
-  0.65 mm each side** (was 0.3 / 0.3 / 0.25 / 0.45).
-- The side limit is the joint screws: the lower counterbore sits about 3.5 mm
-  below each cup and the splayed upper one beside it. The thinnest web from any
-  joint screw cut to a slot is now **1.71 mm** (was 2.14), above the 1.63 mm
-  counterbore wall v5 already had, so it is not the new weakest point. The build
-  gate for that web is 1.6 mm.
+- The slot is now the cup's own 45 deg bore, Ø(9 + 2 x 1.7), continued down its
+  axis and out through the inboard face, with everything above it removed. The
+  wall no longer rises behind the cup.
+- The floor stops at Z72, 1.0 mm above the lower joint screw's counterbore
+  directly beneath each cup. That screw's head seats on the counterbore floor,
+  which is untouched.
+- Past each cup's outer edge, the wall end drops to Z72 as well. This removes
+  the thin fin that stood at each end of the wall.
+- Toward the splayed upper joint screws the side clearance stays 0.6 mm; the
+  web to those counterbores is 1.66 mm (v5 already had 1.63 mm there).
+- Seated cup clearance: **2.45 mm down, 3.5 mm along the axis, open inboard,
+  3.3 mm toward the base end, 0.65 mm toward the upper screw** (printed v5:
+  0.3 / 0.25 / 0.3 / 0.45 / 0.45).
 - The relief is cut after the wedge is final, so the wedge cannot grow into it.
   The build compares the rebuilt wedge with the printed one and refuses to save
   unless they match (difference 0.0 mm3).
-- Base 16.59 -> 16.41 cm3. Deck bearing, seat, tongue, deck screws, joint screw
+- Base 16.59 -> 16.03 cm3. Deck bearing, seat, tongue, deck screws, joint screw
   counterbores and the coupon section are unchanged. Drop-on, lift-out, base
   removal and screw access all still pass.
 
-Reprint `Gladiator_PlateJ_DRIVER-V5b-BASES-ONLY_deck-face-down.3mf` (both
+Reprint `Gladiator_PlateJ_DRIVER-V5c-BASES-ONLY_deck-face-down.3mf` (both
 bases, no supports).
 
 ## Measured

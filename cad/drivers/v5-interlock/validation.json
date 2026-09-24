@@ -48,16 +48,16 @@
       "stage": "base with cup relief",
       "solids": 1,
       "single": true,
-      "vol_cm3": 16.41
+      "vol_cm3": 16.03
     }
   ],
   "checks": {
     "boss_plane_Z_eq_X_plus": 70.79,
     "base_single": true,
     "wedge_single": true,
-    "base_cm3": 16.41,
+    "base_cm3": 16.03,
     "wedge_cm3": 23.73,
-    "total_cm3": 40.14,
+    "total_cm3": 39.76,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
       "u5_v6": 282.3,
@@ -117,7 +117,13 @@
       93.6,
       93.6
     ],
-    "joint_to_boss_slot_web_mm": 1.71,
+    "joint_to_boss_slot_web_mm": {
+      "Y95.0_Z68": 1.0,
+      "Y105.0_Z76": 1.66,
+      "Y134.5_Z68": 1.0,
+      "Y124.5_Z76": 1.66
+    },
+    "joint_webs_ok": true,
     "joint_yaw_deg": {
       "Y95.0_Z68": 0.0,
       "Y105.0_Z76": -22.0,
@@ -128,17 +134,17 @@
     "wedge_matches_printed": true,
     "cup_clearance_mm": {
       "Y95.0": {
-        "down": 1.45,
-        "inboard": 1.45,
-        "axial": 1.05,
+        "down": 2.45,
+        "inboard": 4.0,
+        "axial": 3.5,
         "+Y": 0.65,
-        "-Y": 0.65
+        "-Y": 3.3
       },
       "Y134.5": {
-        "down": 1.45,
-        "inboard": 1.45,
-        "axial": 1.05,
-        "+Y": 0.65,
+        "down": 2.45,
+        "inboard": 4.0,
+        "axial": 3.5,
+        "+Y": 3.3,
         "-Y": 0.65
       }
     },
@@ -220,9 +226,9 @@
     "assembly_lift_clear": true,
     "joint_driver_free_run_mm": {
       "Y95.0_Z68": 37.0,
-      "Y105.0_Z76": 34.5,
+      "Y105.0_Z76": 35.0,
       "Y134.5_Z68": 37.0,
-      "Y124.5_Z76": 34.5
+      "Y124.5_Z76": 35.0
     },
     "wedge_removal_path": {},
     "wedge_removal_clear": true,
