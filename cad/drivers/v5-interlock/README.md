@@ -68,7 +68,7 @@ the printed wedges are reused as they are:
   cup's lowest edge is 0.4 mm outboard of that counterbore, so this sets the
   down clearance at 1.5 mm. That screw's head seats on the counterbore floor,
   which is untouched.
-- Past each cup's outer edge, the wall end drops to Z72 as well. This removes
+- Past each cup's outer edge, the wall end drops to Z73 as well. This removes
   the thin fin that stood at each end of the wall.
 - Toward the splayed upper joint screws the side clearance stays 0.6 mm; the
   web to those counterbores is 1.66 mm (v5 already had 1.63 mm there).
