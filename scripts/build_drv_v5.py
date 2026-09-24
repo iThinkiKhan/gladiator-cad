@@ -40,11 +40,12 @@ MIN_SIDE_WEB = 1.6            # to the splayed upper joint counterbores
 # v5c base (2026-09-24, Jim): the wall behind and beside each cup is not
 # structural. The bore continues down its own 45 deg axis out through the
 # inboard face, and the wall ends beyond the cups are dropped, instead of the
-# wall rising behind the cup. The floor stops 1 mm above the lower joint
-# counterbore under each cup; that screw's head seats on the counterbore
-# floor, which is untouched.
+# wall rising behind the cup. A flat floor keeps the full v5 2.0 mm wall over
+# the lower joint counterbore under each cup. The cup's lowest edge is only
+# 0.4 mm outboard of that counterbore's edge, so down clearance is roughly
+# 3.4 mm minus this web; 2.0 leaves 1.4 mm (Jim, 2026-09-24: don't thin it).
 CUP_RELIEF_BACK = 10.0
-LOWER_CBORE_WEB = 1.0
+LOWER_CBORE_WEB = 2.0
 RELIEF_FLOOR_Z = 68.0 + 3.0 + LOWER_CBORE_WEB
 DECK_TOP, FOOT_TOP = 52.0, 62.0
 DECK_BOSS_D, DECK_BOSS_TOP = 9.0, 58.0
@@ -323,8 +324,8 @@ for u, outward in ((5.0, -1.0), (44.5, 1.0)):
     half_y = BOSS_OD / 2 + CUP_RELIEF_SIDE
     y_in = yc - outward * half_y
     y_far = yc + outward * 20.0
-    relief = relief.common(Part.makeBox(80.0, abs(y_far - y_in), 60.0,
-                                        A.Vector(-20.0, min(y_in, y_far), RELIEF_FLOOR_Z)))
+    y0, dy = min(y_in, y_far), abs(y_far - y_in)
+    relief = relief.common(Part.makeBox(80.0, dy, 60.0, A.Vector(-20.0, y0, RELIEF_FLOOR_Z)))
     # Past the cup's outer edge the wall end drops to the floor, taking the fin.
     y_edge = yc + outward * BOSS_OD / 2
     relief = relief.fuse(Part.makeBox(WALL_X1 - WALL_X0 + 2.0, abs(y_far - y_edge), 60.0,

@@ -63,20 +63,22 @@ the printed wedges are reused as they are:
 - The slot is now the cup's own 45 deg bore, Ø(9 + 2 x 1.7), continued down its
   axis and out through the inboard face, with everything above it removed. The
   wall no longer rises behind the cup.
-- The floor stops at Z72, 1.0 mm above the lower joint screw's counterbore
-  directly beneath each cup. That screw's head seats on the counterbore floor,
+- The floor stops at Z73, keeping the full 2.0 mm wall over the lower joint
+  screw's counterbore directly beneath each cup (Jim: don't thin it). The
+  cup's lowest edge is 0.4 mm outboard of that counterbore, so this sets the
+  down clearance at 1.5 mm. That screw's head seats on the counterbore floor,
   which is untouched.
 - Past each cup's outer edge, the wall end drops to Z72 as well. This removes
   the thin fin that stood at each end of the wall.
 - Toward the splayed upper joint screws the side clearance stays 0.6 mm; the
   web to those counterbores is 1.66 mm (v5 already had 1.63 mm there).
-- Seated cup clearance: **2.45 mm down, 3.5 mm along the axis, open inboard,
+- Seated cup clearance: **1.5 mm down, 2.1 mm along the axis, open inboard,
   3.3 mm toward the base end, 0.65 mm toward the upper screw** (printed v5:
   0.3 / 0.25 / 0.3 / 0.45 / 0.45).
 - The relief is cut after the wedge is final, so the wedge cannot grow into it.
   The build compares the rebuilt wedge with the printed one and refuses to save
   unless they match (difference 0.0 mm3).
-- Base 16.59 -> 16.03 cm3. Deck bearing, seat, tongue, deck screws, joint screw
+- Base 16.59 -> 16.11 cm3. Deck bearing, seat, tongue, deck screws, joint screw
   counterbores and the coupon section are unchanged. Drop-on, lift-out, base
   removal and screw access all still pass.
 
