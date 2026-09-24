@@ -43,15 +43,21 @@
       "solids": 1,
       "single": true,
       "vol_cm3": 23.73
+    },
+    {
+      "stage": "base with cup relief",
+      "solids": 1,
+      "single": true,
+      "vol_cm3": 16.41
     }
   ],
   "checks": {
     "boss_plane_Z_eq_X_plus": 70.79,
     "base_single": true,
     "wedge_single": true,
-    "base_cm3": 16.59,
+    "base_cm3": 16.41,
     "wedge_cm3": 23.73,
-    "total_cm3": 40.32,
+    "total_cm3": 40.14,
     "base_wedge_overlap": 0.0,
     "boss_support_mm3": {
       "u5_v6": 282.3,
@@ -111,13 +117,32 @@
       93.6,
       93.6
     ],
-    "joint_to_boss_slot_web_mm": 2.14,
+    "joint_to_boss_slot_web_mm": 1.71,
     "joint_yaw_deg": {
       "Y95.0_Z68": 0.0,
       "Y105.0_Z76": -22.0,
       "Y134.5_Z68": 0.0,
       "Y124.5_Z76": 22.0
     },
+    "wedge_vs_printed_diff_mm3": 0.0,
+    "wedge_matches_printed": true,
+    "cup_clearance_mm": {
+      "Y95.0": {
+        "down": 1.45,
+        "inboard": 1.45,
+        "axial": 1.05,
+        "+Y": 0.65,
+        "-Y": 0.65
+      },
+      "Y134.5": {
+        "down": 1.45,
+        "inboard": 1.45,
+        "axial": 1.05,
+        "+Y": 0.65,
+        "-Y": 0.65
+      }
+    },
+    "min_cup_clearance_mm": 0.65,
     "service_obstacles": [
       "UpperDeck",
       "SideRailLeft",

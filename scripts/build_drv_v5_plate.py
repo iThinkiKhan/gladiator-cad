@@ -144,6 +144,24 @@ def build_driver_plate(doc):
     return plate_name, report, used_x, used_y
 
 
+def build_base_reprint(doc):
+    # v5b: only the bases changed (cup relief); the printed wedges are reused.
+    items = []
+    report = []
+    for short, obj_name in [('Base_L', 'Base_Left'), ('Base_R', 'Base_Right')]:
+        mesh = oriented_mesh(doc.getObject(obj_name).Shape, V(0, 0, -1))
+        row = validate_mesh(short, mesh)
+        row['orientation'] = 'flat deck face down; no supports needed'
+        report.append(row)
+        items.append((short, mesh))
+    placed, used_x, used_y = arrange_one_row(items)
+    name = 'Gladiator_PlateJ_DRIVER-V5b-BASES-ONLY_deck-face-down.3mf'
+    path = os.path.join(OUT, name)
+    write_3mf(path, 'Gladiator Plate J - v5b driver bases with cup relief', placed)
+    shutil.copy2(path, os.path.join(INCOMING, name))
+    return name, report, used_x, used_y
+
+
 def build_coupon(doc):
     # These are full-length sections cut from the actual v5 joint by
     # build_drv_v5.py.  Each uses the production part's print orientation so
@@ -183,10 +201,14 @@ def main():
     doc = App.openDocument(SOURCE)
     plate_name, parts, plate_x, plate_y = build_driver_plate(doc)
     coupon_name, coupons, coupon_x, coupon_y = build_coupon(doc)
+    bases_name, bases, bases_x, bases_y = build_base_reprint(doc)
     report = {
         'driver_plate': plate_name,
         'driver_plate_used_mm': [plate_x, plate_y],
         'parts': parts,
+        'base_reprint_plate': bases_name,
+        'base_reprint_plate_used_mm': [bases_x, bases_y],
+        'base_reprint_parts': bases,
         'coupon_plate': coupon_name,
         'coupon_plate_used_mm': [coupon_x, coupon_y],
         'coupon_parts': coupons,

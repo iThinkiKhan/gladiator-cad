@@ -27,7 +27,16 @@ OUT = ROOT / 'cad/drivers/v5-interlock'
 CANT, X0, Z0, STANDOFF = 45.0, 8.0, 100.0, 15.0
 BOSS_OD, BOSS_BORE, BOSS_DEPTH = 9.0, 4.6, 8.0
 BOSS_COLUMN_H = BOSS_DEPTH + 3.0
-BOSS_BASE_CLEARANCE = 0.4
+BOSS_BASE_CLEARANCE = 0.4     # trims the wedge only; see CUP_RELIEF_* for the base
+# v5b base (2026-09-24): printed wedges could not seat because the upper cups
+# struck the base slots, which left only 0.25-0.3 mm at the tilted exit edge.
+# The cups locate nothing (the tongue does), so the base slot is opened well
+# beyond the cup in the seating directions (down, inboard, along the axis) and
+# less toward the side joint screws, whose counterbore walls set the limit.
+CUP_RELIEF_RADIAL = 1.2
+CUP_RELIEF_SIDE = 0.6
+CUP_RELIEF_AXIAL = 1.0
+MIN_JOINT_WEB = 1.6           # matches the thinnest wall v5 already accepted
 DECK_TOP, FOOT_TOP = 52.0, 62.0
 DECK_BOSS_D, DECK_BOSS_TOP = 9.0, 58.0
 SCREWS = [(14.5, 95.0), (14.5, 135.0)]
@@ -93,6 +102,11 @@ def xz_prism(profile, y0, y1):
         A.Vector(0, y1 - y0, 0))
 
 before = hashlib.sha256(MASTER.read_bytes()).hexdigest()
+# The 2026-09-23 wedges are already printed with inserts set; the rebuild must
+# reproduce them exactly.
+_printed = A.openDocument(str(OUT / 'DriverMount_v5.FCStd'))
+PRINTED_WEDGE = _printed.getObject('Wedge_Left').Shape.copy()
+A.closeDocument(_printed.Name)
 d = A.openDocument(str(MASTER))
 rep = {'cant_deg': CANT, 'standoff_mm': STANDOFF, 'stages': [], 'checks': {}, 'notes': []}
 
@@ -278,6 +292,25 @@ for y, z, yaw in JOINT:
 wedge = wedge.removeSplitter()
 stage('wedge final', wedge)
 
+# Cup relief is cut from the base only after the wedge is final: the wedge was
+# trimmed against the tighter base above, so it cannot grow into the relief.
+# Each relief is a larger cylinder clipped in Y to a smaller side clearance,
+# swept straight up like the original slot so the wedge still drops on.
+cup_reliefs = []
+for u in (5.0, 44.5):
+    h = BOSS_COLUMN_H + 2 * CUP_RELIEF_AXIAL
+    p0 = at(u, 5.75, W_BOSS - BOSS_COLUMN_H - CUP_RELIEF_AXIAL)
+    c = Part.makeCylinder(BOSS_OD / 2 + CUP_RELIEF_RADIAL, h, p0, N)
+    half_y = BOSS_OD / 2 + CUP_RELIEF_SIDE
+    c = c.common(Part.makeBox(80.0, 2 * half_y, 80.0,
+                              A.Vector(-20.0, ORG.y + u - half_y, 40.0)))
+    relief = swept_up(c, p0 + N * (h / 2), SLOT_RISE)
+    cup_reliefs.append(relief)
+    base = base.cut(relief)
+base = base.removeSplitter()
+boss_slots = cup_reliefs
+stage('base with cup relief', base)
+
 # Cut the coupon from the final printable parts, after all installed-clearance
 # and screw-bore operations.  It therefore preserves the exact joint profile,
 # full 51.5 mm length, lead-ins, locator, and any reliefs used by production.
@@ -361,6 +394,29 @@ rep['checks']['high_pedestal_retained_mm3'] = [
 rep['checks']['joint_to_boss_slot_web_mm'] = round(
     min(jc.distToShape(s)[0] for jc in joint_cuts for s in boss_slots), 2)
 rep['checks']['joint_yaw_deg'] = {'Y%.1f_Z%.0f' % (y, z): yaw for y, z, yaw in JOINT}
+rep['checks']['wedge_vs_printed_diff_mm3'] = round(
+    wedge.cut(PRINTED_WEDGE).Volume + PRINTED_WEDGE.cut(wedge).Volume, 4)
+rep['checks']['wedge_matches_printed'] = rep['checks']['wedge_vs_printed_diff_mm3'] < 0.01
+
+# Seated cup clearance: how far each upper cup can move before touching the base.
+def cup_travel(cup, vec):
+    for i in range(1, 81):
+        s = cup.copy()
+        s.translate(vec * (0.05 * i))
+        if hit(s, base) > 0.01:
+            return round(0.05 * i, 2)
+    return 4.0
+rep['checks']['cup_clearance_mm'] = {}
+for u in (5.0, 44.5):
+    cup = wedge.common(Part.makeCylinder(BOSS_OD / 2, BOSS_COLUMN_H,
+                                         at(u, 5.75, W_BOSS - BOSS_COLUMN_H), N))
+    rep['checks']['cup_clearance_mm']['Y%.1f' % (ORG.y + u)] = {
+        name: cup_travel(cup, vec) for name, vec in [
+            ('down', A.Vector(0, 0, -1)), ('inboard', A.Vector(1, 0, 0)),
+            ('axial', A.Vector(-N.x, 0, -N.z)),
+            ('+Y', A.Vector(0, 1, 0)), ('-Y', A.Vector(0, -1, 0))]}
+rep['checks']['min_cup_clearance_mm'] = min(
+    v for row in rep['checks']['cup_clearance_mm'].values() for v in row.values())
 
 # ---- assembly and service paths -------------------------------------------
 # Obstacles: the robot as modelled in the master (including the head candidate
@@ -484,7 +540,9 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['coupon_base_wedge_overlap'] < 0.001 and
         rep['checks']['high_pedestal_base_overlap_mm3'] < 0.001 and
         min(rep['checks']['high_pedestal_retained_mm3']) > 25.0 and
-        rep['checks']['joint_to_boss_slot_web_mm'] >= 2.0 and
+        rep['checks']['joint_to_boss_slot_web_mm'] >= MIN_JOINT_WEB and
+        rep['checks']['wedge_matches_printed'] and
+        rep['checks']['min_cup_clearance_mm'] >= 0.6 and
         rep['checks']['assembly_lift_clear'] and
         rep['checks']['wedge_removal_clear'] and rep['checks']['base_removal_clear'] and
         min(rep['checks']['joint_driver_free_run_mm'].values()) >= 30.0 and
