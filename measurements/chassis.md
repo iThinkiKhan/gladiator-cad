@@ -59,26 +59,24 @@ Four M2 self-tap pilot holes (1.6 mm) in the gap between each side's rear inner 
 | Rear pilot spacing | 17 between the pair | Second hole Y = 111 |
 | Rear pilot outside bias | 0.5 toward outer slit | Offsets X from the inner/outer slit gap midpoint |
 
-Modeled rear pilot hole centers: left (19.0, 128) and (19.0, 111); right (60.0, 128) and (60.0, 111).
+Modeled rear pilot hole centers **until 2026-09-27**: left (19.0, 128) and (19.0, 111); right (60.0, 128) and (60.0, 111).
 
-## First-build fit observations (2026-09-27) — UNCONFIRMED, not caliper readings
+**Corrected 2026-09-27: all four rear pilots are at X 17.8 (left) / 61.2 (right)**, Y 128 and
+Y 111 (`rear_pilot_outside_bias` 0.5 → 1.7). Source: Jim, from the first build. Through the
+printed mast base holes at 19 / 60, about half of each real pilot was visible. He placed the
+real pilots **3/4 of a pilot diameter (1.2) further outboard**, and said the Y 128 pair is
+exactly aligned with the Y 111 pair. This is an observation against a printed part, not a
+caliper reading. It is recorded here as Jim's direct correction and is not derived.
 
-These came from assembling printed parts on the real deck. They are fit observations with
-approximate magnitudes, **not measurements**, so the `ChassisDeck` model was deliberately left
-unchanged. The printed parts were corrected instead.
+Consequence: at X 17.8 / 61.2 the Y 128 pilots sit **under the side rails' rear feet** (rail
+X 6-18). An M2 there overlaps the rail foot by 7.9 mm3. They were only ~0.2 clear before. The
+power board tray v2 anchors on (19, 128) / (60, 128), so it is now off by 1.2, and those
+pilots are not reachable with the rails fitted.
 
-- **Rear pilot pair at Y 111 is NARROWER than modelled.** The printed mast base holes sit at
-  19 / 60 (41 apart, matching the model). Looking down through them, Jim sees about **half of each
-  pilot**, with the real pilots **closer together**. A first reading of his report ("wider set by
-  about 0.75 each") went the wrong way and was reverted the same day. Half a Ø1.6 pilot showing
-  through a Ø2.6 hole puts the pilot centre near the hole's edge. That suggests about 1.2 inboard
-  per side (c-t-c near 38.6), but it is **an estimate, not a measurement**, and must not be
-  printed from. **Open:** the Y 128 pair comes from the same parameters and is used by the
-  power board cradle's `m2_anchors` (19, 128) / (60, 128), so it may be off too.
-  To measure, thread an M2 screw a few turns into each pilot of a pair, then take two caliper
-  readings across the two shanks: inside faces `I` and outside faces `O`. Then c-t-c = (I+O)/2,
-  with (O-I)/2 = shank diameter as a cross-check. Do both rear pairs.
-- **Right-front slit appears to start further back than modelled.** The rail's front screw at
+## First-build fit observations (2026-09-27)
+
+- **Right-front slit appears to start further back than modelled** (fit observation, deck model
+  unchanged). The rail's front screw at
   Y 10 (shank front edge Y 8.5, modelled slit start Y 7.5) "didn't quite" pass on the right. The
   v2 rail moves it to Y 13.5. The left side went together, so the two front slits may differ.
   Needed: the distance from the deck's front edge to the front end of each front slit.

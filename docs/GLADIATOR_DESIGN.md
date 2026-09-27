@@ -28,7 +28,7 @@ A forward-facing sensor or the vehicle's front looks toward **negative Y**.
 | Battery holder | Reference envelope only (open 4S 18650 holder, not a sealed box) |
 | Side rails (x2) | **v2 tall (2026-09-27)** — 6.5 taller after the first build, front foot slot moved 3.5 back; not yet printed |
 | Upper deck | Printed and good — unchanged part, now sits 6.5 higher (Z 54.5) on the v2 rails |
-| Mast base + tube | **v2 (2026-09-27)** — tube top Z 130; base M2 holes **held at 41 pending a measurement** (real pilots are closer together); not yet printed |
+| Mast base + tube | **v2 (2026-09-27)** — tube top Z 130; base M2 holes 43.4 apart, tied to the corrected deck pilots; not yet printed |
 | S3 + breadboard | Laid out on the upper deck, but the S3 hole pattern is wrong in the printed deck — see Known Issues |
 | Driver mounts (x2) | Built — open frame, PCB-flush mounting, gusseted joint |
 | Driver board reference envelope | Built (2026-09-17) — closes a real gap, see Known Issues |
@@ -128,14 +128,14 @@ the lower socket from 30 to 42, so it resists mast wobble better rather than wor
   moment as a couple against the upper deck's bearing, now 6.5 further above with the v2 rails).
   Two M2 screws into the two *usable* rear pilot holes supply the anti-rotation a round spigot
   alone cannot — the other two rear pilots are buried under the rail feet and are not usable.
-- **Mast base M2 holes: HELD at 41 apart (X 19 / 60, Y 111) pending a measurement.** The
-  first build's holes did not line up with the real pilots. The first report was read as "wider
-  set by about 0.75 each", and v2 briefly moved them out to 42.5. Jim then clarified that the
-  **real pilots are closer together**: about half of each pilot is visible through the printed
-  holes. That is consistent with the pilots sitting roughly 1.2 inboard of the holes on each
-  side, but that is an estimate. The 42.5 change was reverted, its STL withdrawn, and the next
-  value waits for a caliper reading (see `measurements/chassis.md`). The aluminium deck model is
-  untouched. `PowerShield` shares these screws and follows `mast_screw_spacing`.
+- **Mast base M2 holes are 43.4 apart, at X 17.8 / 61.2, Y 111 (2026-09-27).** In the first
+  build, half of each real pilot showed through the printed holes at 19 / 60. Jim confirmed the
+  real pilots are **3/4 of a pilot diameter (1.2) further outboard**, and that the Y 128 pair is
+  aligned with them. So the deck model's rear pilots were moved (`rear_pilot_outside_bias`
+  0.5 → 1.7, all four), and `mast_screw_spacing` / `mast_screw_y` are now **formulas on the deck
+  pilot parameters**, so the base cannot drift from the deck again. `PowerShield` follows too.
+  (Along the way, a 42.5 version and a revert to 41 were committed and withdrawn. Both came
+  from ambiguous readings of the direction and size of the shift.)
 - Spigot drops to **Z -3.5** (5 until the 2026-09-26 reprint Jim asked for), with a 0.8 x 45°
   mast socket entry chamfer (`mast_entry_chamfer`) — both folded into the master on 2026-09-27;
   they had lived only in `cad/mast-base/reprint-20260926/`. The lower anchor only carries shear,
@@ -335,14 +335,14 @@ to the master by `scripts/apply_first_build_fixes.py`:
 | Rails too short; battery clearance 8.5 | Soffit 36.5, rail top 54.5: **15.0 clear** | Both rails |
 | Right front screw would not quite pass the slit | Front foot slot moved 3.5 back; head relief | (same rails) — fit coupon first |
 | Mast must rise with the deck, "a tad more" | Mast top 120 → **130** (+10) | Mast tube |
-| Mast base holes miss the pilots — real pilots are **closer together** (half a pilot visible) | Held at 41 until measured (a 42.5 version went the wrong way and was withdrawn) | Mast base, after measurement |
+| Mast base holes miss the pilots: half a pilot visible, the real ones 1.2 further out | Deck rear pilots corrected (both pairs); M2 holes 41 → **43.4**, tied by formula | Mast base |
+| Rear pilots at Y 128 now sit under the rail rear feet (7.9 mm3 M2 overlap) | **Open:** the power board tray v2 anchors on (19, 128) / (60, 128) | Tray — to decide |
 | Installed cells stand 4 above the holder | `BatteryCells` reference envelope, Z 21.5-25.5: real clearance under the v2 soffit is **11.0**, not 15.0 | — |
 
 The master's mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The
 driver mounts, antenna post and head candidate sit on the deck or the mast top and moved with
-them — no new or grown overlaps across 48 solids. The fit coupon
-(`Gladiator_Coupon_RailFrontFoot_R_v2`, 1.5 g) is the bottom 10 mm of the new right front foot:
-screw it to the real right-front slit before committing to the two rails.
+them — no new or grown overlaps across 48 solids. Jim chose to keep the v2 height (11.0 to the
+installed cells), and to skip the front-foot fit coupon and go straight to the rails.
 
 ### The printed deck's S3 bosses do not fit the board (2026-09-19)
 
