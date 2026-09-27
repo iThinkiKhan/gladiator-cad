@@ -336,7 +336,7 @@ to the master by `scripts/apply_first_build_fixes.py`:
 | Right front screw would not quite pass the slit | Front foot slot moved 3.5 back; head relief | (same rails) — fit coupon first |
 | Mast must rise with the deck, "a tad more" | Mast top 120 → **130** (+10) | Mast tube |
 | Mast base holes miss the pilots: half a pilot visible, the real ones 1.2 further out | Deck rear pilots corrected (both pairs); M2 holes 41 → **43.4**, tied by formula | Mast base |
-| Rear pilots at Y 128 now sit under the rail rear feet (7.9 mm3 M2 overlap) | **Open:** the power board tray v2 anchors on (19, 128) / (60, 128) | Tray — to decide |
+| Rear pilots at Y 128 now sit under the rail rear feet (7.9 mm3 M2 overlap), so the tray's pilot tabs can't reach | **Power board tray v3** (`cad/power-board/v3-cradle/`): pilot tabs dropped, rear slit bolts only; arms 20 deep (were ~4-6); floor 1.6; board ends open 2.9 for wires; lifted 4.3 to clear the cells (v2 sat 3.3 into them) | Tray |
 | Installed cells stand 4 above the holder | `BatteryCells` reference envelope, Z 21.5-25.5: real clearance under the v2 soffit is **11.0**, not 15.0 | — |
 
 The master's mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The

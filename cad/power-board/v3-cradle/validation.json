@@ -1,0 +1,94 @@
+{
+ "script": "scripts/build_power_cradle_v3.py",
+ "volume_cm3": 17.78,
+ "pla_g_solid": 22.1,
+ "v2_volume_cm3": 11.38,
+ "floor_z": [
+  26.5,
+  28.1
+ ],
+ "board_z": [
+  35.1,
+  36.7
+ ],
+ "wall_top": 37.7,
+ "arm_top": 40.0,
+ "cell_top": 25.5,
+ "end_wire_gap_mm": 2.9,
+ "board_holes": [
+  [
+   22.25,
+   31.875
+  ],
+  [
+   22.25,
+   86.125
+  ],
+  [
+   56.75,
+   31.875
+  ],
+  [
+   56.75,
+   86.125
+  ]
+ ],
+ "deck_fixings": [
+  [
+   25.5,
+   130.5
+  ],
+  [
+   53.5,
+   130.5
+  ]
+ ],
+ "clearances_mm": {
+  "BatteryCells": 1.0,
+  "MastTube": 0.4,
+  "MastBase": 0.0,
+  "SideRailLeft": 0.1,
+  "SideRailRight": 0.1,
+  "UpperDeck": 14.5,
+  "ChassisDeck": 0.2
+ },
+ "collar_contact_mm2": 50.2,
+ "sections": {
+  "arm beside mast Y115": {
+   "v2_area_mm2": 21.3,
+   "v2_depth": 6.0,
+   "v3_area_mm2": 82.0,
+   "v3_depth": 20.0
+  },
+  "arm Y105": {
+   "v2_area_mm2": 21.3,
+   "v2_depth": 6.0,
+   "v3_area_mm2": 82.0,
+   "v3_depth": 20.0
+  },
+  "root Y96": {
+   "v2_area_mm2": 55.6,
+   "v2_depth": 7.8,
+   "v3_area_mm2": 136.3,
+   "v3_depth": 13.5
+  },
+  "flare Y125": {
+   "v2_area_mm2": 34.4,
+   "v2_depth": 6.0,
+   "v3_area_mm2": 114.7,
+   "v3_depth": 20.0
+  }
+ },
+ "connector_room_to_upper_deck_mm": 17.8,
+ "print": {
+  "file": "Gladiator_PowerBoardTray_v3_print-on-rear-face.stl",
+  "orientation": "rear face down (as v2)",
+  "bbox": [
+   42.8,
+   37.8,
+   111.4
+  ],
+  "bed_contact_mm2": 364,
+  "downward_faces_mm2": 973
+ }
+}
