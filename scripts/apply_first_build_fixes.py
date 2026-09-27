@@ -179,6 +179,8 @@ addp('head_drawn_mast_top', 120, 'mast_top_z the imported head candidate was mod
 addp('rail_front_well_end', WELL_END, 'Front foot well rear wall; M3 head clears it at full rearward travel')
 addp('rail_front_slot_back', SLOT_BACK, 'Front foot slot moved rearward by this (screw Y 10 -> 13.5); Jim: 3-5 back, 2026-09-27')
 addp('rail_head_relief', RELIEF, 'Head relief into the outboard skin of the front well; SHCS head fouled the skin over the slit')
+# NOTE: 42.5 was the WRONG direction -- the real pilots are closer together. Reverted to 41 the
+# same day by scripts/revert_mast_screws.py; see measurements/chassis.md.
 addp('mast_screw_spacing', 42.5, 'Mast base M2 holes centre to centre; 41 widened 0.75 each side after the 2026-09-27 build (fit, not caliper)')
 addp('mast_screw_y', 111, 'Mast base M2 holes Y')
 addp('mast_entry_chamfer', 0.8, 'Mast socket entry chamfer, from the 2026-09-26 reprint')

@@ -28,7 +28,7 @@ A forward-facing sensor or the vehicle's front looks toward **negative Y**.
 | Battery holder | Reference envelope only (open 4S 18650 holder, not a sealed box) |
 | Side rails (x2) | **v2 tall (2026-09-27)** — 6.5 taller after the first build, front foot slot moved 3.5 back; not yet printed |
 | Upper deck | Printed and good — unchanged part, now sits 6.5 higher (Z 54.5) on the v2 rails |
-| Mast base + tube | **v2 (2026-09-27)** — tube top Z 130, base M2 holes 42.5 apart; not yet printed |
+| Mast base + tube | **v2 (2026-09-27)** — tube top Z 130; base M2 holes **held at 41 pending a measurement** (real pilots are closer together); not yet printed |
 | S3 + breadboard | Laid out on the upper deck, but the S3 hole pattern is wrong in the printed deck — see Known Issues |
 | Driver mounts (x2) | Built — open frame, PCB-flush mounting, gusseted joint |
 | Driver board reference envelope | Built (2026-09-17) — closes a real gap, see Known Issues |
@@ -61,9 +61,9 @@ aluminum.
   top** — then a faceted haunch back down to a rear foot Y 119-135.
 - **v2 tall (2026-09-27), after the first physical build.** The printed v1 rails had a Z 30
   soffit (8.5 clear); Jim asked for about 75% more, so 15.0. Everything the rails carry rose by
-  the same 6.5 (upper deck, S3/breadboard, antenna post, driver mounts). Note the battery holder
-  envelope is its *empty* height (19.5); installed cells may sit higher, which is worth a
-  measurement before anything else is packed over it.
+  the same 6.5 (upper deck, S3/breadboard, antenna post, driver mounts). **Installed cells stand
+  4 above the holder** (Jim, 2026-09-27; `BatteryCells`, `battery_cell_protrusion`). So the real
+  gap to the cells was 4.5 on v1 and is 11.0 on v2. The 15.0 figure is to the empty holder.
 - **Front foot slot moved 3.5 back (v2).** The right front screw would not quite pass the
   aluminium slit at the old Y 10 position. The slit is 33 long, so a screw further back always
   finds it: the crosswise slot is now centred at Y 13.5 (shank front edge Y 12, was 8.5), which
@@ -128,12 +128,14 @@ the lower socket from 30 to 42, so it resists mast wobble better rather than wor
   moment as a couple against the upper deck's bearing, now 6.5 further above with the v2 rails).
   Two M2 screws into the two *usable* rear pilot holes supply the anti-rotation a round spigot
   alone cannot — the other two rear pilots are buried under the rail feet and are not usable.
-- **Mast base M2 holes are 42.5 apart (v2, 2026-09-27)**, at X 18.25 / 60.75, Y 111 — each
-  0.75 further out than v1's 19 / 60, because the first build's holes did not line up with the
-  real pilots. That correction is a fit observation ("about 0.75 each"), not a caliper reading,
-  and the aluminium deck model was deliberately **not** moved to match it; see
-  `measurements/chassis.md`. `PowerShield` shares these screws and follows the same parameter
-  (`mast_screw_spacing`).
+- **Mast base M2 holes: HELD at 41 apart (X 19 / 60, Y 111) pending a measurement.** The
+  first build's holes did not line up with the real pilots. The first report was read as "wider
+  set by about 0.75 each", and v2 briefly moved them out to 42.5. Jim then clarified that the
+  **real pilots are closer together**: about half of each pilot is visible through the printed
+  holes. That is consistent with the pilots sitting roughly 1.2 inboard of the holes on each
+  side, but that is an estimate. The 42.5 change was reverted, its STL withdrawn, and the next
+  value waits for a caliper reading (see `measurements/chassis.md`). The aluminium deck model is
+  untouched. `PowerShield` shares these screws and follows `mast_screw_spacing`.
 - Spigot drops to **Z -3.5** (5 until the 2026-09-26 reprint Jim asked for), with a 0.8 x 45°
   mast socket entry chamfer (`mast_entry_chamfer`) — both folded into the master on 2026-09-27;
   they had lived only in `cad/mast-base/reprint-20260926/`. The lower anchor only carries shear,
@@ -333,9 +335,10 @@ to the master by `scripts/apply_first_build_fixes.py`:
 | Rails too short; battery clearance 8.5 | Soffit 36.5, rail top 54.5: **15.0 clear** | Both rails |
 | Right front screw would not quite pass the slit | Front foot slot moved 3.5 back; head relief | (same rails) — fit coupon first |
 | Mast must rise with the deck, "a tad more" | Mast top 120 → **130** (+10) | Mast tube |
-| Mast base holes too close, ~0.75 each side | M2 holes 41 → **42.5** apart | Mast base |
+| Mast base holes miss the pilots — real pilots are **closer together** (half a pilot visible) | Held at 41 until measured (a 42.5 version went the wrong way and was withdrawn) | Mast base, after measurement |
+| Installed cells stand 4 above the holder | `BatteryCells` reference envelope, Z 21.5-25.5: real clearance under the v2 soffit is **11.0**, not 15.0 | — |
 
-The mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The
+The master's mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The
 driver mounts, antenna post and head candidate sit on the deck or the mast top and moved with
 them — no new or grown overlaps across 48 solids. The fit coupon
 (`Gladiator_Coupon_RailFrontFoot_R_v2`, 1.5 g) is the bottom 10 mm of the new right front foot:

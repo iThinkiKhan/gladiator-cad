@@ -67,13 +67,17 @@ These came from assembling printed parts on the real deck. They are fit observat
 approximate magnitudes, **not measurements**, so the `ChassisDeck` model was deliberately left
 unchanged. The printed parts were corrected instead.
 
-- **Rear pilot pair at Y 111 looks wider than modelled.** The mast base holes at 19 / 60 (41 apart,
-  matching the modelled pilots) needed to be "about 0.75 mm each" further out. The mast base now
-  uses 42.5 (`mast_screw_spacing`). That suggests the real pilots are near X 18.25 / 60.75, but
-  this has not been measured. **Open:** the Y 128 pair comes from the same parameters. It is used by
-  the power board cradle's `m2_anchors` (19, 128) / (60, 128), so if it is off by the same amount
-  the cradle will not line up either. Needed: two-reading caliper measurement (jaws inside `I` and
-  outside `O` the two holes of each pair; c-t-c = (I+O)/2) of both rear pairs.
+- **Rear pilot pair at Y 111 is NARROWER than modelled.** The printed mast base holes sit at
+  19 / 60 (41 apart, matching the model). Looking down through them, Jim sees about **half of each
+  pilot**, with the real pilots **closer together**. A first reading of his report ("wider set by
+  about 0.75 each") went the wrong way and was reverted the same day. Half a Ø1.6 pilot showing
+  through a Ø2.6 hole puts the pilot centre near the hole's edge. That suggests about 1.2 inboard
+  per side (c-t-c near 38.6), but it is **an estimate, not a measurement**, and must not be
+  printed from. **Open:** the Y 128 pair comes from the same parameters and is used by the
+  power board cradle's `m2_anchors` (19, 128) / (60, 128), so it may be off too.
+  To measure, thread an M2 screw a few turns into each pilot of a pair, then take two caliper
+  readings across the two shanks: inside faces `I` and outside faces `O`. Then c-t-c = (I+O)/2,
+  with (O-I)/2 = shank diameter as a cross-check. Do both rear pairs.
 - **Right-front slit appears to start further back than modelled.** The rail's front screw at
   Y 10 (shank front edge Y 8.5, modelled slit start Y 7.5) "didn't quite" pass on the right. The
   v2 rail moves it to Y 13.5. The left side went together, so the two front slits may differ.
