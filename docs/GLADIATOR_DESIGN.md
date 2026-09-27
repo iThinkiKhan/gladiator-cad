@@ -26,9 +26,9 @@ A forward-facing sensor or the vehicle's front looks toward **negative Y**.
 | --- | --- |
 | Lower aluminum deck | Existing fabricated part, reverse-modeled in CAD. **Never add features to it** — see below. |
 | Battery holder | Reference envelope only (open 4S 18650 holder, not a sealed box) |
-| Side rails (x2) | Built — faceted arch, raceway, retention tabs, M3 inserts |
-| Upper deck | Built — tapered width (85 front / 79 rear), rail fixings, mast collar |
-| Mast base + tube | Built — see Mast section for the wire-window bug fix |
+| Side rails (x2) | **v2 tall (2026-09-27)** — 6.5 taller after the first build, front foot slot moved 3.5 back; not yet printed |
+| Upper deck | Printed and good — unchanged part, now sits 6.5 higher (Z 54.5) on the v2 rails |
+| Mast base + tube | **v2 (2026-09-27)** — tube top Z 130, base M2 holes 42.5 apart; not yet printed |
 | S3 + breadboard | Laid out on the upper deck, but the S3 hole pattern is wrong in the printed deck — see Known Issues |
 | Driver mounts (x2) | Built — open frame, PCB-flush mounting, gusseted joint |
 | Driver board reference envelope | Built (2026-09-17) — closes a real gap, see Known Issues |
@@ -56,25 +56,48 @@ the upper deck above the battery. Mount through the aluminum deck's **outermost 
 ends** (not the pilot holes), via crosswise adjustment slots in the printed feet — never in the
 aluminum.
 
-- **Arch, not a portal**: front foot Y 2-13, faceted haunch rising to a flat soffit at Z 30
-  (8.5mm clear of the battery top), a matching haunch back down to a rear foot Y 121-135. Both
-  haunches climb in the same 7mm of run, so the rear is a real post, not a shallow diagonal doing
-  double duty as the roof.
+- **Arch, not a portal**: front foot Y 2-18.5 rising as a near-vertical post (2.5 clear of the
+  battery holder's front face at Y 21) to a flat soffit at **Z 36.5 — 15.0 clear of the battery
+  top** — then a faceted haunch back down to a rear foot Y 119-135.
+- **v2 tall (2026-09-27), after the first physical build.** The printed v1 rails had a Z 30
+  soffit (8.5 clear); Jim asked for about 75% more, so 15.0. Everything the rails carry rose by
+  the same 6.5 (upper deck, S3/breadboard, antenna post, driver mounts). Note the battery holder
+  envelope is its *empty* height (19.5); installed cells may sit higher, which is worth a
+  measurement before anything else is packed over it.
+- **Front foot slot moved 3.5 back (v2).** The right front screw would not quite pass the
+  aluminium slit at the old Y 10 position. The slit is 33 long, so a screw further back always
+  finds it: the crosswise slot is now centred at Y 13.5 (shank front edge Y 12, was 8.5), which
+  passes any real slit that starts up to 4.5 behind the modelled Y 7.5. The foot and its well
+  were lengthened to carry it (well Y 5-16.5, 2.0 wall to the post face). A T-shaped slot that
+  kept the old position as well was tried and rejected — the head bore on only 1.8 mm2 where
+  the two slots met; the plain shifted slot keeps the ~6.3 mm2 every foot has had.
+- **Front foot head relief (v2).** In the v1 foot an M3 socket head over the slit centre line
+  overlapped the outboard skin (5.8 mm3 at X 10.5, still 1.2 mm3 at X 11, the furthest inboard
+  the shank can go in a 4 wide slit), so it could never seat flat. A 1.3 relief into the
+  outboard wall of the front well (Z 6-9.5, skin 1.2 there) clears it at every X across the slit.
+  Rear feet were already clear.
+- The foot screws are driven through the **open inboard side of each well**. The Ø6 "driver
+  shafts" from the rail top stop at the 2 mm raceway floor over each well and do not reach the
+  screw — they have been vestigial since that floor was added.
 - **Solid member with a raceway cut into it**, not a hollow shell: 12mm wide, with a 7x8.5mm
   wire channel (rounded R2 inboard corners) sealed at both rail ends so debris thrown up by the
   tracks can't scoop into the wire run. Six retention tabs alternate top/bottom inside the
   channel. Two foot wells (front smaller, rear roomier) sit clear for future small components
   (fuse, buck converter) — nothing committed yet.
-- **Rail top is Z 48** (raised twice this session: once for battery/cell clearance, once because
-  the real heat-set inserts are 7.05mm long and need a 9mm-thick top slab, not the original 7mm).
-  Three M3 insert bores per rail at Y 16/68/120.
+- **Rail top is Z 54.5** (48 in v1). Raceway Z 38.5-45.5, 9 mm top slab for the 7.05 long
+  heat-set inserts. Three M3 insert bores per rail at Y 16/68/120, unchanged in plan so the
+  printed upper deck still bolts straight on.
+- Rebuild: `scripts/apply_first_build_fixes.py` (checks with solids and refuses to save on any
+  failure). Several rail sketches (raceway, wells, tabs, slots) are not spreadsheet-driven; that
+  script rewrites them from its constants, so edit it rather than the spreadsheet alone.
 
 Full build history and every dimension: git log on `docs/upper-structure.md` (retired, but its
 history remains in git) plus the script files in `scripts/`.
 
 ## Upper deck
 
-`UpperDeck`, 4mm PETG plate sitting on the rail tops (Z 48-52). **Tapered width**: 85mm through
+`UpperDeck`, 4mm PETG plate sitting on the rail tops (Z 54.5-58.5 since the v2 rails; Z 48-52
+before — the part itself is unchanged, and the printed one is reused). **Tapered width**: 85mm through
 the board zone (Y 0-89), stepping back to 79mm — flush with the aluminum below — exactly where
 the driver mounts start (Y 89). The taper exists purely to fix a tight board layout up front
 without touching driver clearance at the rear; see Known Issues for a correction to the original
@@ -89,7 +112,7 @@ reasoning.
 
 2.5mm margin on every boundary (left edge, gap between boards, right edge).
 
-**Mast bearing collar**: Ø20.4 bore with a Ø28 collar standing **above** the plate to Z 62, giving
+**Mast bearing collar**: Ø20.4 bore with a Ø28 collar standing **above** the plate to Z 68.5 (Z 62 on v1 rails), giving
 a 14-long upper bearing (vs. the bare 4 of deck). Moved above the deck on 2026-09-17: it makes the
 deck single-sided so it prints flat with **zero support** (it previously needed 10893 mm2 of it,
 all landing on the face that mates with the rail tops), and it lengthens the bearing couple against
@@ -102,12 +125,19 @@ the lower socket from 30 to 42, so it resists mast wobble better rather than wor
 - **Role**: fixed, non-rotating backbone. It is an interface, not a housing for one sensor — the
   head above it swaps. Any pan/tilt motion lives in the head, not the mast.
 - **Anchored at the aluminum deck's existing Ø14 hole** (the primary structural bearing, resisting
-  moment as a couple against the upper deck's bearing 32mm above). Two M2 screws into the two
-  *usable* rear pilot holes at (19,111)/(60,111) supply the anti-rotation a round spigot alone
-  cannot — the other two rear pilots are buried under the rail feet and are not usable.
-- Ø13.8 spigot drops to Z -5, leaving only 1mm to the motor below the deck — deliberately shallow,
-  since the bearing pair 32mm apart means the lower anchor only carries shear, not the head's full
-  bending moment.
+  moment as a couple against the upper deck's bearing, now 6.5 further above with the v2 rails).
+  Two M2 screws into the two *usable* rear pilot holes supply the anti-rotation a round spigot
+  alone cannot — the other two rear pilots are buried under the rail feet and are not usable.
+- **Mast base M2 holes are 42.5 apart (v2, 2026-09-27)**, at X 18.25 / 60.75, Y 111 — each
+  0.75 further out than v1's 19 / 60, because the first build's holes did not line up with the
+  real pilots. That correction is a fit observation ("about 0.75 each"), not a caliper reading,
+  and the aluminium deck model was deliberately **not** moved to match it; see
+  `measurements/chassis.md`. `PowerShield` shares these screws and follows the same parameter
+  (`mast_screw_spacing`).
+- Spigot drops to **Z -3.5** (5 until the 2026-09-26 reprint Jim asked for), with a 0.8 x 45°
+  mast socket entry chamfer (`mast_entry_chamfer`) — both folded into the master on 2026-09-27;
+  they had lived only in `cad/mast-base/reprint-20260926/`. The lower anchor only carries shear,
+  not the head's full bending moment.
 - **Bug found and fixed (2026-09-17)**: the wire-exit window (`MastWindowCut`) had
   `Reversed=False`/`Length=20`, cutting *away* from the tube — its volume was bit-for-bit identical
   to the uncut tube, meaning the rear wall had been solid the entire time despite looking finished.
@@ -115,8 +145,10 @@ the lower socket from 30 to 42, so it resists mast wobble better rather than wor
   isolated the fix without touching the saved master; applied here as `Reversed=True`,
   `Length=12` — volume dropped by exactly 523.4 mm3, matching their trial. Verified open at the
   rear wall, still solid at the front.
-- Mast top is Z 120, a **placeholder** — see Mast Head section; the head workstream's sightline
-  analysis suggests it may need to go taller.
+- **Mast top is Z 130** (v2, 2026-09-27; was 120): the 6.5 rail lift plus a little more, per
+  Jim. Still provisional — see Mast Head section. The imported head candidate and the index
+  flat follow `mast_top_z` through their placements (`head_drawn_mast_top` = 120 is the height
+  they were drawn at), so they sit on the new top.
 - **Anti-rotation index flat added (2026-09-17)**, at the user's direction ("modifications to the
   mast are allowed if they improve the design"). The neck candidate needs a key to resist twist —
   a round tube alone can't provide it. Rather than re-deriving the flat's geometry, the exact
@@ -290,6 +322,25 @@ attach must either work with them as printed, or wait for a deliberate v2 reprin
 
 Printed so far: side rails x2, upper deck. Everything else is still only geometry.
 
+### First full build — findings and v2 parts (2026-09-27)
+
+Jim assembled rails, upper deck and mast on the real chassis. Upper deck: very good, kept as is.
+Changes, all in `cad/build2-20260927/` (STLs, `validation.json`, comparison drawing) and applied
+to the master by `scripts/apply_first_build_fixes.py`:
+
+| Finding | Change | Reprint |
+| --- | --- | --- |
+| Rails too short; battery clearance 8.5 | Soffit 36.5, rail top 54.5: **15.0 clear** | Both rails |
+| Right front screw would not quite pass the slit | Front foot slot moved 3.5 back; head relief | (same rails) — fit coupon first |
+| Mast must rise with the deck, "a tad more" | Mast top 120 → **130** (+10) | Mast tube |
+| Mast base holes too close, ~0.75 each side | M2 holes 41 → **42.5** apart | Mast base |
+
+The mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The
+driver mounts, antenna post and head candidate sit on the deck or the mast top and moved with
+them — no new or grown overlaps across 48 solids. The fit coupon
+(`Gladiator_Coupon_RailFrontFoot_R_v2`, 1.5 g) is the bottom 10 mm of the new right front foot:
+screw it to the real right-front slit before committing to the two rails.
+
 ### The printed deck's S3 bosses do not fit the board (2026-09-19)
 
 The bosses are at 30.9 x 55.0; the board's real pattern is not that (see Known Issues). Because
@@ -343,9 +394,9 @@ orientation together, not bolt the mount on and accept the scarring.
 2. **Power board mounting** — the board has no mount at all, and the upper deck it was going to
    hang from is now printed with a bare underside. Needs a bracket that works with the printed
    parts; see the Build state section. The shield's own position also still needs the wiring plan.
-3. **Mast top height (Z 120)** — placeholder; the mast-head sightline analysis suggests a ToF
-   sensor may need more height to clear the S3 board's front/top corner in its lower FOV cone.
-   Coordinate with the mast-head workstream before changing.
+3. **Mast top height (Z 130 since 2026-09-27)** — raised with the v2 rails. The S3 board also
+   rose 6.5, so the ToF-over-the-S3-corner sightline question is not settled by this; the
+   mast-head workstream should re-run it against the new heights.
 4. **Driver height / mast FOV** — see the corrected finding above; real room exists if this
    becomes a priority again.
 5. **Antenna whip/pigtail exact envelope** — not yet measured against the pylon's cable exit.

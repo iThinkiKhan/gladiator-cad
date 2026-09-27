@@ -61,6 +61,24 @@ Four M2 self-tap pilot holes (1.6 mm) in the gap between each side's rear inner 
 
 Modeled rear pilot hole centers: left (19.0, 128) and (19.0, 111); right (60.0, 128) and (60.0, 111).
 
+## First-build fit observations (2026-09-27) — UNCONFIRMED, not caliper readings
+
+These came from assembling printed parts on the real deck. They are fit observations with
+approximate magnitudes, **not measurements**, so the `ChassisDeck` model was deliberately left
+unchanged. The printed parts were corrected instead.
+
+- **Rear pilot pair at Y 111 looks wider than modelled.** The mast base holes at 19 / 60 (41 apart,
+  matching the modelled pilots) needed to be "about 0.75 mm each" further out. The mast base now
+  uses 42.5 (`mast_screw_spacing`). That suggests the real pilots are near X 18.25 / 60.75, but
+  this has not been measured. **Open:** the Y 128 pair comes from the same parameters. It is used by
+  the power board cradle's `m2_anchors` (19, 128) / (60, 128), so if it is off by the same amount
+  the cradle will not line up either. Needed: two-reading caliper measurement (jaws inside `I` and
+  outside `O` the two holes of each pair; c-t-c = (I+O)/2) of both rear pairs.
+- **Right-front slit appears to start further back than modelled.** The rail's front screw at
+  Y 10 (shank front edge Y 8.5, modelled slit start Y 7.5) "didn't quite" pass on the right. The
+  v2 rail moves it to Y 13.5. The left side went together, so the two front slits may differ.
+  Needed: the distance from the deck's front edge to the front end of each front slit.
+
 All of the above are driven by named cells in the `Parameters` spreadsheet inside `Gladiator_Master.FCStd` (`mount_hole_diameter`, `pilot_hole_diameter`, `front_slit_side_gap`, `front_slit_edge_gap`, `front_slit_length`, `front_hole_edge_gap`, `front_hole_slit_inset`, `pilot_hole_offset`, `rear_pilot_edge_gap`, `rear_pilot_spacing`, `rear_pilot_outside_bias`). `outer_slit_center_spacing` still drives the rear outer slits, unchanged from the original model.
 
 ## Battery box (added 2026-09-15)

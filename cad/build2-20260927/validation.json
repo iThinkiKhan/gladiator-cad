@@ -1,0 +1,143 @@
+{
+ "generated": "20260927-092339",
+ "script": "scripts/apply_first_build_fixes.py",
+ "prints": [
+  {
+   "file": "Gladiator_SideRail_L_v2-tall_print-on-outboard-face.stl",
+   "note": "Outboard (-X) face down, raceway opens upward.",
+   "bounds": [
+    52.5,
+    133.0,
+    12.0
+   ],
+   "bed_area_mm2": 3651.8,
+   "volume_mm3": 28563.7,
+   "pla_g_solid": 35.4,
+   "facets": 5830
+  },
+  {
+   "file": "Gladiator_SideRail_R_v2-tall_print-on-outboard-face.stl",
+   "note": "Outboard (+X) face down, raceway opens upward.",
+   "bounds": [
+    52.5,
+    133.0,
+    12.0
+   ],
+   "bed_area_mm2": 3651.8,
+   "volume_mm3": 28563.7,
+   "pla_g_solid": 35.4,
+   "facets": 5830
+  },
+  {
+   "file": "Gladiator_MastTube_v2-Z130_print-vertical.stl",
+   "note": "Vertical as modelled, 124 tall. Brim recommended.",
+   "bounds": [
+    20.0,
+    20.0,
+    124.0
+   ],
+   "bed_area_mm2": 201.1,
+   "volume_mm3": 24251.2,
+   "pla_g_solid": 30.1,
+   "facets": 5354
+  },
+  {
+   "file": "Gladiator_MastBase_v2-holes-42p5_print-spigot-UP.stl",
+   "note": "Upside down, spigot up; thin collar ring on the bed - brim, support under the outer plate.",
+   "bounds": [
+    47.0,
+    28.0,
+    23.5
+   ],
+   "bed_area_mm2": 150.8,
+   "volume_mm3": 7887.1,
+   "pla_g_solid": 9.8,
+   "facets": 8690
+  },
+  {
+   "file": "Gladiator_Coupon_RailFrontFoot_R_v2_deck-face-down.stl",
+   "note": "Bottom 10 mm of the new right front foot. Screw it to the real right front slit before printing rails.",
+   "bounds": [
+    12.0,
+    16.5,
+    10.0
+   ],
+   "bed_area_mm2": 176.2,
+   "volume_mm3": 1228.2,
+   "pla_g_solid": 1.5,
+   "facets": 68
+  }
+ ],
+ "overlaps_before": {
+  "Neck_Main|GH44_Fixed_Head_Adapter": 4267.437,
+  "Pan_Rotor|Pan_Retainer_Crank": 29.609,
+  "Pan_Rotor|Tilt_Yoke": 97.487,
+  "Pan_Rotor|Pan_Inner_Spacer": 6.45,
+  "Pan_Rotor|GH44_Fixed_Head_Adapter": 1431.755,
+  "Pan_Retainer_Crank|GH44_Fixed_Head_Adapter": 219.234,
+  "Tilt_Yoke|GH44_Fixed_Head_Adapter": 823.29,
+  "GH44_Tilt_Receiver|GH44_Fixed_Head_Adapter": 155.273,
+  "GH44_Tilt_Receiver|GH44_Receiver_Fit_Coupon": 6042.354,
+  "GH44_Blank_Carrier|GH44_ToF_Carrier": 5547.022,
+  "GH44_Blank_Carrier|GH44_Radar_Carrier": 5566.102,
+  "GH44_Blank_Carrier|GH44_Camera_Carrier": 5618.686,
+  "GH44_Blank_Carrier|GH44_Dual_Carrier": 5508.828,
+  "GH44_ToF_Carrier|GH44_Radar_Carrier": 8153.986,
+  "GH44_ToF_Carrier|GH44_Camera_Carrier": 8800.09,
+  "GH44_ToF_Carrier|GH44_Dual_Carrier": 8253.69,
+  "GH44_Radar_Carrier|GH44_Camera_Carrier": 8397.281,
+  "GH44_Radar_Carrier|GH44_Dual_Carrier": 8333.49,
+  "GH44_Camera_Carrier|GH44_Dual_Carrier": 8721.701,
+  "SEN0628_Envelope|SEN0610_Envelope": 9048.0,
+  "SEN0628_Envelope|ESP32_CAM_Envelope": 10744.5,
+  "SEN0628_Envelope|Dual_ToF_Envelope": 4524.0,
+  "SEN0628_Envelope|Dual_Radar_Envelope": 3581.5,
+  "SEN0610_Envelope|ESP32_CAM_Envelope": 9672.0,
+  "SEN0610_Envelope|Dual_ToF_Envelope": 3581.5,
+  "SEN0610_Envelope|Dual_Radar_Envelope": 2912.0,
+  "ESP32_CAM_Envelope|Dual_ToF_Envelope": 4429.75,
+  "ESP32_CAM_Envelope|Dual_Radar_Envelope": 3727.75,
+  "Pan_Bearing_Lower|GH44_Fixed_Head_Adapter": 344.493,
+  "Pan_Bearing_Upper|GH44_Fixed_Head_Adapter": 344.493,
+  "Pan_Inner_Spacer|GH44_Fixed_Head_Adapter": 33.282,
+  "Pan_Circlip_Envelope|GH44_Fixed_Head_Adapter": 14.121,
+  "SG90_Tilt_Reference|GH44_Fixed_Head_Adapter": 959.662,
+  "Tilt_Horn_Reference|GH44_Fixed_Head_Adapter": 89.753
+ },
+ "overlaps_after": {
+  "Neck_Main|GH44_Fixed_Head_Adapter": 4267.437,
+  "Pan_Rotor|Pan_Retainer_Crank": 29.609,
+  "Pan_Rotor|Tilt_Yoke": 97.487,
+  "Pan_Rotor|Pan_Inner_Spacer": 6.45,
+  "Pan_Rotor|GH44_Fixed_Head_Adapter": 1431.755,
+  "Pan_Retainer_Crank|GH44_Fixed_Head_Adapter": 219.234,
+  "Tilt_Yoke|GH44_Fixed_Head_Adapter": 823.29,
+  "GH44_Tilt_Receiver|GH44_Fixed_Head_Adapter": 155.273,
+  "GH44_Tilt_Receiver|GH44_Receiver_Fit_Coupon": 6042.354,
+  "GH44_Blank_Carrier|GH44_ToF_Carrier": 5547.022,
+  "GH44_Blank_Carrier|GH44_Radar_Carrier": 5566.102,
+  "GH44_Blank_Carrier|GH44_Camera_Carrier": 5618.686,
+  "GH44_Blank_Carrier|GH44_Dual_Carrier": 5508.828,
+  "GH44_ToF_Carrier|GH44_Radar_Carrier": 8153.986,
+  "GH44_ToF_Carrier|GH44_Camera_Carrier": 8800.09,
+  "GH44_ToF_Carrier|GH44_Dual_Carrier": 8253.69,
+  "GH44_Radar_Carrier|GH44_Camera_Carrier": 8397.281,
+  "GH44_Radar_Carrier|GH44_Dual_Carrier": 8333.49,
+  "GH44_Camera_Carrier|GH44_Dual_Carrier": 8721.701,
+  "SEN0628_Envelope|SEN0610_Envelope": 9048.0,
+  "SEN0628_Envelope|ESP32_CAM_Envelope": 10744.5,
+  "SEN0628_Envelope|Dual_ToF_Envelope": 4524.0,
+  "SEN0628_Envelope|Dual_Radar_Envelope": 3581.5,
+  "SEN0610_Envelope|ESP32_CAM_Envelope": 9672.0,
+  "SEN0610_Envelope|Dual_ToF_Envelope": 3581.5,
+  "SEN0610_Envelope|Dual_Radar_Envelope": 2912.0,
+  "ESP32_CAM_Envelope|Dual_ToF_Envelope": 4429.75,
+  "ESP32_CAM_Envelope|Dual_Radar_Envelope": 3727.75,
+  "Pan_Bearing_Lower|GH44_Fixed_Head_Adapter": 344.493,
+  "Pan_Bearing_Upper|GH44_Fixed_Head_Adapter": 344.493,
+  "Pan_Inner_Spacer|GH44_Fixed_Head_Adapter": 33.282,
+  "Pan_Circlip_Envelope|GH44_Fixed_Head_Adapter": 14.121,
+  "SG90_Tilt_Reference|GH44_Fixed_Head_Adapter": 959.662,
+  "Tilt_Horn_Reference|GH44_Fixed_Head_Adapter": 89.753
+ }
+}
