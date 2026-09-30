@@ -409,6 +409,16 @@ orientation together, not bolt the mount on and accept the scarring.
 
 ## Mast head (modular sensor head)
 
+**Status 2026-09-30.** The body is printed and the head is next.
+- **v0.3 (belt pan drive) is on hold.** Its 40T-drives-60T ratio turns the head *less* than the
+  servo, and its belt centre distance is 39.745 where it should be 39.486.
+- The next candidate, v0.4, puts **60T on the servo and 40T on the head** (1.5x, 133 degrees of
+  servo for 200 of head). It is re-based on the printed v2 mast (top Z 130).
+- It is gated on the round-2 coupons in `cad/head/coupons-r2-20260930/` (belt centre distance,
+  neck collar on the real mast, circlip post, M2 pilots, M3 nut sockets) and on the measurements
+  listed in that README.
+- The v0.1 summary below is history.
+
 **A copy of the v0.1 review candidate was brought into the master on 2026-09-17**, at the user's
 request, so the full assembly can be opened and reviewed in one file. This is an import of a
 snapshot, not a live link — the head workstream's own files (below) remain authoritative and will
@@ -593,10 +603,9 @@ The mating face is now the bed face, which is the flattest surface a printer pro
 
 - **Mast tube layer direction.** Printed vertically (the only sane orientation for a Ø20/Ø12 tube),
   the layer lines run perpendicular to the bending stress a sensor head applies — the weakest
-  possible arrangement, and a mast that fails will fail at a layer line. Worth considering a bought
-  aluminium or carbon Ø20/Ø12 tube instead; the design already treats the mast as a removable,
-  standardised part, and the only features on it (wire window, cross-pin hole, index flat) are
-  straightforward to drill and file.
+  possible arrangement, and a mast that fails will fail at a layer line. **Decided 2026-09-30
+  (Jim): the printed v2 tube (top Z 130) is the mast; buying a tube is dropped.** The weakness is
+  accepted. Keep the head light and don't lift the robot by it.
 - **Index flat engagement.** The head candidate's anti-rotation flat is only **0.9 mm deep** and,
   being a tangential cut on a cylinder, feathers to about 0.07 mm at its edges. With a stated 0.2 mm
   key clearance and normal PETG tolerance, the effective engagement could approach zero. Flagged for

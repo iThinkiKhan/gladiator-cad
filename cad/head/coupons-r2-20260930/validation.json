@@ -1,0 +1,304 @@
+{
+  "status": "FIT COUPONS - not a head release",
+  "pieces": {
+    "H1": {
+      "question": "At what centre distance does the real 180 mm belt sit snug on printed 60T and 40T pulleys, and does it run round cleanly by hand?",
+      "drive_pulley": {
+        "teeth": 60,
+        "pitch_dia": 38.197,
+        "tip_dia": 37.689,
+        "root_dia": 36.189,
+        "flange_dia": 40.689,
+        "channel_mm": 7.0,
+        "height": 10.1,
+        "groove_r": 0.65,
+        "groove_depth": 0.75
+      },
+      "driven_pulley": {
+        "teeth": 40,
+        "pitch_dia": 25.465,
+        "tip_dia": 24.957,
+        "root_dia": 23.457,
+        "flange_dia": 27.957,
+        "channel_mm": 7.0,
+        "height": 10.1,
+        "groove_r": 0.65,
+        "groove_depth": 0.75
+      },
+      "ratio_head_per_servo": 1.5,
+      "servo_deg_for_200_head_deg": 133.3,
+      "centre_distance_theory_mm": 39.486,
+      "centre_distance_if_pulleys_print_0p25_small_mm": 39.884,
+      "slot_range_mm": [
+        37.5,
+        42.0
+      ],
+      "wrap_small_pulley_deg": 161.4,
+      "hardware": "2 x M3 bolt 16-20 long, 2 x M3 nut, the belt",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H1a_BeltPulley-60T_flange-down.stl",
+          "size_mm": [
+            40.7,
+            40.7,
+            10.1
+          ],
+          "volume_cm3": 4.44,
+          "grams_pla": 5.5,
+          "bed_contact_mm2": 655.0,
+          "orientation": "bottom flange on the bed, teeth vertical, 45-degree top flange - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 2,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.013,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H1b_BeltPulley-40T_flange-down.stl",
+          "size_mm": [
+            28.0,
+            28.0,
+            10.1
+          ],
+          "volume_cm3": 2.95,
+          "grams_pla": 3.7,
+          "bed_contact_mm2": 408.0,
+          "orientation": "bottom flange on the bed, teeth vertical, 45-degree top flange - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 2,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.006,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H1c_BeltBar_flat.stl",
+          "size_mm": [
+            54.0,
+            10.0,
+            4.0
+          ],
+          "volume_cm3": 2.02,
+          "grams_pla": 2.5,
+          "bed_contact_mm2": 498.0,
+          "orientation": "flat, 4 mm tall - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.001,
+          "pass": true
+        }
+      ]
+    },
+    "H2": {
+      "question": "Does the neck collar slide onto the top of the real printed v2 mast, seat on the top rim, key into the index flat, and lock solid with two M3 bolts? Which key is the tightest that still slides on?",
+      "bore_mm": 20.4,
+      "collar_od_mm": 28.0,
+      "height_mm": 10.0,
+      "key_width_mm": 7.2,
+      "flat_width_mm": 8.0,
+      "key_gap_to_flat_mm": {
+        "1 notch (H2a)": 0.1,
+        "2 notches (H2b)": 0.25
+      },
+      "clamp_gap_mm": 0.6,
+      "hardware": "2 x M3 bolt 16 long, 2 x M3 nut; the robot with the v2 mast fitted",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H2a_NeckCollar_key-1notch-TIGHT_seat-disc-down.stl",
+          "size_mm": [
+            36.0,
+            28.0,
+            11.2
+          ],
+          "volume_cm3": 2.42,
+          "grams_pla": 3.0,
+          "bed_contact_mm2": 523.0,
+          "orientation": "upside down: the 1.2 mm seating disc on the bed, collar and key standing up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.016,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H2b_NeckCollar_key-2notch-LOOSE_seat-disc-down.stl",
+          "size_mm": [
+            36.0,
+            28.0,
+            11.2
+          ],
+          "volume_cm3": 2.4,
+          "grams_pla": 3.0,
+          "bed_contact_mm2": 522.0,
+          "orientation": "upside down: the 1.2 mm seating disc on the bed, collar and key standing up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.016,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H2c_NeckCollarCap_standing.stl",
+          "size_mm": [
+            36.0,
+            13.7,
+            9.8
+          ],
+          "volume_cm3": 1.69,
+          "grams_pla": 2.1,
+          "bed_contact_mm2": 183.0,
+          "orientation": "as modelled, axis vertical, lugs on the bed - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 0,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.011,
+          "pass": true
+        }
+      ]
+    },
+    "H3": {
+      "question": "Does a 6804 slide down the printed post onto the shoulder, and does a 20 mm external circlip snap into the printed groove above it and hold it without rattle?",
+      "post_dia_mm": 20.2,
+      "shoulder_dia_mm": 23.0,
+      "bore_mm": 12.0,
+      "groove_dia_modelled_mm": 19.25,
+      "groove_dia_expected_printed_mm": 19.0,
+      "groove_width_mm": 1.4,
+      "groove_starts_above_bearing_mm": 0.1,
+      "hardware": "one 6804 bearing, one 20 mm external circlip, circlip pliers",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H3_CirclipPost_shoulder-down.stl",
+          "size_mm": [
+            23.0,
+            23.0,
+            12.1
+          ],
+          "volume_cm3": 2.64,
+          "grams_pla": 3.3,
+          "bed_contact_mm2": 247.0,
+          "orientation": "shoulder on the bed, post up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 2,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.031,
+          "pass": true
+        }
+      ]
+    },
+    "H4": {
+      "question": "Which pilot lets an M2 machine screw form a thread and hold firmly without splitting? Try an SG90 ear screw in the same three.",
+      "pilot_dia_modelled_mm": [
+        1.8,
+        2.0,
+        2.2
+      ],
+      "pilot_dia_expected_printed_mm": [
+        1.55,
+        1.75,
+        1.95
+      ],
+      "depth_mm": 7.0,
+      "marking": "notches on the long side, 1 = smallest",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H4_M2Pilots_flat.stl",
+          "size_mm": [
+            30.0,
+            7.0,
+            8.0
+          ],
+          "volume_cm3": 1.59,
+          "grams_pla": 2.0,
+          "bed_contact_mm2": 207.0,
+          "orientation": "flat, holes open upward - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 0,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.001,
+          "pass": true
+        }
+      ]
+    },
+    "H5": {
+      "question": "Which hex socket takes an M3 nut pressed in by thumb, and holds it there?",
+      "across_flats_mm": [
+        5.8,
+        6.0,
+        6.2
+      ],
+      "depth_mm": 2.6,
+      "marking": "notches on the long side, 1 = smallest",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H5_M3NutSockets_flat.stl",
+          "size_mm": [
+            32.0,
+            10.0,
+            5.0
+          ],
+          "volume_cm3": 1.27,
+          "grams_pla": 1.6,
+          "bed_contact_mm2": 268.0,
+          "orientation": "flat, sockets open upward - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 3,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.003,
+          "pass": true
+        }
+      ]
+    }
+  },
+  "checks": {
+    "all_pieces_pass": true,
+    "plate_pass": true
+  },
+  "plate": {
+    "file": "Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf",
+    "pieces": 9,
+    "objects_in_3mf": 9,
+    "triangles_ok": true,
+    "offbed": 0,
+    "overlaps": 0,
+    "volume_cm3": 21.41,
+    "grams_pla": 27.0,
+    "unit_mm": true
+  }
+}

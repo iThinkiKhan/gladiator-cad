@@ -2,7 +2,29 @@
 
 Prepared 2026-09-17; rebuilt 2026-09-18 as actual arranged plates after the first coupon results.
 
-## Live queue (2026-09-21)
+## Live queue (2026-09-30) — head coupons, round 2
+
+The body is essentially printed (build 2). The mast is the **printed v2 tube, top at Z 130**. It
+is the mast, not a stand-in; buying a tube is off the table (Jim, 2026-09-30).
+
+Next up is the head. Nothing in `cad/head/v03-belt/stl/` is printable; v0.3 is on hold.
+Five one-question coupons come first. Full notes, test steps and the measurements
+still needed are in `cad/head/coupons-r2-20260930/README.md`.
+
+Files are in `~/3D-Printer/Incoming/Gladiator/` (the Desktop `3D-Printer-Incoming` link points
+at the same folder). They are `Gladiator_HeadR2_*.stl` one piece each, plus
+`Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf` with all nine laid out. Total 21.4 cm3, about 27 g.
+PLA, no supports, no brim needed, do not auto-orient.
+
+| Coupon | Question |
+| --- | --- |
+| H1 belt (60T + 40T pulleys, slotted bar) | What centre distance tensions the real belt on printed pulleys? |
+| H2 neck collar (2 rear halves + cap) | Does the collar key onto the real mast's flat and clamp? Which key? |
+| H3 circlip post | Does a circlip in a printed groove hold a 6804 on the post? |
+| H4 M2 pilots | Which pilot does an M2 / SG90 ear screw bite in? |
+| H5 M3 nut sockets | Which hex socket takes an M3 nut? |
+
+## Earlier queue (2026-09-21)
 
 ### Driver v5 print prep (2026-09-21)
 
@@ -32,7 +54,7 @@ geometry is superseded. Nothing was deleted by this v5 print-prep pass.
 | D/G old driver mounts | superseded by v5 Plate I |
 | F all remaining coupons | library |
 | A body (rails + upper deck) | printed 2026-09-18 |
-| C mast tube | not queued — buy a 20/12 tube instead |
+| C mast tube | superseded — the printed v2 tube (Z 130, build 2) is the mast |
 | E coupons | superseded by F |
 
 **Plate F = plate E, minus coupon C, plus coupon D.** Coupon C tested self-tapping
@@ -98,10 +120,10 @@ still printing, and its layers are small enough to cook without it.
 Vertical is the only sane orientation for a Ø20/Ø12 tube, but it puts the layer lines perpendicular
 to exactly the bending load a sensor head applies. A mast that fails will fail at a layer line.
 
-**A bought Ø20/Ø12 aluminium or carbon tube is the better answer.** The design already treats the
-mast as a removable, standardised part and its only features (wire window, cross-pin hole, index
-flat) are easy to drill and file. Print this if you want the assembly complete for fit-checking;
-do not treat it as final. Needs a brim.
+**Decided 2026-09-30: the printed tube is the mast.** The earlier suggestion to buy a Ø20/Ø12
+tube is dropped. The v2 tube (top Z 130, from `cad/build2-20260927/`) is on the robot, and the head
+is designed to fit it. The layer-line weakness above still applies, so keep the head light and
+don't lift the robot by the head. Needs a brim.
 
 ## Plate D — driver mounts
 
