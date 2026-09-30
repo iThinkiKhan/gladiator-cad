@@ -142,41 +142,49 @@ Notches 1 to 3, with 1 the smallest. The GH44 receiver's 5.7 sockets took no nut
 
 ---
 
-## Measurements still needed (for round 3 and v0.4)
+## Measurements
 
-Two-reading rule for any pair of holes: jaws **inside** both holes (I), then **outside** both (O).
+### Already recorded — do not ask again
 
-**Printed v2 mast (top end):**
-1. Diameter across the round, side to side, square to the flat.
-2. From the flat face straight across to the opposite side. The model says 19.1.
+Jim has already taken these. They are spread over two files, so check both before asking.
 
-**One SG90, horn off:**
-3. Ear holes: I and O. Currently "about 27.2".
-4. Where the output shaft sits across the body: from each long side to the near edge of the
-   spline (two numbers), plus the body width there. This sets the tilt axis alignment.
+| What | Value | Where |
+| --- | --- | --- |
+| SG90 ear-hole pitch | about 27.2 | `measurements/mast-head.md` |
+| SG90 ear thickness / hole dia / tip-to-tip span | 2.5 / 2.5 / 32.5 | mast-head.md |
+| SG90 body bottom to ear underside; ear underside to horn underside | 17; about 13.2 | mast-head.md |
+| SG90 shaft centre to the near short end | 8.3 | mast-head.md |
+| SG90 usable sweep | 160 degrees | mast-head.md |
+| SG90 count | about six | mast-head.md |
+| Long horn end-to-end; shaft to long tip; short arms end-to-end | about 36; 17; about 18 | mast-head.md |
+| Cross horn holes | five per arm, toward the tip (not a measured pitch) | mast-head.md |
+| Belts / bearings / circlips / pulleys | 5 x GT2 6 mm 180 closed; yes; yes; **no pulleys** | mast-head.md |
+| Screws | mostly M2 / M3 screws, nuts and bolts | mast-head.md |
+| ST7789 board | 62.5 x 29, 3.2 thick | mast-head.md |
+| **ST7789 hole pattern** | **26.00 x 58.25 centres, confirmed by the plate F gauge** | `measurements/components.md`, Display |
+| **ST7789 visible area** | **51.2 x 25.6** | components.md, Display |
 
-**The cross horn you'd use:**
-5. Tip to tip, for each pair of arms.
-6. Arm width next to the hub, and at the tip.
-7. Arm thickness; hub outer diameter; total height from the underside of the arms to the top of
-   the hub.
-8. Does an M2 machine screw thread into the servo's output shaft? Also the supplied horn screw's
-   length and head diameter.
+`mast-head.md` still carries the raw 09-20 screen readings flagged "do not build from these".
+The Display section of `components.md` supersedes them.
 
-**Hardware:**
-9. Circlip thickness. Confirm they're 20 mm external rings, the kind with two lug holes.
-10. One bearing: outside diameter, bore, width.
-11. What's on hand: M2 screw lengths, M3 bolt lengths, M2 nuts (yes/no), M2 heat-set inserts
-    (yes/no), and still no timing pulleys?
+### Still missing
 
-**ST7789 screen (the frame is blocked on these):**
-12. The visible area: distance from each of the four board edges to its edge.
-13. Mounting holes, I and O in both directions.
-14. Which edge the pins or connector are on, and how far they stick out behind the board.
+Two-reading rule for any pair of holes: jaws inside both (I), then outside both (O).
 
-**Harness:**
-15. Which sensors go on the first head: ToF, radar, screen, camera? That sets how many wires go
-    through the 12 mm bore, which is the head's hardest unsolved problem.
+1. **Screen: where the visible area sits.** Its size is known; its position is not. Give the
+   distance from the board's left edge to the visible area, and from the top edge. The other two
+   edges are a bonus cross-check.
+2. **Screen: the pin header.** Which edge it's on, and how far it stands off the back.
+3. **SG90 shaft, across the body** (horn off). From each long side of the body to the near edge
+   of the spline, plus the body width there. This lines up the tilt servo with its idler pivot.
+4. **Cross horn, for the pulley adapter:** arm width next to the hub and at the tip, arm
+   thickness, hub diameter, and total horn height. The lengths are already recorded.
+5. **Does an M2 machine screw thread into the servo output shaft,** in place of the horn screw?
+6. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
+   go through the 12 mm bore.
+
+The coupons already test the rest: the mast fit (H2), the circlip and bearing width (H3), and the
+nut and screw fits (H4, H5). If the circlip won't go into H3, measure its thickness then.
 
 ## Files
 
