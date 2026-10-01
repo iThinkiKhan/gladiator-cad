@@ -229,7 +229,8 @@ are bolted once at the rear slits with **M3** bolts, and the tray's 1 mm smaller
 click bump, so a battery change is lift-out, swap, drop-in. The floor is 1.8 lower (Jim: installed cells are
 negligibly over the holder rim, so the master `BatteryCells` value of 4 is stale) and the board posts are 4.5 tall, so the
 board sits 4.3 lower than v3 and the connector room under the upper deck is 22.1. The INA226 cassette in front of the
-battery box is still to be designed.
+battery box is a separate removable shelf, `cad/power-board/ina-cassette-v1/` (2026-10-01, not printed): it hangs on the tray
+front wall, board front-to-back with the header pins out the front. Its two M2 hole positions are inferred, not calipered.
 
 ## Antenna pylon
 

@@ -11,9 +11,10 @@ STLs are in `~/3D-Printer/Incoming/Gladiator/` (tray, BaseLeft/Right, a fit coup
 - Board posts 7 -> 4.5 (Jim picked this over 5.5). Board is 4.3 lower than v3. His own "trim 4, do 3 to be safe"
   would be posts about 5.8; one constant (`STANDOFF_H`).
 - Rear pegs 3.0 x 8.1 (were 4 x 9.1) in 0.25-clearance sockets, click bump 0.5.
-- **INA226 cassette (front of the battery box, hanging from the tray) is NOT built.** Recorded: 26 x 22, 11.8 tall,
-  about 40 with dupont pins (`measurements/components.md`). Missing: mounting holes, thickness, terminal and header
-  positions, wire exits. Jim 2026-10-01 gave PCB 1.6, holes d3/d2, terminal 14 tail-to-top, pins protrude 7 (now in components.md); hole centres still missing.
+- **INA226 cassette v1 built 2026-10-01** (`cad/power-board/ina-cassette-v1/`, `scripts/build_ina_cassette_v1.py`, not printed). Removable
+  shelf that hangs on the tray front wall (lip over the wall, tongue under the floor, bumps), board front-to-back, header pins out
+  the front, terminals at the rear, wings between the rail front posts. **Hole centres (2.0 from header edge and sides) are
+  INFERRED from Jim's description, not calipered.** Pin tail 2.2 is derived. Board overhangs the deck front by 8.2.
 - Considered and dropped: hanging the board from the upper deck (Jim: keep the current board design for v1).
 
 ## Head round-2 coupons — 2026-09-30 (Claude)

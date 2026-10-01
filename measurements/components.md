@@ -115,6 +115,7 @@ it needs to sit clear of the aluminum deck to radiate.
 | Other mounting holes | Ø2 | Jim, 2026-10-01. Hole centre positions NOT measured |
 | Screw terminal block, pin tail to terminal top | 14 | Jim, 2026-10-01. Does not overhang the board edge; the wires protrude from it. Against the 11.8 above, this implies pin tails about 2.2 below the PCB underside (derived, not measured) |
 | Header pins protrusion | 7 | Jim, 2026-10-01. Which edge or housing face it is measured from was not stated |
+| Header-corner holes (the Ø2 pair) | Ø2 | Jim, 2026-10-01: they touch the corner of the board, with about 1 mm of board left around the hole. Centres NOT measured. The cassette v1 reads this as a corner arc of r 2 around the hole, so 2.0 from the header edge and 2.0 from each side edge: INFERRED |
 | Layout (from photos, not measured) | | Two 2-position screw terminals, orange and green, share one 22 edge; the 4-pin header (GND, SCL, SDA, VCC) is on the opposite edge, pins out past the board; two large pads with holes beside the shunt |
 
 ## Motor driver x2 (power, lower deck)
