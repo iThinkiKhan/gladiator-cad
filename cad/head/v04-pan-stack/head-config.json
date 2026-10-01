@@ -1,0 +1,59 @@
+{
+  "drive": {
+    "teeth_drive_on_servo": 60,
+    "teeth_driven_on_head": 40,
+    "ratio_head_per_servo_deg": 1.5,
+    "head_travel_deg": [
+      -20.0,
+      180.0
+    ],
+    "servo_travel_needed_deg": 133.3,
+    "servo_sweep_measured_deg": 160,
+    "belt": "2GT 90T / 180 mm",
+    "groove": "2-notch, r0.65, depth 0.75 (passed on Jim's belt)",
+    "theory_centre_distance_mm": 39.486,
+    "carriage_travel_mm": [
+      37.0,
+      40.4
+    ],
+    "nominal_mm": 39.75,
+    "evidence_nominal": "tightest about mid-slot on H1 (eyeball)",
+    "tip_dia_60T_mm": 37.689,
+    "tip_dia_40T_mm": 24.957,
+    "flange_dia_60T_mm": 40.689,
+    "belt_channel_bottom_Z": 155.0
+  },
+  "stack_Z": {
+    "plate_rim": 151.0,
+    "plate_top_belt_channel_bottom": 155.0,
+    "arm_top": 152.2,
+    "horn_underside": 150.2,
+    "servo_ear_plane": 138.95,
+    "servo_body_bottom": 121.44999999999999,
+    "pad": [
+      131.45,
+      135.95
+    ],
+    "pedestal_top_plate": [
+      165.5,
+      169.5
+    ],
+    "tilt_axis_local": 206.5,
+    "tilt_axis_real": 216.5,
+    "mast_top_real": 130.0,
+    "inherited_tilt_lift": 1.5
+  },
+  "pending": {
+    "POST_D": "placeholder 20.05 until the H3b bearing-post coupon is read (20.20 jammed)",
+    "PILOT_M2": "placeholder 2.2 until H4b is read (2.2 best of the first three; Jim said maybe bigger)",
+    "HORN_C": "placeholder 0.15 until H6 is read (0.15 snug / 0.30 easy)"
+  },
+  "assumed": {
+    "ARM_T": "2.0 horn arm thickness, NOT measured",
+    "HORN_G": "0.25 gap between the case boss and the horn underside, NOT measured",
+    "SHAFT_NEAR": "5.9 from the near body end, about +-0.6",
+    "servo_cross_centre": "shaft assumed centred across the 12 mm width",
+    "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
+  },
+  "release": "DESIGN CANDIDATE, stage 1 (pan stack). Not released."
+}

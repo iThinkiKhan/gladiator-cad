@@ -1,0 +1,493 @@
+{
+  "release": "DESIGN CANDIDATE, stage 1 (pan stack). Not released.",
+  "source_sha256": {
+    "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "0b2bc7267ca5a5a4ae1fffe02ee9e54d85970d9cc780f7abbfea8a07bee3f913",
+    "/home/buralien/projects/gladiator-cad/cad/head/v03-belt/Gladiator_Head_v03_Belt.FCStd": "b7f5fc285b3093a877580b4aa0ca9a6333f624abe135da4b6ccb6cb4b585509b"
+  },
+  "parts": [],
+  "checks": {
+    "master_mast_top_z": "130.0 mm",
+    "robot_solids_compared": [
+      "MastTube",
+      "MastBase",
+      "UpperDeck",
+      "S3Board",
+      "Breadboard",
+      "AntennaPost",
+      "ChassisDeck",
+      "SideRailLeft",
+      "SideRailRight",
+      "PowerShield",
+      "BatteryBox",
+      "DrvV5_Base_L",
+      "DrvV5_Wedge_L",
+      "DrvV5_Base_R",
+      "DrvV5_Wedge_R",
+      "DrvV5_Board_L",
+      "DrvV5_Fins_L",
+      "DrvV5_Board_R",
+      "DrvV5_Fins_R"
+    ],
+    "robot_solids_missing": [],
+    "head_pair_pose_tests": 13432,
+    "robot_pair_pose_tests": 56088,
+    "carriage_end_pose_tests": 8360,
+    "cable_passage_11_9mm_overlap_mm3": 0.0,
+    "all_parts_single_valid_solid": true,
+    "master_unchanged": true,
+    "sampled_geometry_pass": true
+  },
+  "collisions": [],
+  "pending": {
+    "POST_D": "placeholder 20.05 until the H3b bearing-post coupon is read (20.20 jammed)",
+    "PILOT_M2": "placeholder 2.2 until H4b is read (2.2 best of the first three; Jim said maybe bigger)",
+    "HORN_C": "placeholder 0.15 until H6 is read (0.15 snug / 0.30 easy)"
+  },
+  "assumed": {
+    "ARM_T": "2.0 horn arm thickness, NOT measured",
+    "HORN_G": "0.25 gap between the case boss and the horn underside, NOT measured",
+    "SHAFT_NEAR": "5.9 from the near body end, about +-0.6",
+    "servo_cross_centre": "shaft assumed centred across the 12 mm width",
+    "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
+  },
+  "limitations": [
+    "Stage 1: the PAN stack only. The tilt yoke, GH44 receiver and carriers, display frame and sensor envelopes are INHERITED from v0.3, lifted 1.5 mm, with their screw holes still at the v0.3 nominal sizes. Only the two yoke-to-pedestal M3 holes were re-drilled to 3.6. They are not print-ready.",
+    "Three numbers are placeholders until the final coupon plate is read: POST_D 20.05 (H3b), PILOT_M2 2.2 (H4b), HORN_C 0.15 (H6).",
+    "The horn arm thickness (2.0) and the boss-to-horn gap (0.25) are ASSUMED. They set the servo height, so they set the belt alignment. The first assembly should leave room to shim it.",
+    "Servo shaft position along the body is +-0.6. The carriage slot covers it.",
+    "Sampled rigid-solid checks every 5 degrees of pan. They do not prove clearance between samples, nor cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.",
+    "The belt can be fitted with the carriage at its slack end, but that is argued, not tested.",
+    "No load, torque or payload rating is claimed."
+  ],
+  "clearances": {
+    "drive_pulley_to_pedestal_mm": 1.0,
+    "drive_pulley_to_yoke_mm": 5.4,
+    "drive_pulley_to_retainer_mm": 4.0,
+    "drive_pulley_to_servo_body_mm": 0.35,
+    "servo_body_to_neck_mm": 0.4,
+    "neck_arm_to_rotor_mm": 1.0,
+    "spline_to_pulley_roof_mm": 0.35,
+    "horn_to_servo_boss_mm": 0.25
+  },
+  "service_paths": {
+    "retainer_screws_from_above": {
+      "pan_angles_with_all_four_open": [
+        25.0,
+        30.0,
+        35.0,
+        40.0,
+        45.0,
+        50.0,
+        55.0,
+        60.0,
+        65.0,
+        115.0,
+        120.0,
+        125.0,
+        130.0,
+        135.0,
+        140.0,
+        145.0,
+        150.0,
+        155.0
+      ],
+      "blocked_by_at_pan0": [
+        [
+          225,
+          "Pan_Drive_Pulley"
+        ]
+      ],
+      "note": "a vertical driver cylinder r3.5 over each screw head, against the moving parts"
+    },
+    "clamp_screws_from_above_pulley_fitted": {
+      "blocked_at_pans": {
+        "-20.0": [
+          [
+            "clamp_x-8.5",
+            "GH44_Dual_Carrier"
+          ],
+          [
+            "clamp_x-8.5",
+            "Rear_Display_Frame"
+          ],
+          [
+            "clamp_x+8.5",
+            "Dual_ToF_Envelope"
+          ]
+        ],
+        "-10.0": [
+          [
+            "clamp_x+8.5",
+            "GH44_Dual_Carrier"
+          ],
+          [
+            "clamp_x+8.5",
+            "Dual_ToF_Envelope"
+          ]
+        ],
+        "0.0": [
+          [
+            "clamp_x+8.5",
+            "Rear_Display_Frame"
+          ]
+        ]
+      },
+      "blocked_at_carriage_ends": {
+        "37.0": {
+          "-20.0": [
+            [
+              "clamp_x-8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x-8.5",
+              "Rear_Display_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "-10.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "0.0": [
+            [
+              "clamp_x+8.5",
+              "Rear_Display_Frame"
+            ]
+          ]
+        },
+        "40.4": {
+          "-20.0": [
+            [
+              "clamp_x-8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x-8.5",
+              "Rear_Display_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "-10.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "0.0": [
+            [
+              "clamp_x+8.5",
+              "Rear_Display_Frame"
+            ]
+          ]
+        }
+      },
+      "note": "driver cylinder r4.0 over each M3 clamp screw"
+    },
+    "horn_screw_from_above": {
+      "blocked_at_pans": {
+        "-20.0": [
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "horn_screw",
+            "GH44_Tilt_Receiver"
+          ]
+        ],
+        "-10.0": [
+          [
+            "horn_screw",
+            "Pan_Raised_Pedestal"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ],
+          [
+            "horn_screw",
+            "GH44_Tilt_Receiver"
+          ]
+        ],
+        "0.0": [
+          [
+            "horn_screw",
+            "Pan_Raised_Pedestal"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ]
+        ],
+        "10.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "20.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "30.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "40.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "50.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ]
+      },
+      "open_pans": [
+        60.0,
+        70.0,
+        80.0,
+        90.0,
+        100.0,
+        110.0,
+        120.0,
+        130.0,
+        140.0,
+        150.0,
+        160.0,
+        170.0,
+        180.0
+      ],
+      "note": "driver cylinder r3.5 down the pulley axis, from above the pulley roof"
+    }
+  },
+  "fov_intersections": [],
+  "drive": {
+    "teeth_drive_on_servo": 60,
+    "teeth_driven_on_head": 40,
+    "ratio_head_per_servo_deg": 1.5,
+    "head_travel_deg": [
+      -20.0,
+      180.0
+    ],
+    "servo_travel_needed_deg": 133.3,
+    "servo_sweep_measured_deg": 160,
+    "belt": "2GT 90T / 180 mm",
+    "groove": "2-notch, r0.65, depth 0.75 (passed on Jim's belt)",
+    "theory_centre_distance_mm": 39.486,
+    "carriage_travel_mm": [
+      37.0,
+      40.4
+    ],
+    "nominal_mm": 39.75,
+    "evidence_nominal": "tightest about mid-slot on H1 (eyeball)",
+    "tip_dia_60T_mm": 37.689,
+    "tip_dia_40T_mm": 24.957,
+    "flange_dia_60T_mm": 40.689,
+    "belt_channel_bottom_Z": 155.0
+  },
+  "stack_Z": {
+    "plate_rim": 151.0,
+    "plate_top_belt_channel_bottom": 155.0,
+    "arm_top": 152.2,
+    "horn_underside": 150.2,
+    "servo_ear_plane": 138.95,
+    "servo_body_bottom": 121.44999999999999,
+    "pad": [
+      131.45,
+      135.95
+    ],
+    "pedestal_top_plate": [
+      165.5,
+      169.5
+    ],
+    "tilt_axis_local": 206.5,
+    "tilt_axis_real": 216.5,
+    "mast_top_real": 130.0,
+    "inherited_tilt_lift": 1.5
+  },
+  "stl": [
+    {
+      "part": "Neck_Main",
+      "file": "Gladiator_Head_v04_Neck_Main.stl",
+      "print_orientation": "mast axis vertical, collar on the bed; the C arm, riser and pad need support",
+      "gate": "WAIT for H3b (post size) and the horn arm thickness from H6 (it sets the pad height)",
+      "size_mm": [
+        78.2,
+        86.2,
+        43.1
+      ],
+      "volume_cm3": 17.65,
+      "grams_pla": 21.9,
+      "bed_contact_mm2": 142,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.016,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Neck_Clamp_Cap",
+      "file": "Gladiator_Head_v04_Neck_Clamp_Cap.stl",
+      "print_orientation": "as modelled, axis vertical, lugs on the bed; no support",
+      "gate": "none - tested geometry",
+      "size_mm": [
+        36.0,
+        13.7,
+        16.0
+      ],
+      "volume_cm3": 2.54,
+      "grams_pla": 3.1,
+      "bed_contact_mm2": 142,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.018,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Pan_Servo_Carriage",
+      "file": "Gladiator_Head_v04_Pan_Servo_Carriage.stl",
+      "print_orientation": "flat, long axis along the bed X; no support",
+      "gate": "WAIT for H4b (ear pilots)",
+      "size_mm": [
+        25.0,
+        44.0,
+        3.0
+      ],
+      "volume_cm3": 2.32,
+      "grams_pla": 2.9,
+      "bed_contact_mm2": 765,
+      "bed_relief_edges": 2,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 0,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.002,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Pan_Rotor",
+      "file": "Gladiator_Head_v04_Pan_Rotor.stl",
+      "print_orientation": "axis vertical, LOWER bearing seat on the bed (relieved); no support",
+      "gate": "WAIT for H4b (M2 pilots)",
+      "size_mm": [
+        43.0,
+        43.0,
+        23.0
+      ],
+      "volume_cm3": 15.38,
+      "grams_pla": 19.1,
+      "bed_contact_mm2": 512,
+      "bed_relief_edges": 2,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.031,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Pan_Retainer",
+      "file": "Gladiator_Head_v04_Pan_Retainer.stl",
+      "print_orientation": "flat; no support",
+      "gate": "none - clearance holes only",
+      "size_mm": [
+        43.0,
+        43.0,
+        3.0
+      ],
+      "volume_cm3": 2.28,
+      "grams_pla": 2.8,
+      "bed_contact_mm2": 638,
+      "bed_relief_edges": 6,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.028,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Pan_Raised_Pedestal",
+      "file": "Gladiator_Head_v04_Pan_Raised_Pedestal.stl",
+      "print_orientation": "axis vertical, base plate on the bed; support ONLY under the top plate, and block support from the belt channel",
+      "gate": "none for the geometry; the belt line is set by this part",
+      "size_mm": [
+        50.0,
+        51.5,
+        22.5
+      ],
+      "volume_cm3": 16.61,
+      "grams_pla": 20.6,
+      "bed_contact_mm2": 772,
+      "bed_relief_edges": 6,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.012,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Pan_Drive_Pulley",
+      "file": "Gladiator_Head_v04_Pan_Drive_Pulley.stl",
+      "print_orientation": "axis vertical, horn plate on the bed (pocket faces the bed, relieved); no support",
+      "gate": "WAIT for H6 (pocket clearance and the real arm thickness)",
+      "size_mm": [
+        40.7,
+        40.7,
+        13.1
+      ],
+      "volume_cm3": 7.89,
+      "grams_pla": 9.8,
+      "bed_contact_mm2": 938,
+      "bed_relief_edges": 1,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.005,
+      "NOT_RELEASED": true
+    }
+  ]
+}

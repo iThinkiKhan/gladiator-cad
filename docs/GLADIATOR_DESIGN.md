@@ -422,14 +422,20 @@ orientation together, not bolt the mount on and accept the scarring.
 
 ## Mast head (modular sensor head)
 
-**Status 2026-09-30.** The body is printed and the head is next.
+**Status 2026-10-01.** The body is printed. **Head v0.4 stage 1 (the pan stack) is built** in
+`cad/head/v04-pan-stack/`, from the measured numbers and the round-2 coupon results.
 - **v0.3 (belt pan drive) is on hold.** Its 40T-drives-60T ratio turns the head *less* than the
   servo, and its belt centre distance is 39.745 where it should be 39.486.
-- The next candidate, v0.4, puts **60T on the servo and 40T on the head** (1.5x, 133 degrees of
-  servo for 200 of head). It is re-based on the printed v2 mast (top Z 130).
-- It is gated on the round-2 coupons in `cad/head/coupons-r2-20260930/` (belt centre distance,
-  neck collar on the real mast, circlip post, M2 pilots, M3 nut sockets) and on the measurements
-  listed in that README.
+- **v0.4** puts **60T on the servo and 40T on the head** (1.5x, 133 degrees of servo for 200 of
+  head), on a sliding servo carriage (37.0 to 40.4), with a horn plate that takes the real SG90
+  cross horn. It is re-based on the printed v2 mast (top Z 130) and checked against the current
+  master: 0 collisions in about 78,000 pose tests, 0 ToF intersections, cable bore clear.
+- **Stage 1 covers the pan stack only.** The tilt yoke, GH44 receiver and carriers and the display
+  frame are inherited from v0.3, lifted 1.5 mm, and are not print-ready (stage 2).
+- Print plate 1 (pedestal, retainer, clamp cap) waits on no coupon. The rotor, carriage, neck and
+  drive pulley wait on H3b (post), H4b (M2 pilot) and H6 (horn pocket and arm thickness).
+- The horn arm thickness and the boss-to-horn gap are **assumed** and set the belt alignment. See
+  `cad/head/v04-pan-stack/README.md`.
 - The v0.1 summary below is history.
 
 **A copy of the v0.1 review candidate was brought into the master on 2026-09-17**, at the user's

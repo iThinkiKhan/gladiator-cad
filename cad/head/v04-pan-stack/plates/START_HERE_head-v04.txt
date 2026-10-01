@@ -1,0 +1,31 @@
+GLADIATOR HEAD v0.4 - PRINT PLATE 1 (2026-10-01)
+
+FILE:  Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf
+       Three parts, about 27 g of PLA before supports. Do NOT auto-orient.
+
+THESE THREE WAIT ON NO COUPON RESULT. The other four head parts (neck, rotor, servo carriage,
+drive pulley) are NOT here on purpose: they need the final coupon plate results first.
+Nothing here has been printed or fitted. It is a design candidate that passed the computer checks.
+
+WHAT EACH PART IS
+  Pan_Raised_Pedestal  The big round part with a 40-tooth ring in the middle and a flat
+                       rectangular seat on top. The head's tilt unit bolts to the seat, and the
+                       belt drives the toothed ring. 16.6 cm3, the biggest part.
+  Pan_Retainer         A flat ring. It clamps the top bearing down.
+  Neck_Clamp_Cap       The front half of the collar that clamps the head to the mast.
+
+PRINT SETTINGS
+  PLA, 0.2 mm layers, 4 walls, 30-40% infill.
+  SUPPORTS ARE NEEDED FOR THE PEDESTAL ONLY: under the big round top plate and the flat seat
+  (turn on normal / auto supports). Look at the slicer preview before you print:
+    - there should be NO support between the two flanges of the toothed ring (the belt groove)
+    - the teeth must not be touched by support
+  The retainer and the cap need none. A 3 mm brim is fine for the cap, which is narrow.
+  Elephant-foot compensation on if your profile has it.
+
+WHAT TO LOOK AT AFTERWARD
+  - Teeth: crisp, not mushy (the 2-notch profile that fitted your belt).
+  - The four 2.6 mm screw holes in the pedestal's base plate and in the retainer.
+  - The two hexagonal pockets on the underside of the pedestal's rectangular seat take an M3 nut.
+
+If you would rather wait for the coupon results first, nothing is lost by waiting.

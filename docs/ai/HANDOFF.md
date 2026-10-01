@@ -1,5 +1,30 @@
 # Current Handoff
 
+## Head v0.4 stage 1, the pan stack — 2026-10-01 (Claude)
+
+Built and validated, **not printed, not released**: `cad/head/v04-pan-stack/` (README there is the
+detail), generator `scripts/build_head_v04.py`, plate generator `scripts/build_head_v04_plate1.py`.
+Jim said "Start building head v0.4" while printing the final coupon plate.
+
+- 60T on the servo / 40T on the head, **servo on a sliding carriage** (37.0-40.4, nominal 39.75),
+  **horn plate** in the drive pulley for the real cross horn. Re-based on the Z130 mast and checked
+  against the **current master** (19 robot solids): 0 collisions in 13,432 + 56,088 + 8,360 poses,
+  0 ToF intersections, cable bore clear. The first run found 154 collisions, all my modelling
+  errors (a mirrored servo, a circlip cutting its groove). Fixed.
+- Service paths checked, not just overlap: all three screw groups reachable at **pan 60** and 120-150.
+  The belt clamp screws moved outboard of the pulley because the first layout put them under it.
+- **Plate 1** (`plates/Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf`, 27 g) needs no coupon
+  result. Placed in `~/3D-Printer/Incoming/Gladiator/` with a START_HERE sheet. The other four
+  parts are in `stl/` only and are deliberately **not** in the printer folder.
+- **Placeholders until the final coupon plate is read:** post 20.05 (H3b), M2 pilot 2.2 (H4b), horn
+  pocket clearance 0.15 (H6). **ASSUMED:** horn arm thickness 2.0 and boss-to-horn gap 0.25. They set
+  the servo height and so the belt alignment. Leave room to shim on the first assembly.
+- **Stage 2 (not done):** regenerate the tilt yoke, GH44 receiver/carriers and display frame from code
+  with calibrated holes, 6.0 nut pockets, the screen window (51.2 x 25.6 at 6.2 / 1.5) and header
+  relief, and the screw-access cut in the yoke floor.
+- The master's imported `HeadCandidate_v01` is still the old v0.1. Untouched.
+- Ask before starting any print.
+
 ## Power tray v4 + snap-in base — 2026-10-01 (Claude)
 
 Jim wants a tool-free battery change. v3 tray kept, but it now plugs into two bolt-once rear bases
