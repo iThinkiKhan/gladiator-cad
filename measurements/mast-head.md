@@ -268,3 +268,31 @@ whether the arms stand proud of the pocket rim will give the thickness indirectl
 - The arm tips are rounded.
 - Hole positions along the arms were not read off the photo. The two-screws-as-pins readings are
   still needed, and only if a design screws through the plate into the horn.
+
+### SG90 body photo — Jim, 2026-10-01 (estimates read off the picture, NOT measured)
+
+Photo: `measurements/photos/sg90-body-side-view_20261001.jpg`. A translucent-blue "Beffkkip"
+SG90, one ear broken off. Hand-held and at a slight angle, so everything below is good to about
++-1 mm at best. Scale taken from the body length (22.8 = about 450 px); that scale reproduces the
+recorded 17 mm body-bottom-to-ear-underside, which is a fair cross-check.
+
+What the photo shows:
+- The ears are on the two **short ends**. The output spline stands on a round boss near **one
+  end**, with a second, smaller bump (the idler gear housing) beside it toward the middle.
+- **It supports reading Jim's "4" and "about 15" as distances along the body length.** The spline
+  sits a few mm from the near end and about 15 from the far end.
+- **Shaft position along the body:** the eyeballed centre is about 4.5-6.5 from the near end. That
+  agrees with Jim's 4 + half the spline = about 6.4, and **not** with the older 8.3.
+- The photo cannot show whether the shaft is centred across the 12.2 width. That stays an
+  assumption.
+
+**An unresolved conflict, worth one reading.** In the picture the spline top is about 30 above the
+body bottom (an upper bound, since it is nearer the camera and magnified; the published overall
+height is about 29-30). The case boss it comes out of is about 26-27. So:
+- the spline top is roughly 12-14 above the ear underside, which matches the recorded "ear
+  underside to installed horn underside, about 13.2" only if that was taken to the spline top, and
+- a horn resting on the boss would have its underside nearer 10 above the ear underside.
+
+This matters. It sets the height of the drive pulley's belt channel against the head pulley's. A
+3 mm error would leave a 6 mm belt only half on its groove. The three readings that settle it are
+in the coupon README under "Still missing".

@@ -204,11 +204,17 @@ Two-reading rule for any pair of holes: jaws inside both (I), then outside both 
 
 1. **Cross horn: arm thickness and total height** (one number each, the horn off the servo).
    H6 will give the thickness indirectly if you'd rather skip it.
-2. **SG90 shaft, across the body** (horn off). From each long side of the body to the near edge
-   of the spline, plus the body width there. This lines up the tilt servo with its idler pivot.
-3. **Spline, along the body:** your 4 and about 15 gave a shaft centre about 6.4 from the near
-   end, against the old 8.3. One more reading settles it: the servo body's total length, ears
-   not counted.
+2. **SG90 heights, horn off, servo standing on its flat bottom.** Three caliper readings, each
+   from the table up:
+   - **a.** to the **top of the spline**
+   - **b.** to the **top of the round case boss** the spline comes out of
+   - **c.** to the **underside of an ear** (a recheck of the old 17; use the intact ear)
+
+   The 2026-10-01 photo suggests the horn sits lower than the recorded 13.2 above the ear
+   underside. That sets whether the belt lines up with its pulley groove, so it is the one number
+   that matters here.
+3. **SG90 body length, end to end, ears not counted.** With your 4 and about 15 it settles where
+   the shaft sits along the body (about 6.4 from the near end, against the old 8.3).
 4. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
    go through the 12 mm bore.
 5. **Only if the tiny screws are the plan:** the two-screws-as-pins readings on the horn's
