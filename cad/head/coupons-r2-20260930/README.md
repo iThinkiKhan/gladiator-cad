@@ -157,7 +157,9 @@ play? Which clearance is right?
 horn-shaped pocket can't sit inside the toothed part. In v0.4 the pocket will be in a wider plate
 on the drive pulley's servo side. This coupon is that plate alone.
 
-1. Drop the horn in, boss-up, into the pocket. The long arms go along the long axis.
+1. Drop the horn into the pocket **boss-DOWN**, so the raised hub goes into the round recess in
+   the floor and the flat arm face is up. (An earlier version of this README said boss-up. That
+   was wrong. The recess is in the floor.) The long arms go along the long axis.
 2. **Report which key fits:** 1 notch (0.15 per side) or 2 notches (0.30 per side), whether it
    drops in by hand, and whether it rocks.
 3. **How far do the arms stand above the rim, or do they sit below it?** That gives the arm
@@ -181,8 +183,10 @@ Jim has already taken these. They are spread over two files, so check both befor
 | --- | --- | --- |
 | SG90 ear-hole pitch | about 27.2 | `measurements/mast-head.md` |
 | SG90 ear thickness / hole dia / tip-to-tip span | 2.5 / 2.5 / 32.5 | mast-head.md |
-| SG90 body bottom to ear underside; ear underside to horn underside | 17; about 13.2 | mast-head.md |
-| SG90 shaft centre to the near short end | 8.3 | mast-head.md |
+| **SG90 heights, from the flat bottom** (2026-10-01) | spline top **32**; case boss top **28.5**; ear underside **17.5** (the old 17 was within 0.5) | mast-head.md |
+| **SG90 body length, ears not counted** (2026-10-01) | **22.7** | mast-head.md |
+| ~~SG90 ear underside to installed horn underside~~ | ~~about 13.2~~. **Do not use.** A horn seated on the boss sits about 11.0 above the ear underside | mast-head.md |
+| ~~SG90 shaft centre to the near short end~~ | ~~8.3~~. **Superseded:** about 5.9 (+-0.6), see mast-head.md | mast-head.md |
 | SG90 usable sweep | 160 degrees | mast-head.md |
 | SG90 count | about six | mast-head.md |
 | **Cross horn** (2026-10-01) | long tip to tip 36; short tip to tip 19; long arm 6.8 at the hub, 4.8 at the tip; short arm 3.8; hub dia 7.1; boss about 1 proud | mast-head.md |
@@ -204,24 +208,15 @@ Two-reading rule for any pair of holes: jaws inside both (I), then outside both 
 
 1. **Cross horn: arm thickness and total height** (one number each, the horn off the servo).
    H6 will give the thickness indirectly if you'd rather skip it.
-2. **SG90 heights, horn off, servo standing on its flat bottom.** Three caliper readings, each
-   from the table up:
-   - **a.** to the **top of the spline**
-   - **b.** to the **top of the round case boss** the spline comes out of
-   - **c.** to the **underside of an ear** (a recheck of the old 17; use the intact ear)
-
-   The 2026-10-01 photo suggests the horn sits lower than the recorded 13.2 above the ear
-   underside. That sets whether the belt lines up with its pulley groove, so it is the one number
-   that matters here.
-3. **SG90 body length, end to end, ears not counted.** With your 4 and about 15 it settles where
-   the shaft sits along the body (about 6.4 from the near end, against the old 8.3).
-4. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
+2. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
    go through the 12 mm bore.
-5. **Only if the tiny screws are the plan:** the two-screws-as-pins readings on the horn's
+3. **Only if the tiny screws are the plan:** the two-screws-as-pins readings on the horn's
    long-arm holes (outermost pair and innermost pair, I and O).
 
 Answered 2026-10-01 and no longer open: the screen window position (6.2 / 1.5), the cross horn's
-widths and hub, and M2 into the spline (no). The screen's pin header isn't fitted yet. The
+widths and hub, M2 into the spline (no), and the SG90 heights and body length. The servo needs
+no further readings for now. The shaft position is good to about +-0.6, so v0.4 will give the
+servo carriage a slot rather than a fixed point. The screen's pin header isn't fitted yet. The
 coupons test the rest: the mast fit (H2), the circlip and bearing width (H3), and the nut and
 screw fits (H4, H5). If the circlip won't go into H3, measure its thickness then.
 

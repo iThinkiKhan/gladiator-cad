@@ -296,3 +296,46 @@ height is about 29-30). The case boss it comes out of is about 26-27. So:
 This matters. It sets the height of the drive pulley's belt channel against the head pulley's. A
 3 mm error would leave a 6 mm belt only half on its groove. The three readings that settle it are
 in the coupon README under "Still missing".
+
+### SG90 heights and body length — Jim's calipers, 2026-10-01 (MEASURED)
+
+Servo standing on its flat bottom, horn off, readings from the table up.
+
+| Reading | Value |
+| --- | ---: |
+| To the top of the output spline | **32** |
+| To the top of the round case boss the spline comes out of | **28.5** |
+| To the underside of an ear (intact ear) | **17.5** |
+| Body length, end to end, ears not counted | **22.7** |
+
+**Reading note.** Jim's reply was "3. 17. 5mm". I read it as **17.5** with a stray space. It
+rechecks the earlier 17 and agrees within 0.5. The alternative reading, 17, changes nothing below
+by more than 0.5.
+
+**Derived, not measured:**
+- The case boss top is **11.0** above the ear underside, and the spline top **14.5** above it. (Or
+  11.5 and 15.0, if the older 17 is the truer ear height.)
+- The spline stands **3.5** proud of its boss.
+- A horn seated on the boss therefore has its underside about **11.0-11.5** above the ear
+  underside. It cannot be seated and also be at 13.2.
+
+**Superseded. Do not use either:**
+- "Ear underside to installed horn underside, about 13.2" (09-16), and the 30.2 total derived
+  from it. A horn at 13.2 would grip only about 1.3 mm of the 3.5 mm spline: that horn was not
+  fully seated, or the reading was taken to a different face. The v0.3 CAD modelled the servo with
+  a 27.5 body top and a 30.2 spline top. The real servo is 28.5 and 32, so v0.3 put the horn about
+  1.2-1.7 too high.
+- "Shaft centre to the short body side, 8.3" (09-16). Jim's 4 and about 15 are along the length. With the
+  22.7 length they put the shaft centre at **about 5.9, +-0.6**:
+  - 4 + half the spline (published Ø4.8) = 6.4 from the near end;
+  - 22.7 - 15 - 2.4 = 5.3 from the far side. The "about 15" is the looser reading.
+  - Neither comes near 8.3. The published spline diameter is not a measurement on Jim's parts.
+  - To nail it later: one caliper reading of the spline's diameter, then centre = 4 + D/2.
+
+**What this does to the head.** The belt channels of the two pulleys must line up to within about
+0.5 mm (6 mm belt, 7 mm channel). v0.4 takes the drive pulley height from the real numbers, not
+from 30.2. Belt alignment is still unverified until a physical fit, so the first build should
+leave room to shim it.
+
+The photo-based estimates in the previous section are kept as history. The measured numbers
+replace them. The photo estimates read the spline top low and the boss top low by about 1.5-2.
