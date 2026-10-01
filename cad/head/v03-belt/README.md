@@ -1,3 +1,5 @@
+> **PREPRINT HOLD (2026-09-22):** The 40T drive / 60T driven ratio is reversed in this candidate. The claimed 200-degree head sweep would require 300 degrees of servo travel, exceeding the measured 160 degrees. The fixed 39.745 mm shaft spacing also implies a 180.512 mm pitch path for a 180 mm belt. See docs/ai/agents/codex-head-preprint-20260922.md. The two-notch belt mesh coupon now fits the delivered belt. Jim has no timing pulleys in hand (the purchase statement below is superseded). Hold the full head until the drive is corrected and revalidated.
+
 # Gladiator head v0.3 — corrected belt pan drive
 
 Built 2026-09-19 from the v0.2 comparison candidate. **The v0.2 file and the saved

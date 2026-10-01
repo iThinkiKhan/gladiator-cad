@@ -1,0 +1,30 @@
+{
+  "status": "UNPOWERED FIT COUPON - NOT A FULL HEAD OR DRIVE RELEASE",
+  "belt_profile": "Jim physically selected 2-notch / groove radius 0.65 mm",
+  "teeth": 60,
+  "pitch_mm": 2.0,
+  "pitch_diameter_mm": 38.197186342054884,
+  "outside_diameter_mm": 37.68918634205488,
+  "flange_diameter_mm": 40.08918634205488,
+  "groove_depth_mm": 0.75,
+  "belt_channel_height_mm": 6.0,
+  "total_height_mm": 7.4,
+  "horn_tip_radius_mm_measured": 17,
+  "slot_radial_centers_mm": [
+    7.0,
+    14.0
+  ],
+  "slot_width_mm": 2.6,
+  "center_access_diameter_mm": 5.5,
+  "minimum_tooth_root_to_slot_outer_edge_mm": 2.79459317102744,
+  "single_valid_solid": true,
+  "mesh_is_solid": true,
+  "volume_cm3": 7.305450110592548,
+  "notes": [
+    "Print flat with the pulley axis vertical, no supports; use a brim if bed adhesion needs it.",
+    "Use the supplied horn and its original center screw; do not print a spline.",
+    "Offer up the cross horn unpowered and choose two opposite existing arm holes within the slots.",
+    "Check M2 screw fit, underside nut clearance, horn seating, and unobstructed center-screw access.",
+    "Do not run this pulley on the servo until the attachment and full drive are redesigned and checked."
+  ]
+}
