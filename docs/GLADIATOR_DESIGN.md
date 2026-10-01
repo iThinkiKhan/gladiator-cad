@@ -430,8 +430,9 @@ orientation together, not bolt the mount on and accept the scarring.
   head), on a sliding servo carriage (37.0 to 40.4), with a horn plate that takes the real SG90
   cross horn. It is re-based on the printed v2 mast (top Z 130) and checked against the current
   master: 0 collisions in about 78,000 pose tests, 0 ToF intersections, cable bore clear.
-- **Stage 1 covers the pan stack only.** The tilt yoke, GH44 receiver and carriers and the display
-  frame are inherited from v0.3, lifted 1.5 mm, and are not print-ready (stage 2).
+- **Stage 2 (the tilt side) was done the same day.** The yoke, GH44 receiver, dual carrier and
+  display frame are regenerated with calibrated holes, the same horn-plate drive, an M3 pivot bolt,
+  and the real ST7789 window. Not designed yet: sensor mounting on the carrier, and the harness.
 - Print plate 1 (pedestal, retainer, clamp cap) waits on no coupon. The rotor, carriage, neck and
   drive pulley wait on H3b (post), H4b (M2 pilot) and H6 (horn pocket and arm thickness).
 - The horn arm thickness and the boss-to-horn gap are **assumed** and set the belt alignment. See

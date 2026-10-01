@@ -1,5 +1,5 @@
 {
-  "release": "DESIGN CANDIDATE, stage 1 (pan stack). Not released.",
+  "release": "DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). Not released.",
   "source_sha256": {
     "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "0b2bc7267ca5a5a4ae1fffe02ee9e54d85970d9cc780f7abbfea8a07bee3f913",
     "/home/buralien/projects/gladiator-cad/cad/head/v03-belt/Gladiator_Head_v03_Belt.FCStd": "b7f5fc285b3093a877580b4aa0ca9a6333f624abe135da4b6ccb6cb4b585509b"
@@ -51,7 +51,9 @@
     "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
   },
   "limitations": [
-    "Stage 1: the PAN stack only. The tilt yoke, GH44 receiver and carriers, display frame and sensor envelopes are INHERITED from v0.3, lifted 1.5 mm, with their screw holes still at the v0.3 nominal sizes. Only the two yoke-to-pedestal M3 holes were re-drilled to 3.6. They are not print-ready.",
+    "Stage 2 regenerates the tilt yoke, GH44 receiver, dual carrier and display frame from code. Still NOT designed: how the ToF and radar boards fasten to the carrier (their hole coordinates are not measured), and the cable harness. The sensor envelopes and the other carrier variants are v0.3 references only.",
+    "The display holes are 58.25 x 26.00 (confirmed), but their offset to the board edges is ASSUMED symmetric. The pin edge is put at +X (the viewer's left from behind the robot); firmware can rotate the picture.",
+    "The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.",
     "Three numbers are placeholders until the final coupon plate is read: POST_D 20.05 (H3b), PILOT_M2 2.2 (H4b), HORN_C 0.15 (H6).",
     "The horn arm thickness (2.0) and the boss-to-horn gap (0.25) are ASSUMED. They set the servo height, so they set the belt alignment. The first assembly should leave room to shim it.",
     "Servo shaft position along the body is +-0.6. The carriage slot covers it.",
@@ -59,6 +61,28 @@
     "The belt can be fitted with the carriage at its slack end, but that is argued, not tested.",
     "No load, torque or payload rating is claimed."
   ],
+  "display": {
+    "board_mm": [
+      62.5,
+      29.0,
+      3.2
+    ],
+    "visible_mm": [
+      51.2,
+      25.6
+    ],
+    "visible_from_pin_edge_mm": 6.2,
+    "visible_from_top_mm": 1.5,
+    "hole_centres_mm": [
+      58.25,
+      26.0
+    ],
+    "hole_offset_to_edges": "ASSUMED symmetric",
+    "pin_edge": "+X, the viewer's left from behind the robot",
+    "window_margin_per_side_mm": 0.3,
+    "lip_mm": 3.0,
+    "board_screws": "4 x M2 x 4-5 from behind the board into the lip"
+  },
   "clearances": {
     "drive_pulley_to_pedestal_mm": 1.0,
     "drive_pulley_to_yoke_mm": 5.4,
@@ -205,11 +229,11 @@
         "-20.0": [
           [
             "horn_screw",
-            "Tilt_Yoke"
+            "Tilt_Horn_Reference"
           ],
           [
             "horn_screw",
-            "Tilt_Horn_Reference"
+            "Tilt_Yoke"
           ],
           [
             "horn_screw",
@@ -287,6 +311,90 @@
         180.0
       ],
       "note": "driver cylinder r3.5 down the pulley axis, from above the pulley roof"
+    },
+    "tilt_horn_screw_along_axis": {
+      "blocked_at_tilts": {},
+      "note": "driver r3.4 along the tilt axis from the left, through the receiver access hole"
+    },
+    "yoke_bolts_from_above": {
+      "blocked_at_tilts": {
+        "-25.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "0.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "25.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ]
+      },
+      "note": "blocked means: bolt the yoke to the pedestal BEFORE fitting the receiver"
+    },
+    "gh44_carrier_screws_from_front": {
+      "blocked_by": [
+        [
+          "x-16 z-16",
+          "Dual_ToF_Envelope"
+        ],
+        [
+          "x-16 z+16",
+          "Dual_ToF_Envelope"
+        ],
+        [
+          "x+16 z-16",
+          "Dual_Radar_Envelope"
+        ],
+        [
+          "x+16 z+16",
+          "Dual_Radar_Envelope"
+        ]
+      ],
+      "note": "blocked by a sensor means: screw the carrier on before the sensors"
     }
   },
   "fov_intersections": [],
@@ -487,6 +595,94 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.005,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Tilt_Yoke",
+      "file": "Gladiator_Head_v04_Tilt_Yoke.stl",
+      "print_orientation": "floor on the bed; no support (the servo window and the pivot hole bridge)",
+      "gate": "WAIT for H4b (servo ear pilots)",
+      "size_mm": [
+        60.0,
+        35.0,
+        60.0
+      ],
+      "volume_cm3": 12.13,
+      "grams_pla": 15.0,
+      "bed_contact_mm2": 1501,
+      "bed_relief_edges": 1,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.0,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "GH44_Tilt_Receiver",
+      "file": "Gladiator_Head_v04_GH44_Tilt_Receiver.stl",
+      "print_orientation": "GH44 face DOWN (register recess on the bed, relieved), arms up; no support",
+      "gate": "WAIT for H6 (the horn pocket)",
+      "size_mm": [
+        54.0,
+        44.0,
+        46.1
+      ],
+      "volume_cm3": 11.83,
+      "grams_pla": 14.7,
+      "bed_contact_mm2": 1256,
+      "bed_relief_edges": 4,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 4,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.001,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "GH44_Dual_Carrier",
+      "file": "Gladiator_Head_v04_GH44_Dual_Carrier.stl",
+      "print_orientation": "sensor plate down, register key up; no support",
+      "gate": "none for the interface (tested register); sensor mounting is NOT designed",
+      "size_mm": [
+        70.0,
+        44.0,
+        7.4
+      ],
+      "volume_cm3": 13.76,
+      "grams_pla": 17.1,
+      "bed_contact_mm2": 2653,
+      "bed_relief_edges": 8,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.001,
+      "NOT_RELEASED": true
+    },
+    {
+      "part": "Rear_Display_Frame",
+      "file": "Gladiator_Head_v04_Rear_Display_Frame.stl",
+      "print_orientation": "bezel face down; support under the four mounting tabs only",
+      "gate": "WAIT for H4b (M2 pilots); the hole-to-edge offset is assumed symmetric",
+      "size_mm": [
+        74.0,
+        44.0,
+        61.2
+      ],
+      "volume_cm3": 14.73,
+      "grams_pla": 18.3,
+      "bed_contact_mm2": 1899,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.0,
       "NOT_RELEASED": true
     }
   ]

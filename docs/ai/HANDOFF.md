@@ -19,9 +19,16 @@ Jim said "Start building head v0.4" while printing the final coupon plate.
 - **Placeholders until the final coupon plate is read:** post 20.05 (H3b), M2 pilot 2.2 (H4b), horn
   pocket clearance 0.15 (H6). **ASSUMED:** horn arm thickness 2.0 and boss-to-horn gap 0.25. They set
   the servo height and so the belt alignment. Leave room to shim on the first assembly.
-- **Stage 2 (not done):** regenerate the tilt yoke, GH44 receiver/carriers and display frame from code
-  with calibrated holes, 6.0 nut pockets, the screen window (51.2 x 25.6 at 6.2 / 1.5) and header
-  relief, and the screw-access cut in the yoke floor.
+- **Stage 2 done the same day** (Jim: "keep designing, I'll give you coupon results soon"). The tilt
+  yoke, GH44 receiver, dual carrier and display frame are regenerated from code. They have the
+  calibrated holes and 6.0 nut pockets, the tested register, a horn-plate tilt drive with axis
+  access, an M3 pivot bolt with a captive nut (no bushing), and the real screen window at 6.2 / 1.5.
+  Still 0 collisions, 0 ToF. All 11 parts are in `stl/`, none released. The yoke and display frame
+  wait on H4b; the receiver waits on H6.
+- **Assembly-order facts the checks found:** bolt the yoke to the pedestal before the tilt servo and
+  receiver; fit the GH44 carrier before the sensors; put the screen in its frame before the frame goes on.
+- **Still not designed:** sensor mounting on the carrier (ToF and radar holes not measured) and the
+  cable harness.
 - The master's imported `HeadCandidate_v01` is still the old v0.1. Untouched.
 - Ask before starting any print.
 

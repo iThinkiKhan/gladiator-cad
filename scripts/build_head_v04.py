@@ -224,7 +224,7 @@ def horn_solid(c, z, h):
                 cyl(rb + c, z, h))
 
 
-report = {'release': 'DESIGN CANDIDATE, stage 1 (pan stack). Not released.',
+report = {'release': 'DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). Not released.',
           'source_sha256': before, 'parts': [], 'checks': {}, 'collisions': [],
           'pending': {}, 'assumed': {}, 'limitations': []}
 report['pending'] = {
@@ -240,27 +240,22 @@ report['assumed'] = {
     'horn_screw_head': 'about 4 mm, read off a photo, NOT measured',
 }
 
-# ================================================================== inherited tilt side (v0.3)
+# ================================================ from v0.3: sensor envelopes and carrier variants only
+# Stage 2 regenerates the yoke, receiver, carrier and display frame from code (below). Only the sensor
+# clearance envelopes, which no coupon touches, and the unused carrier variants come from the v0.3 file.
 src = A.openDocument(str(SOURCE))
-inherit_names = ['Tilt_Yoke', 'SG90_Tilt_Reference', 'Tilt_Horn_Reference', 'Tilt_Idler_Bushing',
-                 'GH44_Tilt_Receiver', 'GH44_Dual_Carrier', 'Dual_ToF_Envelope', 'Dual_Radar_Envelope',
-                 'Rear_Display_Frame', 'ST7789_Board_62x29x3_2']
+inherit_names = ['Dual_ToF_Envelope', 'Dual_Radar_Envelope']
 variant_names = ['GH44_Blank_Carrier', 'GH44_ToF_Carrier', 'GH44_Radar_Carrier', 'GH44_Camera_Carrier',
                  'SEN0628_Envelope', 'SEN0610_Envelope', 'ESP32_CAM_Envelope']
-motion_of = {'Tilt_Yoke': 'pan', 'SG90_Tilt_Reference': 'pan', 'Tilt_Idler_Bushing': 'pan'}
 inh = {}
 for n in inherit_names + variant_names:
     o = src.getObject(n)
     s = o.Shape.copy()
     s.translate(A.Vector(-C0.x, -C0.y, TILT_SHIFT))
-    inh[n] = {'shape': s, 'motion': motion_of.get(n, o.MotionGroup if 'MotionGroup' in o.PropertiesList else 'tilt')}
+    inh[n] = {'shape': s, 'motion': 'tilt'}
 A.closeDocument(src.Name)
 
-# the yoke M3 holes to the pedestal are re-drilled to the calibrated 3.6; its other holes stay nominal
 YOKE_BOLTS = [(-20.0, -25.0), (20.0, -25.0)]
-for x, y in YOKE_BOLTS:
-    inh['Tilt_Yoke']['shape'] = inh['Tilt_Yoke']['shape'].cut(cyl(M3_CLEAR / 2, TOP_PLATE_Z, 16, x, y))
-
 T = A.Vector(0, -26, 205.0 + TILT_SHIFT)       # tilt axis
 
 # ================================================================== the neck
@@ -404,18 +399,42 @@ dp.translate(SERVO_POS)
 addp('Pan_Drive_Pulley', dp, 'servo', '60T, horn plate on the servo side', 'Pan')
 
 # --- servo, horn, belt references -------------------------------------------------------------
-sv = fuse(box(-BODY_W / 2, -(BODY_L - SHAFT_NEAR), 0, BODY_W, BODY_L, EAR_UNDER),
-          box(-BODY_W / 2, -(BODY_L - SHAFT_NEAR) - 4.9, EAR_UNDER, BODY_W, BODY_L + 9.8, EAR_T),
-          box(-BODY_W / 2, -11.0, EAR_UNDER + EAR_T, BODY_W, 11.0 + SHAFT_NEAR, 6.0),
-          cyl(5.5, EAR_UNDER + EAR_T, BOSS_TOP - EAR_UNDER - EAR_T),
-          cyl(2.4, BOSS_TOP, SPLINE_TOP - BOSS_TOP))
-# The body is already drawn with its long end (BODY_L - SHAFT_NEAR) toward -Y, the outer end.
+def servo_shape():
+    """SG90 in its own frame: body bottom at z 0, shaft on the z axis pointing up, the long end of
+    the body toward -Y. Heights are Jim's calipers; the upper housing and boss are envelopes."""
+    return fuse(box(-BODY_W / 2, -(BODY_L - SHAFT_NEAR), 0, BODY_W, BODY_L, EAR_UNDER),
+                box(-BODY_W / 2, -(BODY_L - SHAFT_NEAR) - 4.9, EAR_UNDER, BODY_W, BODY_L + 9.8, EAR_T),
+                box(-BODY_W / 2, -11.0, EAR_UNDER + EAR_T, BODY_W, 11.0 + SHAFT_NEAR, 6.0),
+                cyl(5.5, EAR_UNDER + EAR_T, BOSS_TOP - EAR_UNDER - EAR_T),
+                cyl(2.4, BOSS_TOP, SPLINE_TOP - BOSS_TOP))
+
+
+def horn_shape(z_under):
+    h = fuse(horn_solid(0.0, z_under, ARM_T), cyl(BOSS_D / 2, z_under + ARM_T, BOSS_UP))
+    return h.cut(cyl(2.5, z_under - 0.1, ARM_T + BOSS_UP + 0.2))      # the spline socket
+
+
+def horn_plate(z_rim, z_far, wall=2.0):
+    """The horn pocket plate in the servo's own frame: pocket from z_rim, boss recess, a 1.2 roof
+    with the 3.4 screw hole, then solid out to z_far with a r3.5 counterbore so the screw head
+    still sits on the 1.2 roof."""
+    p = horn_solid(HORN_C + wall, z_rim, z_far - z_rim)
+    p = p.cut(horn_solid(HORN_C, z_rim - 0.1, POCKET_DEPTH + 0.1))
+    p = p.cut(cyl(BOSS_D / 2 + HORN_C + 0.125, z_rim + POCKET_DEPTH - 0.1, BOSS_RECESS + 0.1))
+    p = p.cut(cyl(CENTRE_HOLE / 2, z_rim - 0.2, z_far - z_rim + 0.4))
+    roof_top = z_rim + POCKET_DEPTH + BOSS_RECESS + ROOF_T
+    if z_far > roof_top + 0.05:
+        p = p.cut(cyl(3.5, roof_top, z_far - roof_top + 0.2))
+    return p
+
+
+# The body is drawn with its long end (BODY_L - SHAFT_NEAR) toward -Y, the outer end.
 # v0.3 drew it the other way round and rotated it 180; doing that here swung it into the arm.
+sv = servo_shape()
 sv.translate(A.Vector(0, -C_NOM, ZSB))
 addp('SG90_Pan_Reference', rotF(sv), 'fixed', 'measured heights; shaft position +-0.6', 'Hardware')
 
-horn = fuse(horn_solid(0.0, HORN_UNDER, ARM_T), cyl(BOSS_D / 2, HORN_UNDER + ARM_T, BOSS_UP))
-horn = horn.cut(cyl(2.5, HORN_UNDER - 0.1, ARM_T + BOSS_UP + 0.2))      # the spline socket
+horn = horn_shape(HORN_UNDER)
 horn.translate(SERVO_POS)
 addp('Pan_Horn_Reference', horn, 'servo', 'cross horn, arm thickness ASSUMED', 'Hardware')
 
@@ -440,8 +459,147 @@ def belt_for(C):
 
 addp('Pan_Belt_Reference', rotF(belt_for(C_NOM)), 'belt', '2GT 90T / 180 mm', 'Hardware')
 
+# ================================================================== stage 2: the tilt side, from code
+# Re-derived from the v0.1 / v0.2 generators (build_modular_head.py, build_screen_head_v02.py) at the
+# v0.4 height, with the coupon-calibrated holes and nut pockets, the measured SG90 and cross horn, the
+# real ST7789, and the same horn-plate drive as the pan pulley.
+TZ = T.z
+F0 = TOP_PLATE_Z + TOP_PLATE_T                   # yoke floor sits on the pedestal top plate
+assert abs(F0 - (TZ - 37.0)) < 1e-6, (F0, TZ)
+PIVOT_D = M3_CLEAR                               # 3.4 would not pass an M3 at all (fit coupon v2)
+
+
+def cx(r, x, h, y, z): return Part.makeCylinder(r, h, A.Vector(x, y, z), A.Vector(1, 0, 0))
+
+
+def hex_x(af, x, depth, y, z):
+    """Hex prism along +X, flats top and bottom (so it bridges when the axis is horizontal)."""
+    r = af / math.sqrt(3)
+    pts = [A.Vector(x, y + r * math.cos(k * math.pi / 3), z + r * math.sin(k * math.pi / 3)) for k in range(6)]
+    return Part.Face(Part.makePolygon(pts + [pts[0]])).extrude(A.Vector(depth, 0, 0))
+
+
+REG_CHAMFER = 5.0                                # the GH44 register: tested, fits perfectly
+
+
+def keyshape(w, h, y, depth):
+    c = REG_CHAMFER
+    pts = [(-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2 - c), (w / 2 - c, h / 2), (-w / 2, h / 2)]
+    vs = [A.Vector(x, y, TZ + v) for x, v in pts]
+    return Part.Face(Part.makePolygon(vs + [vs[0]])).extrude(A.Vector(0, depth, 0))
+
+
+# --- the tilt servo: shaft on the tilt axis pointing -X, ears against the earplate at x -2.8 ---------
+EARPLATE_X = -2.8
+TS_X0 = EARPLATE_X + EAR_UNDER                   # body bottom, 14.7
+M_TILT = A.Matrix(0, 0, -1, TS_X0,
+                  1, 0, 0, T.y,
+                  0, -1, 0, TZ,
+                  0, 0, 0, 1)                    # servo frame (x, y, z) -> (TS_X0 - z, x - 26, TZ - y)
+
+
+def to_tilt(s):
+    r = s.copy()
+    r.transformShape(M_TILT)
+    return r
+
+
+addp('SG90_Tilt_Reference', to_tilt(servo_shape()), 'pan', 'measured heights; long end up', 'Hardware')
+addp('Tilt_Horn_Reference', to_tilt(horn_shape(BOSS_TOP + HORN_G)), 'tilt', 'cross horn, arm thickness ASSUMED',
+     'Hardware')
+
+# --- yoke --------------------------------------------------------------------------------------------
+yoke = fuse(box(-27, -47, F0, 54, 7, 4), box(-27, -43, F0, 8, 31, 4), box(19, -43, F0, 8, 31, 4),
+            box(-27, -30, F0, 54, 11, 4), box(-19, -43, F0, 19, 11, 4))
+for x, y in YOKE_BOLTS:
+    yoke = yoke.cut(cyl(M3_CLEAR / 2, F0 - 1, 6, x, y))
+tower = fuse(box(28, -35, F0, 5, 18, 45), box(19, -35, F0, 14, 18, 4))
+tower = tower.cut(cx(M3_CLEAR / 2, 27, 7, T.y, TZ))                          # pivot bolt
+tower = tower.cut(hex_x(NUT_AF, 28 - 0.1, NUT_DEPTH + 0.1, T.y, TZ))          # its captive nut, inner face
+earplate = box(EARPLATE_X, -36, F0, 3, 20, 60)
+earplate = earplate.cut(box(EARPLATE_X - 0.7, T.y - BODY_W / 2, TZ - SHAFT_NEAR, 5, BODY_W, BODY_L))
+for s_ in (-1, 1):
+    earplate = earplate.cut(cx(PILOT_M2 / 2, EARPLATE_X - 1.2, 6, T.y, TZ - BODY_CTR + s_ * EAR_PITCH / 2))
+yoke = fuse(yoke, tower, earplate)
+addp('Tilt_Yoke', yoke, 'pan', 'servo window for the real shaft position, M2 ear pilots, M3 pivot + nut', 'Tilt')
+addp('Tilt_Pivot_Bolt', fuse(cx(1.5, 22.0, 11.0, T.y, TZ), cx(2.75, 33.0, 3.0, T.y, TZ)), 'pan',
+     'M3 x 10-12, head outside the tower, nut captive inside it', 'Hardware')
+
+# --- GH44 receiver: the tested register, calibrated holes, 6.0 nut pockets, the horn plate drive ---------
+rec = box(-22, -52, TZ - 22, 44, 4, 44)
+rec = rec.cut(keyshape(26.4, 22.4, -52.1, 1.7))
+rec = rec.cut(keyshape(26.4 + 0.7, 22.4 + 0.7, -52.1, 0.5))      # first-layer relief: it prints face down
+for x in (-16, 16):
+    for dz in (-16, 16):
+        rec = rec.cut(cy(M3_CLEAR / 2, -53, 7, x, TZ + dz)).cut(hex_y(NUT_AF, -50.6, 2.7, x, TZ + dz))
+backbone = box(-27, -48.2, TZ - 6, 54, 4.2, 12)
+left_arm = box(-24, -46, TZ - 6, 3, 25, 12)
+right_arm = box(24, -46, TZ - 6, 3, 25, 12).cut(cx(PIVOT_D / 2, 23, 5, T.y, TZ))
+rim_l = BOSS_TOP + HORN_G + ARM_T - POCKET_DEPTH                 # in the servo frame
+far_l = TS_X0 - (-21.0) + 0.5                                     # reaches 0.5 into the left arm
+tilt_plate = to_tilt(horn_plate(rim_l, far_l))
+rec = fuse(rec, backbone, left_arm, right_arm, tilt_plate)
+rec = rec.cut(box(-9, -53, TZ - 5, 18, 12, 10))                  # cable window
+rec = rec.cut(cx(3.5, -25.5, 7.0, T.y, TZ))                       # driver access to the horn screw
+addp('GH44_Tilt_Receiver', rec, 'tilt', 'tested register; horn plate drive; M3 pivot hole', 'Tilt')
+
+# --- GH44 dual carrier --------------------------------------------------------------------------------
+car_base = box(-22, -55, TZ - 22, 44, 3, 44)
+car_base = fuse(car_base, keyshape(26, 22, -52, 1.4)).cut(box(-9, -56, TZ - 5, 18, 8, 10))
+dual = fuse(car_base, box(-35, -58, TZ - 21, 70, 3, 42))
+for x in (-16, 16):
+    for dz in (-16, 16):
+        dual = dual.cut(cy(M3_CLEAR / 2, -60, 12, x, TZ + dz))
+dual = dual.cut(box(-9, -59, TZ - 5, 18, 12, 10))
+for x in (-32, 32):
+    for dz in (-18, 18):
+        dual = dual.cut(cy(M2_CLEAR / 2, -59, 9, x, TZ + dz))
+addp('GH44_Dual_Carrier', dual, 'tilt', 'tested male register; sensor mounting NOT designed yet', 'Tilt')
+
+# --- the rear display: the real ST7789 ------------------------------------------------------------------
+# Board 62.5 x 29 x 3.2 (Jim). Visible area 51.2 x 25.6, 6.2 from the pin-hole edge and 1.5 from the
+# top (Jim, 2026-10-01). Holes 58.25 x 26.00 centres, confirmed by the plate F gauge; their offset to
+# the board edges is ASSUMED symmetric (it agrees with Jim's raw readings to about 0.3).
+# The screen faces +Y (rear). The pin edge is at +X: the viewer's LEFT when standing behind the robot.
+BOARD_L, BOARD_H, BOARD_T = 62.5, 29.0, 3.2
+VIS_W, VIS_H, VIS_PIN, VIS_TOP = 51.2, 25.6, 6.2, 1.5
+HOLE_DX, HOLE_DZ = 58.25, 26.00
+LIP, WIN_MARGIN, POCKET_CLR = 3.0, 0.3, 0.3
+vx_hi = BOARD_L / 2 - VIS_PIN
+vx_lo = vx_hi - VIS_W
+vz_hi = TZ + BOARD_H / 2 - VIS_TOP
+vz_lo = vz_hi - VIS_H
+board = box(-BOARD_L / 2, 0, TZ - BOARD_H / 2, BOARD_L, BOARD_T, BOARD_H)
+fr = box(-37, -1.0, TZ - 22, 74, 1.0 + BOARD_T + LIP, 44)
+fr = fr.cut(box(-BOARD_L / 2 - POCKET_CLR, -1.1, TZ - BOARD_H / 2 - POCKET_CLR,
+                BOARD_L + 2 * POCKET_CLR, 1.1 + BOARD_T, BOARD_H + 2 * POCKET_CLR))   # pocket, open behind
+fr = fr.cut(box(vx_lo - WIN_MARGIN, BOARD_T - 0.1, vz_lo - WIN_MARGIN,
+                VIS_W + 2 * WIN_MARGIN, LIP + 0.2, VIS_H + 2 * WIN_MARGIN))           # window
+for sx in (-1, 1):
+    for sz in (-1, 1):
+        fr = fr.cut(cy(PILOT_M2 / 2, BOARD_T - 0.1, 2.6 + 0.1, sx * HOLE_DX / 2, TZ + sz * HOLE_DZ / 2))
+for side in (-1, 1):
+    xr = 34.0 if side > 0 else -37.0
+    for dz in (-20, 16):
+        fr = fuse(fr, box(xr, -52, TZ + dz, 3, 52, 4))
+    tx = 27.0 if side > 0 else -37.0
+    for dz in (-21, 14):
+        fr = fuse(fr, box(tx, -55, TZ + dz, 10, 3, 7))
+for x in (-32, 32):
+    for dz in (-18, 18):
+        fr = fr.cut(cy(PILOT_M2 / 2, -56, 5, x, TZ + dz))
+addp('Rear_Display_Frame', fr, 'tilt', 'real ST7789: window at 6.2 / 1.5, M2 pilots, open back for the header',
+     'Tilt')
+addp('ST7789_Board', board, 'tilt', '62.5 x 29 x 3.2, screen face +Y, pins at +X', 'Hardware')
+report['display'] = {
+    'board_mm': [BOARD_L, BOARD_H, BOARD_T], 'visible_mm': [VIS_W, VIS_H],
+    'visible_from_pin_edge_mm': VIS_PIN, 'visible_from_top_mm': VIS_TOP,
+    'hole_centres_mm': [HOLE_DX, HOLE_DZ], 'hole_offset_to_edges': 'ASSUMED symmetric',
+    'pin_edge': '+X, the viewer\'s left from behind the robot', 'window_margin_per_side_mm': WIN_MARGIN,
+    'lip_mm': LIP, 'board_screws': '4 x M2 x 4-5 from behind the board into the lip'}
+
 for n in inherit_names:
-    addp(n, inh[n]['shape'], inh[n]['motion'], 'INHERITED from v0.3, lifted %.1f; nominal holes' % TILT_SHIFT, 'TiltInherited')
+    addp(n, inh[n]['shape'], 'tilt', 'sensor clearance envelope from v0.3', 'Hardware')
 
 # ================================================================== the current robot, from the master
 master = A.openDocument(str(MASTER))
@@ -650,6 +808,45 @@ report['service_paths']['horn_screw_from_above'] = {
     'open_pans': [p for p in pans30 if p not in horn_bad],
     'note': 'driver cylinder r3.5 down the pulley axis, from above the pulley roof'}
 
+# service paths 5-7, the tilt side.
+# 5: the tilt horn screw, driver along the tilt axis from the left, through the receiver's access hole
+tilt_cyl = cx(3.4, -90.0, 90.0 - 19.2, T.y, TZ)
+tilt_bad = {}
+for tilt in TILTS:
+    for p in plist:
+        if p['name'] == 'Tilt_Horn_Reference':
+            continue
+        if overlap(tilt_cyl, posed(p, 0.0, tilt)) > 1.0:
+            tilt_bad.setdefault(tilt, []).append(p['name'])
+# 6: the two yoke-to-pedestal M3 bolts, driver from above
+yb_bad = {}
+for tilt in TILTS:
+    for (x, y) in YOKE_BOLTS:
+        c = cyl(3.5, F0 + 4.0, 80.0, x, y)
+        for p in plist:
+            if p['name'] in ('Tilt_Yoke', 'Pan_Raised_Pedestal'):
+                continue
+            if overlap(c, posed(p, 0.0, tilt)) > 1.0:
+                yb_bad.setdefault(tilt, []).append(('x%+.0f' % x, p['name']))
+# 7: the four GH44 carrier M3 screws, driver from the front
+gh_bad = []
+for x in (-16, 16):
+    for dz in (-16, 16):
+        c = cy(3.5, -140.0, 140.0 - 58.2, x, TZ + dz)
+        for p in plist:
+            if p['name'] in ('GH44_Dual_Carrier', 'GH44_Tilt_Receiver'):
+                continue
+            if overlap(c, p['shape']) > 1.0:
+                gh_bad.append(('x%+d z%+d' % (x, dz), p['name']))
+report['service_paths']['tilt_horn_screw_along_axis'] = {
+    'blocked_at_tilts': {str(k): v for k, v in tilt_bad.items()},
+    'note': 'driver r3.4 along the tilt axis from the left, through the receiver access hole'}
+report['service_paths']['yoke_bolts_from_above'] = {
+    'blocked_at_tilts': {str(k): v for k, v in yb_bad.items()},
+    'note': 'blocked means: bolt the yoke to the pedestal BEFORE fitting the receiver'}
+report['service_paths']['gh44_carrier_screws_from_front'] = {
+    'blocked_by': gh_bad, 'note': 'blocked by a sensor means: screw the carrier on before the sensors'}
+
 # service path 2: the cable bore, 11.9 mm, all the way up
 cab = cyl(5.95, 105, 66)
 report['checks']['cable_passage_11_9mm_overlap_mm3'] = round(sum(
@@ -801,11 +998,37 @@ exports = {
                          'WAIT for H6 (pocket clearance and the real arm thickness)',
                          [((10, 0, PLATE_RIM_Z + 0.6), False), ((10, 0, ZC - 0.5), True),
                           ((0, 0, ZC - 0.5), False)]),
+    'Tilt_Yoke': (parts['Tilt_Yoke']['shape'], 'floor on the bed; no support (the servo window and the '
+                                               'pivot hole bridge)',
+                  'WAIT for H4b (servo ear pilots)',
+                  [((-1.3, T.y, TZ + 5), False), ((30.5, -30, TZ - 10), True), ((30.5, T.y, TZ), False)]),
+    'GH44_Tilt_Receiver': (parts['GH44_Tilt_Receiver']['shape'],
+                           'GH44 face DOWN (register recess on the bed, relieved), arms up; no support',
+                           'WAIT for H6 (the horn pocket)',
+                           [((10, -51.5, TZ + 8), False), ((18, -50, TZ), True), ((25.5, T.y, TZ), False),
+                            ((25.5, -40, TZ), True)]),
+    'GH44_Dual_Carrier': (parts['GH44_Dual_Carrier']['shape'], 'sensor plate down, register key up; no support',
+                          'none for the interface (tested register); sensor mounting is NOT designed',
+                          [((10, -51.0, TZ + 8), True), ((18, -53.5, TZ), True), ((0, -53.5, TZ), False)]),
+    'Rear_Display_Frame': (parts['Rear_Display_Frame']['shape'],
+                           'bezel face down; support under the four mounting tabs only',
+                           'WAIT for H4b (M2 pilots); the hole-to-edge offset is assumed symmetric',
+                           [((0, 4.5, TZ), False), ((33, 4.5, TZ), True), ((0, 1.5, TZ), False)]),
 }
+# print orientation: a rotation applied before dropping each part onto the bed
+X_AXIS = A.Vector(1, 0, 0)
+ROT = {'GH44_Tilt_Receiver': (X_AXIS, 90.0),      # the face (y = -52) goes down
+       'GH44_Dual_Carrier': (X_AXIS, 90.0),       # the sensor plate (y = -58) goes down
+       'Rear_Display_Frame': (X_AXIS, -90.0)}     # the bezel face (y = +6.2) goes down
 OFF = {}
 exp_report = []
 for name, (shape, how, gate, probes) in exports.items():
     s = shape.copy()
+    if name in ROT:
+        ax_, ang_ = ROT[name]
+        s.rotate(A.Vector(), ax_, ang_)
+        R_ = A.Rotation(ax_, ang_)
+        probes = [(tuple(R_.multVec(A.Vector(*pt))), ins) for pt, ins in probes]
     b0 = s.BoundBox
     dz = -b0.ZMin
     dx, dy = -b0.XMin, -b0.YMin
@@ -833,9 +1056,14 @@ report['stl'] = exp_report
 
 # ================================================================== write it out
 report['limitations'] = [
-    'Stage 1: the PAN stack only. The tilt yoke, GH44 receiver and carriers, display frame and sensor '
-    'envelopes are INHERITED from v0.3, lifted %.1f mm, with their screw holes still at the v0.3 nominal '
-    'sizes. Only the two yoke-to-pedestal M3 holes were re-drilled to 3.6. They are not print-ready.' % TILT_SHIFT,
+    'Stage 2 regenerates the tilt yoke, GH44 receiver, dual carrier and display frame from code. Still '
+    'NOT designed: how the ToF and radar boards fasten to the carrier (their hole coordinates are not '
+    'measured), and the cable harness. The sensor envelopes and the other carrier variants are v0.3 '
+    'references only.',
+    'The display holes are 58.25 x 26.00 (confirmed), but their offset to the board edges is ASSUMED '
+    'symmetric. The pin edge is put at +X (the viewer\'s left from behind the robot); firmware can rotate '
+    'the picture.',
+    'The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.',
     'Three numbers are placeholders until the final coupon plate is read: POST_D %.2f (H3b), PILOT_M2 %.1f (H4b), '
     'HORN_C %.2f (H6).' % (POST_D, PILOT_M2, HORN_C),
     'The horn arm thickness (%.1f) and the boss-to-horn gap (%.2f) are ASSUMED. They set the servo height, so '
@@ -875,7 +1103,10 @@ lines += ['', 'tests: head %d  robot %d  carriage-end %d' % (
     'clamp screws (pulley fitted) blocked at pans: %s' % sorted(clamp_bad),
     'clamp screws blocked at carriage ends: %s' % {k: sorted(v) for k, v in clamp_bad_end.items()},
     'horn screw from above, open pans: %s' % report['service_paths']['horn_screw_from_above']['open_pans'],
-    'horn screw blocked by: %s' % sorted(set(x[1] for v in horn_bad.values() for x in v)), '']
+    'horn screw blocked by: %s' % sorted(set(x[1] for v in horn_bad.values() for x in v)),
+    'tilt horn screw along the axis blocked: %s' % tilt_bad,
+    'yoke bolts from above blocked: %s' % {k: sorted(set(v)) for k, v in yb_bad.items()},
+    'GH44 carrier screws from the front blocked by: %s' % sorted(set(b for _, b in gh_bad)), '']
 seen = {}
 for c in report['collisions']:
     k = (c['a'], c['b'], c['kind'])

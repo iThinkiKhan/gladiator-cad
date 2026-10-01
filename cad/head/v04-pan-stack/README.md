@@ -1,14 +1,30 @@
-# Gladiator head v0.4 — pan stack (stage 1), built 2026-10-01
+# Gladiator head v0.4 — the whole head, built 2026-10-01
 
-**Status: design candidate, not released.** Stage 1 is the **pan stack**: everything between the
-mast and the tilt yoke. The tilt side (yoke, GH44 receiver and carriers, display frame) is
-**inherited from v0.3, lifted 1.5 mm, and is not print-ready** until stage 2.
+**Status: design candidate, not released.**
+- **Stage 1** is the pan stack: everything between the mast and the tilt yoke.
+- **Stage 2** is the tilt side: yoke, GH44 receiver, dual carrier and rear display frame,
+  regenerated from code. It was inherited from v0.3 until stage 2.
+- **Not designed yet:** how the ToF and radar boards fasten to the carrier, and the cable harness.
 
 Supersedes v0.3, which stays on hold (`../v03-belt/`). Source: `scripts/build_head_v04.py`, which
-reads the **current** master (mast top Z130) and never writes it.
+reads the **current** master (mast top Z130) and never writes it. The folder name `v04-pan-stack`
+predates stage 2.
 
 ![section through the pan axis and the servo](preview-section.png)
 ![plan at pan 0](preview-plan.png)
+![tilt side: in the tilt axis plane, and a side section](preview-tilt.png)
+
+## Stage 2, the tilt side
+
+| Part | What changed from v0.3 |
+| --- | --- |
+| **Tilt_Yoke** | servo window moved for the real shaft (5.9 from the near end, long end up); ears against the earplate at x -2.8 with **M2 pilots**; tilt pivot is now an **M3 bolt with a captive 6.0 nut** inside the tower (v0.3 wanted a 4 / 3 mm bushing, which isn't in the parts bin); 3.6 holes to the pedestal |
+| **GH44_Tilt_Receiver** | the **tested register** unchanged; 3.6 M3 holes; **6.0 nut pockets** (the 5.7 ones took no nut); the tilt drive is the **same horn-plate pocket** as the pan pulley, with a 7 mm access hole through the left arm so the horn screw is reachable **along the tilt axis at any tilt**; pivot hole 3.6 |
+| **GH44_Dual_Carrier** | the tested male register; 3.6 M3 holes (the 3.4 ones would not pass a screw); 2.6 display holes; v0.1's generic sensor slots dropped because they ran straight through the M3 holes. **Sensor mounting is not designed**, because the ToF and radar hole positions are not measured |
+| **Rear_Display_Frame** | built for the real ST7789: pocket 62.5 x 29 (+0.3), **window 51.2 x 25.6 at 6.2 from the pin edge and 1.5 from the top** (+0.3 margin), 3 mm lip with 4 M2 pilots at the confirmed 58.25 x 26.00 pattern, back left open so the header passes. Pin edge at +X, the viewer's left from behind the robot; firmware can rotate the picture |
+
+The hole pattern is confirmed, but **its offset to the board edges is assumed symmetric**. That agrees
+with Jim's raw readings to about 0.3. The window has 0.3 of margin per side.
 
 ## What v0.3 got wrong, and what v0.4 does
 
@@ -68,9 +84,13 @@ servo body to the neck **0.4**; neck arm to rotor 1.0; spline top to the plate r
 | horn screw (to take the pulley off) | pan **60 to 180** deg |
 | 2 x M3 belt-tension clamp screws | every pan angle **except -20 to 0** |
 | **all three** | **pan 60**, and **120-150** |
+| tilt horn screw (driver along the tilt axis, from the left) | at **every** tilt, through the receiver's access hole |
+| 2 x M3 yoke-to-pedestal bolts (from above) | **no**: under the receiver and the tilt servo. **Bolt the yoke down first** |
+| 4 x M3 carrier-to-receiver screws (from the front) | **no**: behind the sensors. **Fit the carrier before the sensors** |
 
 The clamp screws sit on a tab **outboard** of the pulley because the first layout put them under
-its flange. Pan the head to 60 degrees to service the drive.
+its flange. Pan the head to 60 degrees to service the drive. The last two rows set the assembly
+order, they are not faults.
 
 ## Parts, print orientation, and what each waits on
 
@@ -85,6 +105,10 @@ None of these is released. **Plate 1 needs no coupon result.**
 | Pan_Servo_Carriage | 2.3 | flat | **H4b** (ear pilots) |
 | Neck_Main | 17.7 | axis vertical, collar down; supports under the arm, riser and pad; **brim**: the bed contact is only 142 mm2 | **H3b** (post) and the horn arm thickness |
 | Pan_Drive_Pulley | 7.9 | axis vertical, horn plate on the bed (pocket faces the bed, relieved), no support | **H6** (pocket clearance, arm thickness) |
+| Tilt_Yoke | 12.1 | floor down, no support | **H4b** (servo ear pilots) |
+| GH44_Tilt_Receiver | 11.8 | GH44 face down (register on the bed, relieved), arms up, no support | **H6** (horn pocket) |
+| GH44_Dual_Carrier | 13.8 | sensor plate down, key up, no support | the sensor mounting, which isn't designed |
+| Rear_Display_Frame | 14.7 | bezel face down; support under the four tabs only | **H4b** (M2 pilots) |
 
 `plates/Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf`: 21.4 cm3, about 27 g, three parts.
 
@@ -98,6 +122,14 @@ None of these is released. **Plate 1 needs no coupon result.**
    pulley on the horn with the belt on it, the carriage at its **slack** end (37.0); one horn screw
    through the plate clamps the plate to the horn. 7. Slide the carriage out until the belt is snug and
    tighten both M3 clamp screws.
+8. **Yoke onto the pedestal** with 2 x M3 into the captive nuts under the seat: **before** the tilt
+   servo and receiver, which cover those bolts. 9. Tilt servo into the earplate window from the left,
+   ears against the plate, 2 x M2 into the pilots. Centre the servo electrically first. 10. M3 nut into
+   the tower's inner pocket. Seat the cross horn in the receiver's pocket, offer the receiver onto the
+   spline, and line up the right arm. Then the M3 pivot bolt from outside the tower, and the horn screw
+   down the access hole along the tilt axis. 11. Carrier onto the receiver (register + 4 x M3 into the
+   nut pockets), **before** the sensors. 12. Screen into the display frame (4 x M2 from behind into
+   the lip), then the frame onto the carrier (4 x M2 through the carrier into the tabs).
 
 ## ASSUMED or PENDING — read before trusting any of it
 
@@ -117,16 +149,20 @@ None of these is released. **Plate 1 needs no coupon result.**
 The first assembly should leave room to shim the servo height: if the belt rides half off a
 groove, the horn arm thickness was wrong.
 
-## Stage 2 (not done)
+| display hole offset to the board edges | ASSUMED symmetric (the pattern itself is confirmed) |
+| tilt pivot: M3 bolt turning in a 3.6 hole in PLA | fine for a prototype; it will wear |
 
-Regenerate the tilt yoke, GH44 receiver and carriers, and the display frame from code, with
-the calibrated holes and 6.0 nut pockets; the screen window (51.2 x 25.6 at 6.2 / 1.5) and the
-header relief; the retainer-screw access cut in the yoke floor; the cable harness path.
+## Still not designed
+
+- **Sensor mounting on the carrier.** The SEN0628 and C4001 hole positions are not measured. The
+  envelopes are v0.3 placeholders.
+- **The cable harness**: about 14 conductors down a 12 mm bore through 200 degrees of pan.
+- The yoke's retainer-screw access cut turned out unnecessary: the screws are reachable past the yoke.
 
 The master's imported `HeadCandidate_v01` is **still the old v0.1** and was not touched.
 
 ## Files
 
 `Gladiator_Head_v04_PanStack.FCStd` / `.step` (head parts at real position, plus the robot
-from the master as context), `validation.json`, `head-config.json`, `stl/` (7 parts),
+from the master as context), `validation.json`, `head-config.json`, `stl/` (11 parts),
 `plates/`, `preview-*.png`.
