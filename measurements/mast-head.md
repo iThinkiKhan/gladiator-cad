@@ -342,7 +342,7 @@ replace them. The photo estimates read the spline top low and the boss top low b
 
 ## Round-2 coupon results — Jim, 2026-10-01 (first nine pieces, as printed)
 
-Reported so far. **Not yet reported:** H1 belt, H2 collars, H4 M2 pilots.
+All five of the first coupons have now been reported: H5 and H3 here, H1, H2 and H4 in the next section.
 
 | Coupon | Result | Disposition |
 | --- | --- | --- |
@@ -371,3 +371,41 @@ without force: if the bearing does not slide on by hand, stop.
 **Process note.** Jim said he did not know what the other post and the collars were for. The
 README never reached the printer, and the files carry only terse names. A plain one-page sheet,
 `START_HERE_head-coupons.txt`, now sits beside them.
+
+### Round-2 results, continued — Jim, 2026-10-01 (H1, H2, H4)
+
+| Coupon | What Jim reported | Disposition |
+| --- | --- | --- |
+| **H1** belt | "The centre of these pulley shanks are **38.4 mm apart**." One reading. He did not say whether the belt was taut or whether it ran clean, or whether 38.4 was (I+O)/2 or a single caliper reading. | **Unresolved. Do not set the v0.4 spacing from it.** See below. |
+| **H2** collars | "The collar with **two notches grips tighter**." He did not say whether "grips" means slide friction or hold when bolted. | **Unresolved, and the opposite of what the model predicts.** See below. |
+| **H4** M2 pilots | "**Def the biggest hole for the M2**, maybe slightly bigger." The biggest is the 3-notch hole, 2.2 modelled. He did not report the SG90 ear screw. | Use **2.2 modelled** as the tested M2 pilot. "Slightly bigger" is a hint, not a measurement. Bracket 2.3 / 2.4 / 2.5 in H4b. |
+
+**H1 against the geometry** (checked 2026-10-01). Theory for the modelled 60T and 40T pulleys on
+the 180 mm belt: **39.486**. If both print 0.25 small, 39.884. The reading is 1.1 below theory and
+1.5 below that prediction. For a *taut* belt:
+
+| Pulleys, diameter vs modelled | Taut centre distance |
+| ---: | ---: |
+| -0.25 | 39.884 |
+| 0.00 | 39.486 |
+| +0.50 | 38.690 |
+| +0.75 | 38.291 |
+
+So 38.4 needs **both pulleys about 0.68 mm bigger in diameter than modelled**, or the belt is
+**slack by about 2.1 mm of its length** (it would visibly sag, a few mm on each straight run), or the
+belt rides high on mushy teeth. All three are untested. Modelled tip diameters: 60T 37.689, 40T 24.957.
+
+**H2 against the geometry.** The printed solids were checked: the 1-notch collar (H2a) puts its
+key face at 9.22 from the bore axis and the 2-notch (H2b) at 9.35. The mast flat is at 9.1. By
+the model, then, the 1-notch key is the closer, tighter one, and the labels are right. A tighter
+grip from H2b cannot come from the key. The likelier sources are the clamp bore or bolt tension,
+or print differences between the two pieces. Not inferred.
+
+**One hypothesis ties H1 and H3 together, and is NOT confirmed:** round external features may now
+print larger than the 0.25-under calibration (printer-calibration.md, 2026-09-18) predicts. Both
+the pulleys (oversize) and the post (too tight) point that way. Three caliper readings test it
+without printing anything: the H3 post, the H1 60T tip and the H1 40T tip. If true, the master's
+compensated sizes need a fresh look, which is a bigger question than this head.
+
+**H4b** (M2 pilots 2.3 / 2.4 / 2.5) was generated 2026-10-01 and placed in the incoming folder.
+Why a new bracket: the first one was off-centre, with its best hole at the top edge.

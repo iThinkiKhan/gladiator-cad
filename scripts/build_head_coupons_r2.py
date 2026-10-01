@@ -367,6 +367,27 @@ report['pieces']['H4'] = {
     'depth_mm': 7.0, 'marking': 'notches on the long side, 1 = smallest',
 }
 
+# ================================================= H4b M2 pilots, a bigger bracket
+# Added 2026-10-01. Jim: the BIGGEST H4 hole (2.2 modelled) was clearly the best, "maybe
+# slightly bigger". The first bracket was off-centre. This one continues upward. 2.6 is the
+# calibrated clearance hole, which a screw passes through freely, so 2.5 is the practical ceiling.
+PILOTS_B = [2.3, 2.4, 2.5]
+h4b = box(0, 0, 0, 30, 7, 8)
+for i, d in enumerate(PILOTS_B):
+    x = 6 + 9 * i
+    h4b = h4b.cut(cyl(d / 2, 1.0, 7.1, x, 3.5))
+    h4b = side_notches(h4b, i + 1, x, 0.0, 0, 8)
+add('H4b', 'H4b_M2Pilots-BIGGER_flat', h4b, 'flat, holes open upward - no support',
+    [((6, 3.5, 0.5), True), ((6, 3.5, 7.5), False), ((24, 3.5, 7.5), False), ((15, 3.5, 0.5), True)],
+    180)
+report['pieces']['H4b'] = {
+    'question': 'H4 showed 2.2 was the best of 1.8 / 2.0 / 2.2 and Jim wanted slightly bigger. '
+                'Which of 2.3 / 2.4 / 2.5 holds an M2 firmly without splitting?',
+    'pilot_dia_modelled_mm': PILOTS_B,
+    'pilot_dia_expected_printed_mm_if_0p25_under': [round(d - CURVE_ERR, 2) for d in PILOTS_B],
+    'depth_mm': 7.0, 'marking': 'notches on the long side, 1 = smallest',
+}
+
 # ====================================================== H5 M3 nut sockets
 AFS = [5.8, 6.0, 6.2]            # M3 nut is 5.5 across flats; 5.7 on the GH44 receiver failed
 h5 = box(0, 0, 0, 32, 10, 5)

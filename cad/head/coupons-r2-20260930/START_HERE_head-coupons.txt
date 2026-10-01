@@ -37,6 +37,10 @@ H4   small bar with three blind holes (notches on the side: 1, 2, 3 = smallest t
      Do:  Try an M2 screw in each, then one of the SG90 ear screws.
      Report: best hole for each screw.
 
+H4b  same bar again with three BIGGER holes (1, 2, 3 notches = 2.3 / 2.4 / 2.5)
+     NEW - the biggest H4 hole worked best, so this is the next size up. Same test.
+     Not yet printed.
+
 H5   bar with three hex pockets (1, 2, 3 notches = smallest to largest)
      DONE - the middle one (2 notches) takes an M3 nut perfectly. Thank you.
 

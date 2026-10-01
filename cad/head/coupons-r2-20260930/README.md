@@ -126,6 +126,10 @@ There are three blind holes, 7 deep, modelled 1.8, 2.0 and 2.2 (they print about
 
 **Report:** the best hole for the M2 screw, and the best for the SG90 ear screw.
 
+**Result, 2026-10-01 (Jim):** the biggest hole (3 notches, 2.2 modelled) was clearly the best for
+an M2, "maybe slightly bigger". A second bracket, **H4b**, covers 2.3 / 2.4 / 2.5
+(`Gladiator_HeadR2_H4b_M2Pilots-BIGGER_flat.stl`). Same test, same notch marking.
+
 **Unblocks:** the pan rotor / retainer / pedestal screws, the servo ear screws, and sensor
 screws. v0.3 designed those screws as M2 self-tappers, which aren't in the build.
 
