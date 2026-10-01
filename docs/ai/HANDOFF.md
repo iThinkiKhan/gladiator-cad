@@ -11,6 +11,10 @@ STLs are in `~/3D-Printer/Incoming/Gladiator/` (tray, BaseLeft/Right, a fit coup
 - Board posts 7 -> 4.5 (Jim picked this over 5.5). Board is 4.3 lower than v3. His own "trim 4, do 3 to be safe"
   would be posts about 5.8; one constant (`STANDOFF_H`).
 - Rear pegs 3.0 x 8.1 (were 4 x 9.1) in 0.25-clearance sockets, click bump 0.5.
+- **2026-10-01 later, strengthening pass (Jim: arms overbuilt, tabs fragile):** arms scooped to 9 deep between Y 104.5 and 123
+  (tray 16.56 -> 15.62 cm3); base walls thicker (inboard 2.4, rear 2.0), tab runs past the walls with root fillets, rib on the
+  bolt-side wall behind the bump groove (the groove had left 0.65), peg root fillet. "Tabs" was read as the base tab/socket and peg
+  root; ask if he meant something else.
 - **INA226 cassette v1 built 2026-10-01** (`cad/power-board/ina-cassette-v1/`, `scripts/build_ina_cassette_v1.py`, not printed). Removable
   shelf that hangs on the tray front wall (lip over the wall, tongue under the floor, bumps), board front-to-back, header pins out
   the front, terminals at the rear, wings between the rail front posts. **Hole centres (2.0 from header edge and sides) are

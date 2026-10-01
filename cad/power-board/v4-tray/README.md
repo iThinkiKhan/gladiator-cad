@@ -36,9 +36,25 @@ against solids, and refuses to export if any check fails. Results are in `valida
 Board holes, board position, the open board ends and the arm geometry are unchanged. The root is slightly deeper
 (15.3 vs 13.5 at Y 96) because the floor went down.
 
+## Strengthening pass (Jim, 2026-10-01): lighter arms, stronger tabs
+
+Jim: the arms look overbuilt, and the tabs look prone to breaking. Reading "tabs" as the base tab and its socket walls, plus the
+peg root. The arms and the base now trade plastic.
+
+| Part | Change | Why |
+| --- | --- | --- |
+| Arms | Top scooped from Z 40 down to Z 29 between Y 104.5 and Y 123 (a V: 40 degree front ramp, so no support). Arm is 9 deep at the lowest, 45.7 mm2 at Y 115 (was 82). The root, flare and posts stay full depth. | Between the two collar contacts the arm sees about 0.4 MPa for a 60 g tray. Tray 16.56 -> 15.62 cm3. |
+| Base walls | Inboard wall 1.6 -> 2.4, rear wall 1.6 -> 2.0. The bolt-side wall stays 1.2 (the M3 head needs the room). | Cantilever walls, 12 mm tall, printed with the layers across them. |
+| Base tab | Runs 2 past the inboard wall and 0.7 past the rear wall, with an r1.8 root fillet inboard and r0.6 rear. | The walls rose straight off a sharp tab edge. |
+| Bolt-side wall | A rib on the outside from Z 9 to 17.2, Y 130 to 136, 0.8 thick (wall 2.0 there). It starts above the M3 head and keeps 0.05 clear of the d5 driver path. | The bump groove cut that wall to 0.65. That notch was the weakest point, not the root. |
+| Peg root | r0.7 fillet where the peg meets the full-size post, on the two edges that are not flush. | A 3.0 peg into a 4.6 post is a sharp step. |
+
+Bases are 1.04 -> 1.38 cm3 each. The front wall stays 1.2 (the mast base flange is right behind it at Y 127), and the peg is still
+3.0 x 8.1 (42 mm2 for the pair against the old post's 56), as you asked.
+
 ## Things to check before printing
 
-1. **Cell height is settled enough.** Jim: installed cells are negligibly over the rim, so the floor has about 2.7 of room. If you want more height back, the floor could drop about 1.7 further and still keep 1.0. Not done: it is your call.
+1. **Cell height.** Jim: installed cells are negligibly over the rim, so the floor has about 2.7 of room. If you want more height back, the floor could drop about 1.7 further and still keep 1.0. Not done: it is your call.
 2. **Board underside.** The posts are now 4.5 tall. The assembled board's longest solder tail or lead must be under
    about 4.5 or it touches the floor, which sits 1 above the cell tops.
 3. **Bed contact is only 270 mm2** (v3: 364) for a part 111.8 tall. Use a brim of 8 mm or more.

@@ -114,8 +114,11 @@ PEG_Y = (128.85, 136.95)                # 8.1  (post was 127.4-136.5)
 CLR = 0.25
 POCK_X = (PEG_X[0] - CLR, PEG_X[1] + CLR)
 POCK_Y = (PEG_Y[0] - CLR, PEG_Y[1] + CLR)
-BASE_X = (18.4, 35.15)                  # outer wall 1.2 on the bolt side, 1.6 inboard
-BASE_Y = (127.4, 138.8)                 # front edge 127.4: the mast base flange ends at Y 127
+WALL_IN_T, WALL_REAR_T = 2.4, 2.0       # strengthened 2026-10-01 (were 1.6 and 1.6); bolt side stays 1.2 (M3 head)
+BASE_X = (18.4, POCK_X[1] + WALL_IN_T)  # 35.95
+BASE_Y = (127.4, POCK_Y[1] + WALL_REAR_T)   # front edge 127.4: the mast base flange ends at Y 127; rear 139.2
+TAB_EXT_X, TAB_EXT_Y = 38.0, 139.9      # tab runs beyond the walls inboard and rear so the walls can be filleted into it
+ROOT_FILLET = 1.8
 WALL_OUT_X = POCK_X[0] - 1.2            # 28.85: bolt X 25.5 + head r 3.0 + 0.35
 SOCK_TOP = 17.2
 PEG_Z0 = 6.2                            # 1.0 above the socket floor; the arms bear on the collar, not the pegs
@@ -160,9 +163,41 @@ def make_peg_box(f):
     return pg.makeChamfer(PEG_CHAMFER, es)
 
 
+def peg_root_fillet(shape, f, r=0.7):
+    a, b_ = sorted((f(PEG_X[0]), f(PEG_X[1])))
+    es = [e for e in shape.Edges if abs(e.BoundBox.ZMin - SHOULDER_Z0) < 1e-6 and abs(e.BoundBox.ZMax - SHOULDER_Z0) < 1e-6
+          and e.BoundBox.XMin > a - 0.01 and e.BoundBox.XMax < b_ + 0.01
+          and e.BoundBox.YMin > PEG_Y[0] - 0.01 and e.BoundBox.YMax < PEG_Y[1] + 0.01]
+    if not es:
+        p('INFO peg root fillet: no edges found'); return shape
+    try:
+        out = shape.makeFillet(r, es)
+        if out.isValid() and len(out.Solids) == 1:
+            p('INFO peg root fillet r%.1f on %d edges' % (r, len(es))); return out
+    except Exception as ex:
+        p('INFO peg root fillet skipped:', ex)
+    return shape
+
+
 def make_base_left():
-    b = box(BASE_X[0], BASE_X[1], BASE_Y[0], BASE_Y[1], TAB_Z0, TAB_TOP)
+    b = box(BASE_X[0], TAB_EXT_X, BASE_Y[0], TAB_EXT_Y, TAB_Z0, TAB_TOP)
     b = b.fuse(box(WALL_OUT_X, BASE_X[1], BASE_Y[0], BASE_Y[1], TAB_TOP, SOCK_TOP))
+    b = b.removeSplitter()
+    for nm, axis, pos, rr in (('inboard', 'x', BASE_X[1], ROOT_FILLET), ('rear', 'y', BASE_Y[1], 0.6)):
+        es = [e for e in b.Edges if abs(e.BoundBox.ZMin - TAB_TOP) < 1e-6 and abs(e.BoundBox.ZMax - TAB_TOP) < 1e-6 and
+              ((axis == 'x' and abs(e.BoundBox.XMin - pos) < 1e-6 and abs(e.BoundBox.XMax - pos) < 1e-6 and e.BoundBox.YLength > 5) or
+               (axis == 'y' and abs(e.BoundBox.YMin - pos) < 1e-6 and abs(e.BoundBox.YMax - pos) < 1e-6 and e.BoundBox.XLength > 5))]
+        try:
+            nb = b.makeFillet(rr, es) if es else b
+            if nb.isValid() and len(nb.Solids) == 1:
+                b = nb; p('INFO base %s root fillet r%.1f on %d edge(s)' % (nm, rr, len(es)))
+        except Exception as ex:
+            p('INFO base %s root fillet skipped:' % nm, ex)
+    # rib on the bolt-side wall behind the bump groove: the groove leaves only 0.65 of the 1.2 wall.  It starts above the
+    # M3 head (Z 8.2) and stays 0.05 clear of the d5 driver path, so it needs no support when printed tab-down.
+    rib_pts = [(WALL_OUT_X, 9.0), (WALL_OUT_X - 0.8, 12.0), (WALL_OUT_X - 0.8, SOCK_TOP), (WALL_OUT_X, SOCK_TOP)]
+    rw = [V(x, 130.0, z) for x, z in rib_pts]
+    b = b.fuse(Part.Face(Part.makePolygon(rw + [rw[0]])).extrude(V(0, 6.0, 0))).removeSplitter()
     b = b.cut(box(POCK_X[0], POCK_X[1], POCK_Y[0], POCK_Y[1], TAB_TOP, SOCK_TOP + 1.0))
     ident = lambda x: x
     # grooves in both pocket side walls (cut depth into the wall; the 1.2 outer wall keeps 0.7)
@@ -212,6 +247,17 @@ for side in (0, 1):
     for s in parts:
         tray = tray.fuse(s)
 tray = tray.removeSplitter()
+# arms were overbuilt (Jim, 2026-10-01): scoop the top between the two collar contacts.  Bending there is tiny (about 0.4 MPa for a
+# 60 g tray); the root, flare and posts stay full depth.  The front ramp is 40 degrees from the print axis so it needs no support.
+SCOOP = [(104.5, TOP + 0.1), (117.5, 29.0), (120.0, 29.0), (123.0, TOP + 0.1)]
+for side in (0, 1):
+    fs = side_func(side)
+    xa, xb = sorted((fs(24.9), fs(29.2)))
+    sw = [V(xa, y, z) for y, z in SCOOP]
+    tray = tray.cut(Part.Face(Part.makePolygon(sw + [sw[0]])).extrude(V(xb - xa, 0, 0)))
+tray = tray.removeSplitter()
+for side in (0, 1):
+    tray = peg_root_fillet(tray, side_func(side))
 for x, y in board_holes:
     tray = tray.cut(Part.makeCylinder(M2_PILOT / 2, BOARD_PILOT_DEPTH + 0.1, V(x, y, BOARD_Z - BOARD_PILOT_DEPTH)))
 tray = tray.removeSplitter()
@@ -259,7 +305,7 @@ p('INFO master BatteryCells still says 4 above the holder; Jim reports cells are
 
 # tray <-> base fit
 d_fit = tray_core.distToShape(base_l)[0]
-check(0.24 <= d_fit <= 0.26, 'peg to socket clearance %.3f (design %.2f)' % (d_fit, CLR))
+check(d_fit >= 0.2, 'peg (with its root fillet) to socket clearance %.3f (design %.2f)' % (d_fit, CLR))
 check(hit(tray, base_l) + hit(tray, base_r) < 1e-6, 'installed: bumps sit in their grooves, nothing overlaps')
 check(PEG_Z0 - TAB_TOP >= 0.99,
       'peg bottom is %.1f above the socket floor (the arms bear on the collar)' % (PEG_Z0 - TAB_TOP))
@@ -345,7 +391,12 @@ for nm, y, xa, xb in (('arm beside mast Y115', 115.0, 18, 39.5), ('arm Y105', 10
     a4, h4 = section(tray, y, xa, xb)
     rows[nm] = {'v3_area_mm2': round(a3, 1), 'v3_depth': round(h3, 1), 'v4_area_mm2': round(a4, 1), 'v4_depth': round(h4, 1)}
     p('INFO section %-22s v3 %6.1f mm2 (depth %4.1f)  v4 %6.1f mm2 (depth %4.1f)' % (nm, a3, h3, a4, h4))
-    check(a4 >= a3 - 0.5, '%s not weaker than v3' % nm)
+    if nm.startswith('arm beside'):
+        check(a4 >= 40.0, '%s lightened but still %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
+    elif nm == 'arm Y105':
+        check(a4 >= a3 - 3.0, '%s is where the scoop ramp starts: %.1f mm2 (v3 %.1f)' % (nm, a4, a3))
+    else:
+        check(a4 >= a3 - 0.5, '%s not weaker than v3' % nm)
 peg_a = tray_core.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0))
 p('INFO peg section at Y132, Z8-15 (both pegs): %.1f mm2 (v3 post %.1f)' % (peg_a.Volume / 0.1,
   v3.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0)).Volume / 0.1))
@@ -398,6 +449,7 @@ pb_r = to_bed(base_r); pm_br = fine_mesh(pb_r); mesh_ok(pm_br, base_r.Volume, 'b
 # fit coupon: the real left base plus the peg and a short shoulder stub, printed in the tray's own orientation
 stub = box(28.7, PEG_X[1], 127.4, PEG_Y[1], SHOULDER_Z0, SHOULDER_Z0 + 6.0).fuse(make_peg_box(side_func(0))).fuse(peg_bumps(0))
 stub = stub.cut(box(0, 79, 0, 200, SHOULDER_Z0 + 6.0, 80)).removeSplitter()
+stub = peg_root_fillet(stub, side_func(0))
 pstub = tray_orient(stub)
 pstub.translate(V(pb_l.BoundBox.XLength + 8.0, 0, 0))
 coupon = Part.makeCompound([pb_l, pstub])

@@ -1,8 +1,8 @@
 {
  "script": "scripts/build_power_tray_v4.py",
- "tray_volume_cm3": 16.56,
- "tray_pla_g_solid": 20.5,
- "base_volume_cm3_each": 1.04,
+ "tray_volume_cm3": 15.62,
+ "tray_pla_g_solid": 19.4,
+ "base_volume_cm3_each": 1.38,
  "v3_volume_cm3": 17.78,
  "cell_above_holder_modelled_negligible": 0.5,
  "cell_gap": 1.0,
@@ -70,11 +70,11 @@
  "base": {
   "x": [
    18.4,
-   35.15
+   35.949999999999996
   ],
   "y": [
    127.4,
-   138.8
+   139.2
   ],
   "socket_top_z": 17.2,
   "tab_z": [
@@ -96,14 +96,14 @@
   "arm beside mast Y115": {
    "v3_area_mm2": 82.0,
    "v3_depth": 20.0,
-   "v4_area_mm2": 82.0,
-   "v4_depth": 20.0
+   "v4_area_mm2": 45.7,
+   "v4_depth": 11.2
   },
   "arm Y105": {
    "v3_area_mm2": 82.0,
    "v3_depth": 20.0,
-   "v4_area_mm2": 82.0,
-   "v4_depth": 20.0
+   "v4_area_mm2": 80.7,
+   "v4_depth": 19.7
   },
   "root Y96": {
    "v3_area_mm2": 136.3,
