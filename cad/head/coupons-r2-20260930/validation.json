@@ -284,6 +284,71 @@
           "pass": true
         }
       ]
+    },
+    "H6": {
+      "question": "Does the SG90 cross horn drop into the pocket and sit flat with no rotational play, and can the horn screw be driven through the middle? Which clearance?",
+      "horn_measured_2026_10_01": {
+        "long_tip_to_tip": 36.0,
+        "short_tip_to_tip": 19.0,
+        "long_width_hub": 6.8,
+        "long_width_tip": 4.8,
+        "short_width": 3.8,
+        "boss_dia": 7.1,
+        "boss_above_arms": 1.0
+      },
+      "clearance_per_side_mm": {
+        "1 notch (H6a) snug": 0.15,
+        "2 notches (H6b) easy": 0.3
+      },
+      "pocket_depth_mm": 1.2,
+      "boss_recess_depth_mm": 1.3,
+      "access_hole_mm": 5.0,
+      "thickness_mm": 3.7,
+      "why_a_plate": "36 mm horn span exceeds the 60T tooth root (36.19), so v0.4 carries the pocket in a wider horn plate on the drive pulley servo side",
+      "files": [
+        {
+          "file": "Gladiator_HeadR2_H6a_HornPocket_1notch-SNUG_pocket-up.stl",
+          "size_mm": [
+            40.3,
+            23.3,
+            3.7
+          ],
+          "volume_cm3": 1.34,
+          "grams_pla": 1.7,
+          "bed_contact_mm2": 443.0,
+          "orientation": "flat, pocket facing up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.005,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H6b_HornPocket_2notch-EASY_pocket-up.stl",
+          "size_mm": [
+            40.6,
+            23.6,
+            3.7
+          ],
+          "volume_cm3": 1.38,
+          "grams_pla": 1.7,
+          "bed_contact_mm2": 459.0,
+          "orientation": "flat, pocket facing up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.006,
+          "pass": true
+        }
+      ]
     }
   },
   "checks": {
@@ -291,14 +356,14 @@
     "plate_pass": true
   },
   "plate": {
-    "file": "Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf",
-    "pieces": 9,
-    "objects_in_3mf": 9,
+    "file": "Gladiator_HeadR2_CouponPlate_ALL-11-pieces.3mf",
+    "pieces": 11,
+    "objects_in_3mf": 11,
     "triangles_ok": true,
     "offbed": 0,
     "overlaps": 0,
-    "volume_cm3": 21.41,
-    "grams_pla": 27.0,
+    "volume_cm3": 24.14,
+    "grams_pla": 30.0,
     "unit_mm": true
   }
 }

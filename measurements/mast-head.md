@@ -239,5 +239,32 @@ with its own screw, so the pulley must attach to the horn, not to the shaft.
 ### Published reference values (not measured on Jim's parts)
 
 SG90 output spline **Ø4.8**; body about **23 x 12.2**. Sources: AliExpress SG90 dimensions
-article, Handsontec SG90 datasheet. No published source found gives the cross horn's arm widths,
-thickness or hub size; those need measuring.
+article, Handsontec SG90 datasheet. No published source found gives the cross horn's dimensions,
+which is why Jim measured it (next section).
+
+### SG90 cross horn — Jim's calipers, 2026-10-01
+
+Photo with the rule in frame: `measurements/photos/sg90-cross-horn-with-rule_20261001.jpg`.
+
+| Feature | Value |
+| --- | ---: |
+| Long arms, tip to tip | **36** |
+| Short arms, tip to tip | **19** |
+| Long arm width at the hub | **6.8** |
+| Long arm width at the tip | **4.8** (tapers) |
+| Short arm width | **3.8**, constant |
+| Round hub, outside diameter | **7.1** |
+| Hub boss above the arms, when fitted | **about 1** |
+
+**Correction to my first reading:** Jim wrote "7.1 5." and I took the diameter as 7.15. The "5."
+was his list number. The diameter is 7.1.
+
+**Not given yet:** arm thickness, total height. The first H6 coupon assumes a 1.2 pocket depth, so
+whether the arms stand proud of the pocket rim will give the thickness indirectly.
+
+**From the photo only, NOT measured:**
+- Each long arm has five holes in a line, close-spaced at roughly 2.5 mm. Each short arm has two.
+  This corrects the 09-22 note "five holes in each arm", which holds for the long arms only.
+- The arm tips are rounded.
+- Hole positions along the arms were not read off the photo. The two-screws-as-pins readings are
+  still needed, and only if a design screws through the plate into the horn.

@@ -8,6 +8,7 @@ tested before any new measurement comes back. Each answers ONE question.
     H3  circlip post           a 6804 on the printed spindle, held by a real circlip
     H4  M2 pilots              which pilot an M2 screw (or SG90 ear screw) bites in
     H5  M3 nut sockets         which hex socket takes an M3 nut
+    H6  horn pocket            does the real cross horn seat in a printed pocket (added 2026-10-01)
 
 Round features on this printer print ~0.25 under, convex and concave alike
 (measurements/printer-calibration.md). Sizes below are modelled values; the
@@ -382,6 +383,78 @@ report['pieces']['H5'] = {
     'across_flats_mm': AFS, 'depth_mm': 2.6, 'marking': 'notches on the long side, 1 = smallest',
 }
 
+# ====================================================== H6 horn pocket
+# Cross horn, Jim's calipers 2026-10-01: long arms 36 tip to tip, 6.8 wide at the
+# hub tapering to 4.8 at the tip; short arms 19 tip to tip, 3.8 wide throughout;
+# hub boss 7.1, standing about 1.0 above the arms when fitted. (Arm thickness and
+# total height were NOT given, so POCKET_DEPTH below is an assumption.)
+# The 36 mm span is wider than the 60T pulley's 36.19 tooth root, so the pocket
+# lives in a wider horn plate on the drive pulley's servo side. This coupon is
+# that plate alone, pocket UP, which is how the real drive pulley will print.
+HORN_LONG, HORN_SHORT = 36.0, 19.0
+LONG_W_HUB, LONG_W_TIP, SHORT_W = 6.8, 4.8, 3.8
+BOSS_D, BOSS_UP = 7.1, 1.0
+POCKET_DEPTH = 1.2        # ASSUMED: arm thickness not measured; thicker arms just stand proud
+BOSS_RECESS = BOSS_UP + 0.3
+FLOOR, WALL = 1.2, 2.0
+ACCESS_D = 5.0            # horn screw and driver pass through the middle
+T6 = FLOOR + BOSS_RECESS + POCKET_DEPTH
+
+
+def horn_solid(c, z, h):
+    """The horn's top-down outline grown by c on every side, extruded z..z+h."""
+    rb = BOSS_D / 2
+    lt = HORN_LONG / 2 - LONG_W_TIP / 2          # long-arm tip arc centre
+    st = HORN_SHORT / 2 - SHORT_W / 2            # short-arm tip arc centre
+    h0, h1, hs = LONG_W_HUB / 2 + c, LONG_W_TIP / 2 + c, SHORT_W / 2 + c
+    long_arm = prism([(-lt, -h1), (-rb, -h0), (rb, -h0), (lt, -h1),
+                      (lt, h1), (rb, h0), (-rb, h0), (-lt, h1)], z, h)
+    parts = [long_arm, cyl(h1, z, h, lt, 0), cyl(h1, z, h, -lt, 0),
+             box(-hs, -st, z, 2 * hs, 2 * st, h), cyl(hs, z, h, 0, st), cyl(hs, z, h, 0, -st),
+             cyl(rb + c, z, h)]
+    return fuse(*parts)
+
+
+def horn_coupon(c, marks):
+    body = horn_solid(c + WALL, 0, T6)
+    body = body.cut(horn_solid(c, T6 - POCKET_DEPTH, POCKET_DEPTH + 1))
+    # boss recess, round so compensated for the curve error
+    body = body.cut(cyl(BOSS_D / 2 + c + CURVE_ERR / 2, T6 - POCKET_DEPTH - BOSS_RECESS,
+                        BOSS_RECESS + 0.1))
+    body = body.cut(cyl(ACCESS_D / 2, -0.1, T6 + 0.2))
+    xo = HORN_LONG / 2 + c + WALL                # outer face at the +X long-arm tip
+    for k in range(marks):
+        body = body.cut(cyl(0.6, -0.5, T6 + 1, xo, (k - (marks - 1) / 2.0) * 1.6))
+    return body
+
+
+def horn_probes(c):
+    return [((10, 0, T6 - 0.5), False),            # long-arm pocket open
+            ((10, 0, 0.6), True),                  # floor under it
+            ((0, 6.5, T6 - 0.5), False),           # short-arm pocket open
+            ((3.0, 0, T6 - POCKET_DEPTH - 0.6), False),   # boss recess
+            ((5.0, 5.0, T6 - POCKET_DEPTH - 0.6), True),  # but not beyond it
+            ((0, 0, 0.6), False),                  # screw access hole
+            ((12, 2.85 + c + 0.8, 2.0), True)]     # wall beside the long arm
+
+
+for key, c, marks, label in [('H6a', 0.15, 1, 'SNUG'), ('H6b', 0.30, 2, 'EASY')]:
+    add(key, 'H6%s_HornPocket_%dnotch-%s_pocket-up' % (key[-1], marks, label),
+        horn_coupon(c, marks), 'flat, pocket facing up - no support', horn_probes(c), 300)
+report['pieces']['H6'] = {
+    'question': 'Does the SG90 cross horn drop into the pocket and sit flat with no rotational '
+                'play, and can the horn screw be driven through the middle? Which clearance?',
+    'horn_measured_2026_10_01': {'long_tip_to_tip': HORN_LONG, 'short_tip_to_tip': HORN_SHORT,
+                                 'long_width_hub': LONG_W_HUB, 'long_width_tip': LONG_W_TIP,
+                                 'short_width': SHORT_W, 'boss_dia': BOSS_D,
+                                 'boss_above_arms': BOSS_UP},
+    'clearance_per_side_mm': {'1 notch (H6a) snug': 0.15, '2 notches (H6b) easy': 0.30},
+    'pocket_depth_mm': POCKET_DEPTH, 'boss_recess_depth_mm': BOSS_RECESS,
+    'access_hole_mm': ACCESS_D, 'thickness_mm': T6,
+    'why_a_plate': '36 mm horn span exceeds the 60T tooth root (36.19), so v0.4 carries the '
+                   'pocket in a wider horn plate on the drive pulley servo side',
+}
+
 # ============================================================ export
 LOG = []
 for p in pieces:
@@ -489,7 +562,7 @@ def write_3mf(path, title, its):
         z.writestr('3D/3dmodel.model', NL.join(md))
 
 
-plate = OUT / (PREFIX + 'CouponPlate_ALL-9-pieces.3mf')
+plate = OUT / (PREFIX + 'CouponPlate_ALL-%d-pieces.3mf' % len(items))
 write_3mf(str(plate), 'Gladiator head coupons round 2', items)
 # re-open and check the container
 with zipfile.ZipFile(str(plate)) as z:

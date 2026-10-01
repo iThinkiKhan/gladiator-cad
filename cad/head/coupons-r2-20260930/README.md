@@ -140,6 +140,35 @@ Notches 1 to 3, with 1 the smallest. The GH44 receiver's 5.7 sockets took no nut
 
 **Unblocks:** the GH44 receiver's nut sockets and any captive nuts in v0.4.
 
+## H6 — horn pocket (added 2026-10-01, after the first nine were printed)
+
+Added after your horn calipers came in; it is **not** on the 9-piece plate.
+Files: `Gladiator_HeadR2_H6a_HornPocket_1notch-SNUG_pocket-up.stl` and
+`..._H6b_HornPocket_2notch-EASY_pocket-up.stl`. Together they are 2.7 cm3, flat, no supports.
+`Gladiator_HeadR2_CouponPlate_ALL-11-pieces.3mf` is all eleven pieces; the 9-piece plate is the
+one already printed.
+
+**Question:** does the real cross horn drop into a printed pocket and sit flat, with no rotational
+play? Which clearance is right?
+
+![the real horn outline in the pocket](preview-horn-pocket.png)
+
+**Why a plate.** The long arms span 36 mm, but the 60T pulley's tooth root is 36.19 across, so a
+horn-shaped pocket can't sit inside the toothed part. In v0.4 the pocket will be in a wider plate
+on the drive pulley's servo side. This coupon is that plate alone.
+
+1. Drop the horn in, boss-up, into the pocket. The long arms go along the long axis.
+2. **Report which key fits:** 1 notch (0.15 per side) or 2 notches (0.30 per side), whether it
+   drops in by hand, and whether it rocks.
+3. **How far do the arms stand above the rim, or do they sit below it?** That gives the arm
+   thickness, which I don't have. The pocket is 1.2 deep, an assumption.
+4. **Does the boss clear its round recess?** It should stand into it by about 1.
+5. **Can the horn screw and a driver pass through the 5.0 hole in the middle?**
+
+It has **no screw holes**. How the plate is fastened to the horn (the tiny screws into the horn's
+arm holes, or something else) is decided after this result. If the tiny screws are the plan, I'll
+need the two-screws-as-pins readings on the long-arm holes.
+
 ---
 
 ## Measurements
@@ -156,8 +185,10 @@ Jim has already taken these. They are spread over two files, so check both befor
 | SG90 shaft centre to the near short end | 8.3 | mast-head.md |
 | SG90 usable sweep | 160 degrees | mast-head.md |
 | SG90 count | about six | mast-head.md |
-| Long horn end-to-end; shaft to long tip; short arms end-to-end | about 36; 17; about 18 | mast-head.md |
-| Cross horn holes | five per arm, toward the tip (not a measured pitch) | mast-head.md |
+| **Cross horn** (2026-10-01) | long tip to tip 36; short tip to tip 19; long arm 6.8 at the hub, 4.8 at the tip; short arm 3.8; hub dia 7.1; boss about 1 proud | mast-head.md |
+| Cross horn holes | five per long arm, two per short arm (photo); pitch not measured | mast-head.md |
+| **Screen visible area position** (2026-10-01) | 6.2 from the pin-hole edge, 1.5 from the top | components.md |
+| **SG90 spline** (2026-10-01) | 4 and about 15 from the body ends; M2 does not thread into it | mast-head.md |
 | Belts / bearings / circlips / pulleys | 5 x GT2 6 mm 180 closed; yes; yes; **no pulleys** | mast-head.md |
 | Screws | mostly M2 / M3 screws, nuts and bolts | mast-head.md |
 | ST7789 board | 62.5 x 29, 3.2 thick | mast-head.md |
@@ -171,27 +202,30 @@ The Display section of `components.md` supersedes them.
 
 Two-reading rule for any pair of holes: jaws inside both (I), then outside both (O).
 
-1. **Screen: where the visible area sits.** Its size is known; its position is not. Give the
-   distance from the board's left edge to the visible area, and from the top edge. The other two
-   edges are a bonus cross-check.
-2. **Screen: the pin header.** Which edge it's on, and how far it stands off the back.
-3. **SG90 shaft, across the body** (horn off). From each long side of the body to the near edge
+1. **Cross horn: arm thickness and total height** (one number each, the horn off the servo).
+   H6 will give the thickness indirectly if you'd rather skip it.
+2. **SG90 shaft, across the body** (horn off). From each long side of the body to the near edge
    of the spline, plus the body width there. This lines up the tilt servo with its idler pivot.
-4. **Cross horn, for the pulley adapter:** arm width next to the hub and at the tip, arm
-   thickness, hub diameter, and total horn height. The lengths are already recorded.
-5. **Does an M2 machine screw thread into the servo output shaft,** in place of the horn screw?
-6. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
+3. **Spline, along the body:** your 4 and about 15 gave a shaft centre about 6.4 from the near
+   end, against the old 8.3. One more reading settles it: the servo body's total length, ears
+   not counted.
+4. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
    go through the 12 mm bore.
+5. **Only if the tiny screws are the plan:** the two-screws-as-pins readings on the horn's
+   long-arm holes (outermost pair and innermost pair, I and O).
 
-The coupons already test the rest: the mast fit (H2), the circlip and bearing width (H3), and the
-nut and screw fits (H4, H5). If the circlip won't go into H3, measure its thickness then.
+Answered 2026-10-01 and no longer open: the screen window position (6.2 / 1.5), the cross horn's
+widths and hub, and M2 into the spline (no). The screen's pin header isn't fitted yet. The
+coupons test the rest: the mast fit (H2), the circlip and bearing width (H3), and the nut and
+screw fits (H4, H5). If the circlip won't go into H3, measure its thickness then.
 
 ## Files
 
 | File | What |
 | --- | --- |
 | `stl/Gladiator_HeadR2_*.stl` | one per piece, 0.01 mm mesh, already in print orientation |
-| `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf` | all nine on one 220 x 220 plate |
+| `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf` | the first nine on one 220 x 220 plate. **This is the file that was printed** |
+| `Gladiator_HeadR2_CouponPlate_ALL-11-pieces.3mf` | those nine plus H6a and H6b |
 | `Gladiator_HeadCoupons_R2.FCStd` / `.step` | the solids, in print orientation |
 | `validation.json` | per-piece checks and the H1 numbers |
 | `../../../scripts/build_head_coupons_r2.py` | rebuilds all of it |
