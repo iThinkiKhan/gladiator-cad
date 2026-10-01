@@ -70,6 +70,12 @@ Not yet designed. Preserve the 12 mm mast bore; develop conductors, accessible d
 
 ## ST7789 display — Jim's measurements, 2026-09-20
 
+> **Superseded the same day.** `measurements/components.md`, section "Display (ST7789)", records
+> the plate F gauge result. The hole pattern is **26.00 x 58.25 centres, confirmed** ("fits the
+> back of the board perfectly"), and the visible area is **51.2 x 25.6**. Its position was
+> measured on 2026-10-01 (see the end of this file). The raw readings below are kept as history.
+> (Cross-reference added by Claude, 2026-09-30.)
+
 Board outline **62.5 long x 29 wide**. Thickness not re-read; the 2026-09-17
 record says 3.2 and that is still what the CAD uses. Mounting holes are M2 size.
 
@@ -148,3 +154,90 @@ a different belt length or an idler - not a small adjustment.
 
 **Still open on the belt:** tooth count and pitch diameter of the pulleys the design intends, which
 is what turns the 180 into a centre distance.
+
+## Fit-coupon results — Jim, 2026-09-21–22
+
+These are physical print observations. Keep printer artefacts separate from CAD
+geometry decisions.
+
+| Coupon / feature | Result | CAD or validation disposition |
+| --- | --- | --- |
+| GH44 locating register | Perfect fit | Retain the current register profile. |
+| GH44 male-side M3 through-holes | No hole passes M3; the hole nearest the locating notch is the best of the four | Revise the male-side M3 clearance in the next GH44 iteration. |
+| GH44 female-plate M3 through-holes | All pass M3 | Successful clearance reference. |
+| GH44 female-side M3 nut sockets | No socket accepts an M3 nut | Unresolved: may be a print error. Do not alter modeled socket dimensions until a clean reprint or physical measurement separates printer error from CAD clearance. |
+| Tongue-and-groove, latest coupon | Perfect fit; no notes | No geometry change requested. This supersedes the earlier suggestion to reduce tongue height by 0.20 mm. |
+| Bearing/post coupon #2 | Both parts fit perfectly, especially the post | Preferred bearing/post result. |
+| Bearing full insertion | Elephant foot prevents full insertion | Mitigate with printer settings first, then local sanding; do not change the bearing CAD fit on this result alone. |
+| Outer-ring coupon #3 | Can just fit with elephant foot present, but contact is poor | Marginal and print-condition-dependent; not the preferred outer-ring fit. |
+
+### Still required before head release
+
+- **Belt validation:** Fit the actual GT2 belt, then verify pulley tooth count/pitch diameter,
+  centre distance, tension, hub/horn attachment, and full motion without binding.
+- **ST7789 installed fit coupon:** Check the actual board and screen relationship, retention,
+  bezel opening, connector/cable clearance, and service removal. The board-envelope CAD alone
+  is not a final display fit.
+- **GH44 nut-socket diagnosis:** Reprint cleanly or measure a socket before assigning a CAD
+  correction.
+
+### Belt mesh fit — Jim, 2026-09-22
+
+The delivered GT2 belt fits the **two-notch** arc of the 3-up belt mesh coupon. This is the middle groove profile, radius 0.65 mm at nominal 0.75 mm depth. Keep this profile for the next printed pulley candidate. This closes the tooth-profile coupon gate only; pulley ratio, fixed center distance, tension, shaft attachment, and full-motion fit remain open.
+
+### Pulley inventory clarification — Jim, 2026-09-22
+
+Jim has the belts, ball bearings, and circlips, **but no timing pulleys**. The v0.3 README's statement that a 40T drive pulley was bought is superseded. Both pulley tooth counts and printed/bought construction remain design choices. The physically passing two-notch groove profile may be carried into printed pulley candidates, with whole-loop fit and horn attachment checked separately.
+
+### Pan horn selection clarification — Jim, 2026-09-22
+
+Both single-arm and cross SG90 horns are available. The existing measured shaft-center-to-long-horn-tip distance is 17 mm; do not request it again or treat it as screw-hole spacing. The v0.3 CAD's 9 mm radius round-horn reference does not represent either available long horn. A cross horn with a printed pulley and radial mounting slots is a candidate for a fit coupon, while actual hole locations and vertical screw clearance still need physical verification.
+
+### Cross-horn hole count — Jim, 2026-09-22
+
+Each arm of the cross horn has **five holes**, described as slightly closer to the tip than the shaft center. This is a qualitative location, not a measured hole pitch. The 60T drive-pulley fit coupon uses radial slots from 7 to 14 mm center radius so an actual opposing hole pair can be selected physically. Do not treat the slot span or the 17 mm tip radius as measured hole coordinates.
+
+## Jim, 2026-10-01 — screen window position, SG90 spline, horn screw
+
+### ST7789 visible area position (measured)
+
+| Reading | Value |
+| --- | ---: |
+| Left edge to visible area. This is the edge with the pin holes; **no header soldered yet** | **6.2** |
+| Top edge to visible area | **1.5** |
+
+Derived, not measured: from the 62.5 x 29 board and the 51.2 x 25.6 visible area (both in
+`components.md`, Display), the right margin is **5.1** and the bottom margin **1.9**.
+
+The header is not fitted yet, so its height depends on the header used. The frame needs a relief
+along the left (pin-hole) edge, sized for a standard 2.54 header.
+
+### SG90 output spline position (measured; one conflict open)
+
+| Reading as given | Value |
+| --- | ---: |
+| Near side of the spline to the "longest edge" (far end), not counting the ears | **about 15** |
+| Near side of the spline to "the other" edge (near end), not counting the ears | **4** |
+
+**Interpretation:** these run along the body's length, toward the ends where the ears are. They
+cannot be across the 12.2 width, since 15 + 4 alone exceeds it. As a check, 4 + the published
+4.8 spline + ~15 = ~23.8, against a body length of 22.8-23. That is consistent with "about 15"
+being nearer 14. The shaft centre then sits about **6.4** from the near end.
+
+**This conflicts with the 2026-09-16 record "shaft center to short body side 8.3".** It is not
+resolved. Settle it physically: the next servo-mount coupon carries a spline clearance hole at
+6.4 and a mark at 8.3.
+
+**Across the width, still unmeasured.** Published SG90 drawings show the shaft on the width
+centreline. That is an **assumption** until a tilt-mount coupon confirms it.
+
+### Horn screw (measured)
+
+An M2 machine screw does **not** thread into the top of the output spline. The horn stays on
+with its own screw, so the pulley must attach to the horn, not to the shaft.
+
+### Published reference values (not measured on Jim's parts)
+
+SG90 output spline **Ø4.8**; body about **23 x 12.2**. Sources: AliExpress SG90 dimensions
+article, Handsontec SG90 datasheet. No published source found gives the cross horn's arm widths,
+thickness or hub size; those need measuring.

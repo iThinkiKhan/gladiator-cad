@@ -295,6 +295,8 @@ upper deck, carrying the drivers at the same angle but higher up.
 | --- | ---: | --- |
 | Active area | **51.2 wide x 25.6 high** | Jim, 2026-09-20 |
 | Mounting hole pattern | **26.00 x 58.25 centres, CONFIRMED** | Plate F gauge, 2026-09-20: "fits the back of the board perfectly". The pattern is settled. |
+| Active area position | **6.2 from the left edge, 1.5 from the top edge** | Jim, 2026-10-01. The left edge is the pin-hole side. Derived: right 5.1, bottom 1.9. |
+| Pin header | **not soldered yet** | Jim, 2026-10-01. Relieve the left (pin-hole) edge for a standard 2.54 header. |
 
 **Two things the gauge did not cover, and the frame must.**
 
