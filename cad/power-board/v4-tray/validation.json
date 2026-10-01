@@ -1,0 +1,138 @@
+{
+ "script": "scripts/build_power_tray_v4.py",
+ "tray_volume_cm3": 16.56,
+ "tray_pla_g_solid": 20.5,
+ "base_volume_cm3_each": 1.04,
+ "v3_volume_cm3": 17.78,
+ "cell_above_holder_modelled_negligible": 0.5,
+ "cell_gap": 1.0,
+ "floor_z": [
+  24.7,
+  26.3
+ ],
+ "board_z": [
+  30.8,
+  32.4
+ ],
+ "wall_top": 33.4,
+ "standoff_h": 4.5,
+ "board_drop_vs_v3_mm": 4.3,
+ "arm_top": 40.0,
+ "connector_room_to_upper_deck_mm": 22.1,
+ "v3_connector_room_mm": 17.8,
+ "board_holes": [
+  [
+   22.25,
+   31.875
+  ],
+  [
+   22.25,
+   86.125
+  ],
+  [
+   56.75,
+   31.875
+  ],
+  [
+   56.75,
+   86.125
+  ]
+ ],
+ "deck_fixings": [
+  [
+   25.5,
+   130.5
+  ],
+  [
+   53.5,
+   130.5
+  ]
+ ],
+ "peg": {
+  "x": [
+   30.3,
+   33.3
+  ],
+  "y": [
+   128.85,
+   136.95
+  ],
+  "size": [
+   2.9999999999999964,
+   8.099999999999994
+  ],
+  "clearance": 0.25,
+  "engaged_mm": 11.0,
+  "bump_apex_mm": 0.5,
+  "groove_apex_mm": 0.55,
+  "bump_interference_mm_per_side": 0.25
+ },
+ "base": {
+  "x": [
+   18.4,
+   35.15
+  ],
+  "y": [
+   127.4,
+   138.8
+  ],
+  "socket_top_z": 17.2,
+  "tab_z": [
+   2.2,
+   5.2
+  ]
+ },
+ "clearances_mm": {
+  "MastTube": 0.4,
+  "MastBase": 0.0,
+  "SideRailLeft": 3.1,
+  "SideRailRight": 3.1,
+  "UpperDeck": 14.5,
+  "ChassisDeck": 4.2,
+  "cells (modelled 0.5 above holder)": 2.7
+ },
+ "collar_contact_mm2": 50.2,
+ "sections": {
+  "arm beside mast Y115": {
+   "v3_area_mm2": 82.0,
+   "v3_depth": 20.0,
+   "v4_area_mm2": 82.0,
+   "v4_depth": 20.0
+  },
+  "arm Y105": {
+   "v3_area_mm2": 82.0,
+   "v3_depth": 20.0,
+   "v4_area_mm2": 82.0,
+   "v4_depth": 20.0
+  },
+  "root Y96": {
+   "v3_area_mm2": 136.3,
+   "v3_depth": 13.5,
+   "v4_area_mm2": 154.5,
+   "v4_depth": 15.3
+  },
+  "flare Y125": {
+   "v3_area_mm2": 114.7,
+   "v3_depth": 20.0,
+   "v4_area_mm2": 114.7,
+   "v4_depth": 20.0
+  }
+ },
+ "print": {
+  "tray": "Gladiator_PowerTray_v4_print-on-rear-face.stl",
+  "bases": [
+   "Gladiator_PowerTray_v4_BaseLeft_print-tab-down.stl",
+   "Gladiator_PowerTray_v4_BaseRight_print-tab-down.stl"
+  ],
+  "coupon": "Gladiator_PowerTray_v4_FitCoupon_base-and-peg.stl",
+  "tray_orientation": "rear face down (as v2/v3)",
+  "bases_orientation": "tab down",
+  "tray_bbox": [
+   42.8,
+   33.8,
+   111.8
+  ],
+  "tray_bed_contact_mm2": 270,
+  "tray_downward_faces_mm2": 837
+ }
+}

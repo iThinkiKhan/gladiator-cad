@@ -64,6 +64,9 @@ aluminum.
   the same 6.5 (upper deck, S3/breadboard, antenna post, driver mounts). **Installed cells stand
   4 above the holder** (Jim, 2026-09-27; `BatteryCells`, `battery_cell_protrusion`). So the real
   gap to the cells was 4.5 on v1 and is 11.0 on v2. The 15.0 figure is to the empty holder.
+  **Corrected 2026-10-01 (Jim):** installed cells are negligibly over the holder rim. `battery_cell_protrusion`
+  is now 0.5, a conservative stand-in, not a measurement, so the gap under the v2 soffit is about 14.5. The 4, 4.5
+  and 11.0 above are superseded.
 - **Front foot slot moved 3.5 back (v2).** The right front screw would not quite pass the
   aluminium slit at the old Y 10 position. The slit is 33 long, so a screw further back always
   finds it: the crosswise slot is now centred at Y 13.5 (shank front edge Y 12, was 8.5), which
@@ -220,6 +223,14 @@ are, legs sharing the mast base's existing M2 screws), but its concept was corre
 it's a **clip-on backing shield covering the board's solder side**, not a screw-down tray. Its
 final position is explicitly an open wiring question, tentatively rear, not yet resolved.
 
+**Power board tray v4 + snap-in base (2026-10-01).** Supersedes v3 for printing
+(`cad/power-board/v4-tray/`, `scripts/build_power_tray_v4.py`; not printed). The tray no longer bolts to the deck: two bases
+are bolted once at the rear slits with **M3** bolts, and the tray's 1 mm smaller rear pegs drop into their sockets with a
+click bump, so a battery change is lift-out, swap, drop-in. The floor is 1.8 lower (Jim: installed cells are
+negligibly over the holder rim, so the master `BatteryCells` value of 4 is stale) and the board posts are 4.5 tall, so the
+board sits 4.3 lower than v3 and the connector room under the upper deck is 22.1. The INA226 cassette in front of the
+battery box is still to be designed.
+
 ## Antenna pylon
 
 `AntennaPost` carries a **standard nut-type SMA bulkhead** connector. Rebuilt twice; the current
@@ -337,7 +348,7 @@ to the master by `scripts/apply_first_build_fixes.py`:
 | Mast must rise with the deck, "a tad more" | Mast top 120 → **130** (+10) | Mast tube |
 | Mast base holes miss the pilots: half a pilot visible, the real ones 1.2 further out | Deck rear pilots corrected (both pairs); M2 holes 41 → **43.4**, tied by formula | Mast base |
 | Rear pilots at Y 128 now sit under the rail rear feet (7.9 mm3 M2 overlap), so the tray's pilot tabs can't reach | **Power board tray v3** (`cad/power-board/v3-cradle/`): pilot tabs dropped, rear slit bolts only; arms 20 deep (were ~4-6); floor 1.6; board ends open 2.9 for wires; lifted 4.3 to clear the cells (v2 sat 3.3 into them) | Tray |
-| Installed cells stand 4 above the holder | `BatteryCells` reference envelope, Z 21.5-25.5: real clearance under the v2 soffit is **11.0**, not 15.0 | — |
+| Installed cells stand 4 above the holder | `BatteryCells` reference envelope, Z 21.5-25.5: real clearance under the v2 soffit is **11.0**, not 15.0 | — (superseded 2026-10-01: cells are negligibly over the rim, envelope now Z 21.5-22.0) |
 
 The master's mast base also carries the 2026-09-26 reprint's 3.5 spigot and 0.8 socket chamfer. The
 driver mounts, antenna post and head candidate sit on the deck or the mast top and moved with

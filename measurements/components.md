@@ -110,6 +110,12 @@ it needs to sit clear of the aluminum deck to radiate.
 | Overall length incl. dupont pins | ~40 | Pins extend past the board end |
 | Board width | 22 | |
 | Height, tallest point | 11.8 | |
+| PCB thickness | 1.6 | Jim, 2026-10-01 |
+| Mounting holes nearest the screw terminals | Ø3 | Jim, 2026-10-01. Hole centre positions NOT measured |
+| Other mounting holes | Ø2 | Jim, 2026-10-01. Hole centre positions NOT measured |
+| Screw terminal block, pin tail to terminal top | 14 | Jim, 2026-10-01. Does not overhang the board edge; the wires protrude from it. Against the 11.8 above, this implies pin tails about 2.2 below the PCB underside (derived, not measured) |
+| Header pins protrusion | 7 | Jim, 2026-10-01. Which edge or housing face it is measured from was not stated |
+| Layout (from photos, not measured) | | Two 2-position screw terminals, orange and green, share one 22 edge; the 4-pin header (GND, SCL, SDA, VCC) is on the opposite edge, pins out past the board; two large pads with holes beside the shunt |
 
 ## Motor driver x2 (power, lower deck)
 
