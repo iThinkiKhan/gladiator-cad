@@ -339,3 +339,35 @@ leave room to shim it.
 
 The photo-based estimates in the previous section are kept as history. The measured numbers
 replace them. The photo estimates read the spline top low and the boss top low by about 1.5-2.
+
+## Round-2 coupon results — Jim, 2026-10-01 (first nine pieces, as printed)
+
+Reported so far. **Not yet reported:** H1 belt, H2 collars, H4 M2 pilots.
+
+| Coupon | Result | Disposition |
+| --- | --- | --- |
+| **H5** M3 nut pockets | **The middle pocket (2 notches, 6.0 across flats) takes an M3 nut "perfectly".** | Use **6.0 AF modelled** for M3 captive nuts in v0.4 and the GH44 receiver. The 5.7 pockets on the earlier receiver were too small (flat walls print over, so openings shrink). The other two sizes were not reported. |
+| **H3** circlip post (20.20 modelled) | **Too tight.** The bearing would not pass fully down the post, and could not be pulled back off with two pairs of pliers after forcing it. | See below. The circlip was not tested, since the bearing never seated. |
+
+**H3 needs explaining.** The same 20.20 modelled diameter was the plate F post #2 on 09-22, which
+Jim reported as fitting "perfectly, especially the post". So the post size is not repeatable from
+one print to the next, or something else differs. Candidates, none of them confirmed:
+- the printer's round-feature error has changed since plate F (a settings change, a different
+  spool or temperature), so the post now prints nearer 20.20 than the 19.95 the calibration
+  predicted;
+- the H3 post is 9 mm of full-diameter length against plate F's 6, so a small taper or a seam
+  ridge matters more;
+- a different bearing (bore tolerance), or a bore that is slightly tight.
+
+**Needed from Jim to tell them apart:** the H3 post's outside diameter by calipers (two readings,
+near the top and near the shoulder), and whether the slicer or printer settings changed since
+plate F. **Do not infer the cause until then.**
+
+**Consequence for v0.4.** A spindle that fits one print and wedges the next is not acceptable for
+a bearing that must be serviceable. v0.4 will not use a 20.20 post. The next post coupon will
+bracket lower sizes (centred once the post's measured diameter is known) and will be tested
+without force: if the bearing does not slide on by hand, stop.
+
+**Process note.** Jim said he did not know what the other post and the collars were for. The
+README never reached the printer, and the files carry only terse names. A plain one-page sheet,
+`START_HERE_head-coupons.txt`, now sits beside them.

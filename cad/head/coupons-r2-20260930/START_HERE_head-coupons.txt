@@ -1,0 +1,47 @@
+GLADIATOR HEAD COUPONS, ROUND 2 - WHAT EACH PIECE IS FOR
+(plain version; the full notes are in Gladiator_HeadR2_README.md)
+
+None of these is a head part. Each one is a small test that answers ONE question
+before the real head is printed. After each test, just tell Claude what happened.
+Never force anything. If a part will not go together by hand, stop and report it.
+
+H1a  60-tooth pulley   (the BIG toothed wheel, 41 mm across)
+H1b  40-tooth pulley   (the SMALL toothed wheel, 28 mm across)
+H1c  slotted bar       (long flat bar with one round hole and one slot)
+     Question: how far apart should the two pulleys sit so the real belt is snug?
+     Do:  M3 bolt up through the round hole, nut on top, put the 60T wheel on it.
+          Second M3 bolt up through the slot, nut on top (finger tight), 40T wheel on it.
+          Loop the belt round both. Slide the slot bolt out until the belt is snug,
+          tighten it. Turn the wheels by hand: does the belt run clean?
+     Report: calipers across the two bolts, outside to outside and inside to inside.
+          And whether it ran clean.
+
+H2a  neck collar, TIGHT key   (1 notch)   half-ring with two ears and a small tab inside
+H2b  neck collar, LOOSE key   (2 notches) same, with a slightly smaller tab
+H2c  clamp cap                (the other half-ring, no tab)
+     Question: does the collar that will carry the head fit the top of the real mast?
+     Do:  Try H2b first. Hook the half with the tab onto the top of the mast from the
+          BACK of the robot, tab into the flat on the mast, push down till it sits flat.
+          Fit H2c from the front, two M3 bolts through the ears, nuts, tighten.
+          Then try H2a the same way.
+     Report: does each slide on by hand, sit flat on the mast top, hold when tight,
+          or twist when loose?
+
+H3   bearing post   (flat disc at the bottom, a post, a groove near the top)
+     Question: does a 6804 bearing slide on, and does a circlip hold it?
+     DONE - the post was too tight. Claude is making a new set of posts at smaller sizes.
+     Please do not push a bearing onto the old post again.
+
+H4   small bar with three blind holes (notches on the side: 1, 2, 3 = smallest to largest)
+     Question: which hole does an M2 screw bite into and hold, without splitting?
+     Do:  Try an M2 screw in each, then one of the SG90 ear screws.
+     Report: best hole for each screw.
+
+H5   bar with three hex pockets (1, 2, 3 notches = smallest to largest)
+     DONE - the middle one (2 notches) takes an M3 nut perfectly. Thank you.
+
+H6a / H6b   horn pockets (NOT printed yet - these two were added later)
+     Question: does the real cross horn drop into the pocket? Horn goes in BOSS DOWN.
+
+If you can't tell which piece is which, the file names say it, and the picture
+preview-print-orientation.png shows all of them.
