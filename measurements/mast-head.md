@@ -425,3 +425,28 @@ calibration came from 9 and 14 mm features. If the error shrinks as the radius g
 (radius 10) may lose only about 0.1 and so print near 20.10, which would jam a 20.00 bore. That fits H3
 but is **not proven**. H3b brackets 19.95 / 20.05 / 20.15 so the answer comes from the fit, not from
 an argument. Nothing in the master has been changed.
+
+## Final coupon plate results — Jim, 2026-10-01
+
+| Coupon | Jim's words | Value used in head v0.4 |
+| --- | --- | --- |
+| **H3b** bearing posts 19.95 / 20.05 / 20.15 | "two notch post wins" | spindle post **20.05** modelled |
+| **H6** horn pockets, snug 0.15 / easy 0.30 | "one notch horn pocket" | pocket clearance **0.15** per side |
+| **H4b** M2 pilots 2.3 / 2.4 / 2.5 | "right in the middle between 1 and 2" | M2 pilot **2.35** modelled |
+
+**Read as:** the 2-notch H3b post is 20.05. The 1-notch H6 pocket is H6a, the snug one. For the M2
+sizer, the middle of 1 notch (2.3) and 2 notches (2.4) is 2.35. Stated back to Jim.
+
+**On the post:** 20.20 jammed and 20.05 fits, both modelled values. The real post diameter was never
+calipered, so this sets no new calibration rule. It is one fit, for this size of post.
+
+**Not reported, and still open:**
+- whether the circlip seated in the groove on the winning post
+- how far the horn arms stand above the H6 rim, which would give the arm thickness
+- whether the horn screw's head sits on H6's 3.4 centre hole
+
+**The one measurement the head still needs:** with the horn pushed fully onto the spline, measure
+from the **underside of an ear** to the **top of the horn arms**. The model assumes 11.0 (boss) + 0.25
+(gap) + 2.0 (arm) = **13.25**. It sets the height of the pan servo pad, and so the belt alignment.
+(The old "13.2, ear underside to installed horn underside" may in fact have been this reading, but
+that is not assumed.)

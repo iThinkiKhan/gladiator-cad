@@ -1,6 +1,6 @@
 # Gladiator head v0.4 — the whole head, built 2026-10-01
 
-**Status: design candidate, not released.**
+**Status: released for printing, plates 1 to 3 (2026-10-01).** The neck and the sensor carrier are held. Nothing has been printed or fitted yet.
 - **Stage 1** is the pan stack: everything between the mast and the tilt yoke.
 - **Stage 2** is the tilt side: yoke, GH44 receiver, dual carrier and rear display frame,
   regenerated from code. It was inherited from v0.3 until stage 2.
@@ -92,25 +92,33 @@ The clamp screws sit on a tab **outboard** of the pulley because the first layou
 its flange. Pan the head to 60 degrees to service the drive. The last two rows set the assembly
 order, they are not faults.
 
-## Parts, print orientation, and what each waits on
+## Parts, print orientation, and release
 
-None of these is released. **Plate 1 needs no coupon result.**
+The final coupon plate settled the last three fits (post 20.05, M2 pilot 2.35, horn pocket 0.15). **Nine parts are released on three plates; two are held.**
 
 | Part | cm3 | Print | Waits on |
 | --- | ---: | --- | --- |
-| **Pan_Raised_Pedestal** | 16.6 | base plate down, **support under the top plate only**, none in the belt channel | nothing |
-| **Pan_Retainer** | 2.3 | flat | nothing |
-| **Neck_Clamp_Cap** | 2.5 | axis vertical, lugs down | nothing (tested geometry) |
-| Pan_Rotor | 15.4 | axis vertical, lower seat on the bed (relieved) | **H4b** (M2 pilot size) |
-| Pan_Servo_Carriage | 2.3 | flat | **H4b** (ear pilots) |
-| Neck_Main | 17.7 | axis vertical, collar down; supports under the arm, riser and pad; **brim**: the bed contact is only 142 mm2 | **H3b** (post) and the horn arm thickness |
-| Pan_Drive_Pulley | 7.9 | axis vertical, horn plate on the bed (pocket faces the bed, relieved), no support | **H6** (pocket clearance, arm thickness) |
-| Tilt_Yoke | 12.1 | floor down, no support | **H4b** (servo ear pilots) |
-| GH44_Tilt_Receiver | 11.8 | GH44 face down (register on the bed, relieved), arms up, no support | **H6** (horn pocket) |
-| GH44_Dual_Carrier | 13.8 | sensor plate down, key up, no support | the sensor mounting, which isn't designed |
-| Rear_Display_Frame | 14.7 | bezel face down; support under the four tabs only | **H4b** (M2 pilots) |
+| **Pan_Raised_Pedestal** | 16.6 | base plate down, **support under the top plate only**, none in the belt channel | **plate 1** |
+| **Pan_Retainer** | 2.3 | flat | **plate 1** |
+| **Neck_Clamp_Cap** | 2.5 | axis vertical, lugs down | **plate 1** |
+| **Pan_Rotor** | 15.4 | axis vertical, lower seat on the bed (relieved) | **plate 2** |
+| **Pan_Servo_Carriage** | 2.3 | flat | **plate 2** |
+| Neck_Main | 17.7 | axis vertical, collar down; supports under the arm, riser and pad; **brim**: the bed contact is only 142 mm2 | **HELD**: the horn height (one reading) and the circlip result |
+| **Pan_Drive_Pulley** | 7.9 | axis vertical, horn plate on the bed (pocket faces the bed, relieved), no support | **plate 2** |
+| **Tilt_Yoke** | 12.1 | floor down, no support | **plate 3** |
+| **GH44_Tilt_Receiver** | 11.8 | GH44 face down (register on the bed, relieved), arms up, no support | **plate 3** |
+| GH44_Dual_Carrier | 13.8 | sensor plate down, key up, no support | **HELD**: sensor mounting not designed |
+| **Rear_Display_Frame** | 14.7 | bezel face down; support under the four tabs only | **plate 3** |
 
-`plates/Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf`: 21.4 cm3, about 27 g, three parts.
+| Plate (in `plates/` and the printer folder) | Parts | Weight | Supports |
+| --- | --- | ---: | --- |
+| `Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf` | pedestal, retainer, clamp cap | about 27 g | under the pedestal top plate only |
+| `Gladiator_Head_v04_PLATE2_PanDrive_Rotor-Pulley-Carriage.3mf` | rotor, drive pulley, servo carriage | about 32 g | none |
+| `Gladiator_Head_v04_PLATE3_Tilt_Yoke-Receiver-DisplayFrame.3mf` | tilt yoke, GH44 receiver, display frame | about 48 g | under the display frame's 4 tabs only; frame 61 mm tall |
+
+**Neck_Main is held for one reading.** Push the cross horn fully onto a servo spline, then caliper
+from the **underside of an ear** to the **top of the horn arms**. The model uses 13.25. If the reading
+differs by more than about 0.3, the pad height changes and the neck is rebuilt.
 
 ## Assembly order (argued, not yet done)
 
@@ -135,9 +143,9 @@ None of these is released. **Plate 1 needs no coupon result.**
 
 | What | State |
 | --- | --- |
-| spindle post **20.05** | placeholder. 20.20 jammed a bearing. Set by **H3b** |
-| M2 pilot **2.2** | the best of the first three; Jim said maybe bigger. **H4b** |
-| horn pocket clearance **0.15** | **H6** |
+| spindle post **20.05** | **settled**, H3b 2-notch post. The circlip on it was not reported |
+| M2 pilot **2.35** | **settled**, H4b midway between 1 and 2 notches |
+| horn pocket clearance **0.15** | **settled**, H6a snug |
 | horn **arm thickness 2.0** | **ASSUMED, not measured.** Sets the servo height, so the belt alignment |
 | gap between case boss and horn **0.25** | **ASSUMED** |
 | servo shaft position, 5.9 | +-0.6; the carriage slot covers it |

@@ -19,8 +19,9 @@ Evidence is in `measurements/mast-head.md`, "Round-2 coupon results" and "follow
 - **Drive: 60T on the servo, 40T on the head**, and the 2-notch groove, from the 09-22 work.
 - **Pan servo drawn from the real numbers**: spline top 32, case boss top 28.5, ear underside 17.5,
   body 22.7. The old 13.2 and 8.3 are not used.
-- **Not decided:** the spindle post diameter, the M2 pilot size and the horn plate. Those wait on
-  the final coupon plate (H3b, H4b, H6).
+- **Settled later the same day by the final coupon plate (Jim):** spindle post **20.05** (H3b, "two
+  notch post wins"); M2 thread-forming pilot **2.35** (H4b, "right in the middle between 1 and 2");
+  horn pocket clearance **0.15**, the snug one (H6, "one notch horn pocket").
 
 ## 2026-09-30 — the printed v2 mast tube is the mast
 

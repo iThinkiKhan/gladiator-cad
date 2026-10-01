@@ -1,0 +1,30 @@
+{
+  "Gladiator_Head_v04_PLATE2_PanDrive_Rotor-Pulley-Carriage.3mf": {
+    "parts": [
+      "Pan_Rotor",
+      "Pan_Drive_Pulley",
+      "Pan_Servo_Carriage"
+    ],
+    "objects_in_3mf": 3,
+    "triangles_ok": true,
+    "offbed": 0,
+    "overlaps": 0,
+    "volume_cm3": 25.57,
+    "grams_pla": 32,
+    "tallest_mm": 23.0
+  },
+  "Gladiator_Head_v04_PLATE3_Tilt_Yoke-Receiver-DisplayFrame.3mf": {
+    "parts": [
+      "Tilt_Yoke",
+      "GH44_Tilt_Receiver",
+      "Rear_Display_Frame"
+    ],
+    "objects_in_3mf": 3,
+    "triangles_ok": true,
+    "offbed": 0,
+    "overlaps": 0,
+    "volume_cm3": 38.68,
+    "grams_pla": 48,
+    "tallest_mm": 61.2
+  }
+}

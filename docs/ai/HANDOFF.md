@@ -1,5 +1,22 @@
 # Current Handoff
 
+## Head v0.4 released for printing, except the neck — 2026-10-01 (Claude)
+
+- **Coupon results** (Jim): H3b 2-notch post (**20.05**); H6 1-notch snug pocket (**0.15**); H4b midway
+  between 1 and 2 (**M2 pilot 2.35**). The generator was rebuilt with them. Only the rotor, carriage,
+  yoke and display frame changed; 0 collisions.
+- **Released plates**, in `cad/head/v04-pan-stack/plates/` and the printer incoming folder. None has
+  been printed.
+  - Plate 1: pedestal, retainer, clamp cap. Unchanged.
+  - Plate 2: rotor, drive pulley, servo carriage. About 32 g, no supports.
+  - Plate 3: tilt yoke, GH44 receiver, display frame. About 48 g, supports under the frame tabs.
+  - Generator: `scripts/build_head_v04_plates.py`.
+- **Held:**
+  - **Neck_Main** waits on one reading: horn pushed fully on, ear underside to the top of the horn
+    arms. The model assumes 13.25. It sets the servo pad height and so the belt alignment. The neck
+    also waits on whether the circlip seated on the winning post (not reported).
+  - **GH44_Dual_Carrier** waits until the sensor mounting is designed.
+
 ## Head v0.4 stage 1, the pan stack — 2026-10-01 (Claude)
 
 Built and validated, **not printed, not released**: `cad/head/v04-pan-stack/` (README there is the

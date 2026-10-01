@@ -52,8 +52,8 @@ DELTA = SERVO_ANG - 270.0
 
 # --- fits, from the coupons and calibration -------------------------------------------------
 M3_CLEAR, M2_CLEAR, NUT_AF, NUT_DEPTH = 3.6, 2.6, 6.0, 2.6
-PILOT_M2 = 2.2        # PENDING H4b: 2.2 was the best of 1.8/2.0/2.2 and Jim said maybe bigger
-POST_D = 20.05        # PENDING H3b: 20.20 jammed a 6804. This is a placeholder, not a result
+PILOT_M2 = 2.35       # SETTLED 2026-10-01: Jim, H4b "right in the middle between 1 and 2" (2.3 / 2.4)
+POST_D = 20.05        # SETTLED 2026-10-01: Jim, H3b "two notch post wins" (20.20 had jammed a 6804)
 SEAT_D = 32.35        # plate F coupon #2, fitted perfectly
 BRG_ID, BRG_OD, BRG_W = 20.0, 32.0, 7.0
 GROOVE_D, GROOVE_W, GROOVE_GAP, LAND = 19.25, 1.4, 0.1, 1.6
@@ -76,7 +76,7 @@ LONG_W_HUB, LONG_W_TIP, SHORT_W = 6.8, 4.8, 3.8
 BOSS_D, BOSS_UP = 7.1, 1.0
 ARM_T = 2.0           # ASSUMED, not measured. H6 will show it.
 HORN_G = 0.25         # ASSUMED gap between the case boss and the horn underside
-HORN_C = 0.15         # PENDING H6: snug 0.15 / easy 0.30
+HORN_C = 0.15         # SETTLED 2026-10-01: Jim, H6 "one notch horn pocket" (snug 0.15, not easy 0.30)
 # The recess was 1.3 on the H6 coupon. Here the spline top stands 1.25 above the arms, so 1.3 left
 # 0.05 mm to the roof, and the plate would have rested on the spline instead of clamping the horn.
 POCKET_DEPTH, BOSS_RECESS, ROOF_T = 1.2, BOSS_UP + 0.6, 1.2
@@ -228,9 +228,15 @@ report = {'release': 'DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). 
           'source_sha256': before, 'parts': [], 'checks': {}, 'collisions': [],
           'pending': {}, 'assumed': {}, 'limitations': []}
 report['pending'] = {
-    'POST_D': 'placeholder %.2f until the H3b bearing-post coupon is read (20.20 jammed)' % POST_D,
-    'PILOT_M2': 'placeholder %.1f until H4b is read (2.2 best of the first three; Jim said maybe bigger)' % PILOT_M2,
-    'HORN_C': 'placeholder %.2f until H6 is read (0.15 snug / 0.30 easy)' % HORN_C,
+    'horn_height': 'NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets '
+                   'the pan servo pad height (Neck_Main) and so the belt alignment. Model: %.2f'
+                   % (BOSS_TOP - EAR_UNDER + HORN_G + ARM_T),
+    'circlip_on_H3b2': 'NOT reported: did the circlip seat in the groove on the winning post',
+}
+report['settled'] = {
+    'POST_D': '%.2f, H3b 2-notch post wins (Jim, 2026-10-01)' % POST_D,
+    'PILOT_M2': '%.2f, H4b midway between 1 and 2 notches (Jim, 2026-10-01)' % PILOT_M2,
+    'HORN_C': '%.2f, H6a 1-notch snug pocket (Jim, 2026-10-01)' % HORN_C,
 }
 report['assumed'] = {
     'ARM_T': '%.1f horn arm thickness, NOT measured' % ARM_T,
@@ -977,14 +983,14 @@ def bed_area(shape):
 rp = R_ROT - 0.7
 exports = {
     'Neck_Main': (neck, 'mast axis vertical, collar on the bed; the C arm, riser and pad need support',
-                  'WAIT for H3b (post size) and the horn arm thickness from H6 (it sets the pad height)',
+                  'HOLD: the horn height above the ear underside is not measured (it sets the pad height); the circlip on the winning post was not reported',
                   [((0, 12.5, 110), True), ((0, 0, 110), False), ((0, 9.3, 112), True)]),
     'Neck_Clamp_Cap': (front, 'as modelled, axis vertical, lugs on the bed; no support', 'none - tested geometry',
                        [((0, -12, 110), True), ((0, -8, 110), False)]),
     'Pan_Servo_Carriage': (car_F, 'flat, long axis along the bed X; no support',
-                           'WAIT for H4b (ear pilots)', []),
+                           'released: H4b settled the ear pilots (2.35)', []),
     'Pan_Rotor': (rotor, 'axis vertical, LOWER bearing seat on the bed (relieved); no support',
-                  'WAIT for H4b (M2 pilots)',
+                  'released: H4b settled the M2 pilots (2.35)',
                   [((SEAT_R - 0.5, 0, BRG_LO_Z + 3), False), ((R_ROT - 0.5, 0, BRG_LO_Z + 3), True)]),
     'Pan_Retainer': (retainer, 'flat; no support', 'none - clearance holes only',
                      [((16, 0, RET_Z + 1), True), ((14, 0, RET_Z + 1), False)]),
@@ -995,16 +1001,16 @@ exports = {
                              ((rp, 0, TOP_PLATE_Z + 1), True)]),
     'Pan_Drive_Pulley': (drive_local, 'axis vertical, horn plate on the bed (pocket faces the bed, relieved); '
                                       'no support',
-                         'WAIT for H6 (pocket clearance and the real arm thickness)',
+                         'released: H6a snug pocket (0.15) won',
                          [((10, 0, PLATE_RIM_Z + 0.6), False), ((10, 0, ZC - 0.5), True),
                           ((0, 0, ZC - 0.5), False)]),
     'Tilt_Yoke': (parts['Tilt_Yoke']['shape'], 'floor on the bed; no support (the servo window and the '
                                                'pivot hole bridge)',
-                  'WAIT for H4b (servo ear pilots)',
+                  'released: H4b settled the ear pilots (2.35)',
                   [((-1.3, T.y, TZ + 5), False), ((30.5, -30, TZ - 10), True), ((30.5, T.y, TZ), False)]),
     'GH44_Tilt_Receiver': (parts['GH44_Tilt_Receiver']['shape'],
                            'GH44 face DOWN (register recess on the bed, relieved), arms up; no support',
-                           'WAIT for H6 (the horn pocket)',
+                           'released: H6a snug pocket (0.15) won',
                            [((10, -51.5, TZ + 8), False), ((18, -50, TZ), True), ((25.5, T.y, TZ), False),
                             ((25.5, -40, TZ), True)]),
     'GH44_Dual_Carrier': (parts['GH44_Dual_Carrier']['shape'], 'sensor plate down, register key up; no support',
@@ -1012,11 +1018,12 @@ exports = {
                           [((10, -51.0, TZ + 8), True), ((18, -53.5, TZ), True), ((0, -53.5, TZ), False)]),
     'Rear_Display_Frame': (parts['Rear_Display_Frame']['shape'],
                            'bezel face down; support under the four mounting tabs only',
-                           'WAIT for H4b (M2 pilots); the hole-to-edge offset is assumed symmetric',
+                           'released: H4b settled the pilots (2.35); the hole-to-edge offset is still assumed symmetric',
                            [((0, 4.5, TZ), False), ((33, 4.5, TZ), True), ((0, 1.5, TZ), False)]),
 }
 # print orientation: a rotation applied before dropping each part onto the bed
 X_AXIS = A.Vector(1, 0, 0)
+HOLD = {'Neck_Main', 'GH44_Dual_Carrier'}       # the horn height; the sensor mounting
 ROT = {'GH44_Tilt_Receiver': (X_AXIS, 90.0),      # the face (y = -52) goes down
        'GH44_Dual_Carrier': (X_AXIS, 90.0),       # the sensor plate (y = -58) goes down
        'Rear_Display_Frame': (X_AXIS, -90.0)}     # the bezel face (y = +6.2) goes down
@@ -1050,7 +1057,7 @@ for name, (shape, how, gate, probes) in exports.items():
            'on_z0': abs(bb.ZMin) < 1e-9, 'probes_pass': probe_ok, 'n_probes': len(pr),
            'mesh_solid': back.isSolid(), 'mesh_non_manifold': back.hasNonManifolds(),
            'mesh_volume_error_pct': round(100 * abs(back.Volume - s.Volume) / s.Volume, 3),
-           'NOT_RELEASED': True}
+           'released': name not in HOLD}
     exp_report.append(rec)
 report['stl'] = exp_report
 
@@ -1064,8 +1071,8 @@ report['limitations'] = [
     'symmetric. The pin edge is put at +X (the viewer\'s left from behind the robot); firmware can rotate '
     'the picture.',
     'The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.',
-    'Three numbers are placeholders until the final coupon plate is read: POST_D %.2f (H3b), PILOT_M2 %.1f (H4b), '
-    'HORN_C %.2f (H6).' % (POST_D, PILOT_M2, HORN_C),
+    'Settled by the final coupon plate (Jim, 2026-10-01): POST_D %.2f (H3b), PILOT_M2 %.2f (H4b), '
+    'HORN_C %.2f (H6). Not reported: whether the circlip seated on the winning post.' % (POST_D, PILOT_M2, HORN_C),
     'The horn arm thickness (%.1f) and the boss-to-horn gap (%.2f) are ASSUMED. They set the servo height, so '
     'they set the belt alignment. The first assembly should leave room to shim it.' % (ARM_T, HORN_G),
     'Servo shaft position along the body is +-0.6. The carriage slot covers it.',

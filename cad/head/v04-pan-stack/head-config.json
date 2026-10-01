@@ -44,9 +44,8 @@
     "inherited_tilt_lift": 1.5
   },
   "pending": {
-    "POST_D": "placeholder 20.05 until the H3b bearing-post coupon is read (20.20 jammed)",
-    "PILOT_M2": "placeholder 2.2 until H4b is read (2.2 best of the first three; Jim said maybe bigger)",
-    "HORN_C": "placeholder 0.15 until H6 is read (0.15 snug / 0.30 easy)"
+    "horn_height": "NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets the pan servo pad height (Neck_Main) and so the belt alignment. Model: 13.25",
+    "circlip_on_H3b2": "NOT reported: did the circlip seat in the groove on the winning post"
   },
   "assumed": {
     "ARM_T": "2.0 horn arm thickness, NOT measured",

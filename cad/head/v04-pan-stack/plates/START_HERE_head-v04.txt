@@ -1,31 +1,33 @@
-GLADIATOR HEAD v0.4 - PRINT PLATE 1 (2026-10-01)
+GLADIATOR HEAD v0.4 - PRINT PLATES (updated 2026-10-01, after the final coupons)
 
-FILE:  Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf
-       Three parts, about 27 g of PLA before supports. Do NOT auto-orient.
+The coupons settled the last three fits: bearing post 20.05, M2 holes 2.35, horn pocket snug.
+Nothing below has been printed or fitted yet. Do NOT auto-orient. PLA, 0.2 mm, 4 walls, 30-40% infill.
 
-THESE THREE WAIT ON NO COUPON RESULT. The other four head parts (neck, rotor, servo carriage,
-drive pulley) are NOT here on purpose: they need the final coupon plate results first.
-Nothing here has been printed or fitted. It is a design candidate that passed the computer checks.
+PLATE 1  Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf          about 27 g  (unchanged)
+  Pan_Raised_Pedestal  big round part with the 40-tooth ring and the flat seat on top
+  Pan_Retainer         flat ring that clamps the top bearing
+  Neck_Clamp_Cap       front half of the mast collar
+  SUPPORTS: pedestal only, under its big top plate and seat. NONE in the belt groove
+  between the two flanges of the toothed ring - check the slicer preview.
 
-WHAT EACH PART IS
-  Pan_Raised_Pedestal  The big round part with a 40-tooth ring in the middle and a flat
-                       rectangular seat on top. The head's tilt unit bolts to the seat, and the
-                       belt drives the toothed ring. 16.6 cm3, the biggest part.
-  Pan_Retainer         A flat ring. It clamps the top bearing down.
-  Neck_Clamp_Cap       The front half of the collar that clamps the head to the mast.
+PLATE 2  Gladiator_Head_v04_PLATE2_PanDrive_Rotor-Pulley-Carriage.3mf  about 32 g
+  Pan_Rotor            holds both bearings; the lower bearing seat is on the bed
+  Pan_Drive_Pulley     60-tooth pulley; the cross-horn pocket is underneath, on the bed
+  Pan_Servo_Carriage   flat plate the pan servo sits in; slides to tension the belt
+  SUPPORTS: none.
 
-PRINT SETTINGS
-  PLA, 0.2 mm layers, 4 walls, 30-40% infill.
-  SUPPORTS ARE NEEDED FOR THE PEDESTAL ONLY: under the big round top plate and the flat seat
-  (turn on normal / auto supports). Look at the slicer preview before you print:
-    - there should be NO support between the two flanges of the toothed ring (the belt groove)
-    - the teeth must not be touched by support
-  The retainer and the cap need none. A 3 mm brim is fine for the cap, which is narrow.
-  Elephant-foot compensation on if your profile has it.
+PLATE 3  Gladiator_Head_v04_PLATE3_Tilt_Yoke-Receiver-DisplayFrame.3mf about 48 g
+  Tilt_Yoke            sits on the pedestal; holds the tilt servo and the tilt pivot bolt
+  GH44_Tilt_Receiver   the part that tilts; sensor carrier face on the bed
+  Rear_Display_Frame   holds the screen; bezel face on the bed, 61 mm tall
+  SUPPORTS: only under the display frame's four small mounting tabs at the top.
 
-WHAT TO LOOK AT AFTERWARD
-  - Teeth: crisp, not mushy (the 2-notch profile that fitted your belt).
-  - The four 2.6 mm screw holes in the pedestal's base plate and in the retainer.
-  - The two hexagonal pockets on the underside of the pedestal's rectangular seat take an M3 nut.
+HELD - not in this folder on purpose:
+  Neck_Main            needs ONE caliper reading: push the cross horn fully onto a servo spline,
+                       measure from the UNDERSIDE OF AN EAR to the TOP OF THE HORN ARMS.
+                       The model uses 13.25. Also: did the circlip snap into the groove on the
+                       2-notch H3b post?
+  GH44_Dual_Carrier    waits for the sensor mounting design.
 
-If you would rather wait for the coupon results first, nothing is lost by waiting.
+HARDWARE for these parts: M3 x 10-12 bolts and M3 nuts (captive pockets), M2 x 4-12 screws into
+2.35 pilots, two 6804 bearings, one 20 mm circlip, the 180 mm GT2 belt, two SG90 + cross horns.

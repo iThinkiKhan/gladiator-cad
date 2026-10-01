@@ -39,9 +39,8 @@
   },
   "collisions": [],
   "pending": {
-    "POST_D": "placeholder 20.05 until the H3b bearing-post coupon is read (20.20 jammed)",
-    "PILOT_M2": "placeholder 2.2 until H4b is read (2.2 best of the first three; Jim said maybe bigger)",
-    "HORN_C": "placeholder 0.15 until H6 is read (0.15 snug / 0.30 easy)"
+    "horn_height": "NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets the pan servo pad height (Neck_Main) and so the belt alignment. Model: 13.25",
+    "circlip_on_H3b2": "NOT reported: did the circlip seat in the groove on the winning post"
   },
   "assumed": {
     "ARM_T": "2.0 horn arm thickness, NOT measured",
@@ -54,13 +53,18 @@
     "Stage 2 regenerates the tilt yoke, GH44 receiver, dual carrier and display frame from code. Still NOT designed: how the ToF and radar boards fasten to the carrier (their hole coordinates are not measured), and the cable harness. The sensor envelopes and the other carrier variants are v0.3 references only.",
     "The display holes are 58.25 x 26.00 (confirmed), but their offset to the board edges is ASSUMED symmetric. The pin edge is put at +X (the viewer's left from behind the robot); firmware can rotate the picture.",
     "The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.",
-    "Three numbers are placeholders until the final coupon plate is read: POST_D 20.05 (H3b), PILOT_M2 2.2 (H4b), HORN_C 0.15 (H6).",
+    "Settled by the final coupon plate (Jim, 2026-10-01): POST_D 20.05 (H3b), PILOT_M2 2.35 (H4b), HORN_C 0.15 (H6). Not reported: whether the circlip seated on the winning post.",
     "The horn arm thickness (2.0) and the boss-to-horn gap (0.25) are ASSUMED. They set the servo height, so they set the belt alignment. The first assembly should leave room to shim it.",
     "Servo shaft position along the body is +-0.6. The carriage slot covers it.",
     "Sampled rigid-solid checks every 5 degrees of pan. They do not prove clearance between samples, nor cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.",
     "The belt can be fitted with the carriage at its slack end, but that is argued, not tested.",
     "No load, torque or payload rating is claimed."
   ],
+  "settled": {
+    "POST_D": "20.05, H3b 2-notch post wins (Jim, 2026-10-01)",
+    "PILOT_M2": "2.35, H4b midway between 1 and 2 notches (Jim, 2026-10-01)",
+    "HORN_C": "0.15, H6a 1-notch snug pocket (Jim, 2026-10-01)"
+  },
   "display": {
     "board_mm": [
       62.5,
@@ -447,7 +451,7 @@
       "part": "Neck_Main",
       "file": "Gladiator_Head_v04_Neck_Main.stl",
       "print_orientation": "mast axis vertical, collar on the bed; the C arm, riser and pad need support",
-      "gate": "WAIT for H3b (post size) and the horn arm thickness from H6 (it sets the pad height)",
+      "gate": "HOLD: the horn height above the ear underside is not measured (it sets the pad height); the circlip on the winning post was not reported",
       "size_mm": [
         78.2,
         86.2,
@@ -463,7 +467,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.016,
-      "NOT_RELEASED": true
+      "released": false
     },
     {
       "part": "Neck_Clamp_Cap",
@@ -485,13 +489,13 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.018,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "Pan_Servo_Carriage",
       "file": "Gladiator_Head_v04_Pan_Servo_Carriage.stl",
       "print_orientation": "flat, long axis along the bed X; no support",
-      "gate": "WAIT for H4b (ear pilots)",
+      "gate": "released: H4b settled the ear pilots (2.35)",
       "size_mm": [
         25.0,
         44.0,
@@ -499,27 +503,27 @@
       ],
       "volume_cm3": 2.32,
       "grams_pla": 2.9,
-      "bed_contact_mm2": 765,
+      "bed_contact_mm2": 764,
       "bed_relief_edges": 2,
       "on_z0": true,
       "probes_pass": true,
       "n_probes": 0,
       "mesh_solid": true,
       "mesh_non_manifold": false,
-      "mesh_volume_error_pct": 0.002,
-      "NOT_RELEASED": true
+      "mesh_volume_error_pct": 0.001,
+      "released": true
     },
     {
       "part": "Pan_Rotor",
       "file": "Gladiator_Head_v04_Pan_Rotor.stl",
       "print_orientation": "axis vertical, LOWER bearing seat on the bed (relieved); no support",
-      "gate": "WAIT for H4b (M2 pilots)",
+      "gate": "released: H4b settled the M2 pilots (2.35)",
       "size_mm": [
         43.0,
         43.0,
         23.0
       ],
-      "volume_cm3": 15.38,
+      "volume_cm3": 15.37,
       "grams_pla": 19.1,
       "bed_contact_mm2": 512,
       "bed_relief_edges": 2,
@@ -529,7 +533,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.031,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "Pan_Retainer",
@@ -551,7 +555,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.028,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "Pan_Raised_Pedestal",
@@ -573,13 +577,13 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.012,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "Pan_Drive_Pulley",
       "file": "Gladiator_Head_v04_Pan_Drive_Pulley.stl",
       "print_orientation": "axis vertical, horn plate on the bed (pocket faces the bed, relieved); no support",
-      "gate": "WAIT for H6 (pocket clearance and the real arm thickness)",
+      "gate": "released: H6a snug pocket (0.15) won",
       "size_mm": [
         40.7,
         40.7,
@@ -595,13 +599,13 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.005,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "Tilt_Yoke",
       "file": "Gladiator_Head_v04_Tilt_Yoke.stl",
       "print_orientation": "floor on the bed; no support (the servo window and the pivot hole bridge)",
-      "gate": "WAIT for H4b (servo ear pilots)",
+      "gate": "released: H4b settled the ear pilots (2.35)",
       "size_mm": [
         60.0,
         35.0,
@@ -616,14 +620,14 @@
       "n_probes": 3,
       "mesh_solid": true,
       "mesh_non_manifold": false,
-      "mesh_volume_error_pct": 0.0,
-      "NOT_RELEASED": true
+      "mesh_volume_error_pct": 0.001,
+      "released": true
     },
     {
       "part": "GH44_Tilt_Receiver",
       "file": "Gladiator_Head_v04_GH44_Tilt_Receiver.stl",
       "print_orientation": "GH44 face DOWN (register recess on the bed, relieved), arms up; no support",
-      "gate": "WAIT for H6 (the horn pocket)",
+      "gate": "released: H6a snug pocket (0.15) won",
       "size_mm": [
         54.0,
         44.0,
@@ -639,7 +643,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.001,
-      "NOT_RELEASED": true
+      "released": true
     },
     {
       "part": "GH44_Dual_Carrier",
@@ -661,19 +665,19 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.001,
-      "NOT_RELEASED": true
+      "released": false
     },
     {
       "part": "Rear_Display_Frame",
       "file": "Gladiator_Head_v04_Rear_Display_Frame.stl",
       "print_orientation": "bezel face down; support under the four mounting tabs only",
-      "gate": "WAIT for H4b (M2 pilots); the hole-to-edge offset is assumed symmetric",
+      "gate": "released: H4b settled the pilots (2.35); the hole-to-edge offset is still assumed symmetric",
       "size_mm": [
         74.0,
         44.0,
         61.2
       ],
-      "volume_cm3": 14.73,
+      "volume_cm3": 14.72,
       "grams_pla": 18.3,
       "bed_contact_mm2": 1899,
       "bed_relief_edges": 0,
@@ -683,7 +687,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.0,
-      "NOT_RELEASED": true
+      "released": true
     }
   ]
 }

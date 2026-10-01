@@ -13,6 +13,13 @@ The first nine pieces (plate `ALL-9-pieces`) are printed and tested. What they d
 | **H3** post | does a 6804 slide on a 20.20 post? | **No. Jammed solid** | replaced by H3b |
 | **H4** M2 pilots | which hole holds an M2? | the biggest (2.2) clearly, "maybe slightly bigger" | H4b tests 2.3 / 2.4 / 2.5 |
 | **H5** nut pockets | which hex takes an M3 nut? | the 6.0 across-flats pocket, perfectly | **6.0 AF** |
+| **H3b** posts | which post does a 6804 slide onto? | **the 2-notch post (20.05) wins** (Jim, 2026-10-01) | spindle post **20.05** |
+| **H4b** M2 pilots | 2.3 / 2.4 / 2.5? | Jim: "right in the middle between 1 and 2" | M2 pilot **2.35** |
+| **H6** horn pocket | snug or easy? | **the 1-notch (snug, 0.15)** | pocket clearance **0.15** |
+
+**The coupon rounds are done.** Not reported from the final plate: whether the circlip seated on the
+2-notch post, how far the horn arms stood above the H6 rim, and whether the horn screw head sat on the
+3.4 hole.
 
 One loose end: Jim measured the 60T pulley's flange at **40.65** against 40.689 modelled, so a
 large round part printed only 0.04 small, not the 0.25 the calibration predicts. Smaller round
