@@ -1,9 +1,40 @@
-# Gladiator head coupons, round 2 (2026-09-30)
+# Gladiator head coupons, round 2 (2026-09-30, updated 2026-10-01)
 
-Five small coupons, nine pieces in all, each answering **one** question the head can't be
-finished without. Nothing here needs a new measurement first. The questions that do (horn
-attachment, screen frame) are round 3, after the measurements at the bottom of this file come
-back.
+Small coupons, each answering **one** question the head can't be finished without.
+
+## Where it stands (2026-10-01)
+
+The first nine pieces (plate `ALL-9-pieces`) are printed and tested. What they decided:
+
+| Coupon | Question | Result | Used in v0.4 |
+| --- | --- | --- | --- |
+| **H1** belt | what pulley spacing for the 180 mm belt? | tightest about **midway up the slot**, near 39.75 (eyeballed). Theory is 39.49, and 39.88 if the pulleys print 0.25 small. The first reading of 38.4 was a slack belt plus measurement error | tension slot about 2.5 mm long, centred near **39.7** |
+| **H2** collar | which key fits the mast flat? | the 1-notch key (0.10 from the flat) grips tighter, as the model says | the **1-notch key, 0.10** |
+| **H3** post | does a 6804 slide on a 20.20 post? | **No. Jammed solid** | replaced by H3b |
+| **H4** M2 pilots | which hole holds an M2? | the biggest (2.2) clearly, "maybe slightly bigger" | H4b tests 2.3 / 2.4 / 2.5 |
+| **H5** nut pockets | which hex takes an M3 nut? | the 6.0 across-flats pocket, perfectly | **6.0 AF** |
+
+One loose end: Jim measured the 60T pulley's flange at **40.65** against 40.689 modelled, so a
+large round part printed only 0.04 small, not the 0.25 the calibration predicts. Smaller round
+parts may lose more. That is why H3b brackets the post widely.
+
+## The final plate
+
+`Gladiator_HeadR2_FINAL-COUPON-PLATE_6-pieces.3mf`. Six pieces, 12.1 cm3, about 15 g of PLA. These
+are the only things still unproven that the head's real parts depend on.
+
+![final plate](preview-final-plate.png)
+
+| Piece | Question |
+| --- | --- |
+| **H3b-1, -2, -3** bearing posts at 19.95 / 20.05 / 20.15 | which post lets a 6804 slide on by hand, then hold a circlip? |
+| **H4b** M2 pilots 2.3 / 2.4 / 2.5 | which hole holds an M2? |
+| **H6a, H6b** horn pockets, snug and easy | does the real cross horn drop in, and does the horn screw's head hold the plate? |
+
+Order: do **H3b-1 first** and work upward. Never force a bearing. If it does not go on by hand,
+stop and pull it off by hand, then try the next size up. Two bearings jammed already.
+
+The head's real parts wait on the v0.4 rebuild, which happens in parallel with this plate.
 
 **Context.** Head v0.3 (`cad/head/v03-belt/`) is on hold. Its pulley ratio is reversed (40T
 driving 60T turns the head *less* than the servo), its belt centre distance is 0.26 mm off, and
@@ -23,10 +54,12 @@ go back into this batch.
 
 ## Printing
 
-- File: `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf`, all nine already laid out. Or print
-  the `stl/Gladiator_HeadR2_*.stl` pieces singly.
+- **Current:** `Gladiator_HeadR2_FINAL-COUPON-PLATE_6-pieces.3mf`. Or print the
+  `stl/Gladiator_HeadR2_*.stl` pieces singly.
+- **Already printed:** `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf`. An earlier version of the
+  generator wrote it, and the STLs are unchanged.
 - The same files are in `~/3D-Printer/Incoming/Gladiator/`.
-- Total 21.4 cm3, about 27 g of PLA.
+- The first nine were 21.4 cm3, about 27 g of PLA. The final plate is 12.1 cm3, about 15 g.
 - PLA, 0.2 mm layers, normal profile.
 - **No supports.** Every piece is on its correct face; **do not auto-orient.**
 - No brim needed. The smallest bed contact is the clamp cap at 183 mm2; the belt arcs that
@@ -96,7 +129,36 @@ collar; the fit is what's being tested, not strength.
 
 **Unblocks:** the neck's collar, key and clamp.
 
-## H3 — circlip post
+## H3 — circlip post (result: jammed. Superseded by H3b below)
+
+**Result, 2026-10-01 (Jim):** the 20.20 post was too tight. The bearing would not go fully on and
+two pairs of pliers could not pull it off. The same 20.20 had fitted as plate F post #2, so the size
+is not repeatable run to run. The circlip was not tested.
+
+## H3b — bearing posts, three smaller sizes (the replacement)
+
+Three copies of the H3 post at **19.95 / 20.05 / 20.15** (1, 2, 3 notches on the shoulder rim).
+
+| Modelled | If it loses 0.25 | If it loses 0.10 | If it loses 0.04 |
+| ---: | ---: | ---: | ---: |
+| 19.95 | 19.70 (loose) | 19.85 | 19.91 |
+| 20.05 | 19.80 | **19.95** | 20.01 |
+| 20.15 | 19.90 | 20.05 | 20.11 (tight) |
+
+The 60T flange lost only 0.04, and the earlier calibration says 0.25, so I don't know which this post
+will see. The three sizes cover the whole range.
+
+1. Start with **1 notch**. Slide the bearing down by hand onto the shoulder.
+2. **Stop at the first post that does not go on by hand.** Never force it, and take the bearing off
+   by hand.
+3. On the best post, fit the circlip into the groove.
+
+**Report:** which posts slid on by hand, which is the best, whether the bearing rattles, and
+whether the circlip seated. **You need:** one bearing, one circlip, circlip pliers.
+
+---
+
+*The original H3 notes follow, for the record.*
 
 **Question:** does a 6804 slide down the printed post onto the shoulder, and does a 20 mm
 external circlip snap into the printed groove above it and hold it without rattle?
@@ -169,11 +231,17 @@ on the drive pulley's servo side. This coupon is that plate alone.
 3. **How far do the arms stand above the rim, or do they sit below it?** That gives the arm
    thickness, which I don't have. The pocket is 1.2 deep, an assumption.
 4. **Does the boss clear its round recess?** It should stand into it by about 1.
-5. **Can the horn screw and a driver pass through the 5.0 hole in the middle?**
+5. **The centre hole is 3.4 (changed 2026-10-01 from 5.0, which the screw head would have fallen
+   through).** Take the screw that normally holds the horn onto the servo. Does its **shank pass**
+   the hole, and does its **head sit on the plate** instead of dropping through? Does a small
+   driver reach the head through the hole?
 
-It has **no screw holes**. How the plate is fastened to the horn (the tiny screws into the horn's
-arm holes, or something else) is decided after this result. If the tiny screws are the plan, I'll
-need the two-screws-as-pins readings on the long-arm holes.
+**How the plate is held (the plan this tests):** the horn screw goes down through the plate's
+centre hole, through the horn hub and into the servo shaft. Its head presses the plate onto the
+horn, so the one screw holds both on. The pocket's shape carries the turning force. It has **no
+other screw holes**, so it needs no hole positions from the horn's arms. If the screw's head is
+smaller than 3.4, tell me and I'll shrink the hole. The head is about 4 mm in the photo, but that
+was read off the picture, not measured.
 
 ---
 
@@ -214,8 +282,9 @@ Two-reading rule for any pair of holes: jaws inside both (I), then outside both 
    H6 will give the thickness indirectly if you'd rather skip it.
 2. **Which sensors go on the first head** (ToF, radar, screen, camera)? That sets how many wires
    go through the 12 mm bore.
-3. **Only if the tiny screws are the plan:** the two-screws-as-pins readings on the horn's
-   long-arm holes (outermost pair and innermost pair, I and O).
+3. **Horn screw head diameter**, one caliper reading. It decides whether H6's 3.4 centre hole is
+   right. No longer needed: the two-screws-as-pins readings on the arm holes, since the plan
+   holds the plate with the horn screw and not the arm holes.
 
 Answered 2026-10-01 and no longer open: the screen window position (6.2 / 1.5), the cross horn's
 widths and hub, M2 into the spline (no), and the SG90 heights and body length. The servo needs
@@ -229,8 +298,8 @@ screw fits (H4, H5). If the circlip won't go into H3, measure its thickness then
 | File | What |
 | --- | --- |
 | `stl/Gladiator_HeadR2_*.stl` | one per piece, 0.01 mm mesh, already in print orientation |
-| `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf` | the first nine on one 220 x 220 plate. **This is the file that was printed** |
-| `Gladiator_HeadR2_CouponPlate_ALL-11-pieces.3mf` | those nine plus H6a and H6b |
+| `Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf` | the first nine. **Already printed** |
+| `Gladiator_HeadR2_FINAL-COUPON-PLATE_6-pieces.3mf` | **the current plate:** H3b x3, H4b, H6a, H6b |
 | `Gladiator_HeadCoupons_R2.FCStd` / `.step` | the solids, in print orientation |
 | `validation.json` | per-piece checks and the H1 numbers |
 | `../../../scripts/build_head_coupons_r2.py` | rebuilds all of it |

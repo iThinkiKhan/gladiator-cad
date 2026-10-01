@@ -409,3 +409,19 @@ compensated sizes need a fresh look, which is a bigger question than this head.
 
 **H4b** (M2 pilots 2.3 / 2.4 / 2.5) was generated 2026-10-01 and placed in the incoming folder.
 Why a new bracket: the first one was off-centre, with its best hole at the top edge.
+
+### Round-2 follow-up answers — Jim, 2026-10-01
+
+| Topic | What Jim said | Disposition |
+| --- | --- | --- |
+| **H1** belt spacing | The first reading "probably wasn't super tight and there is error in the measurement." The belt was **tightest about midway up the slot.** | The slot runs 37.5 to 42.0, so midway is **about 39.75**. That is an eyeball position, not a caliper reading. It sits between the 39.49 theory and the 39.88 prediction for pulleys that print 0.25 small. **The 38.4 reading is withdrawn** as slack plus measurement error. v0.4 gets a tension slot about 2.5 mm long centred near 39.7. |
+| **H2** collars | Tested by squeezing each over the mast and feeling the turning force. Re-tested: **"you're right and notch one is tighter."** "Just go with one." | The 1-notch key (0.10 from the flat) wins, matching the model. **v0.4 uses it.** The earlier "two notches grips tighter" is withdrawn. |
+| **60T pulley rim** | "The 60 tooth pulley's outer rim diameter is **40.65**." | I read this as the **flange**, modelled 40.689, **not** the tooth tips (37.689). That is **-0.04**. A large round part printed almost to size, not 0.25 small. The loss may depend on radius, so a small post may lose more, but one reading does not show that. |
+| **H4** M2 | The biggest hole, "maybe slightly bigger". | H4b brackets 2.3 / 2.4 / 2.5. |
+
+**What the 40.65 does to the calibration.** `measurements/printer-calibration.md` says round
+external features print about 0.25 small. The flange says 0.04 for a 40 mm circle, whereas that
+calibration came from 9 and 14 mm features. If the error shrinks as the radius grows, the 20.20 post
+(radius 10) may lose only about 0.1 and so print near 20.10, which would jam a 20.00 bore. That fits H3
+but is **not proven**. H3b brackets 19.95 / 20.05 / 20.15 so the answer comes from the fit, not from
+an argument. Nothing in the master has been changed.

@@ -211,8 +211,99 @@
           "mesh_non_manifold": false,
           "mesh_volume_error_pct": 0.031,
           "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H3b1_BearingPost-1-notch-19.95_shoulder-down.stl",
+          "size_mm": [
+            23.0,
+            23.0,
+            12.1
+          ],
+          "volume_cm3": 2.58,
+          "grams_pla": 3.2,
+          "bed_contact_mm2": 282.0,
+          "orientation": "shoulder on the bed, post up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.031,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H3b2_BearingPost-2-notch-20.05_shoulder-down.stl",
+          "size_mm": [
+            23.0,
+            23.0,
+            12.1
+          ],
+          "volume_cm3": 2.6,
+          "grams_pla": 3.2,
+          "bed_contact_mm2": 281.0,
+          "orientation": "shoulder on the bed, post up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.03,
+          "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H3b3_BearingPost-3-notch-20.15_shoulder-down.stl",
+          "size_mm": [
+            23.0,
+            23.0,
+            12.1
+          ],
+          "volume_cm3": 2.63,
+          "grams_pla": 3.3,
+          "bed_contact_mm2": 280.0,
+          "orientation": "shoulder on the bed, post up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.03,
+          "pass": true
         }
       ]
+    },
+    "H3b": {
+      "question": "Which post diameter lets a 6804 slide on by hand, with no rattle, and then take a circlip? Stop at the first one that does not slide on by hand.",
+      "post_dia_modelled_mm": [
+        19.95,
+        20.05,
+        20.15
+      ],
+      "jammed_before_mm": 20.2,
+      "expected_printed_mm": {
+        "if_0p25_under": [
+          19.7,
+          19.8,
+          19.9
+        ],
+        "if_0p10_under": [
+          19.85,
+          19.95,
+          20.05
+        ],
+        "if_0p04_under": [
+          19.91,
+          20.01,
+          20.11
+        ]
+      },
+      "evidence": "H1 60T flange measured 40.65 vs 40.689 modelled (-0.04); H3 20.20 jammed",
+      "marking": "notches on the shoulder rim, 1 = smallest"
     },
     "H4": {
       "question": "Which pilot lets an M2 machine screw form a thread and hold firmly without splitting? Try an SG90 ear screw in the same three.",
@@ -322,7 +413,7 @@
       ]
     },
     "H6": {
-      "question": "Does the SG90 cross horn drop into the pocket and sit flat with no rotational play, and can the horn screw be driven through the middle? Which clearance?",
+      "question": "Does the SG90 cross horn drop into the pocket and sit flat with no rotational play? Does the horn screw pass the 3.4 centre hole, with its head bearing on the plate rather than falling through? Which clearance?",
       "horn_measured_2026_10_01": {
         "long_tip_to_tip": 36.0,
         "short_tip_to_tip": 19.0,
@@ -338,7 +429,7 @@
       },
       "pocket_depth_mm": 1.2,
       "boss_recess_depth_mm": 1.3,
-      "access_hole_mm": 5.0,
+      "access_hole_mm": 3.4,
       "thickness_mm": 3.7,
       "why_a_plate": "36 mm horn span exceeds the 60T tooth root (36.19), so v0.4 carries the pocket in a wider horn plate on the drive pulley servo side",
       "files": [
@@ -349,30 +440,9 @@
             23.3,
             3.7
           ],
-          "volume_cm3": 1.34,
+          "volume_cm3": 1.36,
           "grams_pla": 1.7,
-          "bed_contact_mm2": 443.0,
-          "orientation": "flat, pocket facing up - no support",
-          "single_valid_solid": true,
-          "bed_relief_edges": 1,
-          "orientation_probes_pass": true,
-          "bed_contact_ok": true,
-          "on_z0": true,
-          "mesh_solid": true,
-          "mesh_non_manifold": false,
-          "mesh_volume_error_pct": 0.005,
-          "pass": true
-        },
-        {
-          "file": "Gladiator_HeadR2_H6b_HornPocket_2notch-EASY_pocket-up.stl",
-          "size_mm": [
-            40.6,
-            23.6,
-            3.7
-          ],
-          "volume_cm3": 1.38,
-          "grams_pla": 1.7,
-          "bed_contact_mm2": 459.0,
+          "bed_contact_mm2": 456.0,
           "orientation": "flat, pocket facing up - no support",
           "single_valid_solid": true,
           "bed_relief_edges": 1,
@@ -383,6 +453,27 @@
           "mesh_non_manifold": false,
           "mesh_volume_error_pct": 0.006,
           "pass": true
+        },
+        {
+          "file": "Gladiator_HeadR2_H6b_HornPocket_2notch-EASY_pocket-up.stl",
+          "size_mm": [
+            40.6,
+            23.6,
+            3.7
+          ],
+          "volume_cm3": 1.39,
+          "grams_pla": 1.7,
+          "bed_contact_mm2": 472.0,
+          "orientation": "flat, pocket facing up - no support",
+          "single_valid_solid": true,
+          "bed_relief_edges": 1,
+          "orientation_probes_pass": true,
+          "bed_contact_ok": true,
+          "on_z0": true,
+          "mesh_solid": true,
+          "mesh_non_manifold": false,
+          "mesh_volume_error_pct": 0.007,
+          "pass": true
         }
       ]
     }
@@ -392,14 +483,14 @@
     "plate_pass": true
   },
   "plate": {
-    "file": "Gladiator_HeadR2_CouponPlate_ALL-12-pieces.3mf",
-    "pieces": 12,
-    "objects_in_3mf": 12,
+    "file": "Gladiator_HeadR2_FINAL-COUPON-PLATE_6-pieces.3mf",
+    "pieces": 6,
+    "objects_in_3mf": 6,
     "triangles_ok": true,
     "offbed": 0,
     "overlaps": 0,
-    "volume_cm3": 25.7,
-    "grams_pla": 32.0,
+    "volume_cm3": 12.11,
+    "grams_pla": 15.0,
     "unit_mm": true
   }
 }

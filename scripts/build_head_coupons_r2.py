@@ -349,6 +349,47 @@ report['pieces']['H3'] = {
     'hardware': 'one 6804 bearing, one 20 mm external circlip, circlip pliers',
 }
 
+# ================================================ H3b bearing post, three smaller sizes
+# Added 2026-10-01. H3 (20.20 modelled) jammed a 6804 so tight two pliers could not free it,
+# though 20.20 had fitted as plate F post #2. Jim's 60T flange then measured 40.65 against
+# 40.689 modelled (-0.04), so big round parts do NOT lose 0.25. The loss may depend on radius,
+# which would put this post (radius 10) nearer -0.1 than -0.25. The bracket steps DOWN from the
+# size that jammed, so it covers any error from -0.04 to -0.25:
+#    modelled   19.95    20.05    20.15
+#    at -0.25   19.70    19.80    19.90   (loose)
+#    at -0.10   19.85    19.95    20.05   (the middle one should slide on)
+#    at -0.04   19.91    20.01    20.11   (only the first slides on)
+# Same geometry as H3 so the circlip groove and shoulder are tested on whichever post fits.
+POSTS_B = [19.95, 20.05, 20.15]
+
+
+def make_post(d, marks):
+    p = fuse(ring(SH_R, BORE / 2, 0, SH_T), ring(d / 2, BORE / 2, SH_T, post_top - SH_T))
+    p = p.cut(ring(d / 2 + 0.1, GROOVE_D / 2, gz, GROOVE_W))
+    top = [e for e in p.Edges if len(e.Vertexes) == 1 and e.Curve.TypeId == 'Part::GeomCircle'
+           and abs(e.BoundBox.ZMin - post_top) < 1e-6 and abs(e.Curve.Radius - d / 2) < 1e-6]
+    p = p.makeChamfer(0.5, top)
+    return radial_notches(p, marks, SH_R, 0, SH_T, 90.0, step_deg=14.0, rad=0.7)
+
+
+for i, d in enumerate(POSTS_B):
+    add('H3b%d' % (i + 1), 'H3b%d_BearingPost-%d-notch-%.2f_shoulder-down' % (i + 1, i + 1, d),
+        make_post(d, i + 1), 'shoulder on the bed, post up - no support',
+        [((SH_R - 0.5, 0, 1), True), ((d / 2 - 0.2, 0, SH_T + 3), True),
+         ((d / 2 - 0.2, 0, gz + GROOVE_W / 2), False), ((GROOVE_D / 2 - 0.2, 0, gz + 0.7), True),
+         ((0, 0, 5), False)],
+        200)
+report['pieces']['H3b'] = {
+    'question': 'Which post diameter lets a 6804 slide on by hand, with no rattle, and then take a '
+                'circlip? Stop at the first one that does not slide on by hand.',
+    'post_dia_modelled_mm': POSTS_B, 'jammed_before_mm': POST_D,
+    'expected_printed_mm': {'if_0p25_under': [round(d - 0.25, 2) for d in POSTS_B],
+                            'if_0p10_under': [round(d - 0.10, 2) for d in POSTS_B],
+                            'if_0p04_under': [round(d - 0.04, 2) for d in POSTS_B]},
+    'evidence': 'H1 60T flange measured 40.65 vs 40.689 modelled (-0.04); H3 20.20 jammed',
+    'marking': 'notches on the shoulder rim, 1 = smallest',
+}
+
 # ====================================================== H4 M2 pilots
 PILOTS = [1.8, 2.0, 2.2]
 h4 = box(0, 0, 0, 30, 7, 8)
@@ -418,7 +459,10 @@ BOSS_D, BOSS_UP = 7.1, 1.0
 POCKET_DEPTH = 1.2        # ASSUMED: arm thickness not measured; thicker arms just stand proud
 BOSS_RECESS = BOSS_UP + 0.3
 FLOOR, WALL = 1.2, 2.0
-ACCESS_D = 5.0            # horn screw and driver pass through the middle
+# 2026-10-01: was 5.0, a hole the horn screw's head fell through. 3.4 lets the shank and a
+# small driver pass, while the ~4 mm head (read off Jim's photo, NOT measured) bears on the
+# plate, so the screw that holds the horn on the servo also holds this plate onto the horn.
+ACCESS_D = 3.4
 T6 = FLOOR + BOSS_RECESS + POCKET_DEPTH
 
 
@@ -464,7 +508,8 @@ for key, c, marks, label in [('H6a', 0.15, 1, 'SNUG'), ('H6b', 0.30, 2, 'EASY')]
         horn_coupon(c, marks), 'flat, pocket facing up - no support', horn_probes(c), 300)
 report['pieces']['H6'] = {
     'question': 'Does the SG90 cross horn drop into the pocket and sit flat with no rotational '
-                'play, and can the horn screw be driven through the middle? Which clearance?',
+                'play? Does the horn screw pass the 3.4 centre hole, with its head bearing on '
+                'the plate rather than falling through? Which clearance?',
     'horn_measured_2026_10_01': {'long_tip_to_tip': HORN_LONG, 'short_tip_to_tip': HORN_SHORT,
                                  'long_width_hub': LONG_W_HUB, 'long_width_tip': LONG_W_TIP,
                                  'short_width': SHORT_W, 'boss_dia': BOSS_D,
@@ -506,8 +551,13 @@ for p in pieces:
                % (p['key'], path.name, b.XLength, b.YLength, b.ZLength, sh.Volume / 1000, bed,
                   'ok' if rec['pass'] else '*** FAIL'))
 
-# ------------------------------------------------------------ one plate
-items = [[p['key'], p['mesh'].copy()] for p in pieces]
+# ------------------------------------------------------------ the FINAL coupon plate
+# Everything that still gates the head and has not been proven. H1, H2, H5 are settled.
+# The first nine pieces were printed from Gladiator_HeadR2_CouponPlate_ALL-9-pieces.3mf, which an
+# earlier version of this script wrote; their STLs are unchanged.
+FINAL_KEYS = ['H3b1', 'H3b2', 'H3b3', 'H4b', 'H6a', 'H6b']
+items = [[p['stem'], p['mesh'].copy()] for p in pieces if p['key'] in FINAL_KEYS]
+assert len(items) == len(FINAL_KEYS)
 for it in items:
     b = it[1].BoundBox
     it[1].translate(-b.XMin, -b.YMin, -b.ZMin)
@@ -583,8 +633,8 @@ def write_3mf(path, title, its):
         z.writestr('3D/3dmodel.model', NL.join(md))
 
 
-plate = OUT / (PREFIX + 'CouponPlate_ALL-%d-pieces.3mf' % len(items))
-write_3mf(str(plate), 'Gladiator head coupons round 2', items)
+plate = OUT / (PREFIX + 'FINAL-COUPON-PLATE_%d-pieces.3mf' % len(items))
+write_3mf(str(plate), 'Gladiator head coupons - final plate', items)
 # re-open and check the container
 with zipfile.ZipFile(str(plate)) as z:
     xml = z.read('3D/3dmodel.model').decode()

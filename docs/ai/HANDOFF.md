@@ -48,6 +48,15 @@ Jim is done printing the body and wants the head right and ready to print. The m
   5.9 +-0.6). v0.3 modelled the servo too short and put the horn about 1.5 high. Rebuild v0.4 from
   these.
 - Fixed a mistake in the H6 README: the horn goes in **boss-down**, not boss-up.
+- **2026-10-01, later:** the first nine coupons are printed and tested (results in
+  `measurements/mast-head.md` and DECISIONS.md). The **final coupon plate** is built:
+  `cad/head/coupons-r2-20260930/Gladiator_HeadR2_FINAL-COUPON-PLATE_6-pieces.3mf` (H3b x3 bearing
+  posts 19.95/20.05/20.15, H4b M2 pilots, H6a/H6b horn pockets; 12.1 cm3). H6 now has a 3.4 centre
+  hole so the horn screw's head holds the plate. Placed in the printer incoming folder, not printed.
+  **Next: build head v0.4** from the settled inputs in DECISIONS.md, while Jim prints the plate.
+  Three results are still pending (H3b post size, H4b pilot size, H6 horn pocket).
+- A 40 mm round flange printed only 0.04 small, so the 0.25 calibration may depend on radius. Not
+  proven. Nothing in the master has changed.
 - Ask before starting any print.
 
 **Next:**
