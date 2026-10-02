@@ -64,10 +64,12 @@ STLs are in `~/3D-Printer/Incoming/Gladiator/` (tray, BaseLeft/Right, a fit coup
   (tray 16.56 -> 15.62 cm3); base walls thicker (inboard 2.4, rear 2.0), tab runs past the walls with root fillets, rib on the
   bolt-side wall behind the bump groove (the groove had left 0.65), peg root fillet. "Tabs" was read as the base tab/socket and peg
   root; ask if he meant something else.
-- **INA226 cassette v1 built 2026-10-01** (`cad/power-board/ina-cassette-v1/`, `scripts/build_ina_cassette_v1.py`, not printed). Removable
-  shelf that hangs on the tray front wall (lip over the wall, tongue under the floor, bumps), board front-to-back, header pins out
-  the front, terminals at the rear, wings between the rail front posts. **Hole centres (2.0 from header edge and sides) are
-  INFERRED from Jim's description, not calipered.** Pin tail 2.2 is derived. Board overhangs the deck front by 8.2.
+- **INA226 cassette v1 built 2026-10-01, ready to print** (`cad/power-board/ina-cassette-v1/`, `scripts/build_ina_cassette_v1.py`, STL queued in
+  `~/3D-Printer/Incoming/Gladiator/`, **not printed; Jim starts it**). Removable shelf that hangs on the tray front wall (lip over the wall,
+  tongue under the floor, bumps), board front-to-back, header pins out the front, terminals at the rear, wings between the rail front
+  posts. Jim chose a **10 mm wire gap** behind the terminals (6 was too tight for wire bends): board overhangs the deck front by 12.2,
+  pin tips 19.2. Posts 4 tall; Jim measured about 3 mm pin tails (read as below the PCB). **Hole centres (2.0 from header edge and
+  sides) are INFERRED**, not calipered. Fit is 0.1 mm gaps and can only be tried on the printed tray.
 - Considered and dropped: hanging the board from the upper deck (Jim: keep the current board design for v1).
 
 ## Head round-2 coupons — 2026-09-30 (Claude)

@@ -14,7 +14,7 @@ PCB 1.6; screw terminals 14 tail-to-top, no overhang, wires leave from the termi
 protrude 7; the two M2 (d2) holes sit in the header-edge corners.
   INFERRED, NOT CALIPERED: Jim says the corner is rounded around the hole with about 1 mm of board left,
   read here as hole centres 2.0 from the header edge and 2.0 from each side edge.
-  DERIVED: pin tails about 2.2 below the PCB (14 tail-to-top against 11.8 tallest).
+  JIM 2026-10-01: about 3 mm between the bottom of the screw terminal and the bottom of the board, read as pin tails 3.0 below the PCB.
   ASSUMED: nothing on the PCB underside beyond the terminal and header tails.
 """
 import json
@@ -73,11 +73,12 @@ WALL_T = 1.0
 # ---------------------------------------------------------------- INA226
 BOARD_W, BOARD_L, PCB_T = 22.0, 26.0, 1.6
 HOLE_D, HOLE_EDGE = 2.0, 2.0            # hole centre from the header edge and from each side edge (INFERRED)
-TAIL = 2.2                              # derived pin tail below the PCB
+TAIL = 3.0                              # Jim 2026-10-01: about 3 between the bottom of the screw terminal and the PCB underside
+                                        # (read as the pin tails below the PCB; was derived 2.2)
 TALLEST = 11.8                          # above the PCB underside, as recorded
 TERM_DEPTH = 8.5                        # terminal block depth from the terminal edge (not measured; envelope)
 PIN_OUT = 7.0
-WIRE_GAP = 6.0                          # terminal edge to the plate: room for the wires to leave and turn
+WIRE_GAP = 10.0                         # terminal edge to the plate: wires need about 3 straight + a 5 radius bend (was 6)
 BOARD_X0 = 39.5 - BOARD_W / 2           # centred on the deck
 
 # ---------------------------------------------------------------- cassette
@@ -94,7 +95,7 @@ LIP_Y1 = WALL_OUT_Y + WALL_T + 0.9      # 0.9 over the inside of the wall
 BUMP_H, BUMP_Y = 0.3, 30.5
 SHELF_T = 2.0
 SHELF_TOP = Z0 + SHELF_T                # 25.2
-POST_H = 3.0
+POST_H = 4.0                            # tails 3.0 + 1.0 of clearance over the shelf
 PCB_Z0 = SHELF_TOP + POST_H             # 28.2
 POST_D, PILOT_D, PILOT_DEPTH = 5.0, 1.6, 3.5
 LIP_H = 4.0
@@ -171,7 +172,7 @@ terms = box(BOARD_X0, BOARD_X0 + BOARD_W, Y_T - TERM_DEPTH, Y_T, PCB_Z0 - TAIL, 
 header = box(39.5 - 5.1, 39.5 + 5.1, Y_H - PIN_OUT, Y_H + 2.0, PCB_Z0 + PCB_T, PCB_Z0 + PCB_T + 2.5)
 check(hit(pcb, cass) < 1e-6 and hit(terms.cut(pcb), cass) < 1e-6, 'the board sits on the posts and pads with nothing else touching')
 check(hit(header, cass) < 1e-6 and hit(header, tray) < 1e-6, 'header and its pins are free, poking out the front by %.0f' % PIN_OUT)
-check(PCB_Z0 - TAIL - SHELF_TOP >= 0.7, 'terminal pin tails clear the shelf by %.2f (tail length is derived)' % (PCB_Z0 - TAIL - SHELF_TOP))
+check(PCB_Z0 - TAIL - SHELF_TOP >= 0.9, 'terminal pin tails (3.0, Jim) clear the shelf by %.2f' % (PCB_Z0 - TAIL - SHELF_TOP))
 tail_in = box(BOARD_X0, BOARD_X0 + BOARD_W, Y_T - TERM_DEPTH, Y_T, PCB_Z0 - TAIL, PCB_Z0)
 check(hit(tail_in, cass) < 1e-6, 'terminal tails do not touch the pads or posts')
 for nm, shp in (('terminals', terms), ('header', header), ('board', pcb)):
@@ -253,7 +254,7 @@ val = {'script': 'scripts/build_ina_cassette_v1.py', 'volume_cm3': round(cass.Vo
        'orientation': 'board front-to-back, header edge facing the front, terminals at the rear, flat shelf',
        'INFERRED_hole_centres': {'from_header_edge': HOLE_EDGE, 'from_side_edge': HOLE_EDGE, 'holes_xy': holes,
                                  'basis': "Jim: holes touch the corner, about 1 mm of board; read as a corner arc of r2 around a d2 hole"},
-       'DERIVED_pin_tail_mm': TAIL, 'ASSUMED_terminal_depth_mm': TERM_DEPTH,
+       'pin_tail_mm_Jim_about': TAIL, 'ASSUMED_terminal_depth_mm': TERM_DEPTH,
        'board_y': [Y_H, Y_T], 'board_x': [BOARD_X0, BOARD_X0 + BOARD_W], 'pcb_z': [PCB_Z0, PCB_Z0 + PCB_T],
        'front_overhang_past_deck_edge_mm': round(-Y_H, 1), 'pin_tips_past_deck_edge_mm': round(-(Y_H - PIN_OUT), 1),
        'wire_gap_mm': WIRE_GAP, 'tray_clearance_mm': round(d_tray, 2), 'rail_clearance_mm': rails,
