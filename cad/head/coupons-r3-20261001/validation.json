@@ -1,0 +1,66 @@
+{
+  "status": "FIT COUPONS, round 3",
+  "pieces": [
+    {
+      "key": "R3a",
+      "file": "Gladiator_HeadR3_R3a_ScreenSlice_notch-is-PIN-edge_bezel-face-down.stl",
+      "orientation": "bezel face down (the face the screen looks out of), pocket up; no support",
+      "size_mm": [
+        67.9,
+        34.4,
+        6.7
+      ],
+      "volume_cm3": 4.6,
+      "grams_pla": 5.7,
+      "bed_contact_mm2": 975,
+      "probes_pass": true,
+      "mesh_ok": true,
+      "mesh_volume_error_pct": 0.0,
+      "pass": true
+    },
+    {
+      "key": "R3b",
+      "file": "Gladiator_HeadR3_R3b_SidewaysNut_1notch-6.0_2notch-6.2_flat.stl",
+      "orientation": "flat, as modelled: the pockets open SIDEWAYS, like the neck collar and tilt pivot; no support",
+      "size_mm": [
+        24.0,
+        12.0,
+        10.0
+      ],
+      "volume_cm3": 2.52,
+      "grams_pla": 3.1,
+      "bed_contact_mm2": 288,
+      "probes_pass": true,
+      "mesh_ok": true,
+      "mesh_volume_error_pct": 0.002,
+      "pass": true
+    },
+    {
+      "key": "R3c",
+      "file": "Gladiator_HeadR3_R3c_GH44Register_recess-DOWN.stl",
+      "orientation": "recess DOWN against the bed, exactly as the real receiver prints; no support",
+      "size_mm": [
+        34.0,
+        30.0,
+        3.0
+      ],
+      "volume_cm3": 2.12,
+      "grams_pla": 2.6,
+      "bed_contact_mm2": 406,
+      "probes_pass": true,
+      "mesh_ok": true,
+      "mesh_volume_error_pct": 0.0,
+      "pass": true
+    }
+  ],
+  "plate": {
+    "file": "Gladiator_HeadR3_CouponPlate_3-pieces.3mf",
+    "objects": 3,
+    "offbed": 0,
+    "overlaps": 0,
+    "triangles_ok": true,
+    "volume_cm3": 9.23,
+    "grams_pla": 11.4
+  },
+  "all_pass": true
+}
