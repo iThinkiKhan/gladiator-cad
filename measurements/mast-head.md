@@ -450,3 +450,19 @@ from the **underside of an ear** to the **top of the horn arms**. The model assu
 (gap) + 2.0 (arm) = **13.25**. It sets the height of the pan servo pad, and so the belt alignment.
 (The old "13.2, ear underside to installed horn underside" may in fact have been this reading, but
 that is not assumed.)
+
+## Round-3 coupon results — Jim, 2026-10-03
+
+| Coupon | Jim's words | Read as |
+| --- | --- | --- |
+| **R3a** screen slice | "Screen is a good fit" | the ST7789 fits the frame's pocket; the 62.5 x 29 board size and 0.3 pocket clearance are good |
+| **R3b** sideways nut block | "the sideways nut block fits 1" | the **1-notch pocket (6.0 AF) takes an M3 nut printed on its side**; the 2-notch (6.2) is not needed |
+
+**Read as:** "fits 1" means the 1-notch pocket, which is 6.0. If "1" meant something else, correct this.
+Head v0.4 already models NUT_AF = 6.0 for every nut pocket, including the sideways ones (neck collar,
+tilt pivot, GH44 receiver), so nothing in the generator changes.
+
+**Not reported, still open:** whether the visible area sat squarely in the window and whether the four
+M2 screws took in the corner pilots (the hole-to-edge offset is still assumed symmetric); R3c (GH44
+register, recess down); the circlip on the 2-notch post; the horn screw head on H6a; the horn height
+reading (model 13.25) that still holds Neck_Main.

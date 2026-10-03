@@ -7,6 +7,15 @@ Use dated entries and include the reason or evidence behind the decision.
 
 Do not record brainstorming or unaccepted proposals as decisions.
 
+## 2026-10-03 — round-3 coupons: screen pocket and sideways nut pocket
+
+Evidence is in `measurements/mast-head.md`, "Round-3 coupon results".
+
+- **Display frame pocket (R3a): Jim, "Screen is a good fit".** Keep the 62.5 x 29 board with 0.3 pocket clearance.
+  Window alignment and the M2 corner pilots were not explicitly reported.
+- **Sideways M3 nut pockets (R3b): the 1-notch 6.0 AF pocket.** Jim, "the sideways nut block fits 1".
+  Matches the NUT_AF = 6.0 already in `build_head_v04.py`; no change.
+
 ## 2026-10-01 — head v0.4 design inputs settled by the round-2 coupons
 
 Evidence is in `measurements/mast-head.md`, "Round-2 coupon results" and "follow-up answers".
