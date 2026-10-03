@@ -1,0 +1,54 @@
+{
+ "script": "scripts/build_ina_cassette_v2.py",
+ "volume_cm3": 3.73,
+ "pla_g_solid": 4.6,
+ "orientation": "board front-to-back, header edge facing the front, terminals at the rear, flat shelf",
+ "INFERRED_hole_centres": {
+  "from_header_edge": 2.0,
+  "from_side_edge": 2.0,
+  "holes_xy": [
+   [
+    30.5,
+    -11.999999999999996
+   ],
+   [
+    48.5,
+    -11.999999999999996
+   ]
+  ],
+  "basis": "Jim: holes touch the corner, about 1 mm of board; read as a corner arc of r2 around a d2 hole"
+ },
+ "pin_tail_mm_Jim_about": 3.0,
+ "ASSUMED_terminal_depth_mm": 8.5,
+ "board_y": [
+  -13.999999999999996,
+  12.000000000000004
+ ],
+ "board_x": [
+  28.5,
+  50.5
+ ],
+ "pcb_z": [
+  29.2,
+  30.8
+ ],
+ "front_overhang_past_deck_edge_mm": 14.0,
+ "pin_tips_past_deck_edge_mm": 21.0,
+ "wire_gap_mm": 10.0,
+ "tray_clearance_mm": 0.3,
+ "attach": "plate + lip + two inside toes; drops on from above; no tongue, no bumps; 0.3 gaps",
+ "rail_clearance_mm": {
+  "SideRailLeft": 0.6,
+  "SideRailRight": 0.6
+ },
+ "print": {
+  "file": "Gladiator_INA226_Cassette_v2_print-upright_SUPPORTS-from-bed.stl",
+  "bbox": [
+   41.8,
+   43.0,
+   12.1
+  ],
+  "bed_contact_mm2": 1181,
+  "downward_faces_mm2": 170
+ }
+}

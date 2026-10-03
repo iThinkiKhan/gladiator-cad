@@ -1,5 +1,19 @@
 # Current Handoff
 
+## Power tray v5 + INA226 cassette v2 — 2026-10-03 (Claude)
+
+Jim printed v4 and the v1 cassette and found: the click bumps and 0.25-clearance pegs were far too tight (nothing came out and the thin
+1.0 front wall tore off the tray), the tray walls were far too weak, and the cassette's pressure fit would not work (it needs a lip over the
+INSIDE of the wall). Rebuilt as new versions; v4 and v1 are kept as the record of what was printed.
+- **Tray v5** (`cad/power-board/v5-tray/`, `scripts/build_power_tray_v5.py`, 52 checks): no bumps or grooves anywhere (plain wells, same 0.25
+  clearance Jim said fitted well before the click); front and rear walls 2.4, floor 2.4 (grown downward, board height unchanged), 2 x 2 root
+  gussets, 2.5 corner blocks, post-to-wall webs. Side walls stay 1.0 (0.1 inside the rails). v4 bases still fit; v5 bases are the same without grooves.
+- **Cassette v2** (`cad/power-board/ina-cassette-v2/`, `scripts/build_ina_cassette_v2.py`, 28 checks): plate + lip + two toes down the inside of the
+  wall; drops on from above; no tongue, no bumps, every gap 0.3. Needs supports (build plate only) for the lip and toes. Board now overhangs the deck
+  front by 14.0 (pin tips 21.0) because the wall is thicker.
+- Not printed. STLs are queued in `~/3D-Printer/Incoming/Gladiator/`; Jim starts prints. The old v4/v1 STLs are still in that folder, untouched.
+- Still inferred: INA hole centres (2.0 from the header edge and sides), pin tails 3.0 read as below the PCB.
+
 ## Head coupons round 3 — 2026-10-01 (Claude)
 
 Jim asked whether there were more coupons. Built `cad/head/coupons-r3-20261001/` (commit 126fbfd, in the

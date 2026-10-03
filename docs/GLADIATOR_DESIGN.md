@@ -233,6 +233,12 @@ base (thicker walls, filleted tab, a rib behind the bump groove, peg root fillet
 battery box is a separate removable shelf, `cad/power-board/ina-cassette-v1/` (2026-10-01, not printed): it hangs on the tray
 front wall, board front-to-back with the header pins out the front. Its two M2 hole positions are inferred, not calipered.
 
+**Power board tray v5 and INA226 cassette v2 (2026-10-03).** Jim printed v4 and found the click mounts far too tight (the thin front wall
+tore off before a peg moved), the walls too weak, and the cassette pressure fit unworkable. v5 (`cad/power-board/v5-tray/`) has plain wells
+with no bumps or grooves, 2.4 front, rear and floor, root gussets, corner blocks and post webs; the side walls stay 1.0 (0.1 inside the
+rails). The cassette v2 (`cad/power-board/ina-cassette-v2/`) is a drop-on hook: plate, lip over the wall top and two toes down the inside,
+every gap 0.3. v4 and cassette v1 remain as the record of what was printed. Neither v5 nor v2 is printed.
+
 ## Antenna pylon
 
 `AntennaPost` carries a **standard nut-type SMA bulkhead** connector. Rebuilt twice; the current
