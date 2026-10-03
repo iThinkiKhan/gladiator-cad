@@ -8,6 +8,8 @@ INSIDE of the wall). Rebuilt as new versions; v4 and v1 are kept as the record o
 - **Tray v5** (`cad/power-board/v5-tray/`, `scripts/build_power_tray_v5.py`, 52 checks): no bumps or grooves anywhere (plain wells, same 0.25
   clearance Jim said fitted well before the click); front and rear walls 2.4, floor 2.4 (grown downward, board height unchanged), 2 x 2 root
   gussets, 2.5 corner blocks, post-to-wall webs. Side walls stay 1.0 (0.1 inside the rails). v4 bases still fit; v5 bases are the same without grooves.
+  **Arms back to the v3 design** (no scoop) after Jim said the new arm did not clear the mast; v3/v4/first-v5 arms were all exactly 0.40 from the
+  tube (so the design was not the difference). Inner face opened 0.8, gap now 1.2. Ask Jim where it actually touched if it still does.
 - **Cassette v2** (`cad/power-board/ina-cassette-v2/`, `scripts/build_ina_cassette_v2.py`, 28 checks): plate + lip + two toes down the inside of the
   wall; drops on from above; no tongue, no bumps, every gap 0.3. Needs supports (build plate only) for the lip and toes. Board now overhangs the deck
   front by 14.0 (pin tips 21.0) because the wall is thicker.

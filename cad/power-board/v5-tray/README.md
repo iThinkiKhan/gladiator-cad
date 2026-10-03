@@ -11,10 +11,12 @@ sections. **Nothing here has been printed.** v4 (what Jim printed) is kept as th
 | The removable mounts were far too tight; once the click engaged nothing would come out, and the strong legs tore the thin front wall off the tray before a foot moved. "Just let them slide into wells." | **No bumps, no grooves, anywhere.** The pegs slide into plain wells with the same 0.25 clearance that already fitted well before the click. Nothing holds the tray except its own weight and the collar. |
 | The walls are far too weak. "We don't need this tiny thin tray anymore." | Front and rear walls 1.0 -> **2.4** (grown outward, so the board and its end gaps do not move). Floor 1.6 -> **2.4**, grown downward (floor top, posts and board height are unchanged). 2 x 2 root gussets along the inside of all four walls, four 2.5 corner blocks (the front corners are where it tore), and a web from each board post to the side wall. |
 
+| The new arm design does not clear the mast. Go back to the v3 arm with the v4 dimensions. | **Arms are the v3 design again** (full depth, Z 20-40; the scoop is gone). The model shows the v3, v4 and first v5 arms were all exactly **0.40** from the mast tube, so the arm design was never the difference; 0.4 is too tight for printed parts. The inner face is opened 0.8 (29.1 -> 28.3), so the gap is now **1.2**. The rim contact under the arms is unchanged (50 mm2). |
+
 The side walls stay 1.0. The tub is only 0.1 inside the rails and has to lift out past them, so they cannot grow outward; they are tied
 into the floor, the corner blocks and the post webs instead.
 
-Tray 15.62 -> 19.29 cm3 (about 24 g solid PLA). Floor underside is now 23.9 (1.9 over the modelled cells, was 2.7). Under the board
+Tray 15.62 -> 19.60 cm3 (about 24 g solid PLA). Floor underside is now 23.9 (1.9 over the modelled cells, was 2.7). Under the board
 601 of 10800 mm3 is plastic (posts, webs, gussets); the whole middle is free for solder tails (4.5 tall).
 
 ## Bases

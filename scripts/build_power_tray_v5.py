@@ -13,7 +13,9 @@ Why v5 (Jim, 2026-10-03, after printing and fitting v4):
        - four 2.5 square corner blocks (the front corners are where it tore),
        - a web from each board post to the side wall beside it.
      The side walls stay 1.0: the tub is only 0.1 inside the rails, and the tray has to lift out past them.
-  Everything else (board position, 4.5 posts, arms, pegs, base geometry) is as v4.
+  3. Arms: back to the v3 design (full depth, Z 20..40; no scoop).  The v3, v4 and first v5 arms were all exactly 0.40 from the
+     mast tube, which Jim found does not clear.  The inner face is opened 0.8 (29.1 -> 28.3) so the gap is 1.2.
+  Everything else (board position, 4.5 posts, pegs, base geometry) is as v4.
         Cells stand NEGLIGIBLY over the holder rim (Jim).  Modelled 0.5 as a conservative stand-in.
         The master BatteryCells value was corrected to match (commit e289c8e).
 
@@ -99,6 +101,7 @@ BOARD_Z = FLOOR_TOP + STANDOFF_H        # 30.8 (v3 35.1)
 WALL_TOP = BOARD_Z + PCB_T + 1.0
 TOP = 40.0
 ARM_Z0 = 20.0
+ARM_INNER = 28.3                        # v3/v4 29.1: the arms were only 0.40 from the mast tube, too tight for a printed part; now 1.2
 M2_PILOT, M2_CLEAR = 1.6, 2.2
 M3_CLEAR = 3.4                          # base slit bolts are M3 now (Jim: they fit the slit better)
 M3_HEAD_R = 3.0                          # pan or button head, d6; a d5.5 socket head is smaller
@@ -238,22 +241,13 @@ for side in (0, 1):
     parts = [
         B(22.0, 32.1, oy1 - 1.0, 100.0, FLOOR_Z, TOP),
         B(24.0, 30.1, 100.0, 104.0, FLOOR_Z, TOP),
-        B(25.0, 29.1, 100.0, 127.0, ARM_Z0, TOP),
+        B(25.0, ARM_INNER, 100.0, 127.0, ARM_Z0, TOP),
         B(28.7, PEG_X[1], 127.4, PEG_Y[1], SHOULDER_Z0, TOP),   # shoulder: the full-size post, above the socket
         make_peg_box(f),                                    # the plug-in peg, 1 mm smaller
         prism([(f(x), y) for x, y in left_flare], ARM_Z0, TOP),
     ]
     for s in parts:
         tray = tray.fuse(s)
-tray = tray.removeSplitter()
-# arms were overbuilt (Jim, 2026-10-01): scoop the top between the two collar contacts.  Bending there is tiny (about 0.4 MPa for a
-# 60 g tray); the root, flare and posts stay full depth.  The front ramp is 40 degrees from the print axis so it needs no support.
-SCOOP = [(104.5, TOP + 0.1), (117.5, 29.0), (120.0, 29.0), (123.0, TOP + 0.1)]
-for side in (0, 1):
-    fs = side_func(side)
-    xa, xb = sorted((fs(24.9), fs(29.2)))
-    sw = [V(xa, y, z) for y, z in SCOOP]
-    tray = tray.cut(Part.Face(Part.makePolygon(sw + [sw[0]])).extrude(V(xb - xa, 0, 0)))
 tray = tray.removeSplitter()
 for side in (0, 1):
     tray = peg_root_fillet(tray, side_func(side))
@@ -307,7 +301,7 @@ gaps = {n: round(tray.distToShape(O(n).Shape)[0], 2) for n in
 gaps['cells (modelled %.1f above holder)' % CELL_ABOVE_HOLDER] = round(tray.distToShape(cells)[0], 2)
 p('INFO clearances', gaps)
 check(tray.distToShape(cells)[0] >= CELL_GAP - 0.01, 'floor (now 2.4 thick, underside %.1f) clears the modelled cells by %.2f' % (FLOOR_Z, tray.distToShape(cells)[0]))
-check(gaps['MastTube'] >= 0.39, 'arms clear the mast tube like v3 (%.2f)' % gaps['MastTube'])
+check(gaps['MastTube'] >= 1.1, 'arms clear the mast tube by %.2f (v3, v4 and the first v5 were 0.40)' % gaps['MastTube'])
 p('INFO master BatteryCells still says 4 above the holder; Jim reports cells are negligibly over the rim, so the master value is stale.')
 
 # tray <-> base fit
@@ -397,10 +391,8 @@ for nm, y, xa, xb in (('arm beside mast Y115', 115.0, 18, 39.5), ('arm Y105', 10
     a4, h4 = section(tray, y, xa, xb)
     rows[nm] = {'v3_area_mm2': round(a3, 1), 'v3_depth': round(h3, 1), 'v5_area_mm2': round(a4, 1), 'v5_depth': round(h4, 1)}
     p('INFO section %-22s v3 %6.1f mm2 (depth %4.1f)  v5 %6.1f mm2 (depth %4.1f)' % (nm, a3, h3, a4, h4))
-    if nm.startswith('arm beside'):
-        check(a4 >= 40.0, '%s lightened but still %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
-    elif nm == 'arm Y105':
-        check(a4 >= a3 - 3.0, '%s is where the scoop ramp starts: %.1f mm2 (v3 %.1f)' % (nm, a4, a3))
+    if nm.startswith('arm'):
+        check(a4 >= 0.75 * a3, '%s is the v3 arm with the inner face opened 0.8: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
     else:
         check(a4 >= a3 - 0.5, '%s not weaker than v3' % nm)
 for nm, (xa, xb, ya, yb) in (('front wall', (30, 49, oy0 + 0.5, oy0 + 0.6)), ('rear wall', (30, 49, oy1 - 0.6, oy1 - 0.5))):
