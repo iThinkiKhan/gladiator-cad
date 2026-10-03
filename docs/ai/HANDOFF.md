@@ -10,6 +10,8 @@ INSIDE of the wall). Rebuilt as new versions; v4 and v1 are kept as the record o
   gussets, 2.5 corner blocks, post-to-wall webs. Side walls stay 1.0 (0.1 inside the rails). v4 bases still fit; v5 bases are the same without grooves.
   **Arms are exactly the v3 arm** (checked to 0.00 mm3). Jim: the v4 V-scoop was an unwanted arm redesign; he only asked for ceiling clearance
   and feet into a base. Do not reshape the arms again without asking.
+  Then Jim asked (via a multiple-choice question) for the long arm beside the mast to be shorter, same width: top Z 40 -> 34, 45 degree
+  ramp into the taper; taper/flare/post proven identical to v3.
 - **Cassette v2** (`cad/power-board/ina-cassette-v2/`, `scripts/build_ina_cassette_v2.py`, 28 checks): plate + lip + two toes down the inside of the
   wall; drops on from above; no tongue, no bumps, every gap 0.3. Needs supports (build plate only) for the lip and toes. Board now overhangs the deck
   front by 14.0 (pin tips 21.0) because the wall is thicker.

@@ -12,13 +12,14 @@ sections. **Nothing here has been printed.** v4 (what Jim printed) is kept as th
 | The walls are far too weak. "We don't need this tiny thin tray anymore." | Front and rear walls 1.0 -> **2.4** (grown outward, so the board and its end gaps do not move). Floor 1.6 -> **2.4**, grown downward (floor top, posts and board height are unchanged). 2 x 2 root gussets along the inside of all four walls, four 2.5 corner blocks (the front corners are where it tore), and a web from each board post to the side wall. |
 
 | The v4 'lighter arms' pass turned the arm into a V. Jim only wanted more ceiling clearance and feet that go into a base, not an arm redesign. | **The arms are exactly the v3 arm again**: the V scoop is gone and nothing else about the arm changed. A check proves the taper, web and flare match v3 to 0.00 mm3 from the v3 floor up (below that, the taper's two 1 mm side strips reach down to the lower floor). Mast tube gap 0.40 and rim contact 50 mm2, both as v3. |
+| Then: the long arm beside the mast is too thick; make it shorter (lower top), same width. | The long arm's top comes down evenly from Z 40 to **Z 34** (20 tall -> 14), width 4.1 unchanged. A 45 degree ramp (Y 104-110) joins it to the full-height taper so it prints without support. The root block, taper, flare and post are proven identical to v3 (0.00 mm3), and the arm was only lowered (nothing added). `WEB_TOP` in the script if you want a different height. |
 
 What differs from v3 around the arms, all from Jim's requests: the rear posts end in pegs that drop into the bases, the post above the peg is 0.6 wider inboard (so the M3 head clears the base wall), a 0.7 fillet at the peg root, and the root block reaches the lower, thicker floor.
 
 The side walls stay 1.0. The tub is only 0.1 inside the rails and has to lift out past them, so they cannot grow outward; they are tied
 into the floor, the corner blocks and the post webs instead.
 
-Tray 15.62 -> 20.23 cm3 (about 25 g solid PLA). Floor underside is now 23.9 (1.9 over the modelled cells, was 2.7). Under the board
+Tray 15.62 -> 19.44 cm3 (about 24 g solid PLA). Floor underside is now 23.9 (1.9 over the modelled cells, was 2.7). Under the board
 601 of 10800 mm3 is plastic (posts, webs, gussets); the whole middle is free for solder tails (4.5 tall).
 
 ## Bases

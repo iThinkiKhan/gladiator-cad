@@ -13,6 +13,8 @@ Why v5 (Jim, 2026-10-03, after printing and fitting v4):
        - four 2.5 square corner blocks (the front corners are where it tore),
        - a web from each board post to the side wall beside it.
      The side walls stay 1.0: the tub is only 0.1 inside the rails, and the tray has to lift out past them.
+  4. Jim, later: the long arm beside the mast was too thick.  Its top comes down evenly from Z 40 to Z 34 (20 tall -> 14), same width,
+     same outline; a 45 degree ramp joins it to the full-height taper.  The root block, taper, flare and post are untouched.
   3. Arms: EXACTLY the v3 arm again (Jim, 2026-10-03: the v4 'lighter arms' pass turned the arm into a V; he only wanted ceiling
      clearance and feet into a base, not an arm redesign).  The check below proves the arm webs, flares and taper match v3.
   Everything else (board position, 4.5 posts, pegs, base geometry) is as v4.
@@ -102,6 +104,8 @@ WALL_TOP = BOARD_Z + PCB_T + 1.0
 TOP = 40.0
 ARM_Z0 = 20.0
 ARM_INNER = 29.1                        # exactly the v3 arm (Jim: no redesign of the arm)
+WEB_TOP = 34.0                          # Jim 2026-10-03: the long arm beside the mast is too thick -> lower its top, keep its width (was 40)
+RAMP = (104.0, 110.0)                   # 45 degree ramp from the full-height taper down to WEB_TOP, so the step prints without support
 M2_PILOT, M2_CLEAR = 1.6, 2.2
 M3_CLEAR = 3.4                          # base slit bolts are M3 now (Jim: they fit the slit better)
 M3_HEAD_R = 3.0                          # pan or button head, d6; a d5.5 socket head is smaller
@@ -241,7 +245,9 @@ for side in (0, 1):
     parts = [
         B(22.0, 32.1, oy1 - 1.0, 100.0, FLOOR_Z, TOP),
         B(24.0, 30.1, 100.0, 104.0, FLOOR_Z, TOP),
-        B(25.0, ARM_INNER, 100.0, 127.0, ARM_Z0, TOP),
+        B(25.0, ARM_INNER, 100.0, 127.0, ARM_Z0, WEB_TOP),
+        B(25.0, ARM_INNER, 123.0, 127.0, ARM_Z0, TOP),          # full height again where the arm runs into the flare, as v3
+        tri_yz([(RAMP[0], WEB_TOP - 0.01), (RAMP[0], TOP), (RAMP[1], WEB_TOP - 0.01)], *sorted((f(25.0), f(ARM_INNER)))),
         B(28.7, PEG_X[1], 127.4, PEG_Y[1], SHOULDER_Z0, TOP),   # shoulder: the full-size post, above the socket
         make_peg_box(f),                                    # the plug-in peg, 1 mm smaller
         prism([(f(x), y) for x, y in left_flare], ARM_Z0, TOP),
@@ -391,16 +397,24 @@ for nm, y, xa, xb in (('arm beside mast Y115', 115.0, 18, 39.5), ('arm Y105', 10
     a4, h4 = section(tray, y, xa, xb)
     rows[nm] = {'v3_area_mm2': round(a3, 1), 'v3_depth': round(h3, 1), 'v5_area_mm2': round(a4, 1), 'v5_depth': round(h4, 1)}
     p('INFO section %-22s v3 %6.1f mm2 (depth %4.1f)  v5 %6.1f mm2 (depth %4.1f)' % (nm, a3, h3, a4, h4))
-    if nm.startswith('arm'):
-        check(abs(a4 - a3) < 0.5 and abs(h4 - h3) < 0.05, '%s is the v3 arm: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
+    if nm == 'arm beside mast Y115':
+        check(abs(h4 - (WEB_TOP - ARM_Z0)) < 0.05 and a4 > 50.0, '%s lowered to Z %.0f as asked: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, WEB_TOP, a4, a3, h4))
+    elif nm == 'arm Y105':
+        check(a4 >= 0.9 * a3, '%s is on the ramp up to the taper: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
     else:
         check(a4 >= a3 - 0.5, '%s not weaker than v3' % nm)
 for nm, (xa, xb, ya, yb) in (('front wall', (30, 49, oy0 + 0.5, oy0 + 0.6)), ('rear wall', (30, 49, oy1 - 0.6, oy1 - 0.5))):
     p('INFO %s: %.1f thick, %.1f deep (v4 1.0 x 8.7)' % (nm, FRONT_T, WALL_TOP - FLOOR_Z))
 for nm_, xa_, xb_ in (('left', 23.9, 33.0), ('right', 79.0 - 33.0, 79.0 - 23.9)):
-    zone = box(xa_, xb_, 100.0, 127.0, 26.5, TOP)          # v3 floor underside; below it only the taper reaches down to the lower v5 floor
-    diff = tray.common(zone).cut(v3.common(zone)).Volume + v3.common(zone).cut(tray.common(zone)).Volume
-    check(diff < 1.0, '%s arm (taper, web and flare, Y 100-127, from the v3 floor up) is identical to v3: %.2f mm3 different' % (nm_, diff))
+    for part_, y0_, y1_ in (('taper', 100.0, 104.0), ('flare', 123.0, 127.0)):
+        zone = box(xa_, xb_, y0_, y1_, 26.5, TOP)             # v3 floor underside up
+        diff = tray.common(zone).cut(v3.common(zone)).Volume + v3.common(zone).cut(tray.common(zone)).Volume
+        check(diff < 1.0, '%s %s is identical to v3: %.2f mm3 different' % (nm_, part_, diff))
+    web = box(xa_, xb_, 104.0, 123.0, ARM_Z0, TOP + 1)
+    added = tray.common(web).cut(v3).Volume
+    check(added < 0.5, '%s long arm was only lowered, nothing added: %.2f mm3 outside the v3 arm' % (nm_, added))
+    check(hit(tray, box(xa_, xb_, RAMP[1] + 0.05, 122.95, WEB_TOP + 0.05, TOP + 1)) < 1e-6,
+          '%s long arm top is Z %.0f from Y %.0f to the flare' % (nm_, WEB_TOP, RAMP[1]))
 peg_a = tray_core.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0))
 p('INFO peg section at Y132, Z8-15 (both pegs): %.1f mm2 (v3 post %.1f)' % (peg_a.Volume / 0.1,
   v3.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0)).Volume / 0.1))

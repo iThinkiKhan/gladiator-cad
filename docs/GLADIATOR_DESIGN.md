@@ -238,7 +238,8 @@ tore off before a peg moved), the walls too weak, and the cassette pressure fit 
 with no bumps or grooves, 2.4 front, rear and floor, root gussets, corner blocks and post webs; the side walls stay 1.0 (0.1 inside the
 rails). The cassette v2 (`cad/power-board/ina-cassette-v2/`) is a drop-on hook: plate, lip over the wall top and two toes down the inside,
 every gap 0.3. v4 and cassette v1 remain as the record of what was printed. Neither v5 nor v2 is printed. The v5 arms are exactly the v3
-arm again (the v4 V-scoop is gone; Jim did not want the arm redesigned).
+arm again (the v4 V-scoop is gone; Jim did not want the arm redesigned), except that, at Jim's request, the long section beside
+the mast is 14 tall instead of 20 (top Z 34), joined to the taper by a 45 degree ramp.
 
 ## Antenna pylon
 
