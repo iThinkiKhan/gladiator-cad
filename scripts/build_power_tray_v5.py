@@ -13,8 +13,8 @@ Why v5 (Jim, 2026-10-03, after printing and fitting v4):
        - four 2.5 square corner blocks (the front corners are where it tore),
        - a web from each board post to the side wall beside it.
      The side walls stay 1.0: the tub is only 0.1 inside the rails, and the tray has to lift out past them.
-  3. Arms: back to the v3 design (full depth, Z 20..40; no scoop).  The v3, v4 and first v5 arms were all exactly 0.40 from the
-     mast tube, which Jim found does not clear.  The inner face is opened 0.8 (29.1 -> 28.3) so the gap is 1.2.
+  3. Arms: EXACTLY the v3 arm again (Jim, 2026-10-03: the v4 'lighter arms' pass turned the arm into a V; he only wanted ceiling
+     clearance and feet into a base, not an arm redesign).  The check below proves the arm webs, flares and taper match v3.
   Everything else (board position, 4.5 posts, pegs, base geometry) is as v4.
         Cells stand NEGLIGIBLY over the holder rim (Jim).  Modelled 0.5 as a conservative stand-in.
         The master BatteryCells value was corrected to match (commit e289c8e).
@@ -101,7 +101,7 @@ BOARD_Z = FLOOR_TOP + STANDOFF_H        # 30.8 (v3 35.1)
 WALL_TOP = BOARD_Z + PCB_T + 1.0
 TOP = 40.0
 ARM_Z0 = 20.0
-ARM_INNER = 28.3                        # v3/v4 29.1: the arms were only 0.40 from the mast tube, too tight for a printed part; now 1.2
+ARM_INNER = 29.1                        # exactly the v3 arm (Jim: no redesign of the arm)
 M2_PILOT, M2_CLEAR = 1.6, 2.2
 M3_CLEAR = 3.4                          # base slit bolts are M3 now (Jim: they fit the slit better)
 M3_HEAD_R = 3.0                          # pan or button head, d6; a d5.5 socket head is smaller
@@ -301,7 +301,7 @@ gaps = {n: round(tray.distToShape(O(n).Shape)[0], 2) for n in
 gaps['cells (modelled %.1f above holder)' % CELL_ABOVE_HOLDER] = round(tray.distToShape(cells)[0], 2)
 p('INFO clearances', gaps)
 check(tray.distToShape(cells)[0] >= CELL_GAP - 0.01, 'floor (now 2.4 thick, underside %.1f) clears the modelled cells by %.2f' % (FLOOR_Z, tray.distToShape(cells)[0]))
-check(gaps['MastTube'] >= 1.1, 'arms clear the mast tube by %.2f (v3, v4 and the first v5 were 0.40)' % gaps['MastTube'])
+check(gaps['MastTube'] >= 0.39, 'arms clear the mast tube by %.2f, as v3' % gaps['MastTube'])
 p('INFO master BatteryCells still says 4 above the holder; Jim reports cells are negligibly over the rim, so the master value is stale.')
 
 # tray <-> base fit
@@ -392,11 +392,15 @@ for nm, y, xa, xb in (('arm beside mast Y115', 115.0, 18, 39.5), ('arm Y105', 10
     rows[nm] = {'v3_area_mm2': round(a3, 1), 'v3_depth': round(h3, 1), 'v5_area_mm2': round(a4, 1), 'v5_depth': round(h4, 1)}
     p('INFO section %-22s v3 %6.1f mm2 (depth %4.1f)  v5 %6.1f mm2 (depth %4.1f)' % (nm, a3, h3, a4, h4))
     if nm.startswith('arm'):
-        check(a4 >= 0.75 * a3, '%s is the v3 arm with the inner face opened 0.8: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
+        check(abs(a4 - a3) < 0.5 and abs(h4 - h3) < 0.05, '%s is the v3 arm: %.1f mm2 (v3 %.1f), depth %.1f' % (nm, a4, a3, h4))
     else:
         check(a4 >= a3 - 0.5, '%s not weaker than v3' % nm)
 for nm, (xa, xb, ya, yb) in (('front wall', (30, 49, oy0 + 0.5, oy0 + 0.6)), ('rear wall', (30, 49, oy1 - 0.6, oy1 - 0.5))):
     p('INFO %s: %.1f thick, %.1f deep (v4 1.0 x 8.7)' % (nm, FRONT_T, WALL_TOP - FLOOR_Z))
+for nm_, xa_, xb_ in (('left', 23.9, 33.0), ('right', 79.0 - 33.0, 79.0 - 23.9)):
+    zone = box(xa_, xb_, 100.0, 127.0, 26.5, TOP)          # v3 floor underside; below it only the taper reaches down to the lower v5 floor
+    diff = tray.common(zone).cut(v3.common(zone)).Volume + v3.common(zone).cut(tray.common(zone)).Volume
+    check(diff < 1.0, '%s arm (taper, web and flare, Y 100-127, from the v3 floor up) is identical to v3: %.2f mm3 different' % (nm_, diff))
 peg_a = tray_core.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0))
 p('INFO peg section at Y132, Z8-15 (both pegs): %.1f mm2 (v3 post %.1f)' % (peg_a.Volume / 0.1,
   v3.common(box(0, 79, 132.0 - 0.05, 132.0 + 0.05, 8.0, 15.0)).Volume / 0.1))

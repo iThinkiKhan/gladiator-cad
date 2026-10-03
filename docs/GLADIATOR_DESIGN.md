@@ -237,8 +237,8 @@ front wall, board front-to-back with the header pins out the front. Its two M2 h
 tore off before a peg moved), the walls too weak, and the cassette pressure fit unworkable. v5 (`cad/power-board/v5-tray/`) has plain wells
 with no bumps or grooves, 2.4 front, rear and floor, root gussets, corner blocks and post webs; the side walls stay 1.0 (0.1 inside the
 rails). The cassette v2 (`cad/power-board/ina-cassette-v2/`) is a drop-on hook: plate, lip over the wall top and two toes down the inside,
-every gap 0.3. v4 and cassette v1 remain as the record of what was printed. Neither v5 nor v2 is printed. The v5 arms are the v3 design
-again (the v4 scoop is gone), with the inner face opened 0.8 so the arms stand 1.2 from the mast tube (they were 0.40 in v3 and v4).
+every gap 0.3. v4 and cassette v1 remain as the record of what was printed. Neither v5 nor v2 is printed. The v5 arms are exactly the v3
+arm again (the v4 V-scoop is gone; Jim did not want the arm redesigned).
 
 ## Antenna pylon
 
