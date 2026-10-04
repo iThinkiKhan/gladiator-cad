@@ -633,8 +633,8 @@
         44.0,
         46.1
       ],
-      "volume_cm3": 11.83,
-      "grams_pla": 14.7,
+      "volume_cm3": 10.91,
+      "grams_pla": 13.5,
       "bed_contact_mm2": 1256,
       "bed_relief_edges": 4,
       "on_z0": true,

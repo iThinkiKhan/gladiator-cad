@@ -533,7 +533,10 @@ addp('Tilt_Pivot_Bolt', fuse(cx(1.5, 22.0, 11.0, T.y, TZ), cx(2.75, 33.0, 3.0, T
 
 # --- GH44 receiver: the tested register, calibrated holes, 6.0 nut pockets, the horn plate drive ---------
 rec = box(-22, -52, TZ - 22, 44, 4, 44)
-rec = rec.cut(keyshape(26.4, 22.4, -52.1, 1.7))
+# R3c (2026-10-03): a 1.6 deep recess printed facing the bed came out about 1 mm shallow (its roof is a bridge).
+# So the register is cut clean THROUGH the 4.0 plate (to y -47.9); the carrier seats on the plate face and the
+# backbone fused below is only a distant roof, 3.8 deep, far past the 1.4 key.
+rec = rec.cut(keyshape(26.4, 22.4, -52.1, 4.2))
 rec = rec.cut(keyshape(26.4 + 0.7, 22.4 + 0.7, -52.1, 0.5))      # first-layer relief: it prints face down
 for x in (-16, 16):
     for dz in (-16, 16):

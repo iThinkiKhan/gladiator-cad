@@ -15,6 +15,9 @@ Evidence is in `measurements/mast-head.md`, "Round-3 coupon results".
   Window alignment and the M2 corner pilots were not explicitly reported.
 - **Sideways M3 nut pockets (R3b): the 1-notch 6.0 AF pocket.** Jim, "the sideways nut block fits 1".
   Matches the NUT_AF = 6.0 already in `build_head_v04.py`; no change.
+- **GH44 receiver register: cut through the plate, not a recess.** R3c printed the 1.6 deep recess about 1 mm shallow
+  facing the bed (Jim, eyeball; cause unconfirmed, roof sag suspected). Jim chose the through-window from four options.
+  Carrier key and outline unchanged. Needs the R3d coupon to confirm it seats flat.
 
 ## 2026-10-01 — head v0.4 design inputs settled by the round-2 coupons
 
