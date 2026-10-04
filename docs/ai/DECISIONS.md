@@ -17,7 +17,8 @@ Evidence is in `measurements/mast-head.md`, "Round-3 coupon results".
   Matches the NUT_AF = 6.0 already in `build_head_v04.py`; no change.
 - **GH44 receiver register: cut through the plate, not a recess.** R3c printed the 1.6 deep recess about 1 mm shallow
   facing the bed (Jim, eyeball; cause unconfirmed, roof sag suspected). Jim chose the through-window from four options.
-  Carrier key and outline unchanged. Needs the R3d coupon to confirm it seats flat.
+  Carrier key and outline unchanged. Jim declined a confirming coupon ("we dont need to spend plastic on that"), so the
+  through-window is unproven until PLATE3 prints; the check is the same drop-in of the blank carrier key.
 
 ## 2026-10-01 — head v0.4 design inputs settled by the round-2 coupons
 

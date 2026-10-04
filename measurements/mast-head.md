@@ -482,4 +482,4 @@ the recess facing UP and was "perfect". R3c prints it facing DOWN, so its 1.4 ro
 `GH44_Tilt_Receiver` (same recess, same orientation). Not yet known: the measured recess depth.
 **Consequence:** do not print the receiver in Plate 3 as released until this is settled.
 
-**Fix (2026-10-03):** register cut clean through the 4.0 plate; the backbone fused behind it is a roof 3.8 deep, far past the 1.4 key. Coupon R3d (`cad/head/coupons-r3d-20261003/`) checks it. Result pending.
+**Fix (2026-10-03):** register cut clean through the 4.0 plate; the backbone fused behind it is a roof 3.8 deep, far past the 1.4 key. A confirming coupon (R3d) was built and then dropped at Jim's request; the fix is unproven until the receiver prints.
