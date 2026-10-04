@@ -27,6 +27,7 @@ printed face down. Also asked for, needing no print: circlip on the H3b-2 post, 
 H6a hole, and the horn height reading for the neck.
 
 **Results 2026-10-03 (Jim):** R3a "Screen is a good fit"; R3b sideways nut block "fits 1" (1-notch, 6.0, already modelled). Not yet reported: R3c, window alignment / M2 corner pilots, circlip, horn screw, horn height (still holds Neck_Main). Logged in `measurements/mast-head.md` and `DECISIONS.md`.
+**Later 2026-10-03:** circlip fits well. R3c (GH44 recess printed down) fits and keys one way but is about 1 mm too shallow (Jim, eyeball). Suspect roof sag over the bridge; unconfirmed. GH44_Tilt_Receiver in Plate 3 shares that recess and orientation: do not print it as released. Fix not chosen yet.
 
 ## Head v0.4 released for printing, except the neck — 2026-10-01 (Claude)
 

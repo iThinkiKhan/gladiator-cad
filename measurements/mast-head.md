@@ -466,3 +466,18 @@ tilt pivot, GH44 receiver), so nothing in the generator changes.
 M2 screws took in the corner pilots (the hole-to-edge offset is still assumed symmetric); R3c (GH44
 register, recess down); the circlip on the 2-notch post; the horn screw head on H6a; the horn height
 reading (model 13.25) that still holds Neck_Main.
+
+### Round-3 follow-up — Jim, 2026-10-03
+
+| Check | Jim's words | Read as |
+| --- | --- | --- |
+| **Circlip** on the 2-notch H3b post | "circlip fits well" | the groove on the 20.05 post seats a circlip; closed |
+| **R3c** GH44 register, recess printed DOWN | "The GH44 fits, but isnt quite deep enough." Then: "its a lot, prolly 1mm. A lot shallower than the first pocket i printed. It goes in one way only." | the profile fits and keys one way only, but the printed recess is about **1 mm shallower than modelled** (eyeball, not calipered) |
+
+**Model vs print:** the recess is modelled 1.6 deep into a 3.0 block (1.7 cut from y -52.1, face at -52), with
+the plate F blank carrier's key 1.4 tall, so the design slack is about 0.2. The earlier fit coupon printed
+the recess facing UP and was "perfect". R3c prints it facing DOWN, so its 1.4 roof is a bridge over a
+26.4 x 22.4 pocket.
+**Cause is NOT established.** Roof sag over the bridge is the leading suspect, which would also hit the real
+`GH44_Tilt_Receiver` (same recess, same orientation). Not yet known: the measured recess depth.
+**Consequence:** do not print the receiver in Plate 3 as released until this is settled.
