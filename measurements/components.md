@@ -362,9 +362,9 @@ Jim, calipers, 2026-10-05. Metal-shell slide switch, 3 pins.
 | Knob envelope along slide axis | 6.0 | Jim: travel "including the switch length" |
 | Pin length | 3.7 | |
 | Pin tip to knob top | 15.0 | = 3.7 + 6.37 + 5.0, consistent |
-| Knob width | **not measured** | power switch holder v1 assumes no more than 4.4 (5.0 window) |
+| Knob width | 4.0 | Jim, 2026-10-05 |
 
-Holder: `cad/power-switch/v1/`.
+Holder: `cad/power-switch/v1b/`. It mounts on the robot-LEFT rail, which is the master object `SideRailRight`.
 
 ## Breadboard power rails x2 (buses)
 

@@ -1,10 +1,7 @@
-# Power switch holder v1 — 2026-10-05
+# Power switch holder v1b — 2026-10-05
 
-**Superseded by `../v1b/`, never printed.** v1 was built on the master's `SideRailLeft`, which is physically the robot's RIGHT rail (front at Y 0 and Z up, so low X is the robot's right). Jim wants it on the robot's left. The v1 STL was withdrawn from the printer folder.
-
-
-Built by `scripts/build_power_switch_holder_v1.py`. It reads the master and the v5 tray and changes neither. It checks
-everything against solids and refuses to export if any check fails; all pass (`validation.json`). `switch-holder-v1.png`
+Built by `scripts/build_power_switch_holder_v1b.py`. It reads the master and the v5 tray and changes neither. It checks
+everything against solids and refuses to export if any check fails; all pass (`validation.json`). `switch-holder-v1b.png`
 shows it in place. **Not printed.**
 
 ## What Jim asked for
@@ -17,7 +14,7 @@ shows it in place. **Not printed.**
 ## What it is
 
 - A pocket for the switch in the gap between the rail and the tray's left leg, right beside the rail's sealed rear wall.
-  Switch body Y 128.6-135.0, X 19.35-26.15, Z 23.7-36.4. **The knob top is at Y 140.0, flush with the lower deck's rear edge**,
+  Switch body Y 128.6-135.0, X 52.85-59.65 (master), Z 23.7-36.4. **The knob top is at Y 140.0, flush with the lower deck's rear edge**,
   5 mm proud of the rail's rear face.
 - Rear plate with a 5.0 x 6.8 knob window and an engraved up arrow (ON) above it. Front fully open, so the pins and
   4 mm ahead of them are clear for the solder joints and wires.
@@ -40,11 +37,11 @@ Rail 0.10, tray leg 0.89, left base 5.2, upper deck 14.4. Nothing else in the ma
 
 ## Print
 
-`stl/Gladiator_PowerSwitchHolder_v1_LEFT-rail_print-on-inboard-face_no-supports.stl`, also in `~/3D-Printer/Incoming/Gladiator/`.
+`stl/Gladiator_PowerSwitchHolder_v1b_robot-LEFT-rail_print-on-inboard-face_no-supports.stl`, also in `~/3D-Printer/Incoming/Gladiator/`.
 Lay it on the **inboard face** (as exported). 17.8 x 7.7 x 14.3, 118 mm2 on the bed, about 0.7 g. No supports: the only
 overhang is the 7.1 bridge over the pocket, and a 45 degree gusset carries the upper tongue. A brim helps on a part this small.
 
 ## Not measured
 
-- **Knob width** is assumed to be no more than 4.4 (the window is 5.0). Jim gave the knob's height (5.0) and travel envelope (6.0) but not its width.
+- Knob width is 4.0 (Jim, 2026-10-05), so the 5.0 window leaves 0.5 each side.
 - Pin layout is assumed to be one row down the middle. That only matters for the clearance check, because the pin face is fully open.

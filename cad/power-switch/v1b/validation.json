@@ -1,0 +1,40 @@
+{
+ "script": "scripts/build_power_switch_holder_v1b.py",
+ "print_file": "Gladiator_PowerSwitchHolder_v1b_robot-LEFT-rail_print-on-inboard-face_no-supports.stl",
+ "print_bounds": [
+  17.75,
+  7.67,
+  14.3
+ ],
+ "bed_contact_mm2": 118.1,
+ "volume_mm3": 592.1,
+ "installed_bbox": [
+  51.7,
+  66.0,
+  128.63,
+  136.3,
+  22.35,
+  40.1
+ ],
+ "switch_body": [
+  52.85,
+  59.65,
+  128.63,
+  135.0,
+  23.7,
+  36.4
+ ],
+ "knob_top_y": 140.0,
+ "clearances": {
+  "rail": 0.1,
+  "tray": 0.892,
+  "base": 5.204,
+  "upper_deck": 14.4,
+  "max_play_with_tray_in": 0.892
+ },
+ "assumed": [
+  "pins in one row down the middle of the pin face"
+ ],
+ "handedness": "master low-X = robot right; this part is on SideRailRight = robot LEFT",
+ "fails": []
+}
