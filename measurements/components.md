@@ -349,6 +349,23 @@ robust, while the diameter only has to accept an M2 screw, which Jim has confirm
 
 Still open: which edge the wires land on and which way they exit.
 
+## Power slide switch (power, left rail rear)
+
+Jim, calipers, 2026-10-05. Metal-shell slide switch, 3 pins.
+
+| Feature | Value | Notes |
+| --- | ---: | --- |
+| Body width | 6.8 | |
+| Body length (slide axis) | 12.7 | Jim: "tall"; mounted vertically, up = ON |
+| Body depth | 6.37 | knob face to pin face, body only |
+| Knob height above body | 5.0 | |
+| Knob envelope along slide axis | 6.0 | Jim: travel "including the switch length" |
+| Pin length | 3.7 | |
+| Pin tip to knob top | 15.0 | = 3.7 + 6.37 + 5.0, consistent |
+| Knob width | **not measured** | power switch holder v1 assumes no more than 4.4 (5.0 window) |
+
+Holder: `cad/power-switch/v1/`.
+
 ## Breadboard power rails x2 (buses)
 
 | Feature | Value | Notes |
