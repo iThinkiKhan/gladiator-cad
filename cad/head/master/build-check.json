@@ -1,0 +1,158 @@
+{
+ "Neck_Main": {
+  "vol_src": 17257.969,
+  "vol_new": 17257.969,
+  "solids": 1,
+  "valid": true
+ },
+ "Neck_Clamp_Cap": {
+  "vol_src": 2539.008,
+  "vol_new": 2539.008,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Servo_Carriage": {
+  "vol_src": 2318.663,
+  "vol_new": 2318.663,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Rotor": {
+  "vol_src": 15398.833,
+  "vol_new": 15398.833,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Retainer": {
+  "vol_src": 2311.333,
+  "vol_new": 2311.333,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Raised_Pedestal": {
+  "vol_src": 16637.98,
+  "vol_new": 16637.98,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Drive_Pulley": {
+  "vol_src": 7901.921,
+  "vol_new": 7901.921,
+  "solids": 1,
+  "valid": true
+ },
+ "Tilt_Yoke": {
+  "vol_src": 12129.435,
+  "vol_new": 12129.435,
+  "solids": 1,
+  "valid": true
+ },
+ "GH44_Tilt_Receiver": {
+  "vol_src": 9972.387,
+  "vol_new": 9972.387,
+  "solids": 1,
+  "valid": true
+ },
+ "GH44_Dual_Carrier": {
+  "vol_src": 15390.975,
+  "vol_new": 15390.975,
+  "solids": 1,
+  "valid": true
+ },
+ "ToF_Sensor_Frame": {
+  "vol_src": 3127.075,
+  "vol_new": 3127.075,
+  "solids": 1,
+  "valid": true
+ },
+ "Radar_Sensor_Frame": {
+  "vol_src": 3541.089,
+  "vol_new": 3541.089,
+  "solids": 1,
+  "valid": true
+ },
+ "Rear_Display_Frame": {
+  "vol_src": 14717.971,
+  "vol_new": 14717.971,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Bearing_Lower": {
+  "vol_src": 3430.619,
+  "vol_new": 3430.619,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Bearing_Upper": {
+  "vol_src": 3430.619,
+  "vol_new": 3430.619,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Inner_Spacer": {
+  "vol_src": 1187.239,
+  "vol_new": 1187.239,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Circlip_Envelope": {
+  "vol_src": 230.415,
+  "vol_new": 230.415,
+  "solids": 1,
+  "valid": true
+ },
+ "SG90_Pan_Reference": {
+  "vol_src": 7283.717,
+  "vol_new": 7283.717,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Horn_Reference": {
+  "vol_src": 561.73,
+  "vol_new": 561.73,
+  "solids": 1,
+  "valid": true
+ },
+ "Pan_Belt_Reference": {
+  "vol_src": 1098.21,
+  "vol_new": 1098.21,
+  "solids": 1,
+  "valid": true
+ },
+ "SG90_Tilt_Reference": {
+  "vol_src": 7283.717,
+  "vol_new": 7283.717,
+  "solids": 1,
+  "valid": true
+ },
+ "Tilt_Horn_Reference": {
+  "vol_src": 561.73,
+  "vol_new": 561.73,
+  "solids": 1,
+  "valid": true
+ },
+ "Tilt_Pivot_Bolt": {
+  "vol_src": 149.029,
+  "vol_new": 149.029,
+  "solids": 1,
+  "valid": true
+ },
+ "Dual_ToF_Envelope": {
+  "vol_src": 20072.583,
+  "vol_new": 20072.583,
+  "solids": 1,
+  "valid": true
+ },
+ "Dual_Radar_Envelope": {
+  "vol_src": 9107.752,
+  "vol_new": 9107.752,
+  "solids": 1,
+  "valid": true
+ },
+ "ST7789_Board": {
+  "vol_src": 5800.0,
+  "vol_new": 5800.0,
+  "solids": 1,
+  "valid": true
+ }
+}
