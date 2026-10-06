@@ -1,0 +1,17 @@
+GLADIATOR HEAD - PRINT PLATES FOR ORCASLICER (2026-10-06)
+
+Open these three files in OrcaSlicer. Supports are already painted in them.
+
+  Gladiator_Head_ORCA-A_PanStack_...3mf      6 parts   about 4 h 35 m
+  Gladiator_Head_ORCA-B_TiltAndSensors_...3mf  6 parts   about 6 h 20 m
+  Gladiator_Head_ORCA-C_Neck_Main_...3mf     1 part    about 2 h 10 m (brim, supports)
+
+They already use your EnderNeo printer, Generic PLA First Print filament, 0.20 mm, 4 walls,
+30% infill. Look at the support preview before you send. Do not auto-orient.
+Nothing has been started. You start the prints.
+
+The older files in this folder (Gladiator_Head_v04_PLATE1..4, v05 PLATE5) are the same parts,
+one plate each, with NO supports painted. Use the ORCA files instead.
+
+Order I would print: A first (pan stack), then C (neck), then B (tilt side and sensors).
+Details: cad/head/orca-plates/README.md in the gladiator-cad repo.

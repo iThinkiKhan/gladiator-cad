@@ -1,0 +1,429 @@
+{
+ "plates": {
+  "A": {
+   "file": "Gladiator_Head_ORCA-A_PanStack_Pedestal-Retainer-Cap_Rotor-Pulley-Carriage.3mf",
+   "extent_mm": [
+    157.7,
+    107.5
+   ],
+   "parts": [
+    {
+     "part": "Pan_Raised_Pedestal",
+     "at": [
+      56.2,
+      82.0
+     ],
+     "size": [
+      50.0,
+      51.5
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Top-plate underside support"
+     ],
+     "notes": [
+      "top-plate underside 1635 mm2 at z 18.5, kept clear of r<14.7 around the belt groove"
+     ]
+    },
+    {
+     "part": "Pan_Rotor",
+     "at": [
+      114.7,
+      82.0
+     ],
+     "size": [
+      43.0,
+      43.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Pan_Drive_Pulley",
+     "at": [
+      168.5,
+      82.0
+     ],
+     "size": [
+      40.7,
+      40.7
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Pan_Retainer",
+     "at": [
+      67.5,
+      141.8
+     ],
+     "size": [
+      43.0,
+      43.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Pan_Servo_Carriage",
+     "at": [
+      113.5,
+      141.8
+     ],
+     "size": [
+      25.0,
+      44.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Neck_Clamp_Cap",
+     "at": [
+      156.0,
+      141.8
+     ],
+     "size": [
+      36.0,
+      13.7
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    }
+   ],
+   "sha256": "25709849c44b7288931e2c526c1626c9da5c2262b57a139122269960accc6ccc"
+  },
+  "B": {
+   "file": "Gladiator_Head_ORCA-B_TiltAndSensors_Yoke-Receiver-DisplayFrame-Carrier-ToF-Radar.3mf",
+   "extent_mm": [
+    189.5,
+    145.0
+   ],
+   "parts": [
+    {
+     "part": "Rear_Display_Frame",
+     "at": [
+      62.0,
+      59.5
+     ],
+     "size": [
+      74.0,
+      44.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Corner tab support 1",
+      "Corner tab support 2",
+      "Corner tab support 3",
+      "Corner tab support 4"
+     ],
+     "notes": [
+      "4 corner tabs at z 58.2, 54 mm2 each"
+     ]
+    },
+    {
+     "part": "GH44_Dual_Carrier",
+     "at": [
+      153.0,
+      59.5
+     ],
+     "size": [
+      84.0,
+      44.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "GH44_Tilt_Receiver",
+     "at": [
+      42.3,
+      115.5
+     ],
+     "size": [
+      54.0,
+      44.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Tilt_Yoke",
+     "at": [
+      111.3,
+      115.5
+     ],
+     "size": [
+      60.0,
+      35.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "ToF_Sensor_Frame",
+     "at": [
+      179.0,
+      115.5
+     ],
+     "size": [
+      51.5,
+      39.5
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    },
+    {
+     "part": "Radar_Sensor_Frame",
+     "at": [
+      110.0,
+      166.0
+     ],
+     "size": [
+      29.2,
+      33.0
+     ],
+     "support_mode": null,
+     "painted": [],
+     "notes": []
+    }
+   ],
+   "sha256": "ebf5c42d330b9e948c48c723f0c53256b7d9dec5694a4b4f106efa2c8a1823ad"
+  },
+  "C": {
+   "file": "Gladiator_Head_ORCA-C_Neck_Main_brim-and-supports.3mf",
+   "extent_mm": [
+    78.2,
+    86.2
+   ],
+   "parts": [
+    {
+     "part": "Neck_Main",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      78.2,
+      86.2
+     ],
+     "support_mode": "normal(auto)",
+     "painted": [
+      "Bore ceiling z 16.0 (keep clear)",
+      "Bore ceiling z 15.5 (keep clear)",
+      "Tube-top lip z 41.5 (0.8 mm step, no support)",
+      "Clamp-bolt ear (keep the bolt hole clear)",
+      "Clamp-bolt ear (keep the bolt hole clear)"
+     ],
+     "notes": [
+      "blockers in the two bore ceilings, over the tube-top lip and the two clamp-bolt ears; everything else auto"
+     ]
+    }
+   ],
+   "sha256": "ff4d580408663418135af04ef6a82979568d6303ecd2781ddadb18f646324d85"
+  }
+ },
+ "settings_overridden_vs_template": {
+  "machine_max_acceleration_extruding": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_x": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_y": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_z": {
+   "template": [
+    "100"
+   ],
+   "now": [
+    "500"
+   ]
+  },
+  "layer_change_gcode": {
+   "template": "",
+   "now": ";AFTER_LAYER_CHANGE\n;[layer_z]"
+  },
+  "machine_pause_gcode": {
+   "template": "",
+   "now": "M601"
+  },
+  "complete_print_exhaust_fan_speed": {
+   "template": [
+    "80"
+   ],
+   "now": [
+    "70"
+   ]
+  },
+  "during_print_exhaust_fan_speed": {
+   "template": [
+    "60"
+   ],
+   "now": [
+    "70"
+   ]
+  },
+  "eng_plate_temp": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "0"
+   ]
+  },
+  "eng_plate_temp_initial_layer": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "0"
+   ]
+  },
+  "filament_flow_ratio": {
+   "template": [
+    "1"
+   ],
+   "now": [
+    "0.98"
+   ]
+  },
+  "required_nozzle_HRC": {
+   "template": [
+    "0"
+   ],
+   "now": [
+    "3"
+   ]
+  },
+  "supertack_plate_temp": {
+   "template": [
+    "35"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "supertack_plate_temp_initial_layer": {
+   "template": [
+    "35"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "temperature_vitrification": {
+   "template": [
+    "60"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "textured_plate_temp": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "55"
+   ]
+  },
+  "textured_plate_temp_initial_layer": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "55"
+   ]
+  },
+  "filament_start_gcode": {
+   "template": [
+    "; filament start gcode\n"
+   ],
+   "now": [
+    "; Filament gcode\n"
+   ]
+  },
+  "filament_end_gcode": {
+   "template": [
+    "; filament end gcode \n"
+   ],
+   "now": [
+    "; filament end gcode\n"
+   ]
+  },
+  "elefant_foot_compensation": {
+   "template": "0.3",
+   "now": "0"
+  },
+  "sparse_infill_density": {
+   "template": "20%",
+   "now": "30%"
+  },
+  "sparse_infill_pattern": {
+   "template": "gyroid",
+   "now": "crosshatch"
+  },
+  "line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "outer_wall_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "top_surface_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "initial_layer_line_width": {
+   "template": "0.45",
+   "now": "0.5"
+  },
+  "internal_solid_infill_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "support_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "wall_loops": {
+   "template": "3",
+   "now": "4"
+  },
+  "layer_height": {
+   "template": "0.16",
+   "now": "0.2"
+  },
+  "top_shell_layers": {
+   "template": "5",
+   "now": "4"
+  }
+ }
+}
