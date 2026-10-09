@@ -3,9 +3,11 @@
 
 namespace board {
 // Installed N16R8 ESP32-S3. GPIO19/20 are reserved for native USB.
-constexpr uint8_t RIGHT_R_EN = 16, RIGHT_RPWM = 17;
-constexpr uint8_t RIGHT_L_EN = 11, RIGHT_LPWM = 12;
-constexpr uint8_t LEFT_ENABLE = 2, LEFT_RPWM = 42, LEFT_LPWM = 41;
+// J1 / USB-to-UART side: left driver.
+constexpr uint8_t LEFT_R_EN = 16, LEFT_RPWM = 17;
+constexpr uint8_t LEFT_L_EN = 11, LEFT_LPWM = 12;
+// J3 / native-USB side: right driver; its R_EN and L_EN are tied.
+constexpr uint8_t RIGHT_ENABLE = 2, RIGHT_RPWM = 42, RIGHT_LPWM = 41;
 constexpr uint8_t I2C_SDA = 8, I2C_SCL = 9;
 constexpr uint32_t I2C_HZ = 400000;
 constexpr uint16_t I2C_TIMEOUT_MS = 10;
