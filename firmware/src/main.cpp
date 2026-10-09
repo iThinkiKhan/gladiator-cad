@@ -19,15 +19,15 @@
 
 namespace {
 
-// BTS7960 pin map. The left driver's R_EN and L_EN are tied together on GPIO2.
-constexpr uint8_t RIGHT_R_EN_PIN = board::RIGHT_R_EN;
-constexpr uint8_t RIGHT_RPWM_PIN = board::RIGHT_RPWM;
-constexpr uint8_t RIGHT_L_EN_PIN = board::RIGHT_L_EN;
-constexpr uint8_t RIGHT_LPWM_PIN = board::RIGHT_LPWM;
-
-constexpr uint8_t LEFT_ENABLE_PIN = board::LEFT_ENABLE;
+// BTS7960 pin map. The right driver's R_EN and L_EN are tied together on GPIO2.
+constexpr uint8_t LEFT_R_EN_PIN = board::LEFT_R_EN;
 constexpr uint8_t LEFT_RPWM_PIN = board::LEFT_RPWM;
+constexpr uint8_t LEFT_L_EN_PIN = board::LEFT_L_EN;
 constexpr uint8_t LEFT_LPWM_PIN = board::LEFT_LPWM;
+
+constexpr uint8_t RIGHT_ENABLE_PIN = board::RIGHT_ENABLE;
+constexpr uint8_t RIGHT_RPWM_PIN = board::RIGHT_RPWM;
+constexpr uint8_t RIGHT_LPWM_PIN = board::RIGHT_LPWM;
 
 constexpr uint8_t LEFT_RPWM_CHANNEL = 0;
 constexpr uint8_t LEFT_LPWM_CHANNEL = 1;
@@ -115,9 +115,9 @@ const char *controlSourceName(ControlSource source){
 }
 
 Motor leftMotor = {
-    LEFT_ENABLE_PIN,
-    LEFT_ENABLE_PIN,
-    false,
+    LEFT_R_EN_PIN,
+    LEFT_L_EN_PIN,
+    true,
     LEFT_RPWM_PIN,
     LEFT_LPWM_PIN,
     LEFT_RPWM_CHANNEL,
@@ -127,9 +127,9 @@ Motor leftMotor = {
 };
 
 Motor rightMotor = {
-    RIGHT_R_EN_PIN,
-    RIGHT_L_EN_PIN,
-    true,
+    RIGHT_ENABLE_PIN,
+    RIGHT_ENABLE_PIN,
+    false,
     RIGHT_RPWM_PIN,
     RIGHT_LPWM_PIN,
     RIGHT_RPWM_CHANNEL,
@@ -1228,13 +1228,13 @@ void setupPwmPin(uint8_t pin, uint8_t channel) {
 }
 
 void setupMotors() {
-  pinMode(RIGHT_R_EN_PIN, OUTPUT);
-  pinMode(RIGHT_L_EN_PIN, OUTPUT);
-  pinMode(LEFT_ENABLE_PIN, OUTPUT);
+  pinMode(LEFT_R_EN_PIN, OUTPUT);
+  pinMode(LEFT_L_EN_PIN, OUTPUT);
+  pinMode(RIGHT_ENABLE_PIN, OUTPUT);
 
-  digitalWrite(RIGHT_R_EN_PIN, LOW);
-  digitalWrite(RIGHT_L_EN_PIN, LOW);
-  digitalWrite(LEFT_ENABLE_PIN, LOW);
+  digitalWrite(LEFT_R_EN_PIN, LOW);
+  digitalWrite(LEFT_L_EN_PIN, LOW);
+  digitalWrite(RIGHT_ENABLE_PIN, LOW);
 
   setupPwmPin(LEFT_RPWM_PIN, LEFT_RPWM_CHANNEL);
   setupPwmPin(LEFT_LPWM_PIN, LEFT_LPWM_CHANNEL);
