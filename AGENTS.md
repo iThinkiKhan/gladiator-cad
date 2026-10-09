@@ -12,6 +12,8 @@ Before substantial work, read:
 
 Then read the engineering documents relevant to the task, especially:
 
+- docs/ORIENTATION.md — current robot frame: mast is FRONT (+Y); +X right,
+  +Z up, rear-left origin. Read before any directional CAD/wiring/firmware change.
 - docs/GLADIATOR_DESIGN.md
 - docs/components.md
 - docs/deck-v2.md

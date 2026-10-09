@@ -1,5 +1,9 @@
 # Gladiator component measurements
 
+Current chassis frame (2026-10-09): **mast is FRONT, +Y forward, +X right**.
+See [ORIENTATION.md](ORIENTATION.md). Older directional chassis measurements
+below retain their recorded mast-rear names; dimensions/placements unchanged.
+
 Units: mm. Caliper-measured 2026-09-15.
 
 **These supersede everything implied by the printed coupons in `cad/TestPrint01/` and

@@ -1,5 +1,9 @@
 # Upper deck v2 — design spec
 
+Current robot frame (2026-10-09): **mast is FRONT (+Y)**; low X LEFT, high X
+RIGHT. See [ORIENTATION.md](ORIENTATION.md). The dated spec below uses legacy
+mast-rear directional names; existing dimensions/holes/parameter aliases stay fixed.
+
 Started 2026-09-20, **revised the same day**. Not yet cut.
 
 ## Revision: the power board does NOT hang from the deck

@@ -1,8 +1,16 @@
 # Gladiator head master
 
+**Current robot frame, 2026-10-09: mast is FRONT (+Y), +X right, +Z up.**
+See ../../../docs/ORIENTATION.md. This native viewing file now shows the ToF/radar
+face toward +Y at legacy pan180/tilt0. The fixed keyed neck stays put; moving
+parts use the existing checked pose. Released print geometry/plates unchanged.
+The old -20..180 pan range is -200..0 relative to new forward: forward is an
+endpoint, **not a centered home**. No servo motion or new travel limits implied.
+`orientation.json` records the frame/pose; robot-front preview looks from +Y.
+
 `Gladiator_Head_Master.FCStd` is the mast head on its own, for looking at in FreeCAD.
 It is a viewing file: every solid is a copy of the matching solid in the current head
-prototype (`../v05-sensor-mounts/`), in real robot coordinates, so it lines up with
+prototype (`../v05-sensor-mounts/`), posed mast-front in real robot coordinates, so it lines up with
 `../../master/Gladiator_Master.FCStd`. Nothing here is modelled by hand and nothing in the
 chassis master or the v05 files was touched.
 

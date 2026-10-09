@@ -1,6 +1,11 @@
 # Gladiator chassis measurements
 
-Units: mm. Declared orientation: front is the edge before the 4S battery case. Origin is the front-left deck corner viewed from above. X increases right; Y increases rearward; Z increases upward.
+Units: mm. **Current orientation (Jim, 2026-10-09): mast end is FRONT, +Y;
+origin is rear-left, +X right, +Z up.** Coordinates/dimensions are unchanged.
+The dated tables and feature names below were recorded in the former mast-rear
+frame: old front becomes REAR, old rear becomes FRONT; old physical left/right
+exchange. See [current mapping](../docs/ORIENTATION.md). Preserve these original
+measurement labels and spreadsheet aliases as provenance, not current direction.
 
 | Feature | Value | Model interpretation |
 | --- | ---: | --- |

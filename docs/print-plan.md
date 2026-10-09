@@ -1,5 +1,9 @@
 # Print plan — body and mast
 
+Current frame (2026-10-09): **mast is FRONT (+Y)**; +X right. See
+[ORIENTATION.md](ORIENTATION.md). Released plates and dated part/face labels
+below remain unchanged; a chassis frame flip does not mirror print geometry.
+
 Prepared 2026-09-17; rebuilt 2026-09-18 as actual arranged plates after the first coupon results.
 
 ## Live queue (2026-09-30) — head coupons, round 2

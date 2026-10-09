@@ -1,0 +1,24 @@
+{
+  "orientation": "MAST_FRONT",
+  "front": [
+    0,
+    1,
+    0
+  ],
+  "right": [
+    1,
+    0,
+    0
+  ],
+  "up": [
+    0,
+    0,
+    1
+  ],
+  "origin": "rear-left",
+  "original_shapes_checked": 219,
+  "all_geometry_unchanged": true,
+  "native_reload_checked": true,
+  "step_geometry_unchanged": true,
+  "datum_nonmanufacturing": true
+}

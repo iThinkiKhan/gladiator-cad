@@ -17,8 +17,12 @@ Master CAD file: `cad/master/Gladiator_Master.FCStd` on the CAD server
 
 ## Coordinate conventions
 
-X right, Y rearward, Z upward. Origin at the front-left corner of the lower aluminum deck.
-A forward-facing sensor or the vehicle's front looks toward **negative Y**.
+**2026-10-09: mast is FRONT.** +X right, +Y forward, +Z upward; origin is
+the rear-left lower-deck corner. Front looks toward **positive Y** (edge Y 140).
+Geometry and coordinates are unchanged. See [ORIENTATION.md](ORIENTATION.md)
+for current left/right, motor pins, sensor frame, and head pose. Older dated
+design prose and parameter/object names below retain the former mast-rear
+terminology; they are historical identifiers, not the current robot frame.
 
 ## Status at a glance
 
@@ -45,7 +49,7 @@ side rails' foot slots absorb a 3mm front/rear offset between two existing deck 
 asking for a new slot in the aluminum). Full measurement detail: `measurements/chassis.md`.
 
 Key figures: deck 79 x 140 x 2mm. Battery holder (open 4-cell 18650, not sealed) occupies the full
-width at Y 21-96.5, Z 2-21.5, leaving a 21mm-deep front zone and a 43.5mm-deep rear zone. Tower/mast
+width at Y 21-96.5, Z 2-21.5, leaving a 21mm-deep REAR zone and a 43.5mm-deep FRONT zone. Tower/mast
 opening: Ø14 at (39.5, 113). Tracks sit about 5mm above the deck and extend about 50mm outboard of
 each deck edge (overall vehicle width 179mm).
 

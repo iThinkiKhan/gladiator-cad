@@ -22,6 +22,13 @@ summary, not a second documentation tree.
 
 ## Current shared state
 
+2026-10-09 — **Mast is FRONT**, per Jim. Current frame +Y forward, +X right,
++Z up; origin rear-left. Low X LEFT, high X RIGHT. No geometry or wiring move.
+See ../ORIENTATION.md before interpreting older front/rear or left/right notes.
+Firmware swaps logical tracks and reverses both polarities; native CAD carries
+the same frame. Head master faces +Y at legacy pan180 (a travel endpoint, not
+a centered servo home). Historical aliases and print plates stay unchanged.
+
 No cross-agent state has been formally summarized here yet.
 
 Agents should add concise, verified current state as work proceeds.

@@ -93,6 +93,8 @@ void RobotLink::run(){
     uint32_t now=millis();Frame frame;
     for(unsigned budget=0;budget<1024&&serial_.available();++budget)if(buffers_->decoder.feed(serial_.read(),now,frame))receive(frame,Transport::UART);
     buffers_->wifi.poll(now,[&](const uint8_t *p,size_t n){for(size_t i=0;i<n;++i)if(buffers_->wifiDecoder.feed(p[i],now,frame))receive(frame,Transport::WIFI);});
+    // Receive timestamps may be newer than the loop's initial clock sample.
+    now=millis();
     uint32_t request=wifiRequest_.exchange(0);if(request){wifiLeaseStart_=now;wifiLeaseMs_=request==UINT32_MAX?0:request;}
     if(wifiLeaseMs_&&uint32_t(now-wifiLeaseStart_)>=wifiLeaseMs_)wifiLeaseMs_=0;
     if(selector_.update(uartHealth_,wifiHealth_,now)){++generation_;buffers_->detail.size=0;}

@@ -1,5 +1,27 @@
 # Current Handoff
 
+## Orientation supersedes earlier directional descriptions — 2026-10-09 (Codex)
+
+Jim chose **mast = FRONT**. Read ../ORIENTATION.md first: +Y forward, low X
+LEFT, high X RIGHT. The switch v1b still occupies the high-X rail, now RIGHT
+and frontward; the October5 handedness instructions below are historical.
+No rewiring, mirrored parts, new aluminum features, or changed print plates.
+The head viewing master faces +Y at legacy pan180, within the existing checked
+range but at its endpoint. A centered front-facing head scan needs a separate
+indexing/travel/harness review; do not silently change its servo limits.
+After the frame update, physically confirm forward and turn directions with
+tracks clear before normal driving; software/OTA checks do not prove motor motion.
+
+Verified this session: S3 OTA accepted mast-front image SHA256
+7f42a21a58e819d8cfc3875456e0e31e68d33fc4dc8d9d3d8e126f4cb78cfeff,
+1524640 bytes. Boot3, app0, marked valid; SAFE/disarmed with0/0 outputs.
+Runtime pin map LEFT EN2/PWM42,41; RIGHT EN16,11/PWM17,12; both inverted.
+UART telemetry stayed live, frame-error counter unchanged at1. Exhaustive
+host checks passed80802 track/trim cases and2025 IMU rebases. Chassis native
+reload preserved162 original shapes. IMU/ToF/radar remain offline; actual
+motor motion and measured IMU orientation have not been physically confirmed.
+
+
 ## Power tray v5 + INA226 cassette v2 — 2026-10-03 (Claude)
 
 Jim printed v4 and the v1 cassette and found: the click bumps and 0.25-clearance pegs were far too tight (nothing came out and the thin

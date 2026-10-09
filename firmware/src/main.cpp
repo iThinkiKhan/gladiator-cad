@@ -10,6 +10,7 @@
 #include <rom/rtc.h>
 #include <esp_ota_ops.h>
 #include "BoardConfig.h"
+#include "Orientation.h"
 #include "sensors/SensorManager.h"
 #include "status/StatusLed.h"
 #include "gateway/RobotLink.h"
@@ -19,13 +20,14 @@
 
 namespace {
 
-// BTS7960 pin map. The right driver's R_EN and L_EN are tied together on GPIO2.
+// Robot-relative mast-front pin map. The LEFT driver's enables are tied on GPIO2.
 constexpr uint8_t LEFT_R_EN_PIN = board::LEFT_R_EN;
 constexpr uint8_t LEFT_RPWM_PIN = board::LEFT_RPWM;
 constexpr uint8_t LEFT_L_EN_PIN = board::LEFT_L_EN;
 constexpr uint8_t LEFT_LPWM_PIN = board::LEFT_LPWM;
 
-constexpr uint8_t RIGHT_ENABLE_PIN = board::RIGHT_ENABLE;
+constexpr uint8_t RIGHT_R_EN_PIN = board::RIGHT_R_EN;
+constexpr uint8_t RIGHT_L_EN_PIN = board::RIGHT_L_EN;
 constexpr uint8_t RIGHT_RPWM_PIN = board::RIGHT_RPWM;
 constexpr uint8_t RIGHT_LPWM_PIN = board::RIGHT_LPWM;
 
@@ -38,40 +40,21 @@ constexpr uint32_t PWM_FREQUENCY_HZ = 18000;
 constexpr uint8_t PWM_RESOLUTION_BITS = 8;
 constexpr uint16_t PWM_MAX_DUTY = (1U << PWM_RESOLUTION_BITS) - 1U;
 
-// Confirmed by the first powered test: both BTS7960 boards need the same
-// logical polarity. The earlier right-side inversion swapped translation and
-// rotation (Right drove forward, Left drove backward).
-constexpr bool LEFT_MOTOR_INVERTED = false;
-constexpr bool RIGHT_MOTOR_INVERTED = false;
+// Both tracks reverse relative to the former mast-rear frame. Together with
+// the L/R swap above this preserves robot-relative turn directions.
+constexpr bool LEFT_MOTOR_INVERTED = orientation::MOTOR_INVERTED;
+constexpr bool RIGHT_MOTOR_INVERTED = orientation::MOTOR_INVERTED;
 
 constexpr uint32_t COMMAND_TIMEOUT_MS = 350;
 constexpr uint32_t STATUS_INTERVAL_MS = 250;
 constexpr uint32_t RAMP_INTERVAL_MS = 20;
 constexpr int8_t RAMP_STEP_PERCENT = 5;
 constexpr uint32_t POWER_LOG_INTERVAL_MS = 1000;
-// Measured 2026-09-08 on carpet with the BNO085 game rotation vector: eight
-// forward runs at left+right=100 with the trim bypassed (unequal pairs skip
-// applyForwardTrim) gave veer_rate = 0.580*d + 13.08 deg/s, where d = left-right.
-// Straight running needs d = -22.5, bracketed by measurements at d=-18 (+2.44
-// deg/s) and d=-24 (-1.12 deg/s). At left=50 this yields an 11 point shift, so
-// 39/61. The direction was always correct; the previous value of 5 was simply
-// about a quarter of the required magnitude.
-//
-// Caveats: measured only at left+right=100 and on one carpet, so the assumed
-// proportionality to commanded power is untested at other speeds. Above roughly
-// 78% the opposite track saturates at 100 and the correction stops growing. A
-// 22% imbalance is large enough to be worth investigating mechanically rather
-// than only compensating in software.
-// Applies only to normal straight-ahead commands; turns, reverse and Overdrive
-// retain their direct requested values.
-constexpr uint8_t FORWARD_RIGHT_TRIM_PERCENT = 22;
-// Reverse was never trimmed at all before this, so it still curved once forward
-// was straight. Measured the same way (reverse always bypassed the trim, so a
-// true d=0 point was available): veer_rate = 0.645*d - 9.30 deg/s, balancing at
-// d = +14.4. The sign is opposite to forward only because both tracks invert;
-// in magnitudes forward wants 39/61 and reverse 43/57, so the same track is
-// held back either way, just by different amounts.
-constexpr uint8_t REVERSE_RIGHT_TRIM_PERCENT = 14;
+// Historical carpet calibration (2026-09-08, mast-rear frame): forward
+// favored old right by 22% (39/61 at 50%), reverse by 14% (43/57).
+// Orientation.h preserves these physical corrections after the frame flip:
+// new forward L/R=57/43; new reverse=-61/-39. Equal commands only; no trim
+// for turns or Overdrive. Other speeds/surfaces still need physical validation.
 
 constexpr uint8_t FRAME_MAGIC_COMMAND = 0x47; // 'G'
 constexpr uint8_t FRAME_MAGIC_STATUS = 0x53;  // 'S'
@@ -117,7 +100,7 @@ const char *controlSourceName(ControlSource source){
 Motor leftMotor = {
     LEFT_R_EN_PIN,
     LEFT_L_EN_PIN,
-    true,
+    board::LEFT_SEPARATE_ENABLES,
     LEFT_RPWM_PIN,
     LEFT_LPWM_PIN,
     LEFT_RPWM_CHANNEL,
@@ -127,9 +110,9 @@ Motor leftMotor = {
 };
 
 Motor rightMotor = {
-    RIGHT_ENABLE_PIN,
-    RIGHT_ENABLE_PIN,
-    false,
+    RIGHT_R_EN_PIN,
+    RIGHT_L_EN_PIN,
+    board::RIGHT_SEPARATE_ENABLES,
     RIGHT_RPWM_PIN,
     RIGHT_LPWM_PIN,
     RIGHT_RPWM_CHANNEL,
@@ -611,7 +594,8 @@ void updateLinkRadios(uint32_t now){
   if(batteryRadiosShed||now-checked<500)return;checked=now;
   const bool wanted=gatewayLink.needsWifi();
   if(wanted&&!stationMode&&now>robotlink::LOSS_MS){
-    WiFi.mode(WIFI_AP_STA);WiFi.setSleep(false);
+    // BLE stays active during fallback; the S3 radio requires modem sleep.
+    WiFi.setSleep(true);WiFi.mode(WIFI_AP_STA);
     if(!maintenanceApActive){maintenanceApActive=WiFi.softAP(MAINTENANCE_AP_NAME,MAINTENANCE_AP_PASSWORD);maintenanceServer.begin();ArduinoOTA.begin();}
     stationMode=true;lastAttempt=now;WiFi.begin(robotlink::FIELD_SSID,robotlink::FIELD_PASSWORD);
     appendLog("Gladiator Link: seeking C6 field network; S3 recovery AP available");
@@ -623,7 +607,7 @@ void updateLinkRadios(uint32_t now){
 
 void setupMaintenanceWifi() {
   WiFi.mode(WIFI_AP);
-  WiFi.setSleep(false);
+  WiFi.setSleep(true); // Keep STA fallback compatible with the BLE controller.
   if (!WiFi.softAP(MAINTENANCE_AP_NAME, MAINTENANCE_AP_PASSWORD)) {
     maintenanceApActive = false;
     appendLog("Maintenance Wi-Fi AP failed to start");
@@ -700,6 +684,13 @@ void setupMaintenanceWifi() {
     json += ",\"batteryCells\":" + String(board::BATTERY_CELLS);
     json += ",\"voltsPerCell\":" + String(ina226SampleValid ? busMillivolts / 1000.0F / board::BATTERY_CELLS : 0.0F, 3);
     json += ",\"lockoutVolts\":" + String(board::BATTERY_LOCKOUT_V, 2);
+    json += ",\"orientation\":\"" + String(orientation::NAME) + "\"";
+    json += ",\"motorPins\":{\"left\":{\"rEn\":" + String(board::LEFT_R_EN);
+    json += ",\"lEn\":" + String(board::LEFT_L_EN) + ",\"rPwm\":" + String(board::LEFT_RPWM);
+    json += ",\"lPwm\":" + String(board::LEFT_LPWM) + ",\"inverted\":true}";
+    json += ",\"right\":{\"rEn\":" + String(board::RIGHT_R_EN) + ",\"lEn\":" + String(board::RIGHT_L_EN);
+    json += ",\"rPwm\":" + String(board::RIGHT_RPWM) + ",\"lPwm\":" + String(board::RIGHT_LPWM);
+    json += ",\"inverted\":true}}";
     json += '}';
     maintenanceServer.send(200, "application/json", json);
   });
@@ -999,21 +990,7 @@ int8_t rampToward(int8_t current, int8_t target) {
 // straight-ahead; turns carry their own differential and Overdrive is untrimmed
 // by design.
 void applyStraightTrim(int8_t &left, int8_t &right) {
-  if (commandOverdrive || left != right || left == 0) {
-    return;
-  }
-
-  if (left > 0) {
-    const int adjustment = max(1, (left * FORWARD_RIGHT_TRIM_PERCENT + 50) / 100);
-    left = static_cast<int8_t>(max(0, left - adjustment));
-    right = static_cast<int8_t>(min(100, right + adjustment));
-  } else {
-    // Same physical track held back, applied to magnitudes so the sign works out.
-    const int magnitude = -left;
-    const int adjustment = max(1, (magnitude * REVERSE_RIGHT_TRIM_PERCENT + 50) / 100);
-    left = static_cast<int8_t>(min(0, left + adjustment));
-    right = static_cast<int8_t>(max(-100, right - adjustment));
-  }
+  orientation::straightTrim(left, right, commandOverdrive);
 }
 
 void updateMotorOutputs() {
@@ -1230,11 +1207,13 @@ void setupPwmPin(uint8_t pin, uint8_t channel) {
 void setupMotors() {
   pinMode(LEFT_R_EN_PIN, OUTPUT);
   pinMode(LEFT_L_EN_PIN, OUTPUT);
-  pinMode(RIGHT_ENABLE_PIN, OUTPUT);
+  pinMode(RIGHT_R_EN_PIN, OUTPUT);
+  pinMode(RIGHT_L_EN_PIN, OUTPUT);
 
   digitalWrite(LEFT_R_EN_PIN, LOW);
   digitalWrite(LEFT_L_EN_PIN, LOW);
-  digitalWrite(RIGHT_ENABLE_PIN, LOW);
+  digitalWrite(RIGHT_R_EN_PIN, LOW);
+  digitalWrite(RIGHT_L_EN_PIN, LOW);
 
   setupPwmPin(LEFT_RPWM_PIN, LEFT_RPWM_CHANNEL);
   setupPwmPin(LEFT_LPWM_PIN, LEFT_LPWM_CHANNEL);
@@ -1404,6 +1383,7 @@ void loop() {
   static uint32_t lastSystem=0;
   if(now-lastSystem>=1000){ControlGuard guard;lastSystem=now;JsonDocument system;
     system["firmware"]="Gladiator S3 Interface v1 / Link v2";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
+    system["orientation"]=orientation::NAME;
     system["resetReason"]=status::resetReasonName(bootReason);system["bootCount"]=bootCount;system["otaSlot"]=otaPartition;
     system["batteryState"]=batteryStateName(batteryState);system["powerSource"]=benchPowerActive?"BENCH":"LIPO";
     system["benchPower"]=benchPowerActive;system["benchPowerSource"]=benchPowerSourceName();

@@ -111,7 +111,9 @@ String sensorJson(const RobotSensors &data) {
   mounting["rollDeg"]=board::IMU_MOUNT_ROLL_DEG;
   mounting["pitchDeg"]=board::IMU_MOUNT_PITCH_DEG;
   mounting["yawDeg"]=nullptr;
-  mounting["note"]="Both derived blocks are in chassis frame: the mount tilt is removed from a copy. Native quaternions are unmodified. Yaw offset is not observable from gravity and is not corrected.";
+  mounting["chassisOrientation"]="MAST_FRONT";
+  mounting["chassisFrameYawRebaseDeg"]=180;
+  mounting["note"]="Both derived blocks use the mast-front chassis frame: historical mount tilt is removed, then body frame rebased 180 degrees. Native quaternions are unmodified; unknown sensor yaw offset remains uncalibrated.";
   imu["derived"]["valid"]=data.imu.derived.valid;
   imu["derived"]["headingValid"]=headingValid(data.imu,millis());
   if (data.imu.derived.valid) {

@@ -1,4 +1,5 @@
 #include "BNO085Sensor.h"
+#include "../Orientation.h"
 #include <esp_timer.h>
 #include <math.h>
 
@@ -33,10 +34,11 @@ bool eulerFromMounted(float real, float i, float j, float k,
   const float cr = cosf(r), sr = sinf(r), cp = cosf(p), sp = sinf(p);
   // conj of the mount quaternion built from (roll, pitch, yaw = 0)
   const float mw = cr*cp, mx = -sr*cp, my = -cr*sp, mz = sr*sp;
-  const float w = real*mw - i*mx - j*my - k*mz;
-  const float x = real*mx + i*mw + j*mz - k*my;
-  const float y = real*my - i*mz + j*mw + k*mx;
-  const float z = real*mz + i*my - j*mx + k*mw;
+  float w = real*mw - i*mx - j*my - k*mz;
+  float x = real*mx + i*mw + j*mz - k*my;
+  float y = real*my - i*mz + j*mw + k*mx;
+  float z = real*mz + i*my - j*mx + k*mw;
+  orientation::rebaseQuaternion(w, x, y, z);
   return eulerFrom(w, x, y, z, rollDeg, pitchDeg, yawDeg);
 }
 } // namespace

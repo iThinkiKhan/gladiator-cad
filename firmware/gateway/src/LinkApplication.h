@@ -129,6 +129,8 @@ void uartTask(void *){
     for(int i=0;i<n;++i)if(decoder.feed(bytes[i],now,frame))receiveTyped(frame,Transport::UART);
     int client=accept(listener,nullptr,nullptr);if(client>=0){if(wifiChannel.fd>=0)::close(client);else{wifiDecoder.reset();wifiHealth=Health{};wifiChannel.attach(client,true,now);lastWifiRx=now;}}
     wifiChannel.poll(now,[&](const uint8_t *p,size_t count){for(size_t i=0;i<count;++i)if(wifiDecoder.feed(p[i],now,frame)){receiveTyped(frame,Transport::WIFI);lastWifiRx=now;}});
+    // Refresh after RX so unsigned age checks cannot precede fresh heartbeats.
+    now=nowMs();
     if(wifiChannel.fd>=0&&now-lastWifiRx>LOSS_MS){wifiChannel.close();wifiHealth=Health{};}
     if(now-lastHeartbeat>=HEARTBEAT_MS){lastHeartbeat=now;
       for(Transport t:{Transport::UART,Transport::WIFI}){auto &h=t==Transport::UART?uartHealth:wifiHealth;Peer p;p.role=2;p.active=primary;p.probe=++h.probe;p.echoBoot=h.boot;p.echoProbe=h.peerProbe;

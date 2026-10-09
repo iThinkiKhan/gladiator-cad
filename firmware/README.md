@@ -1,5 +1,10 @@
 # Gladiator
 
+**2026-10-09: mast is FRONT.** Logical LEFT is the native-USB-side driver;
+RIGHT is the USB-to-UART-side driver. Wiring is unchanged; both track polarities
+are reversed in software. See [orientation](docs/ORIENTATION.md). Do not invert
+the phone/C6 controls a second time. `/api/status` reports `MAST_FRONT` and pins.
+
 **Next milestone: [Interface v1](docs/INTERFACE_V1.md).** Field controls on the
 phone, one C6 development interface, independent S3 recovery service. S3 remains
 the authoritative controller. Implementation is built and host-tested; paired
@@ -39,20 +44,16 @@ The PlatformIO target is configured for the installed N16R8 module: 16 MB flash,
 
 | Track | Signal | ESP32-S3 GPIO |
 | --- | --- | ---: |
-| Left | R_EN | 16 |
-| Left | RPWM | 17 |
-| Left | L_EN | 11 |
-| Left | LPWM | 12 |
-| Right | R_EN + L_EN (tied) | 2 |
-| Right | RPWM | 42 |
-| Right | LPWM | 41 |
+| Left | R_EN + L_EN (tied) | 2 |
+| Left | RPWM | 42 |
+| Left | LPWM | 41 |
+| Right | R_EN | 16 |
+| Right | RPWM | 17 |
+| Right | L_EN | 11 |
+| Right | LPWM | 12 |
 
 R_IS and L_IS are unused. The S3 ground, both BTS7960 logic grounds, and battery
 ground must be common. Motor power comes from VBATT at the drivers, not USB.
-
-The left driver is on the USB-to-UART/UART-side header (GPIO16/17/11/12).
-The right driver is on the native-USB-side header (GPIO2/42/41), with its two
-enable inputs tied together on GPIO2.
 
 ## First test
 
@@ -60,9 +61,9 @@ enable inputs tied together on GPIO2.
 2. Build and upload the `gladiator_s3` PlatformIO environment on COM25.
 3. Open the phone app, choose **Drive**, connect to **Gladiator**, then arm.
 4. Select 25% and briefly hold each direction.
-5. The first powered test confirmed that both drivers use the same logical
-   polarity, so Forward/Reverse command both tracks together and Left/Right
-   command opposite track directions.
+5. Forward must now move toward the mast. Both drivers are software-inverted
+   relative to the historical powered test, with logical tracks exchanged.
+   Confirm forward, reverse, and both turns with tracks clear before driving.
 
 ## INA power monitor wiring
 

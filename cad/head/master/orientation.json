@@ -1,0 +1,30 @@
+{
+  "orientation": "MAST_FRONT",
+  "front": [
+    0,
+    1,
+    0
+  ],
+  "right": [
+    1,
+    0,
+    0
+  ],
+  "up": [
+    0,
+    0,
+    1
+  ],
+  "legacy_pan_pose_deg": 180.0,
+  "legacy_travel_deg": [
+    -20,
+    180
+  ],
+  "front_relative_travel_deg": [
+    -200,
+    0
+  ],
+  "centered_home": false,
+  "source_print_geometry_changed": false,
+  "native_reload_checked": true
+}

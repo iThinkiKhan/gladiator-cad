@@ -1,5 +1,11 @@
 # Mast-head hardware dimensions
 
+2026-10-09 robot-frame decision: **mast is FRONT (+Y)**, +X right, +Z up;
+see [orientation](../docs/ORIENTATION.md). Historical chassis directions below
+retain their original mast-rear meaning. Head-local front is always the sensor
+face, rear the display face. Source construction pan0 faces -Y; the current
+head master shows +Y at the existing checked pan180 endpoint, not centered home.
+
 Recorded from Jim's measurements and supplied specification table, 2026-09-16. All dimensions in mm unless stated. CAD-server copy: `measurements/mast-head.md`. Keep raw measurements distinct from design allowances and inferred geometry.
 
 ## SG90 servos — physical measurements

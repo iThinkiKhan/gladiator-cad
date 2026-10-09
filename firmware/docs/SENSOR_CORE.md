@@ -18,10 +18,13 @@ All addresses above are 7-bit. The example 0x52 address from the planning chat
 does not describe this SEN0628 board: its RP2040 presents a different protocol.
 The SEN0610 is a 24 GHz radar with I2C/UART interfaces, not a Wi-Fi peripheral.
 
-The established motor pins are now left: 16,17,11,12 on the USB-to-UART/UART
-side, and right: 2,42,41 on the native-USB side, with the right driver's enable
-inputs tied together on GPIO2. Native USB uses GPIO19/20. These pins and bus
-settings live in `src/BoardConfig.h`.
+Mast-FRONT frame adopted 2026-10-09 (physical wiring unchanged): LEFT:
+EN2/RPWM42/LPWM41 (enables tied); RIGHT: R_EN16/L_EN11/RPWM17/LPWM12
+(separate enables). Both logical tracks are inverted; see ORIENTATION.md.
+Both derived IMU quaternion paths remove the historical mount tilt, then apply
+the known 180-degree body-frame rebase. Raw sensor data is unchanged and unknown
+sensor yaw calibration stays unknown. Native USB
+uses GPIO19/20. These pins and bus settings live in `src/BoardConfig.h`.
 Bus speed is 400 kHz; each Wire transaction has a 10 ms timeout. Do not use
 0x4A/B for an INA226 in this stack: these addresses are reserved for the IMU.
 

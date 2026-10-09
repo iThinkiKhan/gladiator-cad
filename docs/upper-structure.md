@@ -1,5 +1,7 @@
 # Upper structure design log — retired
 
+Current frame: **mast = FRONT (+Y)**, +X right; see [ORIENTATION.md](ORIENTATION.md).
+
 This file's content was merged into **`docs/GLADIATOR_DESIGN.md`** on 2026-09-17, which now covers
 the whole vehicle (chassis, upper structure, mast, and a summary of the separate mast-head
 workstream) in one place.

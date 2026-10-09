@@ -7,6 +7,16 @@ Use dated entries and include the reason or evidence behind the decision.
 
 Do not record brainstorming or unaccepted proposals as decisions.
 
+## 2026-10-09 — mast end is FRONT
+
+Jim: "we have been using the mast as REAR, and I want it to be FRONT"; update
+notes, CAD, and firmware. Keep CAD coordinates and physical wiring fixed.
+Current frame +Y forward, +X right, +Z up, rear-left origin; logical tracks
+swap and both reverse polarity. Known chassis yaw rebase is180 degrees, not
+a new IMU calibration. Mapping and mechanical limitations: ../ORIENTATION.md.
+This decision does not approve new deck machining, mirrored print parts, or
+a centered head-travel redesign. Earlier dated directional labels are historical.
+
 ## 2026-10-03 — round-3 coupons: screen pocket and sideways nut pocket
 
 Evidence is in `measurements/mast-head.md`, "Round-3 coupon results".
