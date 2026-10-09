@@ -39,16 +39,20 @@ The PlatformIO target is configured for the installed N16R8 module: 16 MB flash,
 
 | Track | Signal | ESP32-S3 GPIO |
 | --- | --- | ---: |
-| Right | R_EN | 16 |
-| Right | RPWM | 17 |
-| Right | L_EN | 11 |
-| Right | LPWM | 12 |
-| Left | R_EN + L_EN (tied) | 2 |
-| Left | RPWM | 42 |
-| Left | LPWM | 41 |
+| Left | R_EN | 16 |
+| Left | RPWM | 17 |
+| Left | L_EN | 11 |
+| Left | LPWM | 12 |
+| Right | R_EN + L_EN (tied) | 2 |
+| Right | RPWM | 42 |
+| Right | LPWM | 41 |
 
 R_IS and L_IS are unused. The S3 ground, both BTS7960 logic grounds, and battery
 ground must be common. Motor power comes from VBATT at the drivers, not USB.
+
+The left driver is on the USB-to-UART/UART-side header (GPIO16/17/11/12).
+The right driver is on the native-USB-side header (GPIO2/42/41), with its two
+enable inputs tied together on GPIO2.
 
 ## First test
 
