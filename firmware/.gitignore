@@ -1,0 +1,11 @@
+.pio/
+gateway/.pio/
+gateway/managed_components/
+diagnostics/
+__pycache__/
+
+# Local credentials and overrides
+shared/secrets.h
+platformio_local.ini
+.pio_upload_s3/
+/=
