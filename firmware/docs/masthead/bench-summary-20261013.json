@@ -1,0 +1,38 @@
+{
+  "durationSeconds": 90.02,
+  "completeJpegFrames": 1343,
+  "framesPerSecond": 14.92,
+  "bytesReceived": 8069120,
+  "meanJpegBytes": 5652.8,
+  "cameraLatencyMs": {
+    "median": 109.0,
+    "max": 172.0
+  },
+  "gatewayLatencyMs": {
+    "median": 78.0,
+    "max": 94.0
+  },
+  "visualLatencyMs": {
+    "median": 63.0,
+    "max": 93.0
+  },
+  "cameraFreeHeapRange": [
+    148932,
+    165176
+  ],
+  "psramConstant": true,
+  "cameraPollErrorValues": [
+    0
+  ],
+  "gatewayFrameErrorValues": [
+    0
+  ],
+  "date": "2026-10-13",
+  "cameraDetectedAfterRibbonCheck": true,
+  "gatewayRebootRecoveryPassed": true,
+  "cameraCounterPreserved": true,
+  "cameraAddressPersisted": true,
+  "displayConnected": false,
+  "s3TelemetryPresent": false,
+  "endurance30MinutesCompleted": false
+}
