@@ -35,6 +35,7 @@
 #include "InterfaceVocabulary.h"
 #include "GatewayConfig.h"
 #include "GatewayPage.h"
+#include "VisualState.h"
 
 namespace {
 constexpr char TAG[]="gateway";
@@ -206,6 +207,7 @@ esp_err_t fieldHandler(httpd_req_t *req){
 bool integerValue(cJSON *d,const char *key,double low,double high,double &out){
   auto v=cJSON_GetObjectItemCaseSensitive(d,key);if(!cJSON_IsNumber(v)||!std::isfinite(v->valuedouble)||std::floor(v->valuedouble)!=v->valuedouble||v->valuedouble<low||v->valuedouble>high)return false;out=v->valuedouble;return true;
 }
+#include "VisualApplication.h"
 esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
   Request request={};request.type=type;request.queuedMs=nowMs();request.size=w.size;
   if(w.size>sizeof(request.data))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Request too large");
@@ -290,6 +292,8 @@ void startHttp(){
   const Route routes[]={{"/",HTTP_GET,rootHandler},{"/api/status",HTTP_GET,statusHandler},
     {"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},
     {"/api/subscribe",HTTP_POST,subscriptionHandler},{"/api/link",HTTP_POST,linkHandler},
+    {"/api/visual",HTTP_GET,visualHandler},{"/api/visual",HTTP_POST,visualCommandHandler},
+    {"/api/visual/config",HTTP_POST,visualConfigHandler},
     {"/api/robot",HTTP_GET,robotHandler},{"/api/config",HTTP_POST,configHandler},
     {"/api/ping",HTTP_POST,pingHandler},{"/api/ota",HTTP_POST,otaHandler}};
   for(const auto &r:routes){httpd_uri_t uri={};uri.uri=r.uri;uri.method=r.method;uri.handler=r.handler;ESP_ERROR_CHECK(httpd_register_uri_handler(server,&uri));}
@@ -303,7 +307,7 @@ extern "C" void app_main(){
   stateMutex=xSemaphoreCreateMutex();configASSERT(stateMutex);
   esp_err_t err=nvs_flash_init();
   if(err==ESP_ERR_NVS_NO_FREE_PAGES||err==ESP_ERR_NVS_NEW_VERSION_FOUND){ESP_ERROR_CHECK(nvs_flash_erase());err=nvs_flash_init();}
-  ESP_ERROR_CHECK(err);bootId=esp_random();loadSettings();
+  ESP_ERROR_CHECK(err);bootId=esp_random();loadSettings();loadVisualSettings();
   requests=xQueueCreate(6,sizeof(Request));configASSERT(requests);
   startWifi();
   configASSERT(xTaskCreate(uartTask,"gladiator-link",12288,nullptr,LINK_TASK_PRIORITY,nullptr)==pdPASS);

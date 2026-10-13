@@ -23,3 +23,5 @@ test; IMU/ToF/radar offline. Deployed S3 coexistence/heartbeat fixes also copied
 into the shared firmware source; its secret macros preserved (no credentials
 added). Original CAD/user-dirty work backed up on CAD server at
 /home/buralien/gladiator-orientation-backup-20261009 before changes.
+
+2026-10-13 — Camera/C6 masthead bring-up and publication: see codex-masthead-20261013.md and firmware/docs/MASTHEAD.md. Camera stream/reconnect passed; TFT and S3 sensor effects remain pending.

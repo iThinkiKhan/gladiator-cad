@@ -22,6 +22,8 @@ summary, not a second documentation tree.
 
 ## Current shared state
 
+2026-10-13 — ESP32-CAM/C6 visual subsystem flashed and camera-tested: 14.92 fps QVGA over 90 seconds, gateway reboot recovery passed. TFT is not connected; S3 telemetry absent at the bench. Source/setup: ../../firmware/docs/MASTHEAD.md; next steps: agents/codex-masthead-20261013.md. Credentials and configured binaries are excluded from GitHub.
+
 2026-10-09 — **Mast is FRONT**, per Jim. Current frame +Y forward, +X right,
 +Z up; origin rear-left. Low X LEFT, high X RIGHT. No geometry or wiring move.
 See ../ORIENTATION.md before interpreting older front/rear or left/right notes.

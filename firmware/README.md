@@ -1,5 +1,7 @@
 # Gladiator
 
+**2026-10-13: [ESP32-CAM masthead visual subsystem](docs/MASTHEAD.md).** Camera and C6 flashed; QVGA streaming/reconnect bench checks pass. TFT is not yet wired; S3 sensor-driven expressions remain to be tested.
+
 **2026-10-09: mast is FRONT.** Logical LEFT is the native-USB-side driver;
 RIGHT is the USB-to-UART-side driver. Wiring is unchanged; both track polarities
 are reversed in software. See [orientation](docs/ORIENTATION.md). Do not invert

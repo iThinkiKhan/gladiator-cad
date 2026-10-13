@@ -9,3 +9,8 @@ shared/secrets.h
 platformio_local.ini
 .pio_upload_s3/
 /=
+
+# Camera credentials and generated masthead outputs
+cam/.pio/
+cam/src/LocalConfig.h
+build-output/
