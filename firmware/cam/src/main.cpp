@@ -8,10 +8,17 @@
 #include <esp_camera.h>
 #include <esp_http_server.h>
 #include <esp_heap_caps.h>
+#include <esp_ota_ops.h>
+#include <esp_app_format.h>
+#include <esp_system.h>
+#include <nvs.h>
+#include <mbedtls/sha256.h>
 #include <atomic>
 #include <cmath>
 #include "Config.h"
 #include "VisualState.h"
+#include "CamOtaPolicy.h"
+#include "MaintenancePage.h"
 
 namespace {
 SPIClass displaySpi(HSPI);
@@ -54,29 +61,36 @@ bool initCamera() {
   if(err!=ESP_OK){Serial.printf("Camera init failed: 0x%x\n",err);return false;}
   return true;
 }
+#include "Maintenance.h"
 esp_err_t statusHandler(httpd_req_t *req) {
-  StaticJsonDocument<768> doc;
+  StaticJsonDocument<1536> doc;
   VisualState s;xSemaphoreTake(stateMutex,portMAX_DELAY);s=state;xSemaphoreGive(stateMutex);
   doc["firmware"]=config::VERSION;doc["cameraReady"]=cameraReady.load();doc["streaming"]=streaming.load();
   doc["frames"]=frames.load();doc["streamErrors"]=streamErrors.load();doc["pollErrors"]=pollErrors.load();
   doc["freeHeap"]=ESP.getFreeHeap();doc["freePsram"]=ESP.getFreePsram();doc["displayBuffered"]=canvas&&canvas->pixels;
   doc["mode"]=visual::name(s.fresh&&visual::fresh(millis(),s.received,config::STALE_MS)?s.mode:visual::Mode::OFFLINE);
   doc["ip"]=WiFi.localIP().toString();doc["rssi"]=WiFi.RSSI();
-  char body[768];size_t n=serializeJson(doc,body,sizeof(body));
+  doc["role"]="masthead-camera";doc["bootId"]=bootId;doc["uptimeMs"]=millis();doc["otaEnabled"]=maintenanceReady;
+  doc["otaUpdating"]=otaUpdating.load();doc["otaPendingVerification"]=pendingVerification.load();
+  doc["otaSlot"]=esp_ota_get_running_partition()->label;
+  const auto *next=esp_ota_get_next_update_partition(nullptr);doc["otaMaxBytes"]=next?next->size:0;
+  doc["recoveryAp"]=recoveryActive.load();doc["recoverySsid"]=recoverySsid;doc["recoveryIp"]="192.168.9.1";
+  char body[1536];size_t n=serializeJson(doc,body,sizeof(body));
   httpd_resp_set_type(req,"application/json");httpd_resp_set_hdr(req,"Cache-Control","no-store");
   return httpd_resp_send(req,body,n);
 }
 esp_err_t rootHandler(httpd_req_t *req) {
-  constexpr char html[]=R"HTML(<!doctype html><meta name="viewport" content="width=device-width"><title>Gladiator camera</title><style>body{font:18px system-ui;background:#0c131a;color:white;max-width:640px;margin:32px auto}img{width:100%}</style><h1>Gladiator camera</h1><p>Live QVGA camera · display state comes from the C6 gateway.</p><button id="toggle">Start video</button><img id="feed" alt="Live camera" hidden><p><a href="/api/status">Subsystem status</a></p><script>let on=false;toggle.onclick=()=>{on=!on;feed.hidden=!on;if(on)feed.src='http://'+location.hostname+':81/stream';else feed.removeAttribute('src');toggle.textContent=on?'Stop video':'Start video'};document.addEventListener('visibilitychange',()=>{if(document.hidden&&on)toggle.click()});</script>)HTML";
+  constexpr char html[]=R"HTML(<!doctype html><meta name="viewport" content="width=device-width"><title>Gladiator camera</title><style>body{font:18px system-ui;background:#0c131a;color:white;max-width:640px;margin:32px auto}img{width:100%}</style><h1>Gladiator camera</h1><p>Live QVGA camera · display state comes from the C6 gateway.</p><button id="toggle">Start video</button><img id="feed" alt="Live camera" hidden><p><a href="/maintenance">Firmware updates and Wi-Fi settings</a></p><p><a href="/api/status">Subsystem status</a></p><script>let on=false;toggle.onclick=()=>{on=!on;feed.hidden=!on;if(on)feed.src='http://'+location.hostname+':81/stream';else feed.removeAttribute('src');toggle.textContent=on?'Stop video':'Start video'};document.addEventListener('visibilitychange',()=>{if(document.hidden&&on)toggle.click()});</script>)HTML";
   httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,html,HTTPD_RESP_USE_STRLEN);
 }
 esp_err_t streamHandler(httpd_req_t *req) {
+  if(otaUpdating){httpd_resp_set_status(req,"503 Service Unavailable");return httpd_resp_send(req,"Firmware update in progress",HTTPD_RESP_USE_STRLEN);}
   if(!cameraReady){httpd_resp_set_status(req,"503 Service Unavailable");return httpd_resp_send(req,"Camera unavailable",HTTPD_RESP_USE_STRLEN);}
   bool expected=false;if(!streaming.compare_exchange_strong(expected,true)){httpd_resp_set_status(req,"503 Service Unavailable");return httpd_resp_send(req,"One viewer at a time",HTTPD_RESP_USE_STRLEN);}
   httpd_resp_set_type(req,"multipart/x-mixed-replace;boundary=gladiator-frame");
   httpd_resp_set_hdr(req,"Cache-Control","no-store");
   esp_err_t err=ESP_OK;
-  while(err==ESP_OK&&WiFi.status()==WL_CONNECTED) {
+  while(err==ESP_OK&&(WiFi.status()==WL_CONNECTED||recoveryActive)&&!otaUpdating) {
     const uint32_t start=millis();camera_fb_t *fb=esp_camera_fb_get();
     if(!fb){err=ESP_FAIL;break;}
     char header[128];int n=snprintf(header,sizeof(header),"\r\n--gladiator-frame\r\nContent-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n",unsigned(fb->len));
@@ -89,12 +103,15 @@ esp_err_t streamHandler(httpd_req_t *req) {
   if(err!=ESP_OK)++streamErrors;streaming=false;return ESP_FAIL; // Close the old multipart socket.
 }
 bool startServers() {
-  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=6144;cfg.max_uri_handlers=3;
+  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=8192;cfg.max_uri_handlers=8;
   cfg.max_open_sockets=3;cfg.lru_purge_enable=true;cfg.send_wait_timeout=2;cfg.recv_wait_timeout=2;
   if(httpd_start(&api,&cfg)!=ESP_OK)return false;
   httpd_uri_t root={};root.uri="/";root.method=HTTP_GET;root.handler=rootHandler;
   httpd_uri_t status={};status.uri="/api/status";status.method=HTTP_GET;status.handler=statusHandler;
   if(httpd_register_uri_handler(api,&root)!=ESP_OK||httpd_register_uri_handler(api,&status)!=ESP_OK)return false;
+  struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
+  const Route routes[]={{"/maintenance",HTTP_GET,maintenanceHandler},{"/api/ota",HTTP_POST,camOtaHandler},{"/api/confirm",HTTP_POST,confirmHandler},{"/api/config",HTTP_POST,camConfigHandler}};
+  for(const auto &r:routes){httpd_uri_t route={};route.uri=r.uri;route.method=r.method;route.handler=r.handler;if(httpd_register_uri_handler(api,&route)!=ESP_OK)return false;}
   cfg.server_port=81;cfg.ctrl_port+=1;cfg.max_open_sockets=1;cfg.max_uri_handlers=1;
   // The infinite stream has its own HTTP task. Status stays responsive.
   if(httpd_start(&video,&cfg)!=ESP_OK)return false;
@@ -103,7 +120,8 @@ bool startServers() {
 }
 bool pollGateway() {
   WiFiClient client;HTTPClient http;http.setConnectTimeout(250);http.setTimeout(300);http.useHTTP10(true);
-  if(!http.begin(client,String(VISUAL_GATEWAY_URL)+"/api/visual"))return false;
+  auto settings=networkSnapshot();
+  if(!http.begin(client,String(settings.gateway)+"/api/visual"))return false;
   int code=http.GET(),length=http.getSize();bool ok=false;
   if(code==200&&length>0&&length<=1536) {
     // Arduino 2.x rounds WiFiClient timeout to whole seconds. Collect explicitly
@@ -133,11 +151,18 @@ bool pollGateway() {
 void networkTask(void *) {
   uint32_t retry=millis()-10000;bool wasConnected=false;
   for(;;) {
+    lastNetworkMs=millis();
+    if(otaUpdating){vTaskDelay(pdMS_TO_TICKS(100));continue;}
+    if(networkChanged.exchange(false)){startRecovery();WiFi.disconnect();retry=millis()-10000;disconnectedSince=millis();}
     if(WiFi.status()!=WL_CONNECTED) {
-      if(millis()-retry>=10000){retry=millis();if(strlen(VISUAL_WIFI_SSID))WiFi.begin(VISUAL_WIFI_SSID,VISUAL_WIFI_PASSWORD);}
+      // Keep recovery clients on a stable channel while they administer the CAM.
+      if(!(recoveryActive&&WiFi.softAPgetStationNum()>0)&&millis()-retry>=(recoveryActive?60000u:10000u)){retry=millis();auto settings=networkSnapshot();if(validNetwork(settings))WiFi.begin(settings.ssid,settings.password);}
+      if(millis()-disconnectedSince>=config::RECOVERY_MS)startRecovery();
       wasConnected=false;
     } else {
+      disconnectedSince=millis();
       if(!wasConnected){Serial.printf("Camera IP: %s\n",WiFi.localIP().toString().c_str());wasConnected=true;}
+      if(recoveryActive&&WiFi.softAPgetStationNum()==0){WiFi.softAPdisconnect(true);WiFi.mode(WIFI_STA);recoveryActive=false;}
       if(!pollGateway())++pollErrors;
     }
     vTaskDelay(pdMS_TO_TICKS(config::POLL_MS));
@@ -175,18 +200,25 @@ void render(const VisualState &s,uint32_t now) {
 void setup() {
   Serial.begin(115200);pinMode(4,OUTPUT);digitalWrite(4,LOW); // Flash LED stays off; no display reset on GPIO4.
   stateMutex=xSemaphoreCreateMutex();configASSERT(stateMutex);
+  bootId=esp_random();maintenanceReady=loadCamSettings();
+  if(!maintenanceReady)Serial.println("CAM settings unavailable; OTA disabled.");
   displaySpi.begin(config::SCLK,-1,config::MOSI,config::CS);
   tft.init(VISUAL_TFT_WIDTH,VISUAL_TFT_HEIGHT);tft.setRotation(VISUAL_TFT_ROTATION);tft.setSPISpeed(20000000);tft.fillScreen(ST77XX_BLACK);
   canvas=new Canvas(tft.width(),tft.height()-48);
   if(!canvas->pixels)Serial.println("Animation buffer unavailable; text status remains active.");
   cameraReady=initCamera();
-  WiFi.mode(WIFI_STA);WiFi.setHostname("gladiator-camera");WiFi.setSleep(false);
-  if(!strlen(VISUAL_WIFI_SSID))Serial.println("Configure LocalConfig.h before deployment. Offline display is active.");
-  if(!startServers())Serial.println("HTTP server startup failed; display continues.");
+  WiFi.mode(WIFI_STA);WiFi.setHostname("gladiator-camera");WiFi.setSleep(false);WiFi.setAutoReconnect(false);
+  if(!validNetwork(networkSnapshot()))Serial.println("Wi-Fi not configured; recovery AP will start in 30 seconds.");
+  httpReady=startServers();if(!httpReady)Serial.println("HTTP server startup failed; display continues.");
   configASSERT(xTaskCreatePinnedToCore(networkTask,"visual-network",6144,nullptr,1,nullptr,0)==pdPASS);
 }
 void loop() {
+  maintenanceLoop();
+  if(otaUpdating){displayPaused=true;delay(10);return;}
+  displayPaused=false;
   uint32_t start=millis();VisualState s;
+  static uint32_t lastCameraRetry=0;
+  if(!cameraReady&&start-lastCameraRetry>=10000){lastCameraRetry=start;cameraReady=initCamera();}
   xSemaphoreTake(stateMutex,portMAX_DELAY);s=state;xSemaphoreGive(stateMutex);render(s,start);
   uint32_t elapsed=millis()-start;delay(elapsed<config::FRAME_MS?config::FRAME_MS-elapsed:1);
 }

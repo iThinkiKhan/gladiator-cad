@@ -22,6 +22,8 @@ summary, not a second documentation tree.
 
 ## Current shared state
 
+2026-10-13 — CAM OTA 1.1.2 installed and confirmed over Wi-Fi, rollback/interruption/corruption checks passed, recovery AP usable without gateway/sensor. USB power only; jumper supply untested. OV2640 currently reports 0x105 again: resolve before sealing. Details: ../../firmware/docs/masthead/cam-ota-20261013.md. Private CAM key remains local.
+
 2026-10-13 — ESP32-CAM/C6 visual subsystem flashed and camera-tested: 14.92 fps QVGA over 90 seconds, gateway reboot recovery passed. TFT is not connected; S3 telemetry absent at the bench. Source/setup: ../../firmware/docs/MASTHEAD.md; next steps: agents/codex-masthead-20261013.md. Credentials and configured binaries are excluded from GitHub.
 
 2026-10-09 — **Mast is FRONT**, per Jim. Current frame +Y forward, +X right,

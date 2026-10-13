@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-13",
+  "firmware": "masthead-1.1.2",
+  "imageBytes": 962864,
+  "imageSha256": "b9e0c00f4c69e04a6c67ad630bec8d55cc3a1c8b8616fd0e2b55b3ac37d820b6",
+  "transport": "HTTP over recovery Wi-Fi; USB attached for power",
+  "missingKeyRejected": true,
+  "wrongKeyRejected": true,
+  "wrongApplicationRejected": true,
+  "appendedImageDigestRejectedCorruption": true,
+  "interruptedUploadRetainedRunningBoot": true,
+  "automaticRollback": {
+    "from": "masthead-1.1.1 app1, pending verification",
+    "to": "masthead-1.1.0 app0, not pending"
+  },
+  "confirmedWirelessUpdates": [
+    {
+      "firmware": "masthead-1.1.1",
+      "fromSlot": "app0",
+      "toSlot": "app1",
+      "sha256": "60426c80a7606dff7e4b3b81861c53480d882559b38c7d389a4e36416b687918"
+    },
+    {
+      "firmware": "masthead-1.1.1",
+      "fromSlot": "app1",
+      "toSlot": "app0",
+      "sha256": "60426c80a7606dff7e4b3b81861c53480d882559b38c7d389a4e36416b687918"
+    },
+    {
+      "firmware": "masthead-1.1.2",
+      "fromSlot": "app0",
+      "toSlot": "app1",
+      "sha256": "b9e0c00f4c69e04a6c67ad630bec8d55cc3a1c8b8616fd0e2b55b3ac37d820b6"
+    }
+  ],
+  "bothSlotsOtaCapable": true,
+  "credentialFreeBuildRetainedProvisionedAccess": true,
+  "cameraReady": false,
+  "displayConnected": false,
+  "gatewayPresentDuringRecoveryTest": false,
+  "jumpersOnlyPowerTestPerformed": false,
+  "otaWhileStreamingTestPerformed": false
+}

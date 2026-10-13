@@ -25,3 +25,5 @@ added). Original CAD/user-dirty work backed up on CAD server at
 /home/buralien/gladiator-orientation-backup-20261009 before changes.
 
 2026-10-13 — Camera/C6 masthead bring-up and publication: see codex-masthead-20261013.md and firmware/docs/MASTHEAD.md. Camera stream/reconnect passed; TFT and S3 sensor effects remain pending.
+
+2026-10-13 — CAM OTA 1.1.2 verified over Wi-Fi, including rollback and recovery. OV2640 detection currently fails again; jumper supply/TFT/live S3 remain physical follow-ups. See codex-masthead-20261013.md.

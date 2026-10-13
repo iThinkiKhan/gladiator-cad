@@ -18,8 +18,15 @@
 #ifndef VISUAL_TFT_ROTATION
 #define VISUAL_TFT_ROTATION 1
 #endif
+#ifndef VISUAL_OTA_KEY
+#define VISUAL_OTA_KEY ""
+#endif
+#ifndef VISUAL_FIRMWARE_VERSION
+#define VISUAL_FIRMWARE_VERSION "masthead-1.1.2"
+#endif
 namespace config {
 constexpr int SCLK=14,MOSI=13,DC=2,CS=15,RESET=-1;
 constexpr uint32_t STALE_MS=1500,FRAME_MS=67,POLL_MS=200;
-constexpr char VERSION[]="masthead-1.0.0";
+constexpr char VERSION[]=VISUAL_FIRMWARE_VERSION;
+constexpr uint32_t OTA_CONFIRM_MS=120000,RECOVERY_MS=30000;
 }

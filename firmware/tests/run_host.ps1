@@ -8,6 +8,10 @@ try {
   if ($LASTEXITCODE) { throw 'Visual policy compilation failed' }
   & .\build-output\host\visual_state_test.exe
   if ($LASTEXITCODE) { throw 'Visual policy tests failed' }
+  & "$compilerDir\g++.exe" -std=c++17 -Wall -Wextra -Werror tests/cam_ota_test.cpp -o build-output/host/cam_ota_test.exe
+  if ($LASTEXITCODE) { throw 'CAM OTA policy compilation failed' }
+  & .\build-output\host\cam_ota_test.exe
+  if ($LASTEXITCODE) { throw 'CAM OTA policy tests failed' }
   $cjsonDir = 'gateway/managed_components/espressif__cjson/cJSON'
   & "$compilerDir\gcc.exe" -std=c99 "-I$cjsonDir" -c "$cjsonDir/cJSON.c" -o build-output/host/cJSON.o
   if ($LASTEXITCODE) { throw 'cJSON compilation failed' }
@@ -17,4 +21,6 @@ try {
   if ($LASTEXITCODE) { throw 'Gateway handler tests failed' }
   node tests/field_page_test.js
   if ($LASTEXITCODE) { throw 'Browser tests failed' }
+  node tests/cam_maintenance_test.js
+  if ($LASTEXITCODE) { throw 'CAM maintenance browser tests failed' }
 } finally { Pop-Location }

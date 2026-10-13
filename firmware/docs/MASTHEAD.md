@@ -1,6 +1,6 @@
 # Gladiator masthead firmware
 
-Implemented October 13, 2026. **Both boards are flashed and the camera/C6 bench checks pass.** CAM USB writes verified on COM8; C6 OTA verified, including a second reboot under video load. After reseating the OV2640 ribbon, live QVGA video delivered 1,343 JPEG frames at 14.92 fps over 90 seconds. The camera recovered after a C6 reboot without resetting. The TFT is not connected yet, and the C6 has no live S3 telemetry, so physical display and sensor-driven expression tests remain outstanding. See [bench results](masthead/bench-20261013.md). Both target builds and host tests pass.
+Implemented October 13, 2026. **CAM OTA 1.1.2 is now wirelessly installed and confirmed; interrupted upload, corruption rejection, and automatic rollback passed.** The sensor is currently reporting 0x105 again; resolve that hardware fault before sealing the case. See [OTA bench](masthead/cam-ota-20261013.md). **Both boards are flashed and the camera/C6 bench checks pass.** CAM USB writes verified on COM8; C6 OTA verified, including a second reboot under video load. After reseating the OV2640 ribbon, live QVGA video delivered 1,343 JPEG frames at 14.92 fps over 90 seconds. The camera recovered after a C6 reboot without resetting. The TFT is not connected yet, and the C6 has no live S3 telemetry, so physical display and sensor-driven expression tests remain outstanding. See [bench results](masthead/bench-20261013.md). Both target builds and host tests pass.
 
 The CAM target is `firmware/cam/`; C6 integration is in the existing `firmware/gateway/` and `firmware/shared/` trees. This change adds three display endpoints and a masthead panel. S3 source, motor control, UART framing, transport failover, sensor ownership, and the S3/C6 pairing architecture are unchanged.
 
@@ -18,7 +18,7 @@ S3 motors/safety/sensors -- existing typed UART or Wi-Fi link --> C6 gateway
 
 The CAM is a Wi-Fi station on the C6's existing WPA2 access point or the same trusted LAN. It polls the C6 at approximately 5 Hz, renders eyes at a target of 15 Hz, and produces QVGA (320×240) JPEG video capped at approximately 15 fps. These are limits/targets, not measured performance. Two latest-frame camera buffers and the graphics buffer use PSRAM. No microSD driver or full display images over the network.
 
-Camera streaming uses its own HTTP task and port; CAM status remains on port 80. Polling runs in a separate task from display rendering. A lost gateway connection produces animated gray idle eyes within 1.5 seconds of the last accepted response. Wi-Fi reconnect attempts occur every 10 seconds. Camera initialization failure is logged and leaves the display running; correct the wiring/power and reboot to retry initialization. A failed stream closes its socket; the operator starts video again after reconnection.
+Camera streaming uses its own HTTP task and port; CAM status remains on port 80. Polling runs in a separate task from display rendering. A lost gateway connection produces animated gray idle eyes within 1.5 seconds of the last accepted response. Wi-Fi reconnect attempts occur every 10 seconds, or every 60 seconds while recovery Wi-Fi is available. Station scans pause while a recovery client is connected. Camera initialization failure is logged and retried every 10 seconds; the display and maintenance API remain available. A failed stream closes its socket; the operator starts video again after reconnection.
 
 The C6 translates **S3-reported** presentation states and fresh sensor data:
 
@@ -97,7 +97,32 @@ Modes: ready, scanning, active, alert, greeting, offline, or auto. Messages are 
 
 `POST /api/visual/config` also requires the maintenance header. Body `{"cameraIp":"192.168.8.2"}` stores the camera address; `{"cameraIp":""}` disables the video link. Only literal private IPv4 addresses are accepted.
 
-On the CAM, `GET /api/status` reports camera readiness, stream/frame/error counters, RSSI, heap/PSRAM, buffered-display availability, and current effective mode. The CAM root page can start/stop video independently. CAM configuration currently uses the local build header and serial upload; OTA camera updates and mDNS are future additions.
+On the CAM, `GET /api/status` reports camera readiness, stream/frame/error counters, RSSI, heap/PSRAM, buffered-display availability, and current effective mode. It also reports the OTA slot, pending confirmation, update limit, boot ID, and recovery Wi-Fi name. The CAM root page can start/stop video independently and links to maintenance.
+
+## Camera OTA and recovery before sealing the case
+
+The CAM has its own authenticated HTTP update service. Open `http://CAM_IP/maintenance`, enter the **CAM** maintenance key, choose the CAM application's `firmware.bin`, and upload. Keep the page open while it reconnects and confirms the new boot. Video and display rendering pause during flash writing; restart video after the reboot. This service does not use PlatformIO's `espota` protocol or the C6 maintenance key.
+
+On first boot, the CAM generates a random 32-character key and saves it in NVS. Before closing the enclosure, retrieve it through the physical USB serial port: send `credentials` followed by Enter at 115200 baud. Save that JSON privately. An optional `VISUAL_OTA_KEY` in ignored `LocalConfig.h` can provision a key only when NVS has no valid key. Neither HTTP status nor the public repository exposes it.
+
+Wi-Fi SSID, password, gateway address, and the CAM maintenance key persist across OTA. An already provisioned board accepts a credential-free build from this public source. A new, unprovisioned board still needs initial USB flashing and its generated key retrieved. The maintenance page can change Wi-Fi settings without opening the case.
+
+After 30 seconds without its configured network, the CAM starts `Gladiator-CAM-<last-six-MAC-digits>` on WPA2. **The recovery Wi-Fi password is the CAM maintenance key.** Connect to that network and open `http://192.168.9.1/maintenance` to update firmware or restore Wi-Fi settings. The currently tested board advertises `Gladiator-CAM-3268FC`. Disconnect from recovery Wi-Fi after saving settings so the station can resume searching for the gateway. Recovery works without a camera sensor, TFT, C6, or S3.
+
+The updater writes the inactive app slot and checks ESP32 chip identity, the CAM application marker, the `min_spiffs` partition contract, file size, and the appended image SHA-256. The helper also checks a full-file SHA-256. A C6/S3 image, merged flash image, truncated file, or corrupted image is rejected. Use only `cam/.pio/build/gladiator_cam/firmware.bin`; do not upload bootloader, partitions, or merged images. An interrupted transfer keeps the running app selected.
+
+A new app must receive an authenticated `/api/confirm` within 120 seconds of startup. The maintenance page/helper does this after checking that HTTP, the main loop, and network task are responsive. Otherwise ESP-IDF rolls back to the previous app. Keep `Identity.cpp`, its strong `verifyRollbackLater()` override, and the linker flags: Arduino's default startup would otherwise confirm too early. This startup check verifies remote maintenance; it does not claim physical camera or display operation.
+
+Command-line maintenance (key read from a private JSON file, never a command argument):
+
+```powershell
+python tools/cam_manage.py status --url http://192.168.9.1
+python tools/cam_manage.py upload --url http://192.168.9.1 --key-file C:/private/cam-credentials.json --firmware cam/.pio/build/gladiator_cam/firmware.bin
+```
+
+Use `--no-confirm` only for deliberate rollback tests. `confirm` can confirm a pending boot manually. `--record` saves non-secret status and transfer evidence. HTTP routes are `POST /api/ota` (raw binary), `/api/confirm`, and `/api/config`, all requiring `X-Gladiator-Key`. Network settings JSON is `{"ssid":"…","password":"…","gatewayUrl":"http://192.168.8.1"}`.
+
+USB remained attached **for power** during the wireless bench tests; firmware transfers used Wi-Fi. Power from regulated 5 V and GND jumpers uses the same OTA service, but a jumper-only power test has not been performed. Keep GPIO0 free for normal camera operation. Save the CAM key before sealing the case. OTA cannot repair failed hardware, damaged bootloader/partition data, or a lost key.
 
 ## Verification and bench acceptance
 
