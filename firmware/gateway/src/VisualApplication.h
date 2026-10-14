@@ -1,11 +1,11 @@
 #pragma once
 // Included within the existing gateway namespace after its HTTP utilities.
-char visualCameraIp[16]={},visualMessage[49]={};
+char visualCameraIp[16]="192.168.8.2",visualMessage[49]={};
 visual::Mode visualOverride=visual::Mode::READY;
 uint32_t visualOverrideMs=0,visualOverrideLease=0;
 void loadVisualSettings() {
   nvs_handle_t nvs;
-  if(nvs_open("visual",NVS_READONLY,&nvs)==ESP_OK){size_t n=sizeof(visualCameraIp);if(nvs_get_str(nvs,"cameraIp",visualCameraIp,&n)!=ESP_OK)visualCameraIp[0]=0;nvs_close(nvs);}
+  if(nvs_open("visual",NVS_READONLY,&nvs)==ESP_OK){char stored[16]={};size_t n=sizeof(stored);if(nvs_get_str(nvs,"cameraIp",stored,&n)==ESP_OK)strlcpy(visualCameraIp,stored,sizeof(visualCameraIp));nvs_close(nvs);}
 }
 bool visualGood(cJSON *robot,const char *key,uint32_t maxAge) {
   auto topic=cJSON_GetObjectItemCaseSensitive(robot,key),meta=cJSON_GetObjectItemCaseSensitive(topic,"meta");
@@ -21,11 +21,16 @@ esp_err_t visualHandler(httpd_req_t *req) {
   strlcpy(input.state,textValue(controller,"state"),sizeof(input.state));strlcpy(input.battery,textValue(controller,"battery"),sizeof(input.battery));
   auto range=cJSON_GetObjectItemCaseSensitive(cJSON_GetObjectItemCaseSensitive(robot,"tofFront"),"derived");
   auto mm=cJSON_GetObjectItemCaseSensitive(range,"nearestMm");
-  input.rangeValid=input.controllerFresh&&visualGood(robot,"tofFront",1000)&&cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(range,"valid"))&&cJSON_IsNumber(mm)&&mm->valuedouble>0&&mm->valuedouble<65536;
+  input.rangeValid=input.controllerFresh&&visualGood(robot,"tofFront",500)&&cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(range,"valid"))&&cJSON_IsNumber(mm)&&mm->valuedouble>=20&&mm->valuedouble<4000;
   if(input.rangeValid)input.nearestMm=mm->valuedouble;
   auto presence=cJSON_GetObjectItemCaseSensitive(cJSON_GetObjectItemCaseSensitive(robot,"presence"),"derived");
   input.presenceValid=input.controllerFresh&&visualGood(robot,"presence",1000)&&cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(presence,"presenceValid"));
   input.present=cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(presence,"present"));
+  auto mast=cJSON_GetObjectItemCaseSensitive(robot,"mast"),mastAge=cJSON_GetObjectItemCaseSensitive(mast,"transportAgeMs");
+  auto sourceAge=cJSON_GetObjectItemCaseSensitive(mast,"sourceAgeMs");
+  input.mastScanning=input.controllerFresh&&cJSON_IsNumber(mastAge)&&mastAge->valuedouble<250&&
+    cJSON_IsNumber(sourceAge)&&sourceAge->valuedouble>=0&&sourceAge->valuedouble<250&&
+    cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(mast,"enabled"))&&cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(mast,"scanning"));
   auto automatic=visual::automatic(input);
   const uint32_t visualNow=nowMs();
   bool overriding=lease&&visual::fresh(visualNow,requestedMs,lease)&&automatic!=visual::Mode::OFFLINE&&automatic!=visual::Mode::ALERT;
@@ -43,7 +48,7 @@ esp_err_t visualHandler(httpd_req_t *req) {
   cJSON_AddStringToObject(doc,"streamUrl",url);cJSON_Delete(robot);return replyJson(req,serialize(doc));
 }
 esp_err_t visualCommandHandler(httpd_req_t *req) {
-  if(!authorize(req))return ESP_OK;
+  // Temporary field expressions are key-free; camera/NVS configuration is maintenance.
   std::string body;if(!readBody(req,body,256))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid visual command");
   auto doc=cJSON_ParseWithLength(body.data(),body.size());const char *mode=textValue(doc,"mode"),*message=textValue(doc,"message");
   visual::Mode selected;double lease=0;bool automatic=!strcmp(mode,"auto");

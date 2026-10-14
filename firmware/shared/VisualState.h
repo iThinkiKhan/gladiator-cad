@@ -15,7 +15,7 @@ inline bool parseMode(const char *s,Mode &m) {
   return false;
 }
 struct Input {
-  bool controllerFresh=false,rangeValid=false,presenceValid=false,present=false;
+  bool controllerFresh=false,rangeValid=false,presenceValid=false,present=false,mastScanning=false;
   uint32_t nearestMm=0;
   char state[12]="UNKNOWN",battery[12]="UNKNOWN";
 };
@@ -27,6 +27,7 @@ inline Mode automatic(const Input &s) {
      (s.rangeValid&&s.nearestMm<500))return Mode::ALERT;
   if(!strcmp(s.state,"DRIVE"))return Mode::ACTIVE;
   if(s.presenceValid&&s.present)return Mode::GREETING;
+  if(s.mastScanning)return Mode::SCANNING;
   if(!strcmp(s.state,"ARMED"))return Mode::SCANNING;
   if(!strcmp(s.state,"SAFE"))return Mode::READY;
   return Mode::OFFLINE;

@@ -16,17 +16,24 @@ displays S3 reports. No change to the established S3/C6 ownership model.
 
 S3 `/` redirects to `/service`. Its old drive dashboard is removed. Existing
 S3 HTTP APIs, USB recovery, OTA and BLE protocol remain available; this milestone
-does not remove maintenance compatibility or change authentication.
+does not remove maintenance compatibility. Field drive, mast and expression
+controls are key-free since Jim's 2026-10-14 request; maintenance endpoints keep
+their existing authentication.
 
 Field diagnostics is closed by default. Native data and the development link
-are inside it. C6 access keys stay in page memory. Connection quality is shown
+are inside it. Maintenance keys stay in the development page's memory. Field
+ARM waits for an authoritative disarmed snapshot; DISARM queued during another
+request is sent as soon as that request ends, without replaying held movement.
+Power changes require disarm; connection/session resets select 25%.
+Connection quality is shown
 as availability and telemetry age in milliseconds; this is not a measurement of
 the phone's RF signal strength. C6 station RSSI, when available, belongs to the
 network diagnostics and describes its upstream station connection.
 
 This repository contains the shared browser field interface and firmware BLE
-protocol, but no separate native phone app source. Interface v1's browser changes
-do not imply a separately installed phone application has been updated.
+protocol. The locally maintained native companion has been updated separately;
+source-only camera/control patches are in `phone-integration/`, not the complete
+Spectre app or its private configuration.
 
 ## Development tools
 
@@ -113,3 +120,7 @@ battery agreement between S3 service and C6, explicit arming, hold/release,
 Overdrive, independent tracks, tab/background disarm, UART/WIFI failover without
 motion replay, native capture/expiry, and independent S3 OTA recovery. Hardware
 flashing and physical acceptance have not been performed by this implementation.
+
+## 2026-10-14 operator extension
+
+Field POST `/api/mast` accepts STOP/HOLD/MOVE/SCAN/KEEPALIVE/RATE/JOG/ENABLE (0…7). S3 owns enablement, owner/session/sequence, calibrated head bounds and gearing; C6 only relays. POST `/api/mast/config` queues deliberate installed testing or saved calibration (≤768 bytes) to S3. Mast state carries saved measured profile periodically, preserving UART capacity. GET/POST `/api/camera` asynchronously relays volatile OV2640 settings. These operator paths are key-free; persistent `/api/visual/config`, network configuration and OTA retain maintenance authorization. Live drive power changes do not revoke the armed session.

@@ -174,7 +174,10 @@ for the paired Link v2 telemetry extensions and installation order.
 C6 GET `/api/field` returns current controller state for field driving. GET
 `/api/robot` schema 2 returns gateway diagnostics, compact robot topics, requested
 `native` and `system` documents, retained `logs`, and receipt ages. GET
-`/api/status` reports C6 state. POST `/api/control`, `/api/subscribe`, `/api/link`,
+`/api/status` reports C6 state. Field POST `/api/control`, `/api/mast` and
+`/api/visual` are key-free at Jim's request on 2026-10-14; S3 session/owner,
+freshness, replay, deadman and safety validation still apply. Persistent
+camera-address configuration remains maintenance-protected. POST `/api/subscribe`, `/api/link`,
 `/api/ping`, `/api/config` and `/api/ota` require `X-Gladiator-Key`. Key storage,
 network provisioning, and C6 OTA identity checks retain the existing behavior.
 S3 recovery HTTP retains its WPA2-local access model; it uses the same strict
@@ -241,3 +244,7 @@ Before deployment acceptance, with tracks clear of the floor:
 
 These physical checks remain pending. The code is prepared and built; no firmware
 was flashed or robot motion commanded as part of the host/browser validation.
+
+## 2026-10-14 operator extension
+
+Field POST `/api/mast` accepts STOP/HOLD/MOVE/SCAN/KEEPALIVE/RATE/JOG/ENABLE (0…7). S3 owns enablement, owner/session/sequence, calibrated head bounds and gearing; C6 only relays. POST `/api/mast/config` queues deliberate installed testing or saved calibration (≤768 bytes) to S3. Mast state carries saved measured profile periodically, preserving UART capacity. GET/POST `/api/camera` asynchronously relays volatile OV2640 settings. These operator paths are key-free; persistent `/api/visual/config`, network configuration and OTA retain maintenance authorization. Live drive power changes do not revoke the armed session.

@@ -1,0 +1,26 @@
+// Chrome with simulated hardware only.
+const fs=require('fs'),path=require('path'),assert=require('assert'),{chromium}=require(process.env.GLADIATOR_NODE_MODULES+'/playwright');
+const root=path.resolve(__dirname,'..'),html=fs.readFileSync(path.join(root,'shared/FieldPage.h'),'utf8').split('R"HTML(')[1].split(')HTML"')[0];
+(async()=>{const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});try{
+ const page=await browser.newPage({viewport:{width:390,height:844}}),errors=[],posts=[],configs=[],camera=[];page.on('pageerror',e=>errors.push(e.message));page.setDefaultTimeout(4000);
+ let fail=false,m={fresh:true,enabled:false,calibrated:false,owner:0,session:0,sequence:0,safe:true,panMinDeg:-5,panMaxDeg:5,tiltMinDeg:-3,tiltMaxDeg:3};
+ let settings={resolution:'QVGA',brightness:0,aec:1,aecValue:300,vflip:0,hmirror:0};
+ await page.route('http://gladiator.test/**',async route=>{const req=route.request(),u=new URL(req.url());let body={},status=200,type='application/json';
+ if(u.pathname==='/'){body=html;type='text/html';}
+ else if(u.pathname==='/api/field')body={connected:true,requiresKey:false,controller:{state:'SAFE',s3Ms:1,epoch:1,battery:'OK',armed:false},sensors:{}};
+ else if(u.pathname==='/api/mast'){if(fail){status=503;}else if(req.method()==='POST'){const c=JSON.parse(req.postData());posts.push(c);if(c.operation===7){assert(m.calibrated&&!m.enabled);m={...m,enabled:true,owner:c.session,session:99,sequence:0};}else if(c.operation===0)m={...m,enabled:false,session:0,owner:0};else{assert.equal(c.session,m.session);assert(c.sequence>m.sequence);m.sequence=c.sequence;}body={queued:true};status=202;}else body=m;}
+ else if(u.pathname==='/api/mast/config'){configs.push(JSON.parse(req.postData()));status=202;}
+ else if(u.pathname==='/api/visual')body={schema:1,mode:'ready',streamUrl:'http://camera.test/stream',cameraIp:'192.168.8.2'};
+ else if(u.pathname==='/api/camera'){if(req.method()==='POST'){const c=JSON.parse(req.postData());camera.push(c);settings={...settings,...c};}body=settings;}
+ await route.fulfill({status,contentType:type,body:typeof body==='string'?body:JSON.stringify(body)});});
+ const pause=()=>page.waitForTimeout(180);await page.goto('http://gladiator.test/');await pause();assert.equal(posts.length,0);assert(await page.locator('#mastEnable').isDisabled());m.calibrated=true;await pause();assert.equal(posts.length,0);
+ await page.locator('#enableConfirm').check();await page.locator('#mastEnable').click();await pause();await pause();assert(posts.some(c=>c.operation===7));assert(posts.some(c=>c.operation===4));assert(!posts.some(c=>c.operation===2||c.operation===3));
+ await page.locator('[data-aim=left]').hover();await page.mouse.down();await pause();await page.mouse.up();await pause();assert(posts.some(c=>c.operation===6&&c.pan===-1));assert(posts.some(c=>c.operation===1));
+ await page.locator('#mastSpeed').fill('12');await page.locator('#mastSpeed').dispatchEvent('change');await pause();assert(posts.some(c=>c.operation===5&&c.pan===120));
+ await page.locator('#mastCenter').click();await pause();assert(posts.some(c=>c.operation===2&&c.pan===0&&c.tilt===0));await page.locator('#mastScan').click();await pause();assert(posts.some(c=>c.operation===3));await page.locator('#mastStop').click();await pause();assert(!m.enabled);
+ await page.locator('#commission summary').click();for(const [id,v] of Object.entries({testFirst:1500,testMin:1400,testMax:1600}))await page.locator('#'+id).fill(String(v));await page.locator('#startTest').click();await pause();assert(configs.some(c=>c.action==='test'&&c.pin===10&&c.firstUs===1500));await page.locator('#stopTest').click();await pause();assert(configs.some(c=>c.action==='stop'));
+ for(const axis of ['pan','tilt'])for(const [key,v] of Object.entries({Low:1000,Neutral:1500,High:2000,ShaftMin:-90,ShaftMax:90}))await page.locator('#'+axis+key).fill(String(v));await page.locator('#calVerified').check();await page.locator('#saveMast').click();await pause();assert(configs.some(c=>c.action==='calibrate'&&c.pan.shaftMinDeciDeg===-900&&c.pan.minDeciDeg===-50&&c.tilt.pin===13));
+ await page.locator('summary').filter({hasText:'Camera image settings'}).click();await page.locator('#readCamera').click();await pause();await page.locator('#camResolution').selectOption('VGA');await page.locator('#camFlip').check();await page.locator('#applyCamera').click();await pause();assert(camera.some(c=>c.resolution==='VGA'&&c.vflip===1));
+ await page.locator('#enableConfirm').check();await page.locator('#mastEnable').click();await pause();await pause();fail=true;await page.waitForTimeout(600);assert(await page.locator('#mastCenter').isDisabled());const count=posts.length;fail=false;m={...m,enabled:true,session:100,sequence:0};await page.waitForTimeout(350);assert.equal(posts.length,count,'no reacquire/resume after reconnect');
+ assert.deepEqual(errors,[]);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await page.screenshot({path:path.join(root,'build-output/mast-field.png'),fullPage:true});console.log('Operator Chrome passed: explicit enable, aim/release, speed, center, scan, stop, commissioning, saved ratio profile, camera settings, recovery, phone layout.');
+ }finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

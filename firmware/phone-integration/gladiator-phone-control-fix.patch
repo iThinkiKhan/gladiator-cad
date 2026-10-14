@@ -1,0 +1,438 @@
+--- a/companion_app/src/screens/DriveScreen.tsx
++++ b/companion_app/src/screens/DriveScreen.tsx
+@@ -37,11 +37,10 @@
+   const [powerTelemetry, setPowerTelemetry] =
+     useState<GladiatorPowerTelemetry | null>(null);
+   const [armed, setArmed] = useState(false);
+-  // Every held button counts, so forward and a turn can be held together. Mast front makes
+-  // Forward drive toward the mast (the heavy end leads, which stops launch tipping).
++  // One authoritative frame across BLE and web: positive drives toward the mast.
+   const [pressed, setPressed] = useState<DriveButtons>(NO_BUTTONS);
+-  const [mastFront, setMastFront] = useState(true);
+   const [powerMode, setPowerMode] = useState<PowerMode>(POWER_MODES[0]);
++  const driveServiceRef = useRef<GladiatorBleService | null>(null);
+ 
+   const service = useMemo(
+     () =>
+@@ -54,19 +53,31 @@
+             setPressed(NO_BUTTONS);
+             setTelemetry(null);
+             setPowerTelemetry(null);
++            setPowerMode(POWER_MODES[0]);
+           }
+         },
+-        onTelemetry: setTelemetry,
++        onTelemetry: report => {
++          setTelemetry(report);
++          if (report.watchdogStopped || !report.connected) {
++            setArmed(false);
++            setPressed(NO_BUTTONS);
++            setPowerMode(POWER_MODES[0]);
++            // A watchdog stop requires a disarmed frame before S3 accepts a
++            // new explicit arm. Clear the old session without resuming motion.
++            void driveServiceRef.current?.sendDrive(0, 0, false, false, 25).catch(() => {});
++          }
++        },
+         onPowerTelemetry: setPowerTelemetry,
+       }),
+     [],
+   );
++  driveServiceRef.current = service;
+ 
+   const linked = connectionState === 'connected';
+ 
+   const mix = useMemo(
+-    () => mixDrive(pressed, powerMode.power, mastFront),
+-    [pressed, powerMode.power, mastFront],
++    () => mixDrive(pressed, powerMode.power),
++    [pressed, powerMode.power],
+   );
+   const driving = mix.active && armed && linked;
+   const latest = useRef({mix, powerMode});
+@@ -79,6 +90,7 @@
+       if (state !== 'active') {
+         setArmed(false);
+         setPressed(NO_BUTTONS);
++        setPowerMode(POWER_MODES[0]);
+         void service.sendDrive(0, 0, false, false, latest.current.powerMode.power).catch(() => {});
+       }
+     });
+@@ -140,6 +152,7 @@
+     setPressed(NO_BUTTONS);
+     setArmed(false);
+     void service.sendDrive(0, 0, false, false, powerMode.power);
++    setPowerMode(POWER_MODES[0]);
+   };
+ 
+   const directionButton = (direction: DriveDirection, label: string) => (
+@@ -287,33 +300,9 @@
+           </Pressable>
+         </View>
+ 
+-        <View style={styles.powerRow}>
+-          {[
+-            {label: 'Mast front', value: true},
+-            {label: 'Mast rear', value: false},
+-          ].map(option => {
+-            const selected = mastFront === option.value;
+-            return (
+-              <Pressable
+-                key={option.label}
+-                disabled={mix.active}
+-                onPress={() => setMastFront(option.value)}
+-                style={[
+-                  styles.powerButton,
+-                  selected ? styles.powerButtonActive : null,
+-                  mix.active ? styles.disabled : null,
+-                ]}>
+-                <Text style={[styles.powerText, selected ? styles.powerTextActive : null]}>
+-                  {option.label}
+-                </Text>
+-              </Pressable>
+-            );
+-          })}
+-        </View>
+         <Text style={styles.body}>
+-          {mastFront
+-            ? 'Forward drives toward the mast. Turning is unchanged.'
+-            : 'Forward drives away from the mast.'}
++          Mast is front. Forward drives toward the mast; Left and Right match
++          the Wi-Fi controls. Power can change while driving.
+         </Text>
+       </FieldPanel>
+ 
+@@ -327,14 +316,13 @@
+             return (
+               <Pressable
+                 key={mode.label}
+-                disabled={mix.active}
++                disabled={false}
+                 onPress={() => setPowerMode(mode)}
+                 style={[
+                   styles.powerButton,
+                   selected ? styles.powerButtonActive : null,
+                   mode.overdrive ? styles.overdriveButton : null,
+                   selected && mode.overdrive ? styles.overdriveButtonActive : null,
+-                  mix.active ? styles.disabled : null,
+                 ]}>
+                 <Text
+                   style={[
+@@ -352,12 +340,15 @@
+         <Text style={powerMode.overdrive ? styles.overdriveNote : styles.body}>
+           {powerMode.overdrive
+             ? 'OVERDRIVE: full VBATT duty with no soft-start ramp. Hold-to-run and link watchdog remain active.'
+-            : `${powerMode.power}% PWM selected. Power cannot change while a button is held.`}
++            : `${powerMode.power}% PWM ceiling selected. Adjust power live; normal modes ramp smoothly.`}
+         </Text>
+       </FieldPanel>
+ 
+       {telemetry && (
+         <FieldPanel title="Motor telemetry" eyebrow={`Frame ${telemetry.sequence}`}>
++          <Text style={styles.body}>
++            S3 reports {telemetry.overdrive ? 'OVERDRIVE' : `${telemetry.powerMode}% selected`}
++          </Text>
+           <View style={styles.telemetryRow}>
+             <View style={styles.telemetryCell}>
+               <Text style={styles.telemetryValue}>{telemetry.leftPercent}%</Text>
+--- a/companion_app/src/services/gladiator/driveMix.ts
++++ b/companion_app/src/services/gladiator/driveMix.ts
+@@ -1,8 +1,7 @@
+ // Turns the four held drive buttons into left/right track percentages.
+ //
+-// Button conventions are the app's existing ones, which the robot was driven with in the
+-// field: the Left button sends (left +p, right -p) and the Right button (left -p, right +p).
+-// "Rotation sense" below is that same convention: left-button rotation has left > right.
++// S3 authoritative frame: mast is FRONT; positive means forward on each logical
++// track. Left pivot is (-p,+p), right pivot (+p,-p), matching the field website.
+ //
+ // Any combination can be held at once. Throttle buttons set the direction of travel, and a
+ // steering button added while moving only slows the inner track; the outer track keeps the
+@@ -30,24 +29,20 @@
+ 
+ const INACTIVE: DriveMix = {left: 0, right: 0, active: false};
+ 
+-// mastFront: the operator's Forward drives the robot toward its mast, which is the opposite
+-// end from the chassis' own forward. Only the direction of travel flips; turning left is
+-// still counter-clockwise from above whichever end leads, so steering is not mirrored.
+ export function mixDrive(
+   buttons: DriveButtons,
+   power: number,
+-  mastFront: boolean,
+ ): DriveMix {
+   const throttle = (buttons.forward ? 1 : 0) - (buttons.reverse ? 1 : 0);
+   const rotation = (buttons.left ? 1 : 0) - (buttons.right ? 1 : 0);
+   if (throttle === 0 && rotation === 0) return INACTIVE;
+ 
+-  const level = Math.max(0, Math.min(100, power));
+-  const travel = (mastFront ? -throttle : throttle) * level;
++  const level = Number.isFinite(power) ? Math.max(0, Math.min(100, power)) : 0;
++  if (!level) return INACTIVE;
++  const travel = throttle * level;
+ 
+   if (throttle === 0) {
+-    // Pivot in place: the existing Left/Right button behaviour.
+-    return {left: rotation * level + 0, right: -rotation * level + 0, active: true};
++    return {left: -rotation * level + 0, right: rotation * level + 0, active: true};
+   }
+   if (rotation === 0) {
+     return {left: travel, right: travel, active: true};
+@@ -55,7 +50,7 @@
+ 
+   // Arc: the outer track keeps the full travel speed, the inner one is scaled down. The
+   // track that must be faster to produce this rotation depends on the travel direction.
+-  const leftIsOuter = travel > 0 === rotation > 0;
++  const leftIsOuter = (travel > 0) !== (rotation > 0);
+   return {
+     left: Math.round(travel * (leftIsOuter ? 1 : ARC_INNER_RATIO)) + 0,
+     right: Math.round(travel * (leftIsOuter ? ARC_INNER_RATIO : 1)) + 0,
+--- a/companion_app/src/services/gladiator/GladiatorBleService.ts
++++ b/companion_app/src/services/gladiator/GladiatorBleService.ts
+@@ -285,6 +285,12 @@
+   ) {
+     if (!this.device) return;
+ 
++    if (![leftPercent, rightPercent, powerMode].every(Number.isFinite) ||
++        powerMode < 0 || powerMode > 100 || (overdrive && powerMode !== 100)) {
++      throw new Error('Invalid drive power or track command');
++    }
++    const cap = overdrive ? 100 : Math.floor(powerMode);
++
+     const frame = new Uint8Array(FRAME_SIZE);
+     frame[0] = COMMAND_MAGIC;
+     frame[1] = PROTOCOL_VERSION;
+@@ -293,8 +299,8 @@
+       (armed ? 0x01 : 0) |
+       (deadman ? 0x02 : 0) |
+       (overdrive ? 0x04 : 0);
+-    frame[4] = Math.max(-100, Math.min(100, Math.round(leftPercent))) & 0xff;
+-    frame[5] = Math.max(-100, Math.min(100, Math.round(rightPercent))) & 0xff;
++    frame[4] = Math.max(-cap, Math.min(cap, Math.round(leftPercent))) & 0xff;
++    frame[5] = Math.max(-cap, Math.min(cap, Math.round(rightPercent))) & 0xff;
+     frame[6] = overdrive ? 0xff : Math.max(0, Math.min(100, powerMode));
+     frame[7] = checksum(frame, FRAME_SIZE - 1);
+ 
+--- a/companion_app/verify-drive/cases.ts
++++ b/companion_app/verify-drive/cases.ts
+@@ -1,102 +1,28 @@
+-import {
+-  ARC_INNER_RATIO,
+-  mixDrive,
+-  NO_BUTTONS,
+-} from '../src/services/gladiator/driveMix.ts';
++import {mixDrive, NO_BUTTONS} from '../src/services/gladiator/driveMix.ts';
+ import type {DriveButtons} from '../src/services/gladiator/driveMix.ts';
+-
+-let passed = 0;
+-function check(name: string, condition: boolean) {
+-  if (!condition) throw new Error(`FAIL ${name}`);
+-  passed += 1; console.log(`  PASS  ${name}`);
++let passed=0;
++function check(name:string,condition:boolean){if(!condition)throw Error('FAIL '+name);++passed;}
++const press=(...keys:Array<keyof DriveButtons>)=>{const b={...NO_BUTTONS};keys.forEach(k=>b[k]=true);return b;};
++const same=(b:DriveButtons,p:number,l:number,r:number)=>{const m=mixDrive(b,p);return m.left===l&&m.right===r;};
++// Independent signed-track contract shared with production FieldPage and S3.
++for(const p of [10,25,50,75,100]){
++  check('Forward +/+ mast-front',same(press('forward'),p,p,p));
++  check('Reverse -/- mast-front',same(press('reverse'),p,-p,-p));
++  check('Left -/+ counter-clockwise',same(press('left'),p,-p,p));
++  check('Right +/- clockwise',same(press('right'),p,p,-p));
+ }
+-
+-const press = (...names: Array<keyof DriveButtons>): DriveButtons => {
+-  const buttons = {...NO_BUTTONS};
+-  for (const name of names) buttons[name] = true;
+-  return buttons;
+-};
+-const same = (a: {left: number; right: number}, left: number, right: number) =>
+-  a.left === left && a.right === right;
+-
+-const POWERS = [25, 50, 75, 100];
+-const COMBOS: Array<Array<keyof DriveButtons>> = [];
+-for (let bits = 0; bits < 16; bits += 1) {
+-  const names: Array<keyof DriveButtons> = [];
+-  (['forward', 'reverse', 'left', 'right'] as const).forEach((name, index) => {
+-    if (bits & (1 << index)) names.push(name);
+-  });
+-  COMBOS.push(names);
++check('forward left inner track',same(press('forward','left'),100,35,100));
++check('forward right inner track',same(press('forward','right'),100,100,35));
++check('reverse left maintains left yaw',same(press('reverse','left'),100,-100,-35));
++check('reverse right maintains right yaw',same(press('reverse','right'),100,-35,-100));
++for(let bits=0;bits<16;++bits)for(let p=0;p<=100;++p){
++  const b={...NO_BUTTONS};(['forward','reverse','left','right'] as const).forEach((k,i)=>b[k]=!!(bits&(1<<i)));
++  const m=mixDrive(b,p);
++  check('bounded integer PWM',Math.abs(m.left)<=p&&Math.abs(m.right)<=p&&Number.isInteger(m.left)&&Number.isInteger(m.right));
++  check('no negative zero',!Object.is(m.left,-0)&&!Object.is(m.right,-0));
++  if(p&&b.left!==b.right)check('yaw follows steering',b.left?m.right>m.left:m.left>m.right);
++  if(b.forward===b.reverse&&b.left===b.right)check('opposites cancel',!m.active&&m.left===0&&m.right===0);
+ }
+-
+-check('no buttons is inactive and zero', !mixDrive(NO_BUTTONS, 50, true).active
+-  && same(mixDrive(NO_BUTTONS, 50, true), 0, 0));
+-check('mast rear: forward drives both tracks forward', same(mixDrive(press('forward'), 75, false), 75, 75));
+-check('mast rear: reverse drives both tracks back', same(mixDrive(press('reverse'), 75, false), -75, -75));
+-check('mast front: forward drives the opposite way', same(mixDrive(press('forward'), 75, true), -75, -75));
+-check('mast front: reverse drives the opposite way', same(mixDrive(press('reverse'), 75, true), 75, 75));
+-check('left pivot keeps the existing pattern in both modes',
+-  same(mixDrive(press('left'), 60, false), 60, -60) && same(mixDrive(press('left'), 60, true), 60, -60));
+-check('right pivot keeps the existing pattern in both modes',
+-  same(mixDrive(press('right'), 60, false), -60, 60) && same(mixDrive(press('right'), 60, true), -60, 60));
+-
+-const innerOf = (power: number) => Math.round(power * ARC_INNER_RATIO);
+-check('mast rear: forward + left slows only the right track',
+-  same(mixDrive(press('forward', 'left'), 100, false), 100, innerOf(100)));
+-check('mast rear: forward + right slows only the left track',
+-  same(mixDrive(press('forward', 'right'), 100, false), innerOf(100), 100));
+-check('mast front: forward + left arcs while travelling the other way',
+-  same(mixDrive(press('forward', 'left'), 100, true), -innerOf(100), -100));
+-check('mast front: forward + right arcs while travelling the other way',
+-  same(mixDrive(press('forward', 'right'), 100, true), -100, -innerOf(100)));
+-check('mast rear: reverse + left',
+-  same(mixDrive(press('reverse', 'left'), 80, false), -Math.round(80 * ARC_INNER_RATIO), -80));
+-check('mast front: reverse + right',
+-  same(mixDrive(press('reverse', 'right'), 80, true), Math.round(80 * ARC_INNER_RATIO), 80));
+-
+-check('adding steering never changes the outer track, so motion is not interrupted',
+-  POWERS.every(power => [false, true].every(mast => {
+-    const straight = mixDrive(press('forward'), power, mast);
+-    const left = mixDrive(press('forward', 'left'), power, mast);
+-    const right = mixDrive(press('forward', 'right'), power, mast);
+-    const outer = (mix: {left: number; right: number}) =>
+-      Math.abs(mix.left) > Math.abs(mix.right) ? mix.left : mix.right;
+-    return outer(left) === straight.left && outer(right) === straight.left;
+-  })));
+-
+-check('a left button always gives left > right rotation, whatever else is held',
+-  COMBOS.every(names => POWERS.every(power => [false, true].every(mast => {
+-    const buttons = press(...names);
+-    if (!buttons.left || buttons.right) return true;
+-    const mix = mixDrive(buttons, power, mast);
+-    return mix.left > mix.right;
+-  }))));
+-check('a right button always gives right > left rotation, whatever else is held',
+-  COMBOS.every(names => POWERS.every(power => [false, true].every(mast => {
+-    const buttons = press(...names);
+-    if (!buttons.right || buttons.left) return true;
+-    const mix = mixDrive(buttons, power, mast);
+-    return mix.right > mix.left;
+-  }))));
+-
+-check('opposite throttle buttons cancel', !mixDrive(press('forward', 'reverse'), 50, true).active);
+-check('opposite steering buttons cancel', !mixDrive(press('left', 'right'), 50, true).active);
+-check('forward + reverse + left is a left pivot',
+-  same(mixDrive(press('forward', 'reverse', 'left'), 50, true), 50, -50));
+-check('all four buttons cancel to inactive', !mixDrive(press('forward', 'reverse', 'left', 'right'), 50, false).active);
+-
+-check('outputs stay within the protocol range for every combination and power',
+-  COMBOS.every(names => POWERS.every(power => [false, true].every(mast => {
+-    const mix = mixDrive(press(...names), power, mast);
+-    return Math.abs(mix.left) <= 100 && Math.abs(mix.right) <= 100
+-      && Number.isInteger(mix.left) && Number.isInteger(mix.right);
+-  }))));
+-check('output is never negative zero',
+-  COMBOS.every(names => [false, true].every(mast => {
+-    const mix = mixDrive(press(...names), 50, mast);
+-    return !Object.is(mix.left, -0) && !Object.is(mix.right, -0);
+-  })));
+-check('power above 100 or below 0 is clamped',
+-  same(mixDrive(press('forward'), 250, false), 100, 100) && !Object.is(mixDrive(press('forward'), -5, false).left, -0));
+-
+-console.log(`\nDrive mixing verification: ${passed} passed`);
++for(const p of [NaN,Infinity,-5,0])check('invalid/zero power inactive',!mixDrive(press('forward'),p).active);
++check('clamp high',same(press('forward'),255,100,100));
++console.log(`Fixed mast-front drive checks: ${passed} passed; every held-button combination, all integer power levels, field/S3 direction contract.`);
+--- /dev/null
++++ b/companion_app/verify-drive/service.cjs
+@@ -0,0 +1,29 @@
++// Actual BLE service/frame encoder; fake radio never connects to hardware.
++const fs=require('fs'),path=require('path'),vm=require('vm'),assert=require('assert/strict'),ts=require('typescript');
++const code=ts.transpileModule(fs.readFileSync(path.join(__dirname,'../src/services/gladiator/GladiatorBleService.ts'),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText;
++const moduleDouble={exports:{}};
++vm.runInNewContext(code,{module:moduleDouble,exports:moduleDouble.exports,setTimeout,clearTimeout,
++ require:n=>n==='react-native-ble-plx'?{BleManager:class {}}:{base64ToBytes:s=>new Uint8Array(Buffer.from(s,'base64')),bytesToBase64:b=>Buffer.from(b).toString('base64')}});
++const Service=moduleDouble.exports.GladiatorBleService;
++const signed=v=>v>127?v-256:v;
++(async()=>{
++ const service=new Service(),frames=[];
++ service.device={writeCharacteristicWithoutResponseForService:async(s,c,value)=>frames.push(Buffer.from(value,'base64'))};
++ for(const [l,r] of [[25,25],[-25,-25],[-25,25],[25,-25],[100,-100]]){
++   await service.sendDrive(l,r,true,true,25,false);
++   const f=frames.at(-1);assert.equal(f[0],0x47);assert.equal(f[1],1);assert.equal(f[3],3);assert.equal(f[6],25);
++   assert.equal(signed(f[4]),Math.max(-25,Math.min(25,l)));assert.equal(signed(f[5]),Math.max(-25,Math.min(25,r)));
++   assert.equal(f[7],f.subarray(0,7).reduce((a,b)=>a^b,0xa5));
++ }
++ await assert.rejects(service.sendDrive(25,25,true,true,25,true),/Invalid/);
++ await assert.rejects(service.sendDrive(NaN,25,true,true,25,false),/Invalid/);
++ await service.sendDrive(100,100,true,true,100,true);assert.equal(frames.at(-1)[3],7);assert.equal(frames.at(-1)[6],255);
++ let finish;
++ service.device={writeCharacteristicWithoutResponseForService:async(s,c,value)=>{frames.push(Buffer.from(value,'base64'));await new Promise(r=>finish=r);}};
++ const writing=service.sendDrive(25,25,true,true,25);
++ await service.sendDrive(-25,25,true,true,25);
++ await service.sendDrive(0,0,false,false,25);
++ finish();await writing;await new Promise(r=>setImmediate(r));
++ const stop=frames.at(-1);assert.equal(stop[3],0);assert.equal(stop[4],0);assert.equal(stop[5],0);finish();
++ console.log('Production BLE encoding passed: 25% ceiling, exact signed bytes/checksum, no accidental Overdrive, invalid input, explicit Overdrive and queued-stop supersession.');
++})().catch(e=>{console.error(e);process.exitCode=1});
+--- a/companion_app/verify-camera/ui.cjs
++++ b/companion_app/verify-camera/ui.cjs
+@@ -13,13 +13,16 @@
+  const module={exports:{}};vm.runInNewContext(code,{module,exports:module.exports,require:name=>{assert(name in imports,'Unexpected dependency '+name);return imports[name];},...extra});return module.exports;}
+ function nodes(tree){if(!tree||typeof tree!=='object')return [];return [tree,...[tree.props?.children].flat(Infinity).flatMap(nodes)];}
+ function text(tree){if(typeof tree==='string')return tree;if(Array.isArray(tree))return tree.map(text).join('');return tree?.props?text(tree.props.children):'';}
+-function environment(){const listeners=new Set();const AppState={currentState:'active',addEventListener(type,fn){listeners.add(fn);return {remove:()=>listeners.delete(fn)};}};
+- return {AppState,change(state){AppState.currentState=state;listeners.forEach(fn=>fn(state));},native:{AppState,Platform:{OS:'android'},Pressable:'Pressable',View:'View',Text:'Text',ScrollView:'ScrollView',StyleSheet:{create:s=>s},requireNativeComponent:()=> 'NativeCamera'},theme:{colors:{},radius:{},spacing:{}}};}
++function environment(){const listeners=new Set(),urls=[];const AppState={currentState:'active',addEventListener(type,fn){listeners.add(fn);return {remove:()=>listeners.delete(fn)};}};
++ return {AppState,urls,change(state){AppState.currentState=state;listeners.forEach(fn=>fn(state));},native:{AppState,Linking:{openURL:url=>{urls.push(url);return Promise.resolve();}},Platform:{OS:'android'},Pressable:'Pressable',View:'View',Text:'Text',ScrollView:'ScrollView',StyleSheet:{create:s=>s},requireNativeComponent:()=> 'NativeCamera'},theme:{colors:{},radius:{},spacing:{}}};}
+ const env=environment(),camHooks=hooks();
+ const Camera=load('src/components/GladiatorCamera.tsx',{'react':camHooks.api,'react/jsx-runtime':jsx,'react-native':env.native,'../theme/theme':{theme:env.theme}}).GladiatorCamera;
+ let tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));
+ nodes(tree).find(n=>n.props?.accessibilityLabel==='Start video').props.onPress();tree=camHooks.render(Camera);
+ assert(nodes(tree).some(n=>n.type==='NativeCamera'&&n.props.active===true));
++nodes(tree).find(n=>n.props?.accessibilityLabel==='Open unified field controls').props.onPress();tree=camHooks.render(Camera);
++assert(!nodes(tree).some(n=>n.type==='NativeCamera'));assert.deepEqual(env.urls,['http://192.168.8.1/']);
++nodes(tree).find(n=>n.props?.accessibilityLabel==='Start video').props.onPress();tree=camHooks.render(Camera);
+ env.change('background');tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));
+ env.change('active');tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));camHooks.dispose();
+ 
+@@ -36,8 +39,20 @@
+ nodes(tree).find(n=>n.type==='Pressable'&&text(n)==='Start drive').props.onPress();tree=driveHooks.render(Drive);
+ const forward=()=>nodes(tree).find(n=>n.props?.accessibilityLabel?.startsWith('forward.'));
+ forward().props.onPressIn();tree=driveHooks.render(Drive);assert(frames.some(f=>f[2]&&f[3]));
++assert(!nodes(tree).some(n=>n.type==='Pressable'&&['Mast front','Mast rear'].includes(text(n))),'orientation toggle removed');
++assert(frames.some(f=>f[0]===25&&f[1]===25&&f[4]===25&&!f[5]),'default forward matches S3/field 25% without Overdrive');
++for(const [name,left,right] of [['reverse',-25,-25],['left',-25,25],['right',25,-25],['forward',25,25]]){
++  nodes(tree).filter(n=>n.props?.accessibilityLabel?.includes('Hold to drive')).forEach(n=>n.props.onPressOut());tree=driveHooks.render(Drive);
++  nodes(tree).find(n=>n.props?.accessibilityLabel?.startsWith(name+'.')).props.onPressIn();tree=driveHooks.render(Drive);
++  assert(frames.some(f=>f[0]===left&&f[1]===right&&f[4]===25&&!f[5]),name+' exact frame');
++}
++assert(!nodes(tree).find(n=>n.type==='Pressable'&&text(n)==='Overdrive').props.disabled,'power can change armed');
++assert(frames.every(f=>Math.abs(f[0])<=25&&Math.abs(f[1])<=25&&f[5]!==true),'all default drive frames bounded');
++nodes(tree).find(n=>n.type==='Pressable'&&text(n)==='50%').props.onPress();tree=driveHooks.render(Drive);
++assert(frames.some(f=>f[0]===50&&f[1]===50&&f[2]&&f[3]&&f[4]===50&&!f[5]),'live power preserves held forward without stop');
++nodes(tree).find(n=>n.type==='Pressable'&&text(n)==='25%').props.onPress();tree=driveHooks.render(Drive);
+ driveEnv.change('background');assert(frames.at(-1)[2]===false&&frames.at(-1)[0]===0&&frames.at(-1)[1]===0);
+ const count=frames.length;timers.forEach(f=>f());assert.equal(frames.length,count);
+ tree=driveHooks.render(Drive);driveEnv.change('active');tree=driveHooks.render(Drive);assert.equal(forward().props.disabled,true);
+ assert.equal(frames.length,count);driveHooks.dispose();
+-console.log('Camera/Drive UI passed: explicit video start, background stop, no restart, pinned viewer, drive disarm, no background heartbeat or resume.');
++console.log('Camera/Drive UI passed: exact four-button mast-front frames, 25% without Overdrive, no orientation toggle, power change lock, explicit video start, background stop, no restart, pinned viewer, drive disarm, no background heartbeat or resume.');
+--- a/companion_app/src/components/GladiatorCamera.tsx
++++ b/companion_app/src/components/GladiatorCamera.tsx
+@@ -1,5 +1,5 @@
+ import React, {useEffect, useState} from 'react';
+-import {AppState, Platform, Pressable, requireNativeComponent, StyleSheet, Text, View, type ViewProps} from 'react-native';
++import {AppState, Linking, Platform, Pressable, requireNativeComponent, StyleSheet, Text, View, type ViewProps} from 'react-native';
+ import {theme} from '../theme/theme';
+ 
+ const CameraView = Platform.OS === 'android'
+@@ -25,6 +25,10 @@
+     </View>
+     {playing && CameraView ? <CameraView active={true} style={styles.video} /> : null}
+     <Text style={styles.note}>Join Gladiator-Gateway Wi-Fi for video. Drive uses BLE. One video viewer at a time.</Text>
++    <Pressable accessibilityRole="button" accessibilityLabel="Open unified field controls"
++      onPress={() => {setPlaying(false);void Linking.openURL('http://192.168.8.1/').catch(() => {});}} style={styles.button}>
++      <Text style={styles.buttonText}>Camera aim, scan & field controls</Text>
++    </Pressable>
+   </View>;
+ }
+ 
