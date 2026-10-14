@@ -203,7 +203,7 @@ void setup() {
   bootId=esp_random();maintenanceReady=loadCamSettings();
   if(!maintenanceReady)Serial.println("CAM settings unavailable; OTA disabled.");
   displaySpi.begin(config::SCLK,-1,config::MOSI,config::CS);
-  tft.init(VISUAL_TFT_WIDTH,VISUAL_TFT_HEIGHT);tft.setRotation(VISUAL_TFT_ROTATION);tft.setSPISpeed(20000000);tft.fillScreen(ST77XX_BLACK);
+  tft.init(VISUAL_TFT_WIDTH,VISUAL_TFT_HEIGHT);tft.setRotation(config::DISPLAY_ROTATION);tft.setSPISpeed(20000000);tft.fillScreen(ST77XX_BLACK);
   canvas=new Canvas(tft.width(),tft.height()-48);
   if(!canvas->pixels)Serial.println("Animation buffer unavailable; text status remains active.");
   cameraReady=initCamera();

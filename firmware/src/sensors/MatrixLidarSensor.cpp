@@ -6,6 +6,7 @@ void MatrixLidarSensor::fail(bool protocol) {
   data_.meta.error(millis());
   if(protocol) ++data_.protocolErrors;
   data_.derived.valid=false;
+  data_.derived.nearestMm=0;data_.derived.usableZones=0;
   state_=State::DISCOVER; stateMs_=millis(); tried_=true;
 }
 bool MatrixLidarSensor::command(uint8_t id) {
@@ -34,7 +35,7 @@ bool MatrixLidarSensor::response() {
   status_=head;
   if(head!=0x53) { fail(true); return false; }
   if(cmd==2) {
-    auto &d=data_.derived; d.valid=false; d.usableZones=0;
+    auto &d=data_.derived; d.valid=false; d.usableZones=0;d.nearestMm=0;
     for(uint8_t i=0; i<64; ++i) {
       const uint16_t mm=uint16_t(payload[2*i]) | uint16_t(payload[2*i+1])<<8;
       data_.raw.distanceMm[i]=mm;

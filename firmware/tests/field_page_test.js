@@ -5,7 +5,7 @@ const elements=new Map(),events=new Map(),calls=[];
 const element=id=>{if(!elements.has(id))elements.set(id,{id,hidden:true,disabled:true,value:'',textContent:'',parentElement:{},append(){},removeAttribute(k){delete this[k]}});return elements.get(id)};
 element('expression').value='greeting';element('key').value='test-key';
 let visual={schema:1,mode:'ready',fresh:true,override:false,cameraIp:'192.168.8.2',streamUrl:'http://192.168.8.2:81/stream'};
-const document={getElementById:element,querySelectorAll:()=>[],querySelector:()=>element('h1'),addEventListener:(k,f)=>events.set(k,f),hidden:false,activeElement:null};
+const document={getElementById:element,querySelectorAll:()=>[],querySelector:()=>element('h1'),addEventListener:(k,f)=>events.set(k,[...(events.get(k)||[]),f]),hidden:false,activeElement:null};
 const window={addEventListener(){}};
 const context=vm.createContext({document,window,location:{search:'',origin:'http://gateway'},parent:{postMessage(){}},crypto:require('node:crypto').webcrypto,Uint32Array,URLSearchParams,performance:{now:()=>100},AbortSignal,console,setTimeout(){},setInterval(){},
 fetch:async(url,opts={})=>{calls.push({url,opts});return {ok:true,status:200,json:async()=>url==='/api/visual'?visual:{connected:true,requiresKey:true,transport:'UART',controller:{state:'SAFE',battery:'OK',s3Ms:50,epoch:1,armed:false,client:0},sensors:{}},text:async()=>'{"accepted":true}'}}});
@@ -19,7 +19,7 @@ const flush=()=>new Promise(resolve=>setImmediate(resolve));
   const command=calls.find(x=>x.url==='/api/visual'&&x.opts.method==='POST');assert(command);
   assert.deepEqual(JSON.parse(command.opts.body),{mode:'greeting',leaseMs:30000});assert.equal(command.opts.headers['X-Gladiator-Key'],'test-key');
   element('cameraIp').value='192.168.8.5';element('saveCamera').onclick();await flush();assert(calls.some(x=>x.url==='/api/visual/config'));
-  document.hidden=true;events.get('visibilitychange')();assert.equal(element('cameraFeed').src,undefined);assert.equal(element('cameraFeed').hidden,true);
+  document.hidden=true;events.get('visibilitychange').forEach(f=>f());assert.equal(element('cameraFeed').src,undefined);assert.equal(element('cameraFeed').hidden,true);
   document.hidden=false;element('videoToggle').onclick();element('cameraFeed').onerror();assert.equal(element('cameraFeed').src,undefined);assert.match(element('videoStatus').textContent,/unavailable/);
   element('videoToggle').onclick();visual={...visual,streamUrl:'http://192.168.8.5:81/stream',cameraIp:'192.168.8.5'};vm.runInContext('refreshVisual()',context);await flush();assert.equal(element('cameraFeed').src,undefined);
   assert.equal(calls.filter(x=>x.url==='/api/control').length,0); // Expression/video controls cannot drive motors.

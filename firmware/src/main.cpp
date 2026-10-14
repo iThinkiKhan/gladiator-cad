@@ -15,6 +15,7 @@
 #include "status/StatusLed.h"
 #include "gateway/RobotLink.h"
 #include "gateway/ControlJson.h"
+#include "mast/MastHardware.h"
 #include "../shared/FieldPage.h"
 #include "../shared/ServicePage.h"
 
@@ -298,21 +299,26 @@ String sensorStatusJson() {
   return json;
 }
 
-// USB commands are deliberately read-only. No command here can arm or move.
+// Existing USB commands remain read-only. Mast commissioning is a separate,
+// explicit physical procedure and never arms the drivetrain.
+#include "mast/MastApplication.h"
 void updateSerialConsole() {
   static String command;
+  static bool overflow=false;
   for (uint8_t budget=0; budget<64 && Serial.available(); ++budget) {
     char c=Serial.read();
     if (c=='\r') continue;
     if (c=='\n') {
+      if(overflow){command="";overflow=false;Serial.println("USB command too long; discarded.");continue;}
       command.trim();
-      if (command == "sensors" || command == "status") {
+      if(mastSerial(command)){}
+      else if (command == "sensors" || command == "status") {
         if (commandArmed) Serial.println("BUSY: disarm before USB snapshot.");
         else Serial.println(sensorStatusJson());
       } else if (command.length()) Serial.println("Read-only commands: sensors | status");
       command="";
-    } else if (command.length()<64) command += c;
-    else command="";
+    } else if (!overflow&&command.length()<768) command += c;
+    else {command="";overflow=true;}
   }
 }
 
@@ -1284,6 +1290,7 @@ void setup() {
   benchPowerCandidate = benchPowerActive = benchPowerViaPin;
   benchPowerCandidateSinceMs = millis();
   setupMotors();
+  mastHardware.begin(); // No PWM attachment or power-gate heartbeat at boot.
 
   // Read why the controller restarted before anything else can overwrite it.
   bootReason = esp_reset_reason();
@@ -1359,6 +1366,7 @@ void loop() {
   updateBatteryGuard(now);
   serviceFieldControl(now);
   updateMotorOutputs();
+  serviceMast();
   updateSerialConsole();
   logIna226();
   publishPowerTelemetry();
@@ -1382,7 +1390,7 @@ void loop() {
   gatewayLink.setController(linkController);
   static uint32_t lastSystem=0;
   if(now-lastSystem>=1000){ControlGuard guard;lastSystem=now;JsonDocument system;
-    system["firmware"]="Gladiator S3 Interface v1 / Link v2";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
+    system["firmware"]="Gladiator S3 Interface v1 / Link v2 / Mast v1";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
     system["orientation"]=orientation::NAME;
     system["resetReason"]=status::resetReasonName(bootReason);system["bootCount"]=bootCount;system["otaSlot"]=otaPartition;
     system["batteryState"]=batteryStateName(batteryState);system["powerSource"]=benchPowerActive?"BENCH":"LIPO";

@@ -22,6 +22,12 @@ summary, not a second documentation tree.
 
 ## Current shared state
 
+2026-10-14 — Jim reports assembled S3/C6/CAM/TFT working; both servos SG-90.
+Final-integration candidate and remaining physical acceptance:
+../../firmware/docs/FINAL_INTEGRATION.md. Hardware not flashed in this session.
+SEN0628 powered from 5 V needs external I²C translation; mast requires verified
+normally-off power/signal gate and measured calibration before outputs enable.
+
 2026-10-13 — CAM OTA 1.1.2 installed and confirmed over Wi-Fi, rollback/interruption/corruption checks passed, recovery AP usable without gateway/sensor. USB power only; jumper supply untested. OV2640 currently reports 0x105 again: resolve before sealing. Details: ../../firmware/docs/masthead/cam-ota-20261013.md. Private CAM key remains local.
 
 2026-10-13 — ESP32-CAM/C6 visual subsystem flashed and camera-tested: 14.92 fps QVGA over 90 seconds, gateway reboot recovery passed. TFT is not connected; S3 telemetry absent at the bench. Source/setup: ../../firmware/docs/MASTHEAD.md; next steps: agents/codex-masthead-20261013.md. Credentials and configured binaries are excluded from GitHub.

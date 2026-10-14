@@ -22,10 +22,12 @@
 #define VISUAL_OTA_KEY ""
 #endif
 #ifndef VISUAL_FIRMWARE_VERSION
-#define VISUAL_FIRMWARE_VERSION "masthead-1.1.2"
+#define VISUAL_FIRMWARE_VERSION "masthead-1.1.3"
 #endif
 namespace config {
 constexpr int SCLK=14,MOSI=13,DC=2,CS=15,RESET=-1;
+// Physical panel is upside down. Apply offset even to existing LocalConfig.
+constexpr uint8_t DISPLAY_ROTATION=(VISUAL_TFT_ROTATION+2)%4;
 constexpr uint32_t STALE_MS=1500,FRAME_MS=67,POLL_MS=200;
 constexpr char VERSION[]=VISUAL_FIRMWARE_VERSION;
 constexpr uint32_t OTA_CONFIRM_MS=120000,RECOVERY_MS=30000;

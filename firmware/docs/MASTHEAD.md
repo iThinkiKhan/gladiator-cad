@@ -1,5 +1,10 @@
 # Gladiator masthead firmware
 
+**2026-10-14 update:** Jim reports the camera and TFT operational on the assembled
+robot. [Final integration](FINAL_INTEGRATION.md) supersedes the historical
+unwired-TFT/camera-fault status below and covers the candidate 180° display offset,
+mast commissioning and SEN0628 wiring. This source update has not been flashed.
+
 Implemented October 13, 2026. **CAM OTA 1.1.2 is now wirelessly installed and confirmed; interrupted upload, corruption rejection, and automatic rollback passed.** The sensor is currently reporting 0x105 again; resolve that hardware fault before sealing the case. See [OTA bench](masthead/cam-ota-20261013.md). **Both boards are flashed and the camera/C6 bench checks pass.** CAM USB writes verified on COM8; C6 OTA verified, including a second reboot under video load. After reseating the OV2640 ribbon, live QVGA video delivered 1,343 JPEG frames at 14.92 fps over 90 seconds. The camera recovered after a C6 reboot without resetting. The TFT is not connected yet, and the C6 has no live S3 telemetry, so physical display and sensor-driven expression tests remain outstanding. See [bench results](masthead/bench-20261013.md). Both target builds and host tests pass.
 
 The CAM target is `firmware/cam/`; C6 integration is in the existing `firmware/gateway/` and `firmware/shared/` trees. This change adds three display endpoints and a masthead panel. S3 source, motor control, UART framing, transport failover, sensor ownership, and the S3/C6 pairing architecture are unchanged.

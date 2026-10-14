@@ -6,6 +6,7 @@ static const char FIELD_PAGE[]=R"HTML(<!doctype html><html lang="en"><meta chars
 <h1>Gladiator</h1><small>Interface v1 · Field</small><p id="link">Connecting…</p><section><div class="row"><span id="state">UNKNOWN</span><span id="power">—</span></div><p id="owner">S3 controls motors and safety.</p><p id="warnings" role="status">Waiting for robot state.</p><div class="row"><button id="arm" class="arm" disabled>ARM</button><button id="stop" class="stop">DISARM</button><select id="speed" aria-label="Drive power"><option value="25">25%</option><option value="50">50%</option><option value="75">75%</option><option value="100">100%</option><option value="255">Overdrive</option></select></div><div class="pad"><span></span><button data-drive="f" disabled>Forward</button><span></span><button data-drive="l" disabled>Left</button><button data-drive="s" disabled>Coast</button><button data-drive="r" disabled>Right</button><span></span><button data-drive="b" disabled>Reverse</button></div><output id="reply" aria-live="polite"></output><small>Hold to move. Release to coast. After any timeout or reconnect, arm again.</small></section>
 <section><div class="row"><span id="quality">UNKNOWN</span><strong id="transport">NONE</strong></div><p id="battery">Battery UNKNOWN</p><div class="facts"><div><small>Heading</small><strong id="heading">—</strong></div><div><small>Range</small><strong id="range">—</strong></div><div><small>Presence</small><strong id="presence">UNKNOWN</strong></div></div></section>
 <section id="visualPanel" hidden><div class="row"><strong>Masthead</strong><span id="visualMode">Connecting</span></div><p id="videoStatus">Set the camera address to enable video.</p><button id="videoToggle" disabled>Start video</button><img id="cameraFeed" hidden alt="Live Gladiator camera" style="width:100%;margin-top:12px;border-radius:10px"><p>Display expression</p><select id="expression" aria-label="Display expression"><option value="auto">Automatic</option><option value="ready">Ready</option><option value="scanning">Scanning</option><option value="active">Active</option><option value="greeting">Greeting</option><option value="alert">Alert</option></select><button id="setExpression">Show for 30 seconds</button><output id="visualReply" aria-live="polite"></output><details><summary>Camera setup</summary><p>Camera IPv4 address on the C6 network. Reserve this address in DHCP.</p><input id="cameraIp" maxlength="15" placeholder="192.168.8.2" aria-label="Camera IPv4 address"><button id="saveCamera">Save camera address</button></details></section>
+<section id="mastPanel" hidden><strong>Pan / tilt mast</strong><p id="mastStatus">Uncommissioned - outputs off</p><p>Reference the supported head through S3 USB before each powered session. Angles are head degrees relative to the calibrated neutral.</p><label><input id="mastMaintain" type="checkbox" style="width:auto"> Maintain commissioned session</label><div class="row"><label>Pan<input id="mastPan" type="number" value="0" step="0.1"></label><label>Tilt<input id="mastTilt" type="number" value="0" step="0.1"></label></div><div class="row"><button id="mastMove" disabled>Move smoothly</button><button id="mastScan" disabled>Scan within limits</button><button id="mastHold" disabled>Hold</button><button id="mastStop" class="stop">Mast OFF</button></div><output id="mastReply"></output></section>
 <details id="diagnostics"><summary>Diagnostics</summary><p id="reportedPower"></p><pre id="sensorHealth"></pre><details id="trackTest" hidden><summary>Independent track test</summary><p>Values are signed percent. Hold Test tracks to run; release to coast. S3 validates every request.</p><label>Left<input id="testLeft" type="number" min="-100" max="100" value="0"></label><label>Right<input id="testRight" type="number" min="-100" max="100" value="0"></label><button data-drive="test" disabled>Test tracks</button></details></details>
 <p><a id="dev" href="/dev">Development & diagnostics</a></p><details id="keyBox"><summary>Field access key</summary><p>Use the C6 maintenance key from USB provisioning. It stays in this page's memory.</p><input id="key" type="password" maxlength="32" autocomplete="off" aria-label="Field access key"></details>
 <script>
@@ -70,5 +71,38 @@ async function visualPost(path,body){try{const r=await fetch(path,{method:'POST'
 $('setExpression').onclick=()=>visualPost('/api/visual',{mode:$('expression').value,leaseMs:30000});
 $('saveCamera').onclick=()=>visualPost('/api/visual/config',{cameraIp:$('cameraIp').value.trim()});
 async function refreshVisual(){try{const r=await fetch('/api/visual',{cache:'no-store',signal:AbortSignal.timeout(600)});if(r.status===404)return;if(!r.ok)throw Error();const v=await r.json();if(v.schema!==1)return;$('visualPanel').hidden=false;$('visualMode').textContent=v.mode+(v.override?' · temporary':'');const next=v.streamUrl||'';if(next!==streamUrl){stopVideo();streamUrl=next;}$('videoToggle').disabled=!streamUrl;if(document.activeElement!==$('cameraIp'))$('cameraIp').value=v.cameraIp||'';$('videoStatus').textContent=streamUrl?'One video viewer at a time.':'Set the camera address to enable video.';}catch(e){$('visualMode').textContent='Gateway unavailable';}setTimeout(refreshVisual,1000);}
+// Mast has its own S3 session and expiry; it cannot attach from this page.
+let mastState=null,mastSeq=0,mastToken=0,mastBusy=false,mastWasEnabled=false;
+function mastPause(message){$('mastMaintain').checked=false;if(message)$('mastReply').textContent=message;}
+async function mastPost(operation){
+ if(mastBusy)return;
+ if(!mastState?.fresh||!mastState.enabled||!mastToken)return;
+ if(operation!==0&&!$('mastMaintain').checked)return;
+ const pan=Math.round(Number($('mastPan').value)*10),tilt=Math.round(Number($('mastTilt').value)*10);
+ if(!Number.isFinite(pan)||!Number.isFinite(tilt)){mastPause('Enter finite head angles.');return;}
+ mastBusy=true;
+ try{const r=await fetch('/api/mast',{method:'POST',headers:{'Content-Type':'application/json','X-Gladiator-Key':$('key').value.trim()},body:JSON.stringify({session:mastToken,sequence:++mastSeq,operation,pan,tilt}),signal:AbortSignal.timeout(250)});if(!r.ok)throw Error(await r.text());if(operation!==4)$('mastReply').textContent='Queued; check S3 status for the result.';}
+ catch(e){mastPause('Mast control interrupted; session will switch off.');}finally{mastBusy=false;}
+}
+$('mastMove').onclick=()=>mastPost(2);$('mastScan').onclick=()=>mastPost(3);$('mastHold').onclick=()=>mastPost(1);
+$('mastStop').onclick=()=>{mastPost(0);mastPause('Mast OFF requested. Support the head.');};
+$('mastMaintain').onchange=()=>{if(!$('mastMaintain').checked)mastPost(0);};
+window.addEventListener('blur',()=>{mastPost(0);mastPause('Paused. Reference again after session ends.');});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){mastPost(0);mastPause();}});
+window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===parent&&e.data?.type==='interface-stop'){mastPost(0);mastPause();}});
+async function refreshMast(){
+ try{const r=await fetch('/api/mast',{cache:'no-store',signal:AbortSignal.timeout(250)});if(r.status===404)return;if(!r.ok)throw Error();const m=await r.json();$('mastPanel').hidden=false;
+ if(!m.fresh){mastPause('S3 mast state unavailable.');mastToken=0;}
+ if(mastWasEnabled&&(!m.enabled||m.session!==mastToken))mastPause('Session ended. Use S3 USB to reference again.');
+ if(m.session!==mastToken){mastToken=m.session||0;mastSeq=m.sequence||0;}else mastSeq=Math.max(mastSeq,m.sequence||0);
+ mastState=m;mastWasEnabled=!!m.enabled;
+ $('mastStatus').textContent=(m.fresh?(m.enabled?(m.awaitingOperator?'Waiting for operator':m.scanning?'Scanning':'Enabled'):'OFF'):'UNAVAILABLE')+' - '+(m.reason||'S3 firmware required')+' - commanded '+(m.commandedPanDeg??'?')+' deg / '+(m.commandedTiltDeg??'?')+' deg - rejected '+(m.rejected||0);
+ for(const [id,min,max] of [['mastPan',m.panMinDeg,m.panMaxDeg],['mastTilt',m.tiltMinDeg,m.tiltMaxDeg]]){$(id).min=min;$(id).max=max;}
+ for(const id of ['mastMove','mastScan','mastHold'])$(id).disabled=!m.fresh||!m.enabled||!m.safe||!$('mastMaintain').checked;
+ if(m.fresh&&m.enabled&&m.safe&&$('mastMaintain').checked&&!document.hidden)mastPost(4);
+ }catch(e){mastState=null;mastToken=0;mastPause('Mast connection lost.');for(const id of ['mastMove','mastScan','mastHold'])$(id).disabled=true;}
+ setTimeout(refreshMast,100);
+}
+refreshMast();
 setInterval(()=>{if(armed&&!document.hidden)command(2);},100);refresh();refreshVisual();
 </script></html>)HTML";

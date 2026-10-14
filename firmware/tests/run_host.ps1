@@ -4,6 +4,10 @@ try {
   $compilerDir = Join-Path $env:USERPROFILE '.platformio\packages\toolchain-gccmingw32\bin'
   $env:PATH = "$compilerDir;$env:PATH"
   New-Item -ItemType Directory -Force 'build-output\host' | Out-Null
+  & "$compilerDir\g++.exe" -std=c++17 -Wall -Wextra -Werror tests/mast_policy_test.cpp -o build-output/host/mast_policy_test.exe
+  if ($LASTEXITCODE) { throw 'Mast policy compilation failed' }
+  & .\build-output\host\mast_policy_test.exe
+  if ($LASTEXITCODE) { throw 'Mast policy tests failed' }
   & "$compilerDir\g++.exe" -std=c++17 -Wall -Wextra -Werror tests/visual_state_test.cpp -o build-output/host/visual_state_test.exe
   if ($LASTEXITCODE) { throw 'Visual policy compilation failed' }
   & .\build-output\host\visual_state_test.exe

@@ -1,5 +1,11 @@
 # Gladiator
 
+**2026-10-14: [Final integration and safe mast commissioning](docs/FINAL_INTEGRATION.md).**
+User reports assembled camera/display operational and installed SG-90 servos.
+Candidate source adds TFT 180° offset, S3-authoritative gated/calibrated mast,
+camera default address and coordinated sensor expressions. Physical servo gate,
+I²C level translation, calibration and event acceptance remain required.
+
 **2026-10-13: [ESP32-CAM masthead visual subsystem](docs/MASTHEAD.md).** Camera and C6 flashed; QVGA streaming/reconnect bench checks pass. CAM OTA 1.1.2 is installed and wirelessly verified with recovery/rollback; current OV2640 detection fault needs resolution before sealing. TFT is not yet wired; S3 sensor-driven expressions remain to be tested.
 
 **2026-10-09: mast is FRONT.** Logical LEFT is the native-USB-side driver;

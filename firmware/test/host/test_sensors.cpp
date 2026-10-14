@@ -58,9 +58,13 @@ static void matrixTests() {
   fakeMillis=5082; sensor.update();
   assert(data.raw.distanceMm[0]==4000 && data.raw.distanceMm[1]==4000);
   assert(data.derived.usableZones==62 && data.derived.nearestZone==37 && data.derived.nearestMm==612);
+  stream={0x53,2,128,0};
+  for(unsigned i=0;i<64;++i){const uint16_t bad[]={0,19,4000,65535};uint16_t v=bad[i%4];stream.push_back(v&255);stream.push_back(v>>8);}
+  fakeMillis=5149;sensor.update();fakeMillis=5154;sensor.update();
+  assert(!data.derived.valid&&!data.derived.usableZones&&!data.derived.nearestMm&&data.meta.health==SensorHealth::OK);
   const auto old=data.raw.receivedUs;
-  fakeMillis=5150; sensor.update();
-  stream={0x53,2,255,255}; fakeMillis=5155; sensor.update();
+  fakeMillis=5221; sensor.update();
+  stream={0x53,2,255,255}; fakeMillis=5226; sensor.update();
   assert(data.protocolErrors==1 && data.raw.receivedUs==old && !data.derived.valid);
   puts("PASS matrix: nonblocking startup, 64 zones, nearest, oversized payload rejected without overwriting evidence");
 }

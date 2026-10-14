@@ -9,7 +9,7 @@ Health uartHealth,wifiHealth;
 WifiChannel wifiChannel;
 Decoder wifiDecoder;
 Transport primary=Transport::NONE;
-uint32_t sequences[3]={},topicReceived[5]={},detailReceived=0,systemReceived=0;
+uint32_t sequences[3]={},topicReceived[6]={},detailReceived=0,systemReceived=0;
 cJSON *robotCache=nullptr;
 std::string nativeJson,systemJson;
 std::string logCache,logPending;uint32_t logReceived=0,logId=0;size_t logUsed=0;
@@ -91,6 +91,14 @@ void receiveTyped(const Frame &f,Transport transport){
     memcpy(&logPending[offset],f.payload+12,chunk);logUsed+=chunk;
     if(logUsed==total){lock();logCache=std::move(logPending);logReceived=nowMs();unlock();logUsed=0;}return;
   }
+  if(f.type==Type::MAST_STATE&&f.length<=768){
+    auto value=cJSON_ParseWithLength(f.payload,f.length);
+    auto schema=cJSON_GetObjectItemCaseSensitive(value,"schema");
+    if(!cJSON_IsObject(value)||!cJSON_IsNumber(schema)||schema->valuedouble!=1){cJSON_Delete(value);return;}
+    lock();if(!robotCache)robotCache=cJSON_CreateObject();
+    cJSON_DeleteItemFromObjectCaseSensitive(robotCache,"mast");cJSON_AddItemToObject(robotCache,"mast",value);
+    topicReceived[5]=nowMs();++state.rxFrames;unlock();return;
+  }
   if(f.type==Type::DETAIL){Reader r(f);uint32_t id=r.u32(),total=r.u32(),offset=r.u32();size_t chunk=f.length>=12?f.length-12:0;
     if(!r.valid||!total||total>MAX_PAYLOAD||chunk>384||offset>total||chunk>total-offset){lock();++state.detailErrors;unlock();return;}
     if(offset==0){detailTransfer=id;detailTotal=total;detailUsed=0;}
@@ -109,11 +117,13 @@ void receiveTyped(const Frame &f,Transport transport){
 // Caller holds stateMutex. Ages grow even if that individual topic stops.
 cJSON *copyRobot(){
   cJSON *out=robotCache?cJSON_Duplicate(robotCache,true):cJSON_CreateObject();
-  const char *keys[]={"controller","power","imu","tofFront","presence"};
-  for(unsigned i=0;i<5;++i){auto item=cJSON_GetObjectItemCaseSensitive(out,keys[i]);if(!item)continue;
+  const char *keys[]={"controller","power","imu","tofFront","presence","mast"};
+  for(unsigned i=0;i<6;++i){auto item=cJSON_GetObjectItemCaseSensitive(out,keys[i]);if(!item)continue;
     number(item,"transportAgeMs",uint32_t(nowMs()-topicReceived[i]));
     auto age=cJSON_GetObjectItemCaseSensitive(cJSON_GetObjectItemCaseSensitive(item,"meta"),"ageMs");
     if(cJSON_IsNumber(age))cJSON_SetNumberValue(age,age->valuedouble+uint32_t(nowMs()-topicReceived[i]));
+    auto sourceAge=cJSON_GetObjectItemCaseSensitive(item,"sourceAgeMs");
+    if(cJSON_IsNumber(sourceAge))cJSON_SetNumberValue(sourceAge,sourceAge->valuedouble+uint32_t(nowMs()-topicReceived[i]));
   }return out;
 }
 void uartTask(void *){
