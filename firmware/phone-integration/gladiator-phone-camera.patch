@@ -1,0 +1,383 @@
+--- a/companion_app/src/screens/DriveScreen.tsx
++++ b/companion_app/src/screens/DriveScreen.tsx
+@@ -2 +2 @@
+-import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
++import {AppState, Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+@@ -4,0 +5 @@
++import {GladiatorCamera} from '../components/GladiatorCamera';
+@@ -73,0 +75,13 @@
++  // Changing Wi-Fi/apps for video must release drive ownership, never resume
++  // a held direction when the operator returns to the control screen.
++  useEffect(() => {
++    const listener = AppState.addEventListener('change', state => {
++      if (state !== 'active') {
++        setArmed(false);
++        setPressed(NO_BUTTONS);
++        void service.sendDrive(0, 0, false, false, latest.current.powerMode.power).catch(() => {});
++      }
++    });
++    return () => listener.remove();
++  }, [service]);
++
+@@ -92,0 +107 @@
++      if (AppState.currentState !== 'active') return;
+@@ -118 +133 @@
+-    if (!linked) return;
++    if (!linked || AppState.currentState !== 'active') return;
+@@ -157,0 +173,2 @@
++    <View style={styles.scroll}>
++    <GladiatorCamera />
+@@ -424,0 +442 @@
++    </View>
+--- a/companion_app/android/app/src/main/java/com/spectre/companion/SpectreCompanionPackage.kt
++++ b/companion_app/android/app/src/main/java/com/spectre/companion/SpectreCompanionPackage.kt
+@@ -27 +27 @@
+-  ): List<ViewManager<*, *>> = emptyList()
++  ): List<ViewManager<*, *>> = listOf(GladiatorCameraViewManager())
+--- a/companion_app/android/app/src/main/res/xml/network_security_config.xml
++++ b/companion_app/android/app/src/main/res/xml/network_security_config.xml
+@@ -6,0 +7,4 @@
++    <!-- Existing private ESP32-CAM MJPEG endpoint only; no global HTTP opt-in. -->
++    <domain-config cleartextTrafficPermitted="true">
++        <domain includeSubdomains="false">192.168.8.2</domain>
++    </domain-config>
+--- /dev/null
++++ b/companion_app/src/components/GladiatorCamera.tsx
+@@ -0,0 +1,39 @@
++import React, {useEffect, useState} from 'react';
++import {AppState, Platform, Pressable, requireNativeComponent, StyleSheet, Text, View, type ViewProps} from 'react-native';
++import {theme} from '../theme/theme';
++
++const CameraView = Platform.OS === 'android'
++  ? requireNativeComponent<ViewProps & {active: boolean}>('GladiatorCameraView')
++  : null;
++
++// Independent read-only Wi-Fi viewer. No motor/arm/mast commands or credentials.
++export function GladiatorCamera() {
++  const [playing, setPlaying] = useState(false);
++  useEffect(() => {
++    const listener = AppState.addEventListener('change', state => {
++      if (state !== 'active') setPlaying(false);
++    });
++    return () => listener.remove();
++  }, []);
++  return <View style={styles.panel}>
++    <View style={styles.row}>
++      <Text style={styles.title}>Gladiator camera</Text>
++      <Pressable accessibilityRole="button" accessibilityLabel={playing ? 'Stop video' : 'Start video'}
++        disabled={!CameraView} onPress={() => setPlaying(value => !value)} style={styles.button}>
++        <Text style={styles.buttonText}>{playing ? 'Stop video' : 'Start video'}</Text>
++      </Pressable>
++    </View>
++    {playing && CameraView ? <CameraView active={true} style={styles.video} /> : null}
++    <Text style={styles.note}>Join Gladiator-Gateway Wi-Fi for video. Drive uses BLE. One video viewer at a time.</Text>
++  </View>;
++}
++
++const styles = StyleSheet.create({
++  panel: {backgroundColor: theme.colors.panel, borderRadius: theme.radius.md, padding: 8, gap: 6},
++  row: {flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8},
++  title: {color: theme.colors.textStrong, fontSize: 13, fontWeight: '700'},
++  button: {minHeight: 44, paddingHorizontal: 12, justifyContent: 'center', backgroundColor: theme.colors.chrome, borderRadius: theme.radius.md},
++  buttonText: {color: theme.colors.cyan, fontWeight: '700'},
++  video: {height: 180, width: '100%'},
++  note: {color: theme.colors.textSoft, fontSize: 11, lineHeight: 15},
++});
+--- /dev/null
++++ b/companion_app/android/app/src/main/java/com/spectre/companion/GladiatorCameraViewManager.kt
+@@ -0,0 +1,128 @@
++package com.spectre.companion
++
++import android.graphics.Bitmap
++import android.graphics.BitmapFactory
++import android.graphics.Color
++import android.net.ConnectivityManager
++import android.net.NetworkCapabilities
++import android.os.Handler
++import android.os.Looper
++import android.view.Gravity
++import android.widget.FrameLayout
++import android.widget.ImageView
++import android.widget.TextView
++import com.facebook.react.bridge.LifecycleEventListener
++import com.facebook.react.common.LifecycleState
++import com.facebook.react.uimanager.SimpleViewManager
++import com.facebook.react.uimanager.ThemedReactContext
++import com.facebook.react.uimanager.annotations.ReactProp
++import java.io.BufferedInputStream
++import java.net.HttpURLConnection
++import java.net.URL
++import java.util.concurrent.atomic.AtomicInteger
++import java.util.concurrent.atomic.AtomicReference
++
++class GladiatorCameraView(context: ThemedReactContext) : FrameLayout(context), LifecycleEventListener {
++  private val reactContext = context
++  private val image = ImageView(context).apply { scaleType = ImageView.ScaleType.FIT_CENTER }
++  private val status = TextView(context).apply {
++    setTextColor(Color.WHITE); textSize = 12f
++    setBackgroundColor(0xB0000000.toInt()); setPadding(12, 6, 12, 6)
++    text = "Camera stopped"
++  }
++  private val main = Handler(Looper.getMainLooper())
++  private val generation = AtomicInteger()
++  private val connection = AtomicReference<HttpURLConnection?>()
++  private val pending = AtomicReference<Bitmap?>()
++  private val deliveryQueued = java.util.concurrent.atomic.AtomicBoolean(false)
++  private var active = false
++
++  init {
++    setBackgroundColor(Color.BLACK)
++    addView(image, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
++    addView(status, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.TOP or Gravity.START))
++    reactContext.addLifecycleEventListener(this)
++  }
++
++  fun setActive(next: Boolean) {
++    if (!next) { stop(); return }
++    if (active || reactContext.lifecycleState != LifecycleState.RESUMED) return
++    active = true
++    val token = generation.incrementAndGet()
++    status.text = "Connecting to camera..."
++    Thread({ stream(token) }, "gladiator-camera").apply { isDaemon = true; start() }
++  }
++
++  private fun stream(token: Int) {
++    var socket: HttpURLConnection? = null
++    try {
++      // Route only this socket over C6 Wi-Fi, even if Android prefers cellular
++      // or Spectre has bound other traffic to a different process network.
++      val networks = reactContext.getSystemService(android.content.Context.CONNECTIVITY_SERVICE) as ConnectivityManager
++      val wifi = networks.allNetworks.firstOrNull { network ->
++        networks.getNetworkCapabilities(network)?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true &&
++          networks.getLinkProperties(network)?.linkAddresses?.any { it.address.hostAddress?.startsWith("192.168.8.") == true } == true
++      } ?: throw java.io.IOException("Join Gladiator-Gateway Wi-Fi")
++      socket = wifi.openConnection(URL("http://192.168.8.2:81/stream")) as HttpURLConnection
++      socket.instanceFollowRedirects = false
++      socket.connectTimeout = 2000; socket.readTimeout = 1500; socket.useCaches = false
++      socket.setRequestProperty("Accept", "multipart/x-mixed-replace")
++      connection.set(socket)
++      if (generation.get() != token) return
++      if (socket.responseCode != 200) throw java.io.IOException("Camera unavailable")
++      BufferedInputStream(socket.inputStream, 16384).use { input ->
++        val reader = MjpegReader(input, socket.contentType)
++        while (generation.get() == token) {
++          val bytes = reader.readFrame()
++          val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
++          BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
++          if (bounds.outWidth <= 0 || bounds.outHeight <= 0 || bounds.outWidth.toLong()*bounds.outHeight > 1048576)
++            throw java.io.IOException("Invalid camera dimensions")
++          val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
++              ?: throw java.io.IOException("Invalid JPEG")
++          if (generation.get() != token) return
++          pending.set(bitmap) // Latest frame only; never queue a video backlog.
++          if (deliveryQueued.compareAndSet(false, true)) main.post {
++            deliveryQueued.set(false)
++            val latest = pending.getAndSet(null)
++            if (generation.get() == token && latest != null) {
++              image.setImageBitmap(latest); status.text = "LIVE"
++            }
++          }
++        }
++      }
++    } catch (_: Exception) {
++      main.post {
++        if (generation.get() == token) {
++          stop()
++          status.text = "Camera unavailable. Stop, then Start to retry."
++        }
++      }
++    } finally {
++      connection.compareAndSet(socket, null)
++      socket?.disconnect()
++    }
++  }
++
++  fun stop() {
++    active = false; generation.incrementAndGet(); pending.set(null)
++    image.setImageDrawable(null); status.text = "Camera stopped"
++    connection.getAndSet(null)?.let { socket ->
++      Thread({ socket.disconnect() }, "gladiator-camera-close").apply { isDaemon = true; start() }
++    }
++  }
++
++  fun dispose() { stop(); reactContext.removeLifecycleEventListener(this) }
++  override fun onDetachedFromWindow() { stop(); super.onDetachedFromWindow() }
++  override fun onHostPause() { stop() }
++  override fun onHostResume() {} // No automatic restart or reconnect.
++  override fun onHostDestroy() { stop() }
++}
++
++class GladiatorCameraViewManager : SimpleViewManager<GladiatorCameraView>() {
++  override fun getName() = "GladiatorCameraView"
++  override fun createViewInstance(context: ThemedReactContext) = GladiatorCameraView(context)
++  @ReactProp(name = "active", defaultBoolean = false)
++  fun setActive(view: GladiatorCameraView, active: Boolean) { view.setActive(active) }
++  override fun onDropViewInstance(view: GladiatorCameraView) { view.dispose(); super.onDropViewInstance(view) }
++}
+--- /dev/null
++++ b/companion_app/android/app/src/main/java/com/spectre/companion/MjpegReader.java
+@@ -0,0 +1,75 @@
++package com.spectre.companion;
++
++import java.io.EOFException;
++import java.io.IOException;
++import java.io.InputStream;
++import java.util.Locale;
++
++/** Bounded multipart reader for the existing ESP32-CAM JPEG stream. */
++public final class MjpegReader {
++  private static final int MAX_JPEG = 262144;
++  private final InputStream input;
++  private final String boundary;
++
++  public MjpegReader(InputStream input, String contentType) throws IOException {
++    this.input = input;
++    if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith("multipart/x-mixed-replace"))
++      throw new IOException("Expected camera MJPEG stream");
++    String found = null;
++    for (String part : contentType.split(";")) {
++      String value = part.trim();
++      if (value.toLowerCase(Locale.ROOT).startsWith("boundary=")) {
++        found = value.substring(9).trim();
++        if (found.startsWith("\"") && found.endsWith("\"")) found = found.substring(1, found.length()-1);
++      }
++    }
++    if (found == null || !found.matches("[a-zA-Z0-9_-]{1,80}")) throw new IOException("Invalid camera boundary");
++    boundary = "--" + found;
++  }
++
++  private String line() throws IOException {
++    StringBuilder out = new StringBuilder();
++    for (int n=0; n<512; n++) {
++      int value = input.read();
++      if (value<0) throw new EOFException("Camera disconnected");
++      if (value=='\n') return out.toString().replace("\r", "");
++      if (value>127 || (value<32 && value!='\r')) throw new IOException("Invalid camera header");
++      out.append((char)value);
++    }
++    throw new IOException("Camera header too long");
++  }
++
++  public byte[] readFrame() throws IOException {
++    String marker = line();
++    for (int n=0; marker.isEmpty() && n<8; n++) marker=line();
++    if (!marker.equals(boundary)) throw new IOException("Camera boundary missing");
++    int length=-1, total=0;
++    boolean jpeg=false;
++    for (int n=0; n<32; n++) {
++      String header=line(); total+=header.length();
++      if (total>4096) throw new IOException("Camera headers too large");
++      if (header.isEmpty()) {
++        if (!jpeg || length<4 || length>MAX_JPEG) throw new IOException("Invalid JPEG length/type");
++        byte[] bytes=new byte[length]; int used=0;
++        while (used<length) {
++          int got=input.read(bytes,used,length-used);
++          if (got<=0) throw new EOFException("Incomplete camera frame");
++          used+=got;
++        }
++        if ((bytes[0]&255)!=255 || (bytes[1]&255)!=216 ||
++            (bytes[length-2]&255)!=255 || (bytes[length-1]&255)!=217) throw new IOException("Invalid JPEG frame");
++        return bytes;
++      }
++      int colon=header.indexOf(':');
++      if (colon<1) throw new IOException("Malformed camera header");
++      String key=header.substring(0,colon).trim().toLowerCase(Locale.ROOT);
++      String value=header.substring(colon+1).trim();
++      if (key.equals("content-type")) jpeg=value.equalsIgnoreCase("image/jpeg");
++      if (key.equals("content-length")) {
++        if (length!=-1 || !value.matches("[0-9]{1,6}")) throw new IOException("Invalid camera length");
++        length=Integer.parseInt(value);
++      }
++    }
++    throw new IOException("Too many camera headers");
++  }
++}
+--- /dev/null
++++ b/companion_app/verify-camera/MjpegReaderTest.java
+@@ -0,0 +1,40 @@
++import com.spectre.companion.MjpegReader;
++import java.io.ByteArrayInputStream;
++import java.io.ByteArrayOutputStream;
++import java.io.IOException;
++import java.nio.charset.StandardCharsets;
++import java.util.Arrays;
++
++public class MjpegReaderTest {
++  static int checked=0;
++  static final byte[] JPEG={(byte)255,(byte)216,1,2,(byte)255,(byte)217};
++  static byte[] part(String header,byte[] jpeg) throws Exception {
++    ByteArrayOutputStream out=new ByteArrayOutputStream();
++    out.write(header.getBytes(StandardCharsets.US_ASCII));out.write(jpeg);return out.toByteArray();
++  }
++  static MjpegReader reader(byte[] bytes) throws IOException {
++    return new MjpegReader(new ByteArrayInputStream(bytes),"multipart/x-mixed-replace;boundary=cam");
++  }
++  static void reject(byte[] bytes) throws Exception {
++    try {reader(bytes).readFrame();throw new AssertionError("Invalid frame accepted");}
++    catch(IOException expected){checked++;}
++  }
++  public static void main(String[] args) throws Exception {
++    String header="\r\n--cam\r\nContent-Type: image/jpeg\r\nContent-Length: 6\r\nX-Timestamp: 1\r\n\r\n";
++    byte[] frame=part(header,JPEG);ByteArrayOutputStream stream=new ByteArrayOutputStream();stream.write(frame);stream.write(frame);
++    MjpegReader r=reader(stream.toByteArray());
++    assert Arrays.equals(r.readFrame(),JPEG);assert Arrays.equals(r.readFrame(),JPEG);checked+=2;
++    reject(part(header,new byte[]{(byte)255,(byte)216}));
++    reject(part(header,new byte[]{0,0,0,0,0,0}));
++    for(String invalid:new String[]{
++      "--cam\r\nContent-Type: image/jpeg\r\n\r\n",
++      "--cam\r\nContent-Type: text/html\r\nContent-Length: 6\r\n\r\n",
++      "--cam\r\nContent-Type: image/jpeg\r\nContent-Length: 262145\r\n\r\n",
++      "--cam\r\nContent-Type: image/jpeg\r\nContent-Length: 6\r\nContent-Length: 6\r\n\r\n",
++      "--cam\r\nContent-Type: image/jpeg\r\nContent-Length: -6\r\n\r\n",
++      "--wrong\r\n","--cam--\r\n","--cam\r\n"+"X".repeat(513)+"\r\n"}) reject(part(invalid,JPEG));
++    try {new MjpegReader(new ByteArrayInputStream(frame),"text/html");throw new AssertionError();}catch(IOException expected){checked++;}
++    assert Arrays.equals(new MjpegReader(new ByteArrayInputStream(frame),"multipart/x-mixed-replace; boundary=\"cam\"").readFrame(),JPEG);checked++;
++    System.out.println("Camera reader: "+checked+" cases passed (multipart, timestamps, truncation, bad JPEG, bounds and headers).");
++  }
++}
+--- /dev/null
++++ b/companion_app/verify-camera/ui.cjs
+@@ -0,0 +1,43 @@
++// Production components with deterministic React/native doubles; no hardware.
++const fs=require('fs'),vm=require('vm'),path=require('path'),assert=require('assert/strict'),ts=require('typescript');
++const root=path.resolve(__dirname,'..');
++function hooks(){const slots=[];let index=0,pending=[];const equal=(a,b)=>a&&b&&a.length===b.length&&a.every((v,i)=>v===b[i]);
++ const api={useState(initial){const i=index++;if(!slots[i])slots[i]={value:initial};return [slots[i].value,v=>slots[i].value=typeof v==='function'?v(slots[i].value):v];},
++ useRef(initial){const i=index++;if(!slots[i])slots[i]={value:{current:initial}};return slots[i].value;},
++ useMemo(fn,deps){const i=index++;if(!equal(slots[i]?.deps,deps))slots[i]={value:fn(),deps};return slots[i].value;},
++ useEffect(fn,deps){const i=index++;if(!equal(slots[i]?.deps,deps)){const old=slots[i];pending.push(()=>{old?.cleanup?.();slots[i]={deps,cleanup:fn()};});}}};
++ return {api,render(fn){index=0;const tree=fn();const effects=pending;pending=[];effects.forEach(f=>f());return tree;},dispose(){slots.forEach(s=>s?.cleanup?.());}};
++}
++const jsx={jsx:(type,props)=>({type,props}),jsxs:(type,props)=>({type,props})};
++function load(file,imports,extra={}){const code=ts.transpileModule(fs.readFileSync(path.join(root,file),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX}}).outputText;
++ const module={exports:{}};vm.runInNewContext(code,{module,exports:module.exports,require:name=>{assert(name in imports,'Unexpected dependency '+name);return imports[name];},...extra});return module.exports;}
++function nodes(tree){if(!tree||typeof tree!=='object')return [];return [tree,...[tree.props?.children].flat(Infinity).flatMap(nodes)];}
++function text(tree){if(typeof tree==='string')return tree;if(Array.isArray(tree))return tree.map(text).join('');return tree?.props?text(tree.props.children):'';}
++function environment(){const listeners=new Set();const AppState={currentState:'active',addEventListener(type,fn){listeners.add(fn);return {remove:()=>listeners.delete(fn)};}};
++ return {AppState,change(state){AppState.currentState=state;listeners.forEach(fn=>fn(state));},native:{AppState,Platform:{OS:'android'},Pressable:'Pressable',View:'View',Text:'Text',ScrollView:'ScrollView',StyleSheet:{create:s=>s},requireNativeComponent:()=> 'NativeCamera'},theme:{colors:{},radius:{},spacing:{}}};}
++const env=environment(),camHooks=hooks();
++const Camera=load('src/components/GladiatorCamera.tsx',{'react':camHooks.api,'react/jsx-runtime':jsx,'react-native':env.native,'../theme/theme':{theme:env.theme}}).GladiatorCamera;
++let tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));
++nodes(tree).find(n=>n.props?.accessibilityLabel==='Start video').props.onPress();tree=camHooks.render(Camera);
++assert(nodes(tree).some(n=>n.type==='NativeCamera'&&n.props.active===true));
++env.change('background');tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));
++env.change('active');tree=camHooks.render(Camera);assert(!nodes(tree).some(n=>n.type==='NativeCamera'));camHooks.dispose();
++
++const driveEnv=environment(),driveHooks=hooks(),frames=[],timers=new Map();let nextTimer=0,service;
++class FakeBle {constructor(listener){this.listener=listener;service=this;}sendDrive(...args){frames.push(args);return Promise.resolve();}shutdown(){return Promise.resolve();}}
++const mix=load('src/services/gladiator/driveMix.ts',{});
++const Drive=load('src/screens/DriveScreen.tsx',{'react':driveHooks.api,'react/jsx-runtime':jsx,'react-native':driveEnv.native,
++ '../components/FieldPanel':{FieldPanel:'FieldPanel'},'../components/GladiatorCamera':{GladiatorCamera:'CameraWidget'},
++ '../services/gladiator/GladiatorBleService':{GladiatorBleService:FakeBle},'../services/gladiator/driveMix':mix,
++ '../state/SpectreContext':{useSpectre:()=>({permissions:{allGranted:true}})},'../theme/theme':{theme:driveEnv.theme}},
++ {setInterval:fn=>{timers.set(++nextTimer,fn);return nextTimer;},clearInterval:id=>timers.delete(id)}).DriveScreen;
++tree=driveHooks.render(Drive);assert.equal(tree.props.children[0].type,'CameraWidget');
++service.listener.onConnectionChange('connected','fixture');tree=driveHooks.render(Drive);
++nodes(tree).find(n=>n.type==='Pressable'&&text(n)==='Start drive').props.onPress();tree=driveHooks.render(Drive);
++const forward=()=>nodes(tree).find(n=>n.props?.accessibilityLabel?.startsWith('forward.'));
++forward().props.onPressIn();tree=driveHooks.render(Drive);assert(frames.some(f=>f[2]&&f[3]));
++driveEnv.change('background');assert(frames.at(-1)[2]===false&&frames.at(-1)[0]===0&&frames.at(-1)[1]===0);
++const count=frames.length;timers.forEach(f=>f());assert.equal(frames.length,count);
++tree=driveHooks.render(Drive);driveEnv.change('active');tree=driveHooks.render(Drive);assert.equal(forward().props.disabled,true);
++assert.equal(frames.length,count);driveHooks.dispose();
++console.log('Camera/Drive UI passed: explicit video start, background stop, no restart, pinned viewer, drive disarm, no background heartbeat or resume.');

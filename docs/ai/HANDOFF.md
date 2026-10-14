@@ -1,13 +1,18 @@
 # Current Handoff
 
-## 2026-10-14 — final firmware integration candidate
+## 2026-10-14 — final firmware integration deployed
 
 Jim reports fully assembled working camera/display; installed servos are SG-90.
 See [integration and commissioning](../../firmware/docs/FINAL_INTEGRATION.md).
 GPIO10/13 reserved for mast, GPIO6 for external watchdog gate; boot remains off.
-Do not flash credential-placeholder S3/C6 builds or enable servos before measured
-limits, neutral indexing and gate checks. SEN0628's 5 V-side connector pull-ups
-need an external I²C translator before GPIO8/9. No hardware moved/flashed here.
+S3 Mast v1, C6 2.1.1 and CAM 1.1.3 updated over Wi-Fi OTA and boots verified;
+configured private credentials preserved. Native phone camera app installed in
+place with matching signature. Source pushed in stacked draft PR2.
+Mast remains OFF/unreferenced; GPIO10/13 physical axis assignment awaits isolated
+testing. Do not enable before measured limits, neutral indexing and gate checks.
+SEN0628 reports OFFLINE/no sample. Its 5 V-side connector pull-ups need an external
+I²C translator before GPIO8/9. No servo/drivetrain motion performed.
+Deployment evidence: ../../firmware/docs/integration-deployment-20261014.md.
 Detailed validation and limitations: agents/codex-final-integration-20261014.md.
 
 ## 2026-10-13 — ESP32-CAM masthead firmware (Codex)

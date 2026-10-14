@@ -1,9 +1,11 @@
 # Final integration and safe mast commissioning — 2026-10-14
 
-This is a tested source candidate, not a hardware acceptance report. Jim reports
+This is integrated and OTA-deployed firmware, with mechanical acceptance pending. Jim reports
 the assembled S3, C6, ESP32-CAM and TFT are working, and identifies both installed
 servos as **SG-90**. That supersedes the October 13 unwired-screen/camera-fault
-status. No boards were flashed or servos moved during this integration.
+status. The S3, C6 and CAM were updated over Wi-Fi OTA without erasing NVS.
+No servos or drivetrain were moved during this integration. See the
+[deployment record](integration-deployment-20261014.md) for verified outcomes.
 
 ## Firmware behavior
 
@@ -52,6 +54,13 @@ status. No boards were flashed or servos moved during this integration.
 | C6 UART | TX4 / RX5 | Unchanged |
 | Bench power | 7 | Unchanged |
 | Status light | 48 | Unchanged |
+
+Jim connected servo signals to GPIO10 and GPIO13; their physical axis assignment
+is not yet verified. Pan10/tilt13 are provisional firmware names, not a finding
+about the installed wiring. Identify each with linkage disengaged during the
+isolated commissioning step. If reversed, exchange the two signal leads with
+power OFF before applying the measured pan/tilt calibration. Do not use the
+assembled mechanism to discover which output moves which axis.
 
 GPIO6/10/13 are unused in the audited firmware and are exposed output-capable
 pins on the [DevKitC-1 header](https://docs.espressif.com/projects/esp-idf/en/v4.4.6/esp32s3/hw-reference/esp32s3/user-guide-devkitc-1.html).
@@ -251,6 +260,8 @@ layouts and the original working binaries. CAM OTA on a provisioned board
 retains its NVS credentials/key; use its existing maintenance upload/confirmation
 process. Do not erase NVS. Update C6/S3 while robot disarmed and servo power
 physically isolated; updating either never authorizes a mast reference.
+The S3 OTA entry path now immediately stops mast PWM/session and gate heartbeat
+along with its existing drivetrain safety shutdown.
 
 Host checks: `tests/run_host.ps1` (or `.sh`); production sensor tests; protocol,
 link and orientation tests; browser fixtures under `tools/test_interface_v1.cjs`,

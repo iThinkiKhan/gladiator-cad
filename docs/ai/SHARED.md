@@ -23,8 +23,12 @@ summary, not a second documentation tree.
 ## Current shared state
 
 2026-10-14 — Jim reports assembled S3/C6/CAM/TFT working; both servos SG-90.
-Final-integration candidate and remaining physical acceptance:
-../../firmware/docs/FINAL_INTEGRATION.md. Hardware not flashed in this session.
+Final integration deployed via Wi-Fi OTA: S3 Mast v1, C6 2.1.1, CAM 1.1.3.
+Same-signature native phone app updated in place with explicit camera viewer.
+Remaining physical acceptance: ../../firmware/docs/FINAL_INTEGRATION.md;
+verified deployment: ../../firmware/docs/integration-deployment-20261014.md.
+Mast is OFF/unreferenced; physical GPIO10/13 axis assignment is unverified.
+LiDAR reports OFFLINE/no sample; power/IMU and S3/C6 link are healthy.
 SEN0628 powered from 5 V needs external I²C translation; mast requires verified
 normally-off power/signal gate and measured calibration before outputs enable.
 

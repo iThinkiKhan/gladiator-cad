@@ -521,6 +521,8 @@ void coastAll() {
 
 void forceSafeForUpdate() {
   ControlGuard guard;
+  mastController.stop(mast::Reason::SAFETY);
+  mastHardware.stop();
   remoteSession.invalidate();
   activeControlSource = ControlSource::NONE;
   commandArmed = false;
