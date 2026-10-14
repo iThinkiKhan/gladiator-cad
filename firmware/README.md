@@ -2,9 +2,9 @@
 
 **2026-10-14: [Final integration and safe mast commissioning](docs/FINAL_INTEGRATION.md).**
 User reports assembled camera/display operational and installed SG-90 servos.
-Candidate source adds TFT 180° offset, S3-authoritative gated/calibrated mast,
-camera default address and coordinated sensor expressions. Physical servo gate,
-I²C level translation, calibration and event acceptance remain required.
+The field page now combines camera video/settings, S3-authoritative pan/tilt aiming, saved installed calibration and bounded scanning. GPIO10/13 wiring is retained; no external mast interlock is required. Servo outputs remain off until deliberately enabled. See the guide for the 1.5 pan pulley ratio and LiDAR 5 V I²C translation.
+
+**Phone/website correction:** fixed mast-front drive directions, key-free field operations, live power changes and an S3 PWM ceiling after trim/ramp. See [verification and deployment](docs/control-fix-20261014.md).
 
 **2026-10-13: [ESP32-CAM masthead visual subsystem](docs/MASTHEAD.md).** Camera and C6 flashed; QVGA streaming/reconnect bench checks pass. CAM OTA 1.1.2 is installed and wirelessly verified with recovery/rollback; current OV2640 detection fault needs resolution before sealing. TFT is not yet wired; S3 sensor-driven expressions remain to be tested.
 
@@ -152,10 +152,7 @@ pio run -e gladiator_ota -t upload
 The OTA password is `GLADIATOR_OTA_PASSWORD` in `shared/secrets.h`; put the same value in `platformio_local.ini` (gitignored; copy `platformio_local.ini.example`). USB upload remains the default
 environment and recovery path.
 
-The build regenerates the application image without an appended SHA-256 trailer
-to avoid an activation fault in this ESP32-S3 Arduino toolchain. The ESP image
-checksum remains enabled, and authenticated PlatformIO OTA also verifies the
-complete source MD5 before activation.
+The application retains the normal appended SHA256 digest. Native web OTA validates the image before activation and reports exact errors; the working slot remains selected on rejection. PlatformIO ArduinoOTA compatibility remains available.
 
 Normal 25/50/75/100 modes use a soft-start ramp. Overdrive immediately applies
 100% PWM duty, which passes the available VBATT through the BTS7960; after the

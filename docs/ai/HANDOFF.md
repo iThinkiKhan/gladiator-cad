@@ -1,19 +1,10 @@
 # Current Handoff
 
-## 2026-10-14 — final firmware integration deployed
+## 2026-10-14 — operator integration / power-dependent acceptance
 
-Jim reports fully assembled working camera/display; installed servos are SG-90.
-See [integration and commissioning](../../firmware/docs/FINAL_INTEGRATION.md).
-GPIO10/13 reserved for mast, GPIO6 for external watchdog gate; boot remains off.
-S3 Mast v1, C6 2.1.1 and CAM 1.1.3 updated over Wi-Fi OTA and boots verified;
-configured private credentials preserved. Native phone camera app installed in
-place with matching signature. Source pushed in stacked draft PR2.
-Mast remains OFF/unreferenced; GPIO10/13 physical axis assignment awaits isolated
-testing. Do not enable before measured limits, neutral indexing and gate checks.
-SEN0628 reports OFFLINE/no sample. Its 5 V-side connector pull-ups need an external
-I²C translator before GPIO8/9. No servo/drivetrain motion performed.
-Deployment evidence: ../../firmware/docs/integration-deployment-20261014.md.
-Detailed validation and limitations: agents/codex-final-integration-20261014.md.
+2026-10-14 — operator integration and control corrections. Jim uses installed SG90s on GPIO10/13 and explicitly removed the proposed GPIO6 hardware gate. S3 stores measured calibration in NVS, leaves PWM off at boot and supports deliberate field enable, bounded pan/tilt, speed/Center/Scan/OFF, installed pulse tests and 1.5 pan gearing. Manual aim can coexist with driving; commissioning requires disarmed tracks. Field keys and client front/rear inversion removed; live drive power changes and S3 PWM ceiling added.
+Installed C6 2.2.1 and CAM 1.1.4 OTA verified; latest phone APK installed in place. S3 operator release recovered through authorized USB with full backup/NVS preserved. S3 OTA remains intermittent: one valid changed-slot boot, later byte-identical valid images rejected by native verifier. No validation bypass; experimental hash backend removed. Last voltage 10.06 V triggered existing battery/radio lockout; restore deck power AND power-cycle before further OTA/ARM tests.
+No physical mast or track motion was commanded. Servo axis identity/calibration and cable clearance remain operator acceptance. SEN0628/radar OFFLINE; verify 5 V I²C translation to SDA8/SCL9. Current guide: ../../firmware/docs/FINAL_INTEGRATION.md. Deployment/limitations: ../../firmware/docs/control-fix-20261014.md.
 
 ## 2026-10-13 — ESP32-CAM masthead firmware (Codex)
 

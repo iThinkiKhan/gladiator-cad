@@ -22,15 +22,9 @@ summary, not a second documentation tree.
 
 ## Current shared state
 
-2026-10-14 — Jim reports assembled S3/C6/CAM/TFT working; both servos SG-90.
-Final integration deployed via Wi-Fi OTA: S3 Mast v1, C6 2.1.1, CAM 1.1.3.
-Same-signature native phone app updated in place with explicit camera viewer.
-Remaining physical acceptance: ../../firmware/docs/FINAL_INTEGRATION.md;
-verified deployment: ../../firmware/docs/integration-deployment-20261014.md.
-Mast is OFF/unreferenced; physical GPIO10/13 axis assignment is unverified.
-LiDAR reports OFFLINE/no sample; power/IMU and S3/C6 link are healthy.
-SEN0628 powered from 5 V needs external I²C translation; mast requires verified
-normally-off power/signal gate and measured calibration before outputs enable.
+2026-10-14 — operator integration and control corrections. Jim uses installed SG90s on GPIO10/13 and explicitly removed the proposed GPIO6 hardware gate. S3 stores measured calibration in NVS, leaves PWM off at boot and supports deliberate field enable, bounded pan/tilt, speed/Center/Scan/OFF, installed pulse tests and 1.5 pan gearing. Manual aim can coexist with driving; commissioning requires disarmed tracks. Field keys and client front/rear inversion removed; live drive power changes and S3 PWM ceiling added.
+Installed C6 2.2.1 and CAM 1.1.4 OTA verified; latest phone APK installed in place. S3 operator release recovered through authorized USB with full backup/NVS preserved. S3 OTA remains intermittent: one valid changed-slot boot, later byte-identical valid images rejected by native verifier. No validation bypass; experimental hash backend removed. Last voltage 10.06 V triggered existing battery/radio lockout; restore deck power AND power-cycle before further OTA/ARM tests.
+No physical mast or track motion was commanded. Servo axis identity/calibration and cable clearance remain operator acceptance. SEN0628/radar OFFLINE; verify 5 V I²C translation to SDA8/SCL9. Current guide: ../../firmware/docs/FINAL_INTEGRATION.md. Deployment/limitations: ../../firmware/docs/control-fix-20261014.md.
 
 2026-10-13 — CAM OTA 1.1.2 installed and confirmed over Wi-Fi, rollback/interruption/corruption checks passed, recovery AP usable without gateway/sensor. USB power only; jumper supply untested. OV2640 currently reports 0x105 again: resolve before sealing. Details: ../../firmware/docs/masthead/cam-ota-20261013.md. Private CAM key remains local.
 

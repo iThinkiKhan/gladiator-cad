@@ -10,6 +10,6 @@ constexpr auto RF_ENABLE=GPIO_NUM_3,RF_SELECT=GPIO_NUM_14;
 constexpr auto &AP_SSID=robotlink::FIELD_SSID;
 constexpr auto &AP_PASSWORD=robotlink::FIELD_PASSWORD;
 constexpr char HOSTNAME[]="gladiator-gateway";
-constexpr char VERSION[]="gateway-2.1.1";
+constexpr char VERSION[]="gateway-2.2.1";
 constexpr uint32_t STALE_MS=2000;
 }

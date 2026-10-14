@@ -2,6 +2,8 @@
 set -eu
 cd "$(dirname "$0")/.."
 mkdir -p build-output/host
+g++ -std=c++17 -Wall -Wextra -Werror tests/drive_power_test.cpp -o build-output/host/drive_power_test
+build-output/host/drive_power_test
 g++ -std=c++17 -Wall -Wextra -Werror tests/mast_policy_test.cpp -o build-output/host/mast_policy_test
 build-output/host/mast_policy_test
 g++ -std=c++17 -Wall -Wextra -Werror tests/visual_state_test.cpp -o build-output/host/visual_state_test

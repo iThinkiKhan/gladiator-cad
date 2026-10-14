@@ -30,7 +30,8 @@ bool RobotLink::begin(sensors::SensorManager &manager){
   buffers_=new(storage) Buffers();
   manager_=&manager;mutex_=xSemaphoreCreateMutex();commands_=xQueueCreate(6,sizeof(PendingControl));results_=xQueueCreate(6,sizeof(Reply));
   mastCommands_=xQueueCreate(4,sizeof(PendingMast));
-  if(!mutex_||!commands_||!results_||!mastCommands_)return false;bootId_=esp_random();
+  mastConfigs_=xQueueCreate(2,sizeof(PendingMastConfig));
+  if(!mutex_||!commands_||!results_||!mastCommands_||!mastConfigs_)return false;bootId_=esp_random();
   serial_.setRxBufferSize(2048);serial_.setTxBufferSize(2048);
   serial_.begin(board::GATEWAY_BAUD,SERIAL_8N1,board::GATEWAY_RX,board::GATEWAY_TX);
   return xTaskCreatePinnedToCore(taskEntry,"gladiator-link",16384,this,1,nullptr,0)==pdPASS;
@@ -77,6 +78,10 @@ void RobotLink::receive(const Frame &frame,Transport transport){
         if(transport!=selector_.active||!c.command.decode(frame)||xQueueSend(commands_,&c,0)!=pdTRUE)++status_.rejected;break;}
       case Type::MAST_CONTROL:{PendingMast c;c.receivedMs=millis();c.generation=generation();
         if(transport!=selector_.active||!c.command.decode(frame)||xQueueSend(mastCommands_,&c,0)!=pdTRUE)++status_.rejected;break;}
+      case Type::MAST_CONFIG:{PendingMastConfig c;c.receivedMs=millis();c.generation=generation();
+        if(transport!=selector_.active||!frame.length||frame.length>768){++status_.rejected;break;}
+        memcpy(c.json,frame.payload,frame.length);c.json[frame.length]=0;
+        if(xQueueSend(mastConfigs_,&c,0)!=pdTRUE)++status_.rejected;break;}
       default:++status_.rejected;return;
     }
   }
@@ -133,8 +138,12 @@ void RobotLink::run(){
       if(xSemaphoreTake(mutex_,0)==pdTRUE){s=mast_;xSemaphoreGive(mutex_);}
       // A live link task must not make a stalled control loop's cache fresh.
       JsonDocument doc;if(s.length()&&!deserializeJson(doc,s)){
-        doc["sourceAgeMs"]=uint32_t(millis()-(doc["s3Ms"]|0U));s="";serializeJson(doc,s);
-        if(s.length()<=768)send(Type::MAST_STATE,s.c_str(),s.length(),selector_.active);
+        doc["sourceAgeMs"]=uint32_t(millis()-(doc["s3Ms"]|0U));
+        // Saved profile is infrequent; preserve UART capacity for live control.
+        static uint32_t lastProfile=0;
+        if(uint32_t(now-lastProfile)<2000)doc.remove("profile");else lastProfile=now;
+        s="";serializeJson(doc,s);
+        if(s.length()<=1536)send(Type::MAST_STATE,s.c_str(),s.length(),selector_.active);
       }
     }
     const bool bulk=wifiLeaseMs_&&wifiHealth_.alive(now);Transport details=bulk?Transport::WIFI:selector_.active;

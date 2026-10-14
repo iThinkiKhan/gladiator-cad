@@ -22,7 +22,7 @@
 #define VISUAL_OTA_KEY ""
 #endif
 #ifndef VISUAL_FIRMWARE_VERSION
-#define VISUAL_FIRMWARE_VERSION "masthead-1.1.3"
+#define VISUAL_FIRMWARE_VERSION "masthead-1.1.4"
 #endif
 namespace config {
 constexpr int SCLK=14,MOSI=13,DC=2,CS=15,RESET=-1;

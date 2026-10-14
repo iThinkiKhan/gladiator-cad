@@ -61,3 +61,7 @@ and explicit-start/background-stop/no-resume component checks passed. Configured
 binaries, credentials, camera frames and complete phone app source are not
 published. Detailed network receipts and hashes remain in local ignored
 `firmware/build-output/` and the private handoff directory.
+
+## Later operator/control correction
+
+The original deployment above records the initial OTA stage. Later user instructions removed the proposed gate, enabled installed commissioning/persistent calibration, live power changes and unified camera aiming. Subsequent S3 recovery used explicitly authorized USB. Read [the current deployment and unresolved acceptance](control-fix-20261014.md); the original gate/volatile USB-only workflow is superseded.

@@ -34,8 +34,20 @@ Android HTTP access is allowed only for this camera address in addition to
 the existing home-map exception. No new dependency, camera credential, motor
 command or mast enable path was added to the viewer.
 
-Validation: Android release build/lint pass; TypeScript checks pass; all 23
-existing drive mixing checks pass; 14 production multipart-reader checks pass;
+Apply the subsequent [control fix](gladiator-phone-control-fix.patch) after the
+camera patch. It removes the obsolete front/rear switch and second inversion:
+mast is FRONT in both phone and S3. Forward sends positive L/R, Reverse negative
+L/R, Left negative L/positive R, Right positive L/negative R. Power changes remain available while armed or moving. It resets to 25% on stop/reconnect/background/watchdog, and
+clears the S3's release latch with a disarmed frame after watchdog expiry.
+Normal encoded track commands cannot exceed the selected percentage; Overdrive
+requires the explicit 100% Overdrive selection. Motor telemetry shows S3-reported
+outputs and selected power. The S3 enforces the same PWM ceiling after straight-line trim and ramp; selected duty is not a measurement of vehicle speed.
+
+Validation: Android release build/lint and TypeScript pass; 4,465 fixed-frame
+drive checks and production BLE-frame/checksum/queued-stop checks pass; 14
+production multipart-reader checks pass;
 production component tests cover explicit Start, background Stop, no restart,
 pinned placement and drive disarm/no heartbeat/no resume. Physical phone video
 and coexistence/long-run acceptance should be checked on the robot Wi-Fi.
+
+The camera card now offers **Camera aim, scan & field controls**, opening the unified field console. It first stops the native stream so the browser can become the single viewer. Backgrounding the native Drive screen disarms BLE as before. The field console then provides web drive, live video, aiming, saved calibration and camera image settings. Phone installation status is recorded in the deployment report; latest APK may require reconnecting the phone for in-place installation.

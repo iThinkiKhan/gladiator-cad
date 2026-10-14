@@ -53,3 +53,7 @@ Jim: "the taller v2 tube. We are not buying a tube, drop that." The v2 tube (top
 carbon tube is withdrawn from `docs/print-plan.md` and `docs/GLADIATOR_DESIGN.md`. The head
 designs to this tube. Its index flat was checked against both the master and the printed STL:
 0.9 deep, 8.0 wide, on the rear, running 15 down from the top.
+
+## 2026-10-14 — installed-development operator control (Jim / Codex)
+
+Jim explicitly authorized GPIO10/13 as installed, installed SG90 testing, removal of the proposed external gate/watchdog, key-free field operation, live power changes, GitHub publication and USB S3 recovery while retaining OTA as the intended primary path. Those instructions supersede the initial gate/USB-only volatile commissioning design. S3 persists measured calibration, applies shaft-to-head pan ratio 1.5, and never restores enabled state or assumes current servo position. All normal motion shares its limits/session/lease. Bounded commissioning is explicit and requires stationary disarmed tracks. Existing battery, drive ownership/deadman/watchdog and protected network/firmware maintenance remain. Operator scan is bounded without LiDAR; invalid sensor readings stay unknown. Autonomous attention motion is deferred. See firmware operator guide and control-fix deployment record for verified status and remaining OTA/power/physical acceptance.

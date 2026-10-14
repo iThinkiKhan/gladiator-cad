@@ -1,18 +1,27 @@
 #pragma once
 // Included in the S3 namespace, after control/power/sensor state declarations.
 mast::Controller mastController;
+mast::PulseTest mastTest;
 mast::Hardware mastHardware;
 uint32_t mastGeneration=0,mastRejected=0;
-bool mastSafe(){
+uint32_t mastOwner=0;
+String mastProfileJson,mastAction="No measured calibration saved";
+bool mastPowerSafe(){
   const auto &p=sensorData.power.meta;
-  return !commandArmed&&!commandDeadman&&!leftMotor.currentPercent&&!rightMotor.currentPercent&&
-    !targetLeftPercent&&!targetRightPercent&&!batteryInhibitsMotion()&&
-    p.hasSample&&p.health==sensors::SensorHealth::OK&&uint32_t(millis()-p.lastUpdateMs)<250&&
-    gatewayLink.online();
+  return !batteryInhibitsMotion()&&
+    p.hasSample&&p.health==sensors::SensorHealth::OK&&uint32_t(millis()-p.lastUpdateMs)<250;
 }
+bool mastSafe(){return mastPowerSafe()&&gatewayLink.online();}
+bool mastCommissionSafe(){return mastPowerSafe()&&!commandArmed&&!commandDeadman&&!leftMotor.currentPercent&&!rightMotor.currentPercent&&!targetLeftPercent&&!targetRightPercent;}
 String mastJson(){
   JsonDocument d;d["schema"]=1;d["s3Ms"]=millis();d["enabled"]=mastController.enabled;
   d["calibrated"]=mastController.calibrated;d["referenced"]=mastController.referenced;
+  d["testActive"]=mastTest.enabled;d["testPin"]=mastTest.pin;
+  d["testPulseUs"]=mastTest.pulseUs;d["testTargetUs"]=mastTest.targetUs;
+  d["testMinUs"]=mastTest.minUs;d["testMaxUs"]=mastTest.maxUs;
+  d["owner"]=mastOwner;d["action"]=mastAction;d["speedDegPerSec"]=mastController.calibration.speedDeciDegPerSec/10.0F;
+  d["panRatio"]=1.5F;d["panPin"]=mastController.calibration.panPin;d["tiltPin"]=mastController.calibration.tiltPin;
+  if(mastProfileJson.length()){JsonDocument profile;if(!deserializeJson(profile,mastProfileJson))d["profile"]=profile.as<JsonVariantConst>();}
   d["scanning"]=mastController.scanning;d["session"]=mastController.session;
   d["awaitingOperator"]=mastController.awaitingOperator;
   d["sequence"]=mastController.sequence;d["reason"]=mast::name(mastController.reason);
@@ -35,38 +44,53 @@ bool mastAxis(JsonVariantConst obj,mast::Axis &a,int ceiling){
   a.lowUs=lo;a.neutralUs=neutral;a.highUs=hi;a.minDeciDeg=mn;a.maxDeciDeg=mx;
   a.reversed=obj["reversed"].as<bool>();return a.valid(ceiling);
 }
+#include "MastProfiles.h"
 bool mastSerial(const String &line){
   if(!line.startsWith("mast"))return false;
   ControlGuard guard;
   if(line=="mast-status"){Serial.println(mastJson());return true;}
-  if(line=="mast-stop"){mastController.stop(mast::Reason::STOPPED);mastHardware.stop();Serial.println(mastJson());return true;}
-  if(line.startsWith("mast-config ")){
-    if(mastController.enabled||!mastSafe()){Serial.println("Mast config rejected: disarm, restore power monitor and C6 link.");return true;}
-    // A rejected replacement must not leave an older pulse map reusable.
-    mastController.calibrated=false;mastController.calibration=mast::Calibration{};
-    JsonDocument d;mast::Calibration c;int hz,speed;
-    bool ok=!deserializeJson(d,line.substring(12))&&
-      d["panModel"].is<const char *>()&&strlen(d["panModel"].as<const char *>())>0&&
-      d["tiltModel"].is<const char *>()&&strlen(d["tiltModel"].as<const char *>())>0&&
-      d["positionalVerified"].is<bool>()&&d["positionalVerified"].as<bool>()&&
-      d["gateVerified"].is<bool>()&&d["gateVerified"].as<bool>()&&
-      d["clearanceVerified"].is<bool>()&&d["clearanceVerified"].as<bool>()&&
-      mastAxis(d["pan"],c.pan,450)&&mastAxis(d["tilt"],c.tilt,200)&&
-      mastInteger(d["frequencyHz"],50,100,hz)&&mastInteger(d["speedDeciDegPerSec"],1,100,speed);
-    if(ok){c.frequencyHz=hz;c.speedDeciDegPerSec=speed;c.modelsVerified=c.gateVerified=c.clearanceVerified=true;ok=mastController.configure(c);}
-    Serial.println(ok?"Mast calibration accepted for this boot only; outputs remain off.":"Mast calibration rejected; no outputs enabled.");return true;
+  if(line=="mast-stop"){mastController.stop(mast::Reason::STOPPED);mastTest.stop();mastHardware.stop();Serial.println(mastJson());return true;}
+  if(line.startsWith("mast-test ")){
+    int pin,first,low,high,hz;char extra;
+    bool ok=!mastController.enabled&&sscanf(line.c_str(),"mast-test %d %d %d %d %d %c",&pin,&first,&low,&high,&hz,&extra)==5&&
+      mastTest.start(pin,first,low,high,hz,millis(),mastCommissionSafe());
+    if(ok&&!mastHardware.startTest(pin,first,hz)){mastTest.stop();mastHardware.stop();ok=false;}
+    Serial.println(ok?"USB pulse test active for 10 seconds after each jog; other output stays off.":"USB test rejected: stop first, disarm tracks, restore power data; pin 10/13 and bounded pulse/frequency required.");
+    Serial.println(mastJson());return true;
   }
-  if(line=="mast-reference CONFIRM_NEUTRAL_AND_GATE"){
+  if(line.startsWith("mast-jog ")){
+    int us;char extra;bool ok=sscanf(line.c_str(),"mast-jog %d %c",&us,&extra)==1&&mastTest.jog(us,millis(),mastCommissionSafe());
+    Serial.println(ok?"USB pulse target accepted.":"USB jog rejected: active test, safe power/tracks and target inside test window required.");return true;
+  }
+  if(line.startsWith("mast-config ")){
+    Serial.println(saveMastProfile(line.substring(12))?"Measured calibration saved; outputs remain off.":mastAction);return true;
+  }
+  if(line=="mast-reference CONFIRM_NEUTRAL"){
+    if(mastTest.enabled){Serial.println("Stop USB pulse test before normal mast reference.");return true;}
     mastGeneration=gatewayLink.generation();
     if(!mastController.reference(esp_random()|1,millis(),mastSafe())){Serial.println("Mast reference rejected: verify calibration, S3 SAFE, power and link.");return true;}
     if(!mastHardware.start(mastController.calibration)){mastController.stop(mast::Reason::HARDWARE);mastHardware.stop();}
     Serial.println(mastJson());return true;
   }
-  Serial.println("Mast USB: mast-status | mast-config {measured calibration} | mast-reference CONFIRM_NEUTRAL_AND_GATE | mast-stop");return true;
+  Serial.println("Mast USB: mast-status | mast-test PIN FIRST_US MIN_US MAX_US HZ | mast-jog US | mast-stop | mast-config {measured calibration} | mast-reference CONFIRM_NEUTRAL");return true;
 }
 void serviceMast(){
   ControlGuard guard;
-  const uint32_t now=millis();const bool safe=mastSafe();
+  uint32_t now=millis();bool safe=mastSafe();
+  gateway::PendingMastConfig configRequest;
+  for(unsigned budget=0;budget<2&&gatewayLink.takeMastConfig(configRequest);++budget){
+    if(configRequest.generation!=gatewayLink.generation()||uint32_t(millis()-configRequest.receivedMs)>1000){++mastRejected;continue;}
+    mastConfigureAction(configRequest.json);
+  }
+  now=millis();safe=mastSafe(); // Configuration/test start may timestamp after entry.
+  if(mastTest.enabled){
+    mastTest.tick(now,mastCommissionSafe());
+    if(!mastTest.enabled||!mastHardware.writeTest(uint16_t(lroundf(mastTest.pulseUs)))){mastTest.stop();mastHardware.stop();}
+    gateway::PendingMast ignored;for(unsigned budget=0;budget<4&&gatewayLink.takeMast(ignored);++budget){
+      if(ignored.command.operation==mast::Operation::STOP){mastTest.stop();mastHardware.stop();}else ++mastRejected;}
+    static uint32_t lastTest=0;if(uint32_t(now-lastTest)>=50){lastTest=now;gatewayLink.setMast(mastJson());}
+    return;
+  }
   const auto &r=sensorData.tofFront;const auto &p=sensorData.presence;
   bool rangeGood=r.meta.hasSample&&r.meta.health==sensors::SensorHealth::OK&&
     uint32_t(now-r.meta.lastUpdateMs)<500&&r.derived.valid;
@@ -77,8 +101,17 @@ void serviceMast(){
   gateway::PendingMast request;
   for(unsigned budget=0;budget<4&&gatewayLink.takeMast(request);++budget){
     const uint32_t commandNow=millis(); // RX task may timestamp after tick's sample.
+    if(request.command.operation==mast::Operation::STOP){mastController.stop(mast::Reason::STOPPED);mastTest.stop();mastHardware.stop();mastOwner=0;continue;}
+    if(request.command.operation==mast::Operation::ENABLE){
+      if(!mastTest.enabled&&request.generation==gatewayLink.generation()&&uint32_t(commandNow-request.receivedMs)<=150&&
+        mastController.reference(esp_random()|1,commandNow,safe)){
+        mastGeneration=gatewayLink.generation();mastOwner=request.command.session;mastController.awaitingOperator=false;
+        if(!mastHardware.start(mastController.calibration)){mastController.stop(mast::Reason::HARDWARE);mastHardware.stop();}
+      }else ++mastRejected;
+      continue;
+    }
     if(request.generation!=mastGeneration||uint32_t(commandNow-request.receivedMs)>150||
-       (request.command.operation==mast::Operation::SCAN&&(!rangeGood||nearby))||
+       (request.command.operation==mast::Operation::SCAN&&nearby)||
        !mastController.command(request.command,commandNow,safe))++mastRejected;
   }
   if(!mastHardware.write(mastController,now)){mastController.stop(mast::Reason::HARDWARE);mastHardware.stop();}

@@ -14,7 +14,7 @@ cJSON *robotCache=nullptr;
 std::string nativeJson,systemJson;
 std::string logCache,logPending;uint32_t logReceived=0,logId=0;size_t logUsed=0;
 uint8_t detailBytes[MAX_PAYLOAD];size_t detailUsed=0,detailTotal=0;uint32_t detailTransfer=0;
-struct Request {Type type;uint32_t queuedMs;size_t size;uint8_t data[32];};
+struct Request {Type type;uint32_t queuedMs;size_t size;uint8_t data[768];};
 QueueHandle_t requests;
 
 bool sendTyped(Type type,const void *data,size_t size,Transport transport){
@@ -91,11 +91,15 @@ void receiveTyped(const Frame &f,Transport transport){
     memcpy(&logPending[offset],f.payload+12,chunk);logUsed+=chunk;
     if(logUsed==total){lock();logCache=std::move(logPending);logReceived=nowMs();unlock();logUsed=0;}return;
   }
-  if(f.type==Type::MAST_STATE&&f.length<=768){
+  if(f.type==Type::MAST_STATE&&f.length<=1536){
     auto value=cJSON_ParseWithLength(f.payload,f.length);
     auto schema=cJSON_GetObjectItemCaseSensitive(value,"schema");
     if(!cJSON_IsObject(value)||!cJSON_IsNumber(schema)||schema->valuedouble!=1){cJSON_Delete(value);return;}
     lock();if(!robotCache)robotCache=cJSON_CreateObject();
+    if(!cJSON_GetObjectItemCaseSensitive(value,"profile")){
+      auto previous=cJSON_GetObjectItemCaseSensitive(cJSON_GetObjectItemCaseSensitive(robotCache,"mast"),"profile");
+      if(previous)cJSON_AddItemToObject(value,"profile",cJSON_Duplicate(previous,true));
+    }
     cJSON_DeleteItemFromObjectCaseSensitive(robotCache,"mast");cJSON_AddItemToObject(robotCache,"mast",value);
     topicReceived[5]=nowMs();++state.rxFrames;unlock();return;
   }

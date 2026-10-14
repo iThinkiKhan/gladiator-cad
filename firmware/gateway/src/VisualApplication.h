@@ -48,7 +48,7 @@ esp_err_t visualHandler(httpd_req_t *req) {
   cJSON_AddStringToObject(doc,"streamUrl",url);cJSON_Delete(robot);return replyJson(req,serialize(doc));
 }
 esp_err_t visualCommandHandler(httpd_req_t *req) {
-  if(!authorize(req))return ESP_OK;
+  // Temporary field expressions are key-free; camera/NVS configuration is maintenance.
   std::string body;if(!readBody(req,body,256))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid visual command");
   auto doc=cJSON_ParseWithLength(body.data(),body.size());const char *mode=textValue(doc,"mode"),*message=textValue(doc,"message");
   visual::Mode selected;double lease=0;bool automatic=!strcmp(mode,"auto");

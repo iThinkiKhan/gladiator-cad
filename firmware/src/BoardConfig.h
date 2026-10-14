@@ -15,7 +15,7 @@ constexpr bool RIGHT_SEPARATE_ENABLES = true;
 constexpr uint8_t I2C_SDA = 8, I2C_SCL = 9;
 // Unused output-capable non-strap pins on installed N16R8; channels 4/5,
 // timer 2. Channels 0..3/timers 0..1 remain drivetrain PWM.
-constexpr uint8_t MAST_PAN=10, MAST_TILT=13, MAST_GATE_HEARTBEAT=6;
+constexpr uint8_t MAST_PAN=10, MAST_TILT=13;
 constexpr uint32_t I2C_HZ = 400000;
 constexpr uint16_t I2C_TIMEOUT_MS = 10;
 constexpr float SHUNT_OHMS = 0.002F;
