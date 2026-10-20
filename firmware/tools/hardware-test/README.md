@@ -1,12 +1,21 @@
 # Gladiator V2 hardware bench
 
-Run **Start-HardwareTest.cmd** in this folder, then open **http://127.0.0.1:8765/** on this PC.
-The launcher uses the existing PlatformIO Python; no packages or firmware flash are required.
-Keep its terminal open while using the tester. Ctrl+C stops the local service.
+## Use from your phone — no PC required
 
-Connect the PC to Gladiator's network. Enter the C6 gateway address (default
-http://192.168.8.1) and click Connect. Starting the server, loading the page and
-Connect send no robot commands.
+With gateway firmware **2.2.2**, connect the phone to **Gladiator-Gateway** and open
+**http://192.168.8.1/hardware-test/**. A Hardware setup & servo tests link is also
+available on the existing driving page. Tap Connect to robot in the tester.
+The page and assets are served by the C6 and use its existing APIs directly.
+No local Python service, PC, Internet access or external script/CDN is needed.
+Opening the page and connecting do not enable servo or track motion.
+
+## Optional PC-hosted version
+
+Run **Start-HardwareTest.cmd** in this folder, then open **http://127.0.0.1:8765/**.
+The launcher uses PlatformIO Python (or Python 3); it installs no packages.
+Connect the PC to Gladiator's network, enter the gateway address and click Connect.
+This mode retains the restricted local API bridge. Keep its terminal open while
+using the tester; Ctrl+C stops that service.
 
 ## Simplified interface
 
@@ -88,8 +97,8 @@ a route to the camera address for direct video.
 
 Requires existing /api/mast, /api/mast/config, /api/field, /api/visual, /api/camera
 and /api/control APIs. Missing or stale mast APIs leave motion unavailable.
-Inspect installed firmware before an update. This addition does not flash or
-modify firmware, CAD, drivetrain settings, the phone APK or saved S3 calibration.
+Inspect installed firmware before an update. Hosting the page on the robot requires the C6 update. It does not require an S3
+or camera update, and does not alter saved S3 calibration or drivetrain settings.
 
 S3 stores calibration only after a successful save; the page confirms readback.
 Exports are explicit local downloads. Frames, credentials and enablement are not saved.
@@ -110,3 +119,16 @@ DISARM and phone layout. Installed clearance and behavior still require your tes
 On Windows, browser checks use installed Chrome by default. Elsewhere they use
 Playwright Chromium. Set GLADIATOR_CHROME to an explicit browser executable if needed.
 Test screenshots are written next to the tests and excluded from Git.
+
+## Build the C6-hosted page
+
+From firmware/gateway run: pio run -e gladiator_c6
+
+The pre-build script embeds deterministic gzip copies of index.html, app.js and
+styles.css in flash. HardwareTestAssets.h is generated and ignored by Git; edit
+the original assets in tools/hardware-test. Four GET routes serve the page (with
+or without trailing slash), script and stylesheet. Existing control APIs and
+maintenance authorization remain unchanged.
+
+For simulated direct-mode checks set GLADIATOR_NATIVE=1 and run tests/test_ui.cjs.
+The default test mode checks the PC bridge. Neither mode contacts the robot.

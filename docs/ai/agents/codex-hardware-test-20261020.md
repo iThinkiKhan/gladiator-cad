@@ -25,3 +25,19 @@ Canonical local firmware has independent earlier work; only this new standalone
 tool and its documentation are being added to the existing GitHub integration branch.
 No older canonical firmware is copied over the published October14 firmware.
 Runtime state, screenshots, credentials, binaries and flash backups remain local.
+
+## Follow-up: hosted on C6 and OTA deployed
+
+Jim explicitly requested phone access without this PC and OTA deployment.
+Gateway 2.2.2 now serves /hardware-test/ plus its gzip assets and adds a shortcut
+on the existing driving page. Native mode uses the original gateway control APIs;
+S3 retains all motion/commissioning authority. PC-hosted mode is still available.
+
+Canonical gateway source was reconciled against the exact published October14
+baseline using Git blob hashes; prior canonical files were backed up locally.
+Only C6 firmware was built/flashed; existing S3 source, CAM, secrets and NVS were
+not replaced. Gateway version/slot change, three served assets, AP/LAN access,
+S3 boot continuity and motion-off state were verified. See the tester VALIDATION.md
+and firmware/docs/HARDWARE_TEST.md. Runtime OTA evidence and binary stay private.
+The camera sensor was not initializing before this update; LiDAR/presence were
+offline. Those hardware/firmware acceptance items are still separate pending work.

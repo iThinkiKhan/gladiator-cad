@@ -221,6 +221,7 @@ esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
 #include "MastApplication.h"
 #include "CameraApplication.h"
 #include "ControlApplication.h"
+#include "HardwareTestApplication.h"
 esp_err_t subscriptionHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
   std::string body;if(!readBody(req,body,128))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid subscription");
@@ -283,11 +284,12 @@ esp_err_t otaHandler(httpd_req_t *req){
   xTaskNotifyGive(rebootWorker);return ESP_OK;
 }
 void startHttp(){
-  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=24;
+  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=32;
   cfg.lru_purge_enable=true;cfg.recv_wait_timeout=5;cfg.send_wait_timeout=5;
   ESP_ERROR_CHECK(httpd_start(&server,&cfg));
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
   const Route routes[]={{"/",HTTP_GET,rootHandler},{"/api/status",HTTP_GET,statusHandler},
+    {"/hardware-test",HTTP_GET,hardwarePageHandler},{"/hardware-test/",HTTP_GET,hardwarePageHandler},{"/hardware-test/app.js",HTTP_GET,hardwareScriptHandler},{"/hardware-test/styles.css",HTTP_GET,hardwareStyleHandler},
     {"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},{"/api/mast/config",HTTP_POST,mastConfigHandler},{"/api/camera",HTTP_GET,cameraProxyHandler},{"/api/camera",HTTP_POST,cameraProxyHandler},
     {"/api/subscribe",HTTP_POST,subscriptionHandler},{"/api/link",HTTP_POST,linkHandler},
     {"/api/visual",HTTP_GET,visualHandler},{"/api/visual",HTTP_POST,visualCommandHandler},
