@@ -55,13 +55,15 @@ bool initCamera() {
   c.pin_xclk=0;c.pin_pclk=22;c.pin_vsync=25;c.pin_href=23;
   c.pin_sccb_sda=26;c.pin_sccb_scl=27;c.pin_pwdn=32;c.pin_reset=-1;
   c.xclk_freq_hz=20000000;c.pixel_format=PIXFORMAT_JPEG;
-  c.frame_size=FRAMESIZE_QVGA;c.jpeg_quality=14;c.fb_count=2;
+  c.frame_size=FRAMESIZE_SVGA;c.jpeg_quality=14;c.fb_count=2; // Reserve room for live operator resolution changes.
   c.fb_location=CAMERA_FB_IN_PSRAM;c.grab_mode=CAMERA_GRAB_LATEST;
   esp_err_t err=esp_camera_init(&c);
   if(err!=ESP_OK){Serial.printf("Camera init failed: 0x%x\n",err);return false;}
+  if(esp_camera_sensor_get()->set_framesize(esp_camera_sensor_get(),FRAMESIZE_QVGA)!=0)return false;
   return true;
 }
 #include "Maintenance.h"
+#include "CameraControl.h"
 esp_err_t statusHandler(httpd_req_t *req) {
   StaticJsonDocument<1536> doc;
   VisualState s;xSemaphoreTake(stateMutex,portMAX_DELAY);s=state;xSemaphoreGive(stateMutex);
@@ -91,7 +93,7 @@ esp_err_t streamHandler(httpd_req_t *req) {
   httpd_resp_set_hdr(req,"Cache-Control","no-store");
   esp_err_t err=ESP_OK;
   while(err==ESP_OK&&(WiFi.status()==WL_CONNECTED||recoveryActive)&&!otaUpdating) {
-    const uint32_t start=millis();camera_fb_t *fb=esp_camera_fb_get();
+    const uint32_t start=millis();xSemaphoreTake(cameraMutex,portMAX_DELAY);camera_fb_t *fb=esp_camera_fb_get();xSemaphoreGive(cameraMutex);
     if(!fb){err=ESP_FAIL;break;}
     char header[128];int n=snprintf(header,sizeof(header),"\r\n--gladiator-frame\r\nContent-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n",unsigned(fb->len));
     err=httpd_resp_send_chunk(req,header,n);
@@ -103,14 +105,14 @@ esp_err_t streamHandler(httpd_req_t *req) {
   if(err!=ESP_OK)++streamErrors;streaming=false;return ESP_FAIL; // Close the old multipart socket.
 }
 bool startServers() {
-  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=8192;cfg.max_uri_handlers=8;
+  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=8192;cfg.max_uri_handlers=10;
   cfg.max_open_sockets=3;cfg.lru_purge_enable=true;cfg.send_wait_timeout=2;cfg.recv_wait_timeout=2;
   if(httpd_start(&api,&cfg)!=ESP_OK)return false;
   httpd_uri_t root={};root.uri="/";root.method=HTTP_GET;root.handler=rootHandler;
   httpd_uri_t status={};status.uri="/api/status";status.method=HTTP_GET;status.handler=statusHandler;
   if(httpd_register_uri_handler(api,&root)!=ESP_OK||httpd_register_uri_handler(api,&status)!=ESP_OK)return false;
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
-  const Route routes[]={{"/maintenance",HTTP_GET,maintenanceHandler},{"/api/ota",HTTP_POST,camOtaHandler},{"/api/confirm",HTTP_POST,confirmHandler},{"/api/config",HTTP_POST,camConfigHandler}};
+  const Route routes[]={{"/maintenance",HTTP_GET,maintenanceHandler},{"/api/ota",HTTP_POST,camOtaHandler},{"/api/confirm",HTTP_POST,confirmHandler},{"/api/config",HTTP_POST,camConfigHandler},{"/api/camera",HTTP_GET,cameraSettingsHandler},{"/api/camera",HTTP_POST,cameraSettingsHandler}};
   for(const auto &r:routes){httpd_uri_t route={};route.uri=r.uri;route.method=r.method;route.handler=r.handler;if(httpd_register_uri_handler(api,&route)!=ESP_OK)return false;}
   cfg.server_port=81;cfg.ctrl_port+=1;cfg.max_open_sockets=1;cfg.max_uri_handlers=1;
   // The infinite stream has its own HTTP task. Status stays responsive.
@@ -203,10 +205,10 @@ void setup() {
   bootId=esp_random();maintenanceReady=loadCamSettings();
   if(!maintenanceReady)Serial.println("CAM settings unavailable; OTA disabled.");
   displaySpi.begin(config::SCLK,-1,config::MOSI,config::CS);
-  tft.init(VISUAL_TFT_WIDTH,VISUAL_TFT_HEIGHT);tft.setRotation(VISUAL_TFT_ROTATION);tft.setSPISpeed(20000000);tft.fillScreen(ST77XX_BLACK);
+  tft.init(VISUAL_TFT_WIDTH,VISUAL_TFT_HEIGHT);tft.setRotation(config::DISPLAY_ROTATION);tft.setSPISpeed(20000000);tft.fillScreen(ST77XX_BLACK);
   canvas=new Canvas(tft.width(),tft.height()-48);
   if(!canvas->pixels)Serial.println("Animation buffer unavailable; text status remains active.");
-  cameraReady=initCamera();
+  cameraMutex=xSemaphoreCreateMutex();cameraReady=cameraMutex&&initCamera();
   WiFi.mode(WIFI_STA);WiFi.setHostname("gladiator-camera");WiFi.setSleep(false);WiFi.setAutoReconnect(false);
   if(!validNetwork(networkSnapshot()))Serial.println("Wi-Fi not configured; recovery AP will start in 30 seconds.");
   httpReady=startServers();if(!httpReady)Serial.println("HTTP server startup failed; display continues.");

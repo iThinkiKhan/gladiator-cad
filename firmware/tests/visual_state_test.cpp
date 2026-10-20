@@ -15,6 +15,9 @@ int main() {
   s.rangeValid=true;s.nearestMm=499;assert(automatic(s)==Mode::ALERT);
   s.nearestMm=500;assert(automatic(s)==Mode::GREETING);
   s.rangeValid=false;s.nearestMm=1;assert(automatic(s)==Mode::GREETING);
+  s.presenceValid=false;s.mastScanning=true;assert(automatic(s)==Mode::SCANNING);
+  s.rangeValid=true;s.nearestMm=100;assert(automatic(s)==Mode::ALERT);
+  s.rangeValid=false;s.mastScanning=false;
   for(const char *b:{"LOCKOUT","CRITICAL"}){strcpy(s.battery,b);assert(automatic(s)==Mode::ALERT);}
   s.controllerFresh=false;assert(automatic(s)==Mode::OFFLINE);
   assert(fresh(20,0xfffffff0u,37));assert(!fresh(20,0xfffffff0u,36));

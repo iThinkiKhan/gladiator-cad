@@ -19,7 +19,7 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    else if(url.pathname==='/dev'){body=html('gateway/src/GatewayPage.h');type='text/html';}
    else if(url.pathname==='/api/field'){
     if(armed&&now()-lastCommand>350){armed=false;client=0;++epoch;}
-    body=JSON.stringify({sensors:robot(),transport:'UART',telemetryAgeMs:5,requiresKey:true,connected,interface:'C6 field · UART to S3',controller:controller(),powerValid:true,volts:12.2,amps:.12});
+    body=JSON.stringify({sensors:robot(),transport:'UART',telemetryAgeMs:5,requiresKey:false,connected,interface:'C6 field · UART to S3',controller:controller(),powerValid:true,volts:12.2,amps:.12});
    }else if(url.pathname==='/api/control'){
     const c=route.request().postDataJSON();commands.push(c);
     if(c.epoch===epoch&&connected){if(c.operation===1&&!armed){armed=true;client=c.client;}if(c.operation===0){armed=false;client=0;++epoch;}lastCommand=now();}
@@ -29,11 +29,19 @@ const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
    await route.fulfill({status:200,contentType:type,body});
   });
   await page.goto('http://gladiator.test/');await page.waitForFunction(()=>document.querySelector('#arm').disabled===false);
+  assert(!await page.locator('#keyBox').isVisible(),'field control requires no maintenance key');
+  assert.equal(await page.locator('#dev').getAttribute('href'),'/dev','key-free C6 still links to C6 development');
   await page.screenshot({path:path.join(root,'diagnostics/link-field-phone.png'),fullPage:true});
   await page.locator('#arm').click();await page.waitForFunction(()=>!document.querySelector('[data-drive=f]').disabled);
   const forward=page.locator('[data-drive=f]');await forward.hover();await page.mouse.down();await sleep(250);await page.mouse.up();await sleep(180);
   assert(commands.some(c=>c.operation===2&&c.deadman===1&&c.left===25&&c.right===25),'hold sends movement');
   assert(commands.some(c=>c.operation===2&&c.deadman===0),'release sends coast');
+  assert(!await page.locator('#speed').isDisabled(),'power may change live');
+  await forward.hover();await page.mouse.down();await page.locator('#speed').selectOption('50');await sleep(160);assert(commands.some(c=>c.operation===2&&c.deadman===1&&c.power===50&&c.left===50&&c.right===50),'live power keeps held direction');await page.locator('#speed').selectOption('25');await page.mouse.up();await sleep(120);
+  for(const [direction,l,r] of [['b',-25,-25],['l',-25,25],['r',25,-25]]){
+    await page.locator(`[data-drive=${direction}]`).hover();await page.mouse.down();await sleep(160);await page.mouse.up();await sleep(120);
+    assert(commands.some(c=>c.operation===2&&c.deadman===1&&c.left===l&&c.right===r&&c.power===25&&!c.overdrive),'field '+direction+' contract at 25%');
+  }
   const armCount=commands.filter(c=>c.operation===1).length;
   connected=false;armed=false;client=0;++epoch;await sleep(500);connected=true;await sleep(400);
   assert.equal(commands.filter(c=>c.operation===1).length,armCount,'recovery never auto-arms');

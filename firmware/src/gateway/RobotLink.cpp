@@ -29,13 +29,16 @@ bool RobotLink::begin(sensors::SensorManager &manager){
   if(!storage)return false;
   buffers_=new(storage) Buffers();
   manager_=&manager;mutex_=xSemaphoreCreateMutex();commands_=xQueueCreate(6,sizeof(PendingControl));results_=xQueueCreate(6,sizeof(Reply));
-  if(!mutex_||!commands_||!results_)return false;bootId_=esp_random();
+  mastCommands_=xQueueCreate(4,sizeof(PendingMast));
+  mastConfigs_=xQueueCreate(2,sizeof(PendingMastConfig));
+  if(!mutex_||!commands_||!results_||!mastCommands_||!mastConfigs_)return false;bootId_=esp_random();
   serial_.setRxBufferSize(2048);serial_.setTxBufferSize(2048);
   serial_.begin(board::GATEWAY_BAUD,SERIAL_8N1,board::GATEWAY_RX,board::GATEWAY_TX);
   return xTaskCreatePinnedToCore(taskEntry,"gladiator-link",16384,this,1,nullptr,0)==pdPASS;
 }
 void RobotLink::setController(const ControllerState &s){if(mutex_&&xSemaphoreTake(mutex_,0)==pdTRUE){controller_=s;xSemaphoreGive(mutex_);}}
 void RobotLink::setSystem(const String &s,const String &log){if(mutex_&&xSemaphoreTake(mutex_,0)==pdTRUE){system_=s;if(wantsDetails_)log_=log;xSemaphoreGive(mutex_);}}
+void RobotLink::setMast(const String &s){if(mutex_&&xSemaphoreTake(mutex_,0)==pdTRUE){mast_=s;xSemaphoreGive(mutex_);}}
 void RobotLink::result(const Control &c,Result r,uint32_t epoch){Reply reply{c.client,c.sequence,epoch,uint8_t(r)};if(results_)xQueueSend(results_,&reply,0);}
 String RobotLink::statusJson(){
   if(mutex_&&xSemaphoreTake(mutex_,0)==pdTRUE){visible_=published_;xSemaphoreGive(mutex_);}
@@ -73,6 +76,12 @@ void RobotLink::receive(const Frame &frame,Transport transport){
       case Type::WIFI_LEASE:{uint32_t ms=r.u32();if(r.done()&&ms<=60000)requestWifi(ms);else ++status_.rejected;break;}
       case Type::CONTROL:{PendingControl c;c.receivedMs=millis();c.generation=generation();
         if(transport!=selector_.active||!c.command.decode(frame)||xQueueSend(commands_,&c,0)!=pdTRUE)++status_.rejected;break;}
+      case Type::MAST_CONTROL:{PendingMast c;c.receivedMs=millis();c.generation=generation();
+        if(transport!=selector_.active||!c.command.decode(frame)||xQueueSend(mastCommands_,&c,0)!=pdTRUE)++status_.rejected;break;}
+      case Type::MAST_CONFIG:{PendingMastConfig c;c.receivedMs=millis();c.generation=generation();
+        if(transport!=selector_.active||!frame.length||frame.length>768){++status_.rejected;break;}
+        memcpy(c.json,frame.payload,frame.length);c.json[frame.length]=0;
+        if(xQueueSend(mastConfigs_,&c,0)!=pdTRUE)++status_.rejected;break;}
       default:++status_.rejected;return;
     }
   }
@@ -86,7 +95,7 @@ void RobotLink::prepareDetail(){
 }
 void RobotLink::taskEntry(void *p){static_cast<RobotLink *>(p)->run();}
 void RobotLink::run(){
-  sensors::RobotSensors snapshot;ControllerState c;uint32_t lastBeat=0,lastState=0,lastPower=0,lastImu=0,lastRange=0,lastPresence=0,lastChunk=0,lastSystem=0;
+  sensors::RobotSensors snapshot;ControllerState c;uint32_t lastBeat=0,lastState=0,lastPower=0,lastImu=0,lastRange=0,lastPresence=0,lastChunk=0,lastSystem=0,lastMast=0;
   status_.started=true;
   String logTransfer;size_t logOffset=0;uint32_t logId=0,lastLog=0,lastLogChunk=0;Transport previousDetails=Transport::NONE;
   for(;;){
@@ -124,6 +133,18 @@ void RobotLink::run(){
         w.u8(i.derived.valid);w.u8(i.gameDerived.valid);for(float v:{i.derived.rollDeg,i.derived.pitchDeg,i.derived.yawDeg,i.gameDerived.rollDeg,i.gameDerived.pitchDeg,i.gameDerived.yawDeg})w.f32(v);w.u8(sensors::headingValid(i,now));send(Type::ORIENTATION,w,selector_.active);}
       if(now-lastRange>=500){lastRange=now;Writer w;w.u32(now);meta(w,snapshot.tofFront.meta);auto &d=snapshot.tofFront.derived;w.u8(d.valid);w.u32(d.nearestMm);w.u8(d.usableZones);send(Type::RANGE,w,selector_.active);}
       if(now-lastPresence>=500){lastPresence=now;Writer w;w.u32(now);meta(w,snapshot.presence.meta);auto &d=snapshot.presence.derived;w.u8(d.presenceValid);w.u8(d.present);w.u8(d.targetValid);w.f32(d.rangeMeters);w.f32(d.speedMetersPerSecond);send(Type::PRESENCE,w,selector_.active);}
+    }
+    if(now-lastMast>=100){lastMast=now;String s;
+      if(xSemaphoreTake(mutex_,0)==pdTRUE){s=mast_;xSemaphoreGive(mutex_);}
+      // A live link task must not make a stalled control loop's cache fresh.
+      JsonDocument doc;if(s.length()&&!deserializeJson(doc,s)){
+        doc["sourceAgeMs"]=uint32_t(millis()-(doc["s3Ms"]|0U));
+        // Saved profile is infrequent; preserve UART capacity for live control.
+        static uint32_t lastProfile=0;
+        if(uint32_t(now-lastProfile)<2000)doc.remove("profile");else lastProfile=now;
+        s="";serializeJson(doc,s);
+        if(s.length()<=1536)send(Type::MAST_STATE,s.c_str(),s.length(),selector_.active);
+      }
     }
     const bool bulk=wifiLeaseMs_&&wifiHealth_.alive(now);Transport details=bulk?Transport::WIFI:selector_.active;
     if(details!=previousDetails){buffers_->detail.size=0;logTransfer="";previousDetails=details;}

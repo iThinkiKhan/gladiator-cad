@@ -17,6 +17,8 @@
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_http_server.h"
+#include "esp_http_client.h"
+#include <new>
 #include "esp_ota_ops.h"
 #include "esp_app_desc.h"
 #include "esp_app_format.h"
@@ -36,6 +38,7 @@
 #include "GatewayConfig.h"
 #include "GatewayPage.h"
 #include "VisualState.h"
+#include "MastPolicy.h"
 
 namespace {
 constexpr char TAG[]="gateway";
@@ -190,9 +193,9 @@ bool readBody(httpd_req_t *req,std::string &out,size_t maximum){
 }
 esp_err_t fieldHandler(httpd_req_t *req){
   lock();cJSON *robot=copyRobot();State s=state;unlock();auto c=cJSON_DetachItemFromObjectCaseSensitive(robot,"controller");
-  cJSON *doc=cJSON_CreateObject();cJSON_AddBoolToObject(doc,"requiresKey",true);
+  cJSON *doc=cJSON_CreateObject();cJSON_AddBoolToObject(doc,"requiresKey",false);
   cJSON_AddBoolToObject(doc,"connected",s.receivedUs&&esp_timer_get_time()-s.receivedUs<250000);
-  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field · UART to S3":s.active==Transport::WIFI?"C6 field · Wi-Fi to S3":"C6 field · S3 unavailable");
+  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field Â· UART to S3":s.active==Transport::WIFI?"C6 field Â· Wi-Fi to S3":"C6 field Â· S3 unavailable");
   cJSON_AddItemToObject(doc,"controller",c?c:cJSON_CreateNull());
   cJSON_AddStringToObject(doc,"transport",s.active==Transport::UART?"UART":s.active==Transport::WIFI?"WIFI":"NONE");
   if(s.receivedUs)number(doc,"telemetryAgeMs",(esp_timer_get_time()-s.receivedUs)/1000);else cJSON_AddNullToObject(doc,"telemetryAgeMs");
@@ -215,16 +218,11 @@ esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
   if(xQueueSend(requests,&request,0)!=pdTRUE){httpd_resp_set_status(req,"503 Service Unavailable");return replyJson(req,"{\"error\":\"Link queue full\"}");}
   httpd_resp_set_status(req,"202 Accepted");return replyJson(req,"{\"queued\":true,\"authority\":\"S3\"}");
 }
-esp_err_t controlHandler(httpd_req_t *req){
-  if(!authorize(req))return ESP_OK;
-  std::string body;if(!readBody(req,body,512))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid control body");
-  cJSON *doc=cJSON_ParseWithLength(body.data(),body.size());Control c;double v=0;bool valid=cJSON_IsObject(doc);
-  const char *keys[]={"epoch","client","sequence","observedMs","operation","deadman","overdrive","power","left","right"};
-  double values[10]={};for(unsigned i=0;i<10;++i){valid=integerValue(doc,keys[i],i>=8?-128:0,i<4?4294967295.0:i>=8?127:255,v)&&valid;values[i]=v;}
-  cJSON_Delete(doc);if(!valid)return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Expected integer control fields");
-  c.epoch=values[0];c.client=values[1];c.sequence=values[2];c.observedMs=values[3];c.operation=values[4];c.deadman=values[5];c.overdrive=values[6];c.power=values[7];c.left=values[8];c.right=values[9];
-  return queueRequest(req,Type::CONTROL,c.encode());
-}
+#include "MastApplication.h"
+#include "CameraApplication.h"
+#include "ControlApplication.h"
+#include "HardwareTestApplication.h"
+#include "MastSetupApplication.h"
 esp_err_t subscriptionHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
   std::string body;if(!readBody(req,body,128))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid subscription");
@@ -255,9 +253,11 @@ esp_err_t configHandler(httpd_req_t *req){
   cJSON_Delete(doc);reconfigure=true;
   return replyJson(req,"{\"saved\":true,\"message\":\"Connecting to Wi-Fi; gateway setup access point remains available.\"}");
 }
-void rebootTask(void *){vTaskDelay(pdMS_TO_TICKS(500));esp_restart();}
+TaskHandle_t rebootWorker=nullptr;
+void rebootTask(void *){ulTaskNotifyTake(pdTRUE,portMAX_DELAY);vTaskDelay(pdMS_TO_TICKS(750));esp_restart();}
 esp_err_t otaHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
+  if(!rebootWorker)return httpd_resp_send_err(req,HTTPD_500_INTERNAL_SERVER_ERROR,"Reboot worker unavailable; update refused");
   const esp_partition_t *partition=esp_ota_get_next_update_partition(nullptr);
   if(!partition||req->content_len<512||size_t(req->content_len)>partition->size)
     return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Expected a C6 gateway firmware.bin within OTA slot size");
@@ -282,18 +282,21 @@ esp_err_t otaHandler(httpd_req_t *req){
   if(error==ESP_OK)error=esp_ota_set_boot_partition(partition);
   if(error!=ESP_OK){if(begun)esp_ota_abort(handle);otaUpdating=false;return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Update rejected or incomplete; running firmware retained");}
   replyJson(req,"{\"updated\":true,\"message\":\"C6 gateway rebooting. The S3 controller continues running.\"}");
-  xTaskCreate(rebootTask,"reboot",2048,nullptr,2,nullptr);return ESP_OK;
+  xTaskNotifyGive(rebootWorker);return ESP_OK;
 }
 void startHttp(){
-  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=16;
+  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=32;
   cfg.lru_purge_enable=true;cfg.recv_wait_timeout=5;cfg.send_wait_timeout=5;
   ESP_ERROR_CHECK(httpd_start(&server,&cfg));
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
   const Route routes[]={{"/",HTTP_GET,rootHandler},{"/api/status",HTTP_GET,statusHandler},
-    {"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},
+    {"/hardware-test",HTTP_GET,hardwarePageHandler},{"/hardware-test/",HTTP_GET,hardwarePageHandler},{"/hardware-test/app.js",HTTP_GET,hardwareScriptHandler},{"/hardware-test/styles.css",HTTP_GET,hardwareStyleHandler},
+    {"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},{"/api/mast/config",HTTP_POST,mastConfigHandler},{"/api/camera",HTTP_GET,cameraProxyHandler},{"/api/camera",HTTP_POST,cameraProxyHandler},
     {"/api/subscribe",HTTP_POST,subscriptionHandler},{"/api/link",HTTP_POST,linkHandler},
     {"/api/visual",HTTP_GET,visualHandler},{"/api/visual",HTTP_POST,visualCommandHandler},
     {"/api/visual/config",HTTP_POST,visualConfigHandler},
+    {"/api/mast/setup",HTTP_GET,mastSetupHandler},{"/api/mast/setup",HTTP_POST,mastSetupHandler},
+    {"/api/mast",HTTP_GET,mastHandler},{"/api/mast",HTTP_POST,mastCommandHandler},
     {"/api/robot",HTTP_GET,robotHandler},{"/api/config",HTTP_POST,configHandler},
     {"/api/ping",HTTP_POST,pingHandler},{"/api/ota",HTTP_POST,otaHandler}};
   for(const auto &r:routes){httpd_uri_t uri={};uri.uri=r.uri;uri.method=r.method;uri.handler=r.handler;ESP_ERROR_CHECK(httpd_register_uri_handler(server,&uri));}
@@ -311,6 +314,7 @@ extern "C" void app_main(){
   requests=xQueueCreate(6,sizeof(Request));configASSERT(requests);
   startWifi();
   configASSERT(xTaskCreate(uartTask,"gladiator-link",12288,nullptr,LINK_TASK_PRIORITY,nullptr)==pdPASS);
+  configASSERT(xTaskCreate(rebootTask,"reboot",8192,nullptr,2,&rebootWorker)==pdPASS);
   startHttp();
   fcntl(STDIN_FILENO,F_SETFL,O_NONBLOCK);
   ESP_LOGI(TAG,"Gateway ready: C6 TX16/RX17, external antenna; setup http://192.168.8.1");

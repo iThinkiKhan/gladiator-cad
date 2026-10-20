@@ -18,6 +18,8 @@
 #endif
 #include "cJSON.h"
 #include "../shared/VisualState.h"
+#include "../shared/MastPolicy.h"
+using robotlink::Type;
 using esp_err_t=int;using nvs_handle_t=int;
 constexpr int ESP_OK=0,NVS_READONLY=0,NVS_READWRITE=1,HTTPD_400_BAD_REQUEST=400,HTTPD_500_INTERNAL_SERVER_ERROR=500;
 struct httpd_req_t {std::string body,response;bool authorized=true;int status=200;};
@@ -42,6 +44,16 @@ int nvs_get_str(nvs_handle_t,const char *,char *,size_t *){return -1;}
 int nvs_set_str(nvs_handle_t,const char *,const char *){return 0;}
 int nvs_commit(nvs_handle_t){return 0;}void nvs_close(nvs_handle_t){}
 #include "../gateway/src/VisualApplication.h"
+unsigned mastQueued=0;
+unsigned controlQueued=0;
+esp_err_t queueRequest(httpd_req_t *r,Type type,const robotlink::Writer &w){
+  if(type==Type::CONTROL){assert(w.size==22);++controlQueued;}
+  else if(type==Type::MAST_CONFIG){assert(w.size>0&&w.size<=768);}
+  else{assert(type==Type::MAST_CONTROL);assert(w.size==13);++mastQueued;}
+  r->status=202;return 0;
+}
+#include "../gateway/src/MastApplication.h"
+#include "../gateway/src/ControlApplication.h"
 void fixture(const char *battery="OK",int age=0,int range=900){
   cJSON_Delete(cache);char json[1024];snprintf(json,sizeof(json),R"({"controller":{"state":"SAFE","battery":"%s"},"tofFront":{"meta":{"health":"OK","ageMs":%d},"derived":{"valid":true,"nearestMm":%d}},"presence":{"meta":{"health":"OK","ageMs":0},"derived":{"presenceValid":true,"present":false}},"power":{"meta":{"health":"OK","ageMs":0},"derived":{"busVolts":7.8}}})",battery,age,range);
   cache=cJSON_Parse(json);state.receivedUs=esp_timer_get_time();
@@ -51,16 +63,44 @@ void expectMode(const char *mode){auto d=get();assert(!strcmp(textValue(d,"mode"
 int post(const char *json,bool authorized=true){httpd_req_t r;r.body=json;r.authorized=authorized;visualCommandHandler(&r);return r.status;}
 int configPost(const char *json){httpd_req_t r;r.body=json;visualConfigHandler(&r);return r.status;}
 int main(){
+  httpd_req_t field;field.authorized=false;
+  field.body=R"({"epoch":10,"client":20,"sequence":1,"observedMs":1000,"operation":1,"deadman":0,"overdrive":0,"power":25,"left":0,"right":0})";
+  controlHandler(&field);assert(field.status==202&&controlQueued==1);
+  for(const char *bad:{"{}","null","{",R"({"epoch":"10"})"}){httpd_req_t r;r.authorized=false;r.body=bad;controlHandler(&r);assert(r.status==400&&controlQueued==1);}
+  loadVisualSettings();assert(!strcmp(visualCameraIp,"192.168.8.2"));
+  for(const char *json:{"{}","null","{",R"({"session":1,"sequence":1,"operation":8,"pan":0,"tilt":0})",
+    R"({"session":1,"sequence":1,"operation":2,"pan":451,"tilt":0})",
+    R"({"session":1,"sequence":1,"operation":2,"pan":0,"tilt":201})",
+    R"({"session":1,"sequence":1,"operation":2,"pan":0.5,"tilt":0})"}){
+    httpd_req_t r;r.body=json;mastCommandHandler(&r);assert(r.status==400&&mastQueued==0);
+  }
+  httpd_req_t commissioning;commissioning.authorized=false;commissioning.body=R"({"action":"test","pin":10,"firstUs":1500,"minUs":1400,"maxUs":1600,"frequencyHz":50})";mastConfigHandler(&commissioning);assert(commissioning.status==202);
+  httpd_req_t mr;mr.body=R"({"session":1,"sequence":1,"operation":2,"pan":-50,"tilt":20})";
+  mr.authorized=false;mastCommandHandler(&mr);assert(mr.status==202&&mastQueued==1);
   fixture();expectMode("ready");auto d=get();assert(cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(d,"fresh")));assert(cJSON_IsNumber(cJSON_GetObjectItemCaseSensitive(d,"volts")));cJSON_Delete(d);
   assert(post(R"({"mode":"greeting","leaseMs":1000,"message":"Hello"})")==200);expectMode("greeting");
   clockMs=1500;fixture();expectMode("greeting");clockMs=2000;fixture();expectMode("ready");
   assert(post(R"({"mode":"scanning","leaseMs":60000})")==200);expectMode("scanning");
   fixture("CRITICAL");expectMode("alert");fixture("OK",0,499);expectMode("alert");
   fixture("OK",1000,499);expectMode("scanning"); // Expired range cannot raise an alert.
+  fixture("OK",500,499);expectMode("scanning");
+  for(int invalid:{0,19,4000,65535}){fixture("OK",0,invalid);expectMode("scanning");}
   state.receivedUs=esp_timer_get_time()-500000;expectMode("offline");
   d=get();assert(cJSON_IsNull(cJSON_GetObjectItemCaseSensitive(d,"nearestMm")));assert(cJSON_IsNull(cJSON_GetObjectItemCaseSensitive(d,"volts")));cJSON_Delete(d);
   fixture();assert(post(R"({"mode":"auto"})")==200);expectMode("ready");
-  assert(post(R"({"mode":"alert","leaseMs":1000})",false)==401);expectMode("ready");
+  auto mst=cJSON_AddObjectToObject(cache,"mast");cJSON_AddBoolToObject(mst,"enabled",true);cJSON_AddBoolToObject(mst,"scanning",true);number(mst,"transportAgeMs",0);
+  number(mst,"sourceAgeMs",0);
+  expectMode("scanning");number(mst,"schema",1);httpd_req_t mg;mastHandler(&mg);
+  auto md=cJSON_Parse(mg.response.c_str());assert(cJSON_IsTrue(cJSON_GetObjectItemCaseSensitive(md,"fresh")));cJSON_Delete(md);
+  cJSON_SetNumberValue(cJSON_GetObjectItemCaseSensitive(mst,"transportAgeMs"),250);expectMode("ready");
+  mastHandler(&mg);md=cJSON_Parse(mg.response.c_str());assert(cJSON_IsFalse(cJSON_GetObjectItemCaseSensitive(md,"fresh")));cJSON_Delete(md);
+  cJSON_SetNumberValue(cJSON_GetObjectItemCaseSensitive(mst,"transportAgeMs"),0);
+  cJSON_SetNumberValue(cJSON_GetObjectItemCaseSensitive(mst,"sourceAgeMs"),250);expectMode("ready");
+  mastHandler(&mg);md=cJSON_Parse(mg.response.c_str());assert(cJSON_IsFalse(cJSON_GetObjectItemCaseSensitive(md,"fresh")));cJSON_Delete(md);
+  assert(post(R"({"mode":"alert","leaseMs":1000})",false)==200);expectMode("alert");
+  assert(post(R"({"mode":"auto"})",false)==200);expectMode("ready");
+  httpd_req_t protectedConfig;protectedConfig.authorized=false;protectedConfig.body=R"({"cameraIp":"192.168.8.2"})";
+  visualConfigHandler(&protectedConfig);assert(protectedConfig.status==401);
   for(const char *json:{R"({"mode":"wrong","leaseMs":1000})",R"({"mode":"alert","leaseMs":999})",R"({"mode":"alert","leaseMs":60001})",R"({"mode":"alert","leaseMs":1000.5})",R"({"mode":"alert","leaseMs":"1000"})",R"({"mode":"alert","leaseMs":1000,"message":"bad\ntext"})","[]","null","{"})assert(post(json)==400);
   assert(configPost(R"({"cameraIp":"192.168.8.2"})")==200);d=get();assert(!strcmp(textValue(d,"streamUrl"),"http://192.168.8.2:81/stream"));cJSON_Delete(d);
   assert(configPost(R"({"cameraIp":"10.0.0.5"})")==200);assert(configPost(R"({"cameraIp":"172.16.0.2"})")==200);

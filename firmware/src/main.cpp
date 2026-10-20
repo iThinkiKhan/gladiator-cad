@@ -5,16 +5,19 @@
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <Update.h>
+#include <Preferences.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <rom/rtc.h>
 #include <esp_ota_ops.h>
 #include "BoardConfig.h"
 #include "Orientation.h"
+#include "DrivePower.h"
 #include "sensors/SensorManager.h"
 #include "status/StatusLed.h"
 #include "gateway/RobotLink.h"
 #include "gateway/ControlJson.h"
+#include "mast/MastHardware.h"
 #include "../shared/FieldPage.h"
 #include "../shared/ServicePage.h"
 
@@ -173,6 +176,8 @@ uint32_t bootCount = 0;
 // is still PENDING_VERIFY makes esp_ota_set_boot_partition refuse the next
 // image, which surfaces only as a generic activation failure at the far end of
 // a completed upload. Record it so the cause is visible without a cable.
+esp_ota_handle_t webOtaHandle=0;const esp_partition_t *webOtaPartition=nullptr;
+esp_err_t webOtaError=ESP_FAIL;bool webOtaComplete=false;
 char otaPartition[8] = "?";
 const char *otaStateName = "UNKNOWN";
 bool otaMarkedValid = false;
@@ -298,21 +303,26 @@ String sensorStatusJson() {
   return json;
 }
 
-// USB commands are deliberately read-only. No command here can arm or move.
+// Existing USB commands remain read-only. Mast commissioning is a separate,
+// explicit physical procedure and never arms the drivetrain.
+#include "mast/MastApplication.h"
 void updateSerialConsole() {
   static String command;
+  static bool overflow=false;
   for (uint8_t budget=0; budget<64 && Serial.available(); ++budget) {
     char c=Serial.read();
     if (c=='\r') continue;
     if (c=='\n') {
+      if(overflow){command="";overflow=false;Serial.println("USB command too long; discarded.");continue;}
       command.trim();
-      if (command == "sensors" || command == "status") {
+      if(mastSerial(command)){}
+      else if (command == "sensors" || command == "status") {
         if (commandArmed) Serial.println("BUSY: disarm before USB snapshot.");
         else Serial.println(sensorStatusJson());
       } else if (command.length()) Serial.println("Read-only commands: sensors | status");
       command="";
-    } else if (command.length()<64) command += c;
-    else command="";
+    } else if (!overflow&&command.length()<768) command += c;
+    else {command="";overflow=true;}
   }
 }
 
@@ -515,6 +525,9 @@ void coastAll() {
 
 void forceSafeForUpdate() {
   ControlGuard guard;
+  mastController.stop(mast::Reason::SAFETY);
+  mastTest.stop();
+  mastHardware.stop();
   remoteSession.invalidate();
   activeControlSource = ControlSource::NONE;
   commandArmed = false;
@@ -918,36 +931,31 @@ void setupMaintenanceWifi() {
         200, "text/plain",
         "Motion accepted for one 350 ms watchdog-limited pulse.");
   });
-  maintenanceServer.on(
-      "/update", HTTP_POST,
-      []() {
-        const bool okay = !Update.hasError();
-        maintenanceServer.send(okay ? 200 : 500, "text/plain",
-                               okay ? "Update complete. Gladiator is rebooting."
-                                    : "Update failed; current firmware retained.");
-        if (okay) {
-          delay(250);
-          ESP.restart();
-        }
+  // Native sequential OTA gives exact validation/activation errors and retains
+  // the running slot on every failure. No image validation is bypassed.
+  maintenanceServer.on("/update", HTTP_POST,
+      [](){
+        maintenanceServer.send(webOtaComplete?200:500,"text/plain",webOtaComplete?"Update complete. Gladiator is rebooting.":String("Update failed: ")+esp_err_to_name(webOtaError)+"; current firmware retained.");
+        if(webOtaComplete){delay(250);ESP.restart();}
       },
-      []() {
-        HTTPUpload &upload = maintenanceServer.upload();
-        if (upload.status == UPLOAD_FILE_START) {
-          forceSafeForUpdate();
-          appendLogf("Web OTA starting: %s", upload.filename.c_str());
-          Update.begin(UPDATE_SIZE_UNKNOWN);
-        } else if (upload.status == UPLOAD_FILE_WRITE) {
-          Update.write(upload.buf, upload.currentSize);
-          feedLoopWDT(); // HTTP upload runs inside one handleClient() call.
-        } else if (upload.status == UPLOAD_FILE_END) {
-          if (Update.end(true)) {
-            appendLogf("Web OTA complete: %u bytes", upload.totalSize);
-          } else {
-            appendLogf("Web OTA failed: error %u", Update.getError());
-          }
-        } else if (upload.status == UPLOAD_FILE_ABORTED) {
-          Update.abort();
-          appendLog("Web OTA upload aborted");
+      [](){
+        HTTPUpload &upload=maintenanceServer.upload();
+        if(upload.status==UPLOAD_FILE_START){
+          forceSafeForUpdate();webOtaComplete=false;webOtaHandle=0;webOtaPartition=esp_ota_get_next_update_partition(nullptr);
+          webOtaError=webOtaPartition?esp_ota_begin(webOtaPartition,OTA_WITH_SEQUENTIAL_WRITES,&webOtaHandle):ESP_ERR_NOT_FOUND;
+          appendLogf("Native web OTA begin: %s",esp_err_to_name(webOtaError));
+        }else if(upload.status==UPLOAD_FILE_WRITE){
+          if(webOtaError==ESP_OK)webOtaError=esp_ota_write(webOtaHandle,upload.buf,upload.currentSize);
+          feedLoopWDT();
+        }else if(upload.status==UPLOAD_FILE_END){
+          if(webOtaError==ESP_OK){webOtaError=esp_ota_end(webOtaHandle);webOtaHandle=0;}
+          if(webOtaError==ESP_OK)webOtaError=esp_ota_set_boot_partition(webOtaPartition);
+          if(webOtaHandle){esp_ota_abort(webOtaHandle);webOtaHandle=0;}
+          webOtaComplete=webOtaError==ESP_OK;
+          appendLogf("Native web OTA %u bytes: %s",upload.totalSize,esp_err_to_name(webOtaError));
+        }else if(upload.status==UPLOAD_FILE_ABORTED){
+          if(webOtaHandle)esp_ota_abort(webOtaHandle);webOtaHandle=0;webOtaError=ESP_FAIL;webOtaComplete=false;
+          appendLog("Native web OTA aborted; running slot retained");
         }
       });
   maintenanceServer.begin();
@@ -1011,6 +1019,7 @@ void updateMotorOutputs() {
   int8_t outputLeft = targetLeftPercent;
   int8_t outputRight = targetRightPercent;
   applyStraightTrim(outputLeft, outputRight);
+  drivepower::cap(outputLeft,outputRight,selectedPowerMode,commandOverdrive);
 
   // Overdrive intentionally bypasses soft start and commands full-duty values
   // immediately. Direction and magnitude still come from the signed frame.
@@ -1027,8 +1036,9 @@ void updateMotorOutputs() {
   }
   lastRampMs = now;
 
-  const int8_t nextLeft = rampToward(leftMotor.currentPercent, outputLeft);
-  const int8_t nextRight = rampToward(rightMotor.currentPercent, outputRight);
+  int8_t nextLeft = rampToward(leftMotor.currentPercent, outputLeft);
+  int8_t nextRight = rampToward(rightMotor.currentPercent, outputRight);
+  drivepower::cap(nextLeft,nextRight,selectedPowerMode,commandOverdrive);
   applyMotor(leftMotor, nextLeft);
   applyMotor(rightMotor, nextRight);
 }
@@ -1124,6 +1134,11 @@ class CommandCallbacks final : public BLECharacteristicCallbacks {
     if (left < -100 || left > 100 || right < -100 || right > 100) {
       rejectInput();
       return;
+    }
+    const bool overdrive=(frame[3]&FLAG_OVERDRIVE)!=0;
+    if((frame[3]&~uint8_t(FLAG_ARMED|FLAG_DEADMAN|FLAG_OVERDRIVE)) ||
+       (overdrive?frame[6]!=0xff:frame[6]>100)){
+      rejectInput();return;
     }
 
     if (activeControlSource != ControlSource::BLE && activeControlSource != ControlSource::NONE && commandArmed &&
@@ -1284,6 +1299,8 @@ void setup() {
   benchPowerCandidate = benchPowerActive = benchPowerViaPin;
   benchPowerCandidateSinceMs = millis();
   setupMotors();
+  mastHardware.begin(); // Direct GPIO10/13 wiring; no PWM attachment at boot.
+  loadMastProfile(); // Calibration persists; enabled/reference/position never restore.
 
   // Read why the controller restarted before anything else can overwrite it.
   bootReason = esp_reset_reason();
@@ -1359,6 +1376,7 @@ void loop() {
   updateBatteryGuard(now);
   serviceFieldControl(now);
   updateMotorOutputs();
+  serviceMast();
   updateSerialConsole();
   logIna226();
   publishPowerTelemetry();
@@ -1382,7 +1400,7 @@ void loop() {
   gatewayLink.setController(linkController);
   static uint32_t lastSystem=0;
   if(now-lastSystem>=1000){ControlGuard guard;lastSystem=now;JsonDocument system;
-    system["firmware"]="Gladiator S3 Interface v1 / Link v2";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
+    system["firmware"]="Gladiator S3 Interface v1 / Link v2 / Mast operator v2";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
     system["orientation"]=orientation::NAME;
     system["resetReason"]=status::resetReasonName(bootReason);system["bootCount"]=bootCount;system["otaSlot"]=otaPartition;
     system["batteryState"]=batteryStateName(batteryState);system["powerSource"]=benchPowerActive?"BENCH":"LIPO";
