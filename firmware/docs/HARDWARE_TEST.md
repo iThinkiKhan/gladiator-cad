@@ -1,6 +1,6 @@
 # V2 phone hardware tester
 
-Gateway 2.2.2 serves the guided tester directly at
+Gateway 2.2.3 serves the guided tester directly at
 http://192.168.8.1/hardware-test/ on Gladiator-Gateway Wi-Fi.
 The root driving page links to it. A PC or Internet connection is unnecessary.
 
@@ -18,3 +18,9 @@ Camera, sensor and mechanical faults remain visible and require their own diagno
 The local PC variant remains available for development. The C6 build regenerates
 compressed assets from the same source files using the PlatformIO pre-build hook.
 Compiled firmware, private configuration, backups and runtime logs stay local.
+
+Development recording works while slewing or after Stop, expiry or link loss.
+Recorded values are retained as a partial draft on the phone, not gated behind
+motion-session checks. Full measured calibration is applied to S3 separately.
+Repeated start/save acknowledgment checkboxes are removed; deliberate enable,
+S3 commissioning checks and calibrated motion limits remain.

@@ -41,3 +41,17 @@ S3 boot continuity and motion-off state were verified. See the tester VALIDATION
 and firmware/docs/HARDWARE_TEST.md. Runtime OTA evidence and binary stay private.
 The camera sensor was not initializing before this update; LiDAR/presence were
 offline. Those hardware/firmware acceptance items are still separate pending work.
+
+## Development workflow correction — gateway 2.2.3
+
+Jim reported Save center blocked and asked to remove development friction.
+The old UI incorrectly required an active owned/settled test even for local draft
+recording. Recording now uses retained command data after Stop/link loss, without
+movement-side guards. Partial drafts survive reload locally and remain distinct
+from applied S3 calibration. Repeated test/save acknowledgements and duplicate
+frontend commissioning gates removed. Complete setup save automatically stops
+mast tests, then lets S3 decide and displays its rejection/confirmation.
+
+Native and PC simulated regressions passed. C6 2.2.3 OTA boot/slot and exact assets
+verified; S3 boot stayed unchanged and outputs stayed off. No pulse test, center
+assignment or physical movement was commanded by the agent on live hardware.

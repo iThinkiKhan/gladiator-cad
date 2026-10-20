@@ -21,7 +21,7 @@ def safe():
     return f,m
 def main():
     image=(ROOT/"gateway/.pio/build/gladiator_c6/firmware.bin").read_bytes()
-    assert 512<len(image)<=0x1e0000 and image[0]==0xe9 and b"gladiator_gateway" in image and b"gateway-2.2.2" in image,"Unexpected firmware image"
+    assert 512<len(image)<=0x1e0000 and image[0]==0xe9 and b"gladiator_gateway" in image and b"gateway-2.2.3" in image,"Unexpected firmware image"
     key=json.loads((ROOT/"diagnostics/gateway-private/credentials.json").read_text())["adminKey"]
     secret=(ROOT/"shared/secrets.h").read_text()
     for name in ["GLADIATOR_FIELD_PASSWORD","GLADIATOR_MAINTENANCE_AP_PASSWORD"]:
@@ -51,7 +51,7 @@ def main():
         try:
             after=get("/api/status")
             if after["bootId"]==before["bootId"] or after["uptimeMs"]<18000:continue
-            assert after["firmware"]=="gateway-2.2.2","Unexpected running firmware"
+            assert after["firmware"]=="gateway-2.2.3","Unexpected running firmware"
             assert after["otaSlot"]!=before["otaSlot"],"OTA slot did not change"
             assert after["peerBootId"]==before["peerBootId"] and after["robotConnected"],"S3 continuity lost"
             field,mast=safe()

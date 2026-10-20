@@ -2,7 +2,7 @@
 
 ## Use from your phone — no PC required
 
-With gateway firmware **2.2.2**, connect the phone to **Gladiator-Gateway** and open
+With gateway firmware **2.2.3**, connect the phone to **Gladiator-Gateway** and open
 **http://192.168.8.1/hardware-test/**. A Hardware setup & servo tests link is also
 available on the existing driving page. Tap Connect to robot in the tester.
 The page and assets are served by the C6 and use its existing APIs directly.
@@ -33,7 +33,7 @@ raw sensor data and logs live under System. STOP ALL stays visible while scrolli
 2. Choose GPIO10 or GPIO13. Choose a first pulse deliberately; neutral is blank
    because the mechanism has never been referenced. 500–2500 µs and 50–100 Hz are
    existing firmware parser bounds, **not verified SG90 specifications**.
-3. Set a small window (±50 µs helper), confirm supervision and start that GPIO.
+3. Set a small window (±50 µs helper), then click Start servo test.
    The first pulse can move immediately. Use 5/10/25 µs steps. The S3 limits the
    test window to 500 µs and slews subsequent changes.
 4. Identify the axis and choose a useful neutral. Record with the matching
@@ -45,8 +45,8 @@ raw sensor data and logs live under System. STOP ALL stays visible while scrolli
    **60/40 = 1.5**, applied by the S3; do not apply it twice. Verify belt routing
    and direction. A zero shaft angle and corresponding neutral pulse support a
    neutral at one mechanical endpoint. Mark reverse if increasing pulses move negative.
-6. Verify positional servo behavior and clearance, then Save calibration to S3.
-   Wait for matching S3 profile readback. Export a draft as a backup. Loading or
+6. Enter the measured pulse/shaft limits, then Save setup to robot.
+   Wait for matching S3 profile readback. Download a draft as a backup; incomplete setups are supported. Loading or
    importing only edits fields; it never enables movement.
 7. Confirm “Enable at saved neutral” and enable. This initial positioning may move
    both servos. Hold arrows to jog, release to hold, or use center/bounded scan.
@@ -132,3 +132,21 @@ maintenance authorization remain unchanged.
 
 For simulated direct-mode checks set GLADIATOR_NATIVE=1 and run tests/test_ui.cjs.
 The default test mode checks the PC bridge. Neither mode contacts the robot.
+
+## Recording centers during development (gateway 2.2.3)
+
+Save center and endpoint buttons record the latest available command for the
+selected GPIO, including after a test stops, expires or loses its connection.
+Recording does not require an active test, matching the final target, fresh
+telemetry, full angle measurements or an acknowledgment checkbox. The source
+(last S3 command, requested target or saved draft) is shown next to the value.
+These values are commands, not SG90 position feedback.
+
+Partial centers/endpoints/angle fields are retained on this browser/device and
+can be exported/imported before the setup is complete. Drafts never restore
+motion, checkbox enablement or a running session. Different phones/browsers
+have separate drafts; saving a complete profile to the S3 shares that applied
+profile across controllers. Start test is the deliberate test enable action;
+the repeated supervision checkbox has been removed. A complete Save setup
+stops any mast test automatically and reports the S3 result. S3 still validates
+power, stationary disarmed commissioning and the measured travel profile.

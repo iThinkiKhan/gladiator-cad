@@ -40,3 +40,24 @@ Image SHA256: 44348dd2e93af8eaa5c590e1998bc884bf9573417a4c08b5b43fd0d89c2c9376
 No servo or nonzero drivetrain movement was commanded. Previously observed
 camera sensor initialization failure and offline ranging sensors are not fixed
 by hosting the page; physical diagnosis and commissioning remain operator work.
+
+## Center recording fix — gateway 2.2.3, 2026-10-20
+
+Reproduced the failure: S3 retained a valid test GPIO/pulse after Stop, but the
+page disabled recording because the local motion session was inactive.
+Removed active-session, freshness and target-settled gates from draft capture.
+Retained S3 command values per GPIO and partially completed setup fields locally.
+Draft restoration never restores enablement or motion. Partial import/export is
+supported. Removed repeated test/save acknowledgement checkboxes and duplicated
+frontend commissioning preconditions; S3 still enforces actual movement rules.
+Full setup save stops mast output automatically and reports S3 rejection/timeout.
+
+Simulated native checks pass recording during slew, after Stop and offline,
+reload persistence with zero replay, automatic stop-before-save ordering, and
+explicit S3 rejection without overwriting the saved profile. Existing aiming,
+limits, startup, recovery, camera and mobile layout checks pass in both modes.
+
+Gateway 2.2.3 build and OTA succeeded. Slot changed ota_1 -> ota_0 and the C6
+boot changed. S3 boot remained unchanged; mast/test off and tracks disarmed.
+All three served assets match source. Existing S3 and CAM firmware unchanged.
+Image SHA256: 7d978d940337a2cd9c8212a2b9903c05175efa77607d994c1d2cd32c659fd7b4
