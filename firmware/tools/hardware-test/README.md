@@ -2,7 +2,7 @@
 
 ## Use from your phone — no PC required
 
-With gateway firmware **2.2.3**, connect the phone to **Gladiator-Gateway** and open
+With gateway firmware **2.2.4**, connect the phone to **Gladiator-Gateway** and open
 **http://192.168.8.1/hardware-test/**. A Hardware setup & servo tests link is also
 available on the existing driving page. Tap Connect to robot in the tester.
 The page and assets are served by the C6 and use its existing APIs directly.
@@ -20,7 +20,7 @@ using the tester; Ctrl+C stops that service.
 ## Simplified interface
 
 The page has four views: **Test servos**, **Save setup**, **Camera & aim**, and **System**.
-Starting pulse automatically fills a small test window; range/frequency edits are under
+Starting pulse automatically fills a 500 µs test window; range/frequency edits are under
 Test range & frequency. Use the large +/− buttons and one-click center/endpoint recording.
 Stop & test other servo turns outputs off, switches GPIO, and clears the first pulse.
 Stop & review setup opens the calibration form. Recorded pulses and measured shaft
@@ -33,21 +33,27 @@ raw sensor data and logs live under System. STOP ALL stays visible while scrolli
 2. Choose GPIO10 or GPIO13. Choose a first pulse deliberately; neutral is blank
    because the mechanism has never been referenced. 500–2500 µs and 50–100 Hz are
    existing firmware parser bounds, **not verified SG90 specifications**.
-3. Set a small window (±50 µs helper), then click Start servo test.
-   The first pulse can move immediately. Use 5/10/25 µs steps. The S3 limits the
-   test window to 500 µs and slews subsequent changes.
+3. The starting pulse fills a ±250 µs window (clipped to the parser envelope).
+   Click Start servo test. The first pulse can move immediately. Use 5/10/25/50/100 µs
+   steps, enter a target and tap Move to target, or use the slider. The S3 ramps
+   subsequent changes at 100 µs/s. Stop & shift window here prepares a new window
+   around the last S3 command; Start is still deliberate.
 4. Identify the axis and choose a useful neutral. Record with the matching
    “This is pan/tilt · save center” button. This records GPIO and commanded pulse,
-   not a measured position. Stop output before changing GPIO/window or saving.
+   not a measured position. Centers and endpoints save immediately in C6 flash,
+   including incomplete setups; recording never changes movement. Wait for Saved
+   on robot. Changing GPIO/window stops output.
 5. Record only pulse endpoints actually reached without binding. Enter measured
    servo **shaft** angles relative to neutral, pulse endpoints and smaller allowed
    head travel. Initial limits: ±5° pan and ±3° tilt. Pan head/shaft ratio is
    **60/40 = 1.5**, applied by the S3; do not apply it twice. Verify belt routing
    and direction. A zero shaft angle and corresponding neutral pulse support a
    neutral at one mechanical endpoint. Mark reverse if increasing pulses move negative.
-6. Enter the measured pulse/shaft limits, then Save setup to robot.
-   Wait for matching S3 profile readback. Download a draft as a backup; incomplete setups are supported. Loading or
-   importing only edits fields; it never enables movement.
+6. Edited measurements and limits save to the robot on field change. Save current
+   entries to robot also stores incomplete entries or imports from an older phone
+   draft. Apply aiming calibration to S3 validates the complete measured profile,
+   stops outputs and stores the enforced profile in S3 NVS. Wait for matching S3
+   readback. Saved entries and currently enforced limits are shown separately.
 7. Confirm “Enable at saved neutral” and enable. This initial positioning may move
    both servos. Hold arrows to jog, release to hold, or use center/bounded scan.
    Apply speed updates the S3 rate. Disable after testing.
@@ -133,20 +139,47 @@ maintenance authorization remain unchanged.
 For simulated direct-mode checks set GLADIATOR_NATIVE=1 and run tests/test_ui.cjs.
 The default test mode checks the PC bridge. Neither mode contacts the robot.
 
-## Recording centers during development (gateway 2.2.3)
+## Robot calibration storage (gateway 2.2.4)
 
-Save center and endpoint buttons record the latest available command for the
-selected GPIO, including after a test stops, expires or loses its connection.
-Recording does not require an active test, matching the final target, fresh
-telemetry, full angle measurements or an acknowledgment checkbox. The source
-(last S3 command, requested target or saved draft) is shown next to the value.
-These values are commands, not SG90 position feedback.
+Centers, endpoints, GPIO assignment, directions, measured shaft angles and allowed
+travel entries are saved on the robot's C6 NVS as work progresses. Recording a
+center or endpoint waits for flash commit and readback. Editing a setup field saves
+after change; Save current entries explicitly stores all entries, even incomplete
+ones. Reopening from another device reads the robot record automatically.
+Robot storage replaces phone drafts as the source of saved entries. The local
+draft remains a recovery/export convenience; an older phone draft can be migrated
+with Copy earlier entries from this device (the earlier copy is retained) or
+Save current entries. Startup/Connect never replay a motion command.
 
-Partial centers/endpoints/angle fields are retained on this browser/device and
-can be exported/imported before the setup is complete. Drafts never restore
-motion, checkbox enablement or a running session. Different phones/browsers
-have separate drafts; saving a complete profile to the S3 shares that applied
-profile across controllers. Start test is the deliberate test enable action;
-the repeated supervision checkbox has been removed. A complete Save setup
-stops any mast test automatically and reports the S3 result. S3 still validates
-power, stationary disarmed commissioning and the measured travel profile.
+GET/POST /api/mast/setup uses schema 1, revision and a fields object. POST merges
+only specified known fields; stale revisions return 409. Clients retry their changed
+fields against the new revision, preserving unrelated controller edits. A single
+NVS record atomically stores revision and fields, and unchanged values do not
+rewrite flash. This API cannot enable outputs or change an active S3 calibration.
+
+Complete calibrated aiming still uses /api/mast/config and S3 NVS. The S3 reports
+its current profile and enforced angular limits through /api/mast to every
+controller. A saved partial measurement is not silently treated as an applied
+angular map. S3 validation, pulley ratio and deliberate enablement remain.
+
+Pulse capture uses the last S3-reported command for the selected GPIO, including
+after Stop, rather than an unconfirmed target. SG90 provides no position feedback.
+The large readout and separate target distinguish gradual movement from a request.
+
+## Tilt diagnosis status
+
+Operator confirms tilt GPIO13, regulated 5 V and common S3 ground. Source audit
+finds drivetrain PWM channels 0–3/timers 0–1 and mast channels 4–5/timer 2, with no
+other GPIO13 assignment. Both test pins use the same 14-bit duty conversion and
+set/update calls. At 50 Hz a 1500 µs request computes duty 1228 (~1499 µs); this is
+source/math verification, not an oscilloscope measurement. Espressif API reference:
+https://docs.espressif.com/projects/esp-idf/en/v4.4/esp32s3/api-reference/peripherals/ledc.html
+
+No physical tilt fault has been identified or repaired. Use direct target entry
+to observe both the target and S3-commanded pulse. If GPIO13's S3 command changes
+but tilt stays at its stop, turn output off and check the PWM at the servo connector.
+With power off, exchanging servo signal connections can help determine whether the
+behavior follows the servo/mechanism or GPIO/wiring. Do not record a pressed end
+stop as useful travel or leave a stalled servo powered. Servo supply voltage under
+load, waveform, pin-to-connector continuity and installed travel remain physical
+checks. The agent did not command live servo motion during this update.

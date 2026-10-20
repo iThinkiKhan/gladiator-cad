@@ -195,7 +195,7 @@ esp_err_t fieldHandler(httpd_req_t *req){
   lock();cJSON *robot=copyRobot();State s=state;unlock();auto c=cJSON_DetachItemFromObjectCaseSensitive(robot,"controller");
   cJSON *doc=cJSON_CreateObject();cJSON_AddBoolToObject(doc,"requiresKey",false);
   cJSON_AddBoolToObject(doc,"connected",s.receivedUs&&esp_timer_get_time()-s.receivedUs<250000);
-  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field · UART to S3":s.active==Transport::WIFI?"C6 field · Wi-Fi to S3":"C6 field · S3 unavailable");
+  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field Â· UART to S3":s.active==Transport::WIFI?"C6 field Â· Wi-Fi to S3":"C6 field Â· S3 unavailable");
   cJSON_AddItemToObject(doc,"controller",c?c:cJSON_CreateNull());
   cJSON_AddStringToObject(doc,"transport",s.active==Transport::UART?"UART":s.active==Transport::WIFI?"WIFI":"NONE");
   if(s.receivedUs)number(doc,"telemetryAgeMs",(esp_timer_get_time()-s.receivedUs)/1000);else cJSON_AddNullToObject(doc,"telemetryAgeMs");
@@ -222,6 +222,7 @@ esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
 #include "CameraApplication.h"
 #include "ControlApplication.h"
 #include "HardwareTestApplication.h"
+#include "MastSetupApplication.h"
 esp_err_t subscriptionHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
   std::string body;if(!readBody(req,body,128))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid subscription");
@@ -294,6 +295,7 @@ void startHttp(){
     {"/api/subscribe",HTTP_POST,subscriptionHandler},{"/api/link",HTTP_POST,linkHandler},
     {"/api/visual",HTTP_GET,visualHandler},{"/api/visual",HTTP_POST,visualCommandHandler},
     {"/api/visual/config",HTTP_POST,visualConfigHandler},
+    {"/api/mast/setup",HTTP_GET,mastSetupHandler},{"/api/mast/setup",HTTP_POST,mastSetupHandler},
     {"/api/mast",HTTP_GET,mastHandler},{"/api/mast",HTTP_POST,mastCommandHandler},
     {"/api/robot",HTTP_GET,robotHandler},{"/api/config",HTTP_POST,configHandler},
     {"/api/ping",HTTP_POST,pingHandler},{"/api/ota",HTTP_POST,otaHandler}};

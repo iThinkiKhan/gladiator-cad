@@ -24,3 +24,20 @@ Recorded values are retained as a partial draft on the phone, not gated behind
 motion-session checks. Full measured calibration is applied to S3 separately.
 Repeated start/save acknowledgment checkboxes are removed; deliberate enable,
 S3 commissioning checks and calibrated motion limits remain.
+
+## Robot memory and pulse testing — gateway 2.2.4
+
+Individual centers/endpoints and edited limits now commit to C6 NVS through
+GET/POST /api/mast/setup, with revision checks, partial-field merge and flash
+readback. Other devices load the robot record on Connect. Complete applied aiming
+calibration remains persisted/enforced by S3 and its current limits are displayed.
+Use Save current entries to migrate an earlier phone-only draft.
+
+Testing now provides 5–100 µs steps, direct target entry, a slider and 500 µs
+windows that can be stopped/repositioned around the current S3 command. S3 ramps
+subsequent moves at 100 µs/s. No automatic enablement or motion on reconnect.
+
+Tilt is confirmed on GPIO13 with regulated 5 V/common ground. No GPIO/PWM resource
+conflict was found in the deployed S3 source. Physical pegging remains unresolved;
+target and commanded pulse are shown independently to support waveform/wiring/servo
+diagnosis. No live movement was commanded by the agent.

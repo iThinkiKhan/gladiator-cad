@@ -64,6 +64,13 @@ class Tests(unittest.TestCase):
         body={"action":"test","pin":13,"firstUs":1400,"minUs":1350,"maxUs":1450,"frequencyHz":50}
         self.assertEqual(self.request("/robot/api/mast/config",body)[0],202)
         self.assertEqual(Fake.calls[-1],("POST","/api/mast/config",body))
+    def test_robot_setup_forward(self):
+        body={"revision":3,"fields":{"panNeutral":"1490","tiltPin":"13","panMin":"-5"}}
+        self.assertEqual(self.request("/robot/api/mast/setup",body)[0],202)
+        self.assertEqual(Fake.calls[-1],("POST","/api/mast/setup",body))
+        self.assertEqual(self.request("/robot/api/mast/setup")[0],200)
+        with self.assertRaises(ValueError):
+            bench.validate_body("/api/mast/setup",{"revision":3,"fields":{"junk":"x"*2048}})
     def test_cross_origin(self):
         self.assertEqual(self.request("/robot/api/mast",{"operation":7},origin="http://evil.example")[0],403)
         self.assertFalse(Fake.calls)

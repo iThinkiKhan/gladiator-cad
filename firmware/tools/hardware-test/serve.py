@@ -6,8 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 PRIVATE = tuple(ipaddress.ip_network(n) for n in ("10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"))
-GETS = {"/api/status", "/api/field", "/api/mast", "/api/visual", "/api/camera", "/api/robot"}
-POSTS = {"/api/mast", "/api/mast/config", "/api/visual", "/api/camera", "/api/control"}
+GETS = {"/api/status", "/api/field", "/api/mast", "/api/mast/setup", "/api/visual", "/api/camera", "/api/robot"}
+POSTS = {"/api/mast", "/api/mast/setup", "/api/mast/config", "/api/visual", "/api/camera", "/api/control"}
 ASSETS = {"/": "index.html", "/index.html": "index.html", "/app.js": "app.js", "/styles.css": "styles.css"}
 def validate_target(value):
     parsed = urllib.parse.urlsplit(value if "://" in value else "http://" + value)
@@ -27,7 +27,7 @@ def validate_body(path, body):
         raise ValueError("This tester can only DISARM tracks; driving uses the field page")
     if path == "/api/mast/config" and body.get("action") not in ("test", "jog-test", "calibrate", "stop"):
         raise ValueError("Unsupported commissioning action")
-    maximum = 768 if path == "/api/mast/config" else 384 if path == "/api/camera" else 512
+    maximum = 2048 if path == "/api/mast/setup" else 768 if path == "/api/mast/config" else 384 if path == "/api/camera" else 512
     data = json.dumps(body, separators=(",", ":"), allow_nan=False).encode()
     if len(data) > maximum: raise ValueError(f"Request exceeds the firmware's {maximum}-byte limit")
     return data
