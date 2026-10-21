@@ -1,0 +1,355 @@
+{
+ "status": "v3 DRAFT - not printed, not fitted",
+ "parameters": {
+  "z0": 54.5,
+  "z1": 58.5,
+  "slot_w": 6.0,
+  "mast_x": 39.5,
+  "peg_rows": [
+   [
+    23.85,
+    12.5,
+    67.0,
+    12.6,
+    12.6
+   ],
+   [
+    68.35,
+    11.75,
+    67.75,
+    12.6,
+    12.6
+   ],
+   [
+    112.85,
+    11.0,
+    68.5,
+    12.6,
+    12.6
+   ]
+  ],
+  "retention_y": 83.5,
+  "TIES": {
+   "L": [
+    11.8,
+    83.5,
+    6.8,
+    5.4
+   ],
+   "R": [
+    68.0,
+    83.5,
+    6.8,
+    5.4
+   ]
+  },
+  "retention_x": [
+   11.8,
+   68.0
+  ],
+  "retention_slot": [
+   6.8,
+   5.4
+  ],
+  "wire_holes": [
+   [
+    23.0,
+    44.0
+   ],
+   [
+    56.0,
+    44.0
+   ]
+  ],
+  "wire_d": 10.0,
+  "chamfer": 0.8,
+  "widen": 0.0,
+  "old_rail_holes": [
+   [
+    12,
+    16
+   ],
+   [
+    12,
+    68
+   ],
+   [
+    12,
+    120
+   ],
+   [
+    67,
+    16
+   ],
+   [
+    67,
+    68
+   ],
+   [
+    67,
+    120
+   ]
+  ]
+ },
+ "valid": true,
+ "solids": 1,
+ "volume_mm3": 46907.8,
+ "old_deck_volume_mm3": 49509.2,
+ "bbox": [
+  -3.0,
+  82.0,
+  0.0,
+  140.0,
+  54.5,
+  68.5
+ ],
+ "probes": {
+  "slot L Y23.85 open": {
+   "point": [
+    12.5,
+    23.85,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "slot L Y68.35 open": {
+   "point": [
+    11.75,
+    68.35,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "slot L Y112.85 open": {
+   "point": [
+    11.0,
+    112.85,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "slot R Y23.85 open": {
+   "point": [
+    67.0,
+    23.85,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "slot R Y68.35 open": {
+   "point": [
+    67.75,
+    68.35,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "slot R Y112.85 open": {
+   "point": [
+    68.5,
+    112.85,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "tie-down L open (X)": {
+   "point": [
+    10.0,
+    83.5,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "tie-down L open (Y end)": {
+   "point": [
+    11.25,
+    86.0,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "tie-down R open (X end)": {
+   "point": [
+    65.0,
+    83.5,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "tie-down R open (X far end)": {
+   "point": [
+    70.5,
+    83.5,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "plate beside tie-down L solid": {
+   "point": [
+    11.25,
+    79.5,
+    56.5
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "plate beside tie-down R solid": {
+   "point": [
+    67.75,
+    79.5,
+    56.5
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "wire hole L open": {
+   "point": [
+    23,
+    44,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "wire hole R open": {
+   "point": [
+    56,
+    44,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "old rail hole (12,16) filled": {
+   "point": [
+    12,
+    16,
+    56.5
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "old rail hole (67,120) filled": {
+   "point": [
+    67,
+    120,
+    56.5
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "plate beside peg slot solid": {
+   "point": [
+    12.0,
+    78,
+    56.5
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "underside chamfer opens the slot": {
+   "point": [
+    15.9,
+    23.85,
+    54.7
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "mast bore open": {
+   "point": [
+    39.5,
+    119,
+    56.5
+   ],
+   "result": "empty",
+   "ok": true
+  },
+  "driver boss (14.5,95) solid ring": {
+   "point": [
+    17.8,
+    95,
+    61.0
+   ],
+   "result": "solid",
+   "ok": true
+  },
+  "driver boss insert pocket open": {
+   "point": [
+    14.5,
+    95,
+    62.0
+   ],
+   "result": "empty",
+   "ok": true
+  }
+ },
+ "tie_down_checks": {
+  "widening_vs_references_mm3": "none",
+  "original_edge_is_plain_full_thickness (560 = yes)": null,
+  "left insert": {
+   "screw_x": 11.33,
+   "screw_y": 83.5,
+   "shank_vs_deck_mm3": 0.0,
+   "fender_washer_9mm_bearing_fraction": 0.42,
+   "first_thing_above_in_the_screwdriver_column": [
+    "Head_SG90_Pan_Reference",
+    129.2
+   ],
+   "clear_height_above_deck_mm": 70.7,
+   "slot_margin_mm": {
+    "x": 1.43,
+    "y": 1.2
+   }
+  },
+  "right insert": {
+   "screw_x": 67.67,
+   "screw_y": 83.5,
+   "shank_vs_deck_mm3": 0.0,
+   "fender_washer_9mm_bearing_fraction": 0.42,
+   "first_thing_above_in_the_screwdriver_column": null,
+   "clear_height_above_deck_mm": null,
+   "slot_margin_mm": {
+    "x": 1.57,
+    "y": 1.2
+   }
+  },
+  "mast_bore_radius_mm (tube 10.0)": 10.2
+ },
+ "fit_with_rails": {
+  "Arch_Rail_Left_v4": {
+   "overlap_mm3": 0.0,
+   "gap_mm": 0.0
+  },
+  "Arch_Rail_Right_v4": {
+   "overlap_mm3": 0.0,
+   "gap_mm": 0.0
+  }
+ },
+ "peg_clearance_mm": {
+  "x_each_side": 1.5,
+  "locating_slot_y_each_end": 0.4,
+  "slotted_y_each_end": 2.25
+ },
+ "stl": {
+  "file": "Gladiator_UpperDeck_v4.stl",
+  "is_solid": true,
+  "non_manifold": false,
+  "size_mm": [
+   85.0,
+   140.0,
+   14.0
+  ],
+  "orientation": "as modelled: top up, underside (Z54.5) flat on the glass bed"
+ }
+}

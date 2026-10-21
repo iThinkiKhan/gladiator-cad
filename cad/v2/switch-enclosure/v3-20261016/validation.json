@@ -1,0 +1,94 @@
+{
+ "status": "v3 DRAFT - not printed",
+ "parameters": {
+  "W": 14.5,
+  "floor": 2.7,
+  "top": 1.7,
+  "L": 18.0,
+  "body": [
+   6.8,
+   12.7,
+   6.37
+  ],
+  "clear": 0.4,
+  "front_t": 2.0,
+  "shroud_w": 9.0,
+  "screw_y": [
+   12.0
+  ],
+  "screw_slot": [
+   5.0,
+   3.6
+  ],
+  "knob_slot": [
+   4.6,
+   8.0
+  ],
+  "chamfer": 0.7,
+  "m2_pilot": 2.2
+ },
+ "height_mm": 17.9,
+ "knob_centre_above_floor_underside_mm": 9.45,
+ "parts": {
+  "Switch_Holder_v3": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 2931.0,
+   "size_mm": [
+    14.5,
+    20.0,
+    17.9
+   ]
+  }
+ },
+ "fit": {
+  "body_vs_holder": 0.0,
+  "knob_vs_holder": 0.0,
+  "pins_vs_holder": 0.0,
+  "leads_vs_holder": 0.0,
+  "slide_in_from_rear_path_vs_holder": 0.0,
+  "knob_tip_beyond_front_wall_mm": 2.85,
+  "m2_pilots_reach_body_clearance_mm": 0.4,
+  "screw_slot_x_play_each_side_mm": 1.0
+ },
+ "mounting": {
+  "screws": "ONE M3 x 25 (head + washer inside the shell/above the shelf) down through the 5.0 x 3.6 slot into the first shelf insert",
+  "length_check": "top 1.7 + cavity 13.5 + floor 2.7 + insert 7.5 = 25.4: use M3 x 25 and a 7 mm washer; the screw passes beside the leads in the 9 mm shroud (3 mm each side)"
+ },
+ "placements": {
+  "hood_shelf": {
+   "x": 71.0,
+   "y_front": -29.4,
+   "z_floor": 30.5
+  },
+  "rail_shelf_real": {
+   "x": 72.62,
+   "y_front": -22.0,
+   "z_floor": 12.0
+  }
+ },
+ "placement_checks": {
+  "hood_shelf_overlaps": "none",
+  "hood_shelf_nearest_INA_mm": 12.55,
+  "rail_shelf_real_overlaps": "none",
+  "rail_shelf_real_nearest_INA_mm": 9.8,
+  "rail_shelf_slot_x_range_vs_shelf_insert": {
+   "insert_x": 72.62,
+   "slot_x_range": [
+    70.12,
+    75.12
+   ]
+  },
+  "rail_shelf_holder_gap_to_track_mm": 5.0
+ },
+ "stl": {
+  "is_solid": true,
+  "non_manifold": false,
+  "size_mm": [
+   14.5,
+   20.0,
+   17.9
+  ],
+  "print": "floor down as exported, open rear toward +Y; no supports (the pocket roof is a 7.1 bridge, the shroud roof a 9.0 bridge)"
+ }
+}

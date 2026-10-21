@@ -1,0 +1,44 @@
+{
+ "hardpoints": [
+  {
+   "y": 22.0,
+   "z": 40.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  },
+  {
+   "y": 35.5,
+   "z": 46.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  },
+  {
+   "y": 59.0,
+   "z": 45.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  }
+ ],
+ "shelf": {
+  "x": [
+   61.0,
+   77.0
+  ],
+  "y": [
+   -22.0,
+   6.5
+  ],
+  "z": [
+   2.0,
+   12.0
+  ],
+  "insert_y": [
+   -10.0,
+   -1.0
+  ],
+  "insert_x": 71.0
+ }
+}

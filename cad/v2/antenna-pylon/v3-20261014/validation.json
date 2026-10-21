@@ -1,0 +1,53 @@
+{
+  "status": "v3 REVIEW PART - not printed, not fitted",
+  "parameters": {
+    "x0": 54.0,
+    "x1": 82.0,
+    "y0": 2.0,
+    "flange_y1": 13.0,
+    "z0": 64.5,
+    "flange_top": 68.5,
+    "z_top": 92.5,
+    "plate_t": 2.0,
+    "hole_x": 68.0,
+    "hole_z": 84.5,
+    "hole_d": 7.0,
+    "clear_r": 11.0,
+    "rib_t": 2.8,
+    "rib_y1": 10.0,
+    "spoke_t": 3.0,
+    "bolt_d": 3.6,
+    "bolts": [
+      [
+        60.0,
+        10.0
+      ],
+      [
+        76.0,
+        10.0
+      ]
+    ]
+  },
+  "valid": true,
+  "solids": 1,
+  "volume_mm3": 3373.4,
+  "old_pylon_volume_mm3": 4333,
+  "collisions_with_chassis_references": [],
+  "nearest_references_mm": [
+    [
+      0.0,
+      "Ref_UpperDeck"
+    ]
+  ],
+  "material_inside_clear_zone_at_Y6": [],
+  "stl": {
+    "file": "Gladiator_AntennaPylon_v3.stl",
+    "is_solid": true,
+    "non_manifold": false,
+    "size_mm": [
+      28.0,
+      28.0,
+      11.0
+    ]
+  }
+}

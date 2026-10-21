@@ -1,0 +1,113 @@
+{
+ "status": "v2 DRAFT - not printed",
+ "parameters": {
+  "W": 14.5,
+  "floor": 3.0,
+  "lid": 1.9,
+  "L": 24.0,
+  "body": [
+   6.8,
+   12.7,
+   6.37
+  ],
+  "clear": 0.3,
+  "rib": 0.65,
+  "front_t": 1.2,
+  "shroud_w": 9.0,
+  "screw_y": [
+   12.0,
+   21.0
+  ],
+  "screw_d": 3.6,
+  "cb_d": 6.4,
+  "cb_depth": 1.0,
+  "knob_slot": [
+   4.6,
+   8.0
+  ],
+  "chamfer": 0.7
+ },
+ "height_mm": 17.9,
+ "knob_centre_above_floor_underside_mm": 9.5,
+ "parts": {
+  "Switch_Housing_v2": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 3141.6,
+   "size_mm": [
+    14.5,
+    25.2,
+    16.0
+   ]
+  },
+  "Switch_Lid_v2": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 611.9,
+   "size_mm": [
+    14.5,
+    25.2,
+    1.9
+   ]
+  }
+ },
+ "fit": {
+  "body_vs_housing": 0.0,
+  "body_vs_lid": 0.0,
+  "knob_vs_housing": 0.0,
+  "knob_vs_lid": 0.0,
+  "pins_vs_housing": 0.0,
+  "pins_vs_lid": 0.0,
+  "leads_vs_housing": 0.0,
+  "leads_vs_lid": 0.0,
+  "body_rear_gap_to_ribs_mm": 0.15,
+  "knob_tip_beyond_front_wall_mm": 3.65,
+  "drop_in_path_clear": true,
+  "note": "the body is dropped straight down between the front wall and the two side ribs; the lid then closes the top"
+ },
+ "mounting": {
+  "screws": "two M3 x 25 through the lid (counterbored) and the floor into two heat-set inserts 9 mm apart in the shelf",
+  "screw_y_prime": [
+   12.0,
+   21.0
+  ]
+ },
+ "placements": {
+  "rail_shelf": {
+   "x": 71.0,
+   "y_front": -22.0,
+   "z_floor": 12.0
+  },
+  "hood_shelf": {
+   "x": 71.0,
+   "y_front": -29.4,
+   "z_floor": 30.5
+  }
+ },
+ "placement_checks": {
+  "rail_shelf_nearest_INA_mm": 4.8,
+  "rail_shelf_overlaps": "none",
+  "hood_shelf_nearest_INA_mm": 16.88,
+  "hood_shelf_overlaps": "none"
+ },
+ "stl": {
+  "Switch_Housing_v2": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    14.5,
+    25.2,
+    16.0
+   ]
+  },
+  "Switch_Lid_v2": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    14.5,
+    25.2,
+    1.9
+   ]
+  }
+ }
+}

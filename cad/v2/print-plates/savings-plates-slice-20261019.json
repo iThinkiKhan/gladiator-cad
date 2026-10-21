@@ -1,0 +1,38 @@
+{
+ "Gladiator_v2_ORCA-D2_Upper_Deck_v4_light.3mf": {
+  "g": 34.83,
+  "time": "2h 22m 57s",
+  "x": [
+   64.133,
+   155.867
+  ],
+  "y": [
+   36.633,
+   183.367
+  ]
+ },
+ "Gladiator_v2_ORCA-H_Rear_Hood_0.28_tree.3mf": {
+  "g": 141.93,
+  "time": "8h 7m 30s",
+  "x": [
+   46.865,
+   173.135
+  ],
+  "y": [
+   35.061,
+   173.29
+  ]
+ },
+ "Gladiator_v2_ORCA-P_Front_Panels_0.28_tree.3mf": {
+  "g": 121.38,
+  "time": "7h 51m 12s",
+  "x": [
+   21.657,
+   199.528
+  ],
+  "y": [
+   64.086,
+   151.3
+  ]
+ }
+}

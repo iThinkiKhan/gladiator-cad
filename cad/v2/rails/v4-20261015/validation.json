@@ -1,0 +1,243 @@
+{
+ "status": "v4 ARCH DRAFT - not printed, not fitted",
+ "parameters": {
+  "band_x": [
+   9.5,
+   18.0
+  ],
+  "t_leg": 7.0,
+  "t_apex": 8.5,
+  "yc": 68.35,
+  "zc": 24.0,
+  "a_c": 51.15,
+  "b_c": 21.5,
+  "z_foot": 6.0,
+  "foot_x": [
+   6.0,
+   18.0
+  ],
+  "foot_rear_y": [
+   2.0,
+   20.8
+  ],
+  "foot_front_y": [
+   117.0,
+   135.0
+  ],
+  "foot_z": [
+   2.0,
+   6.0
+  ],
+  "foot_screws": [
+   [
+    10.5,
+    10.0
+   ],
+   [
+    13.5,
+    127.0
+   ]
+  ],
+  "foot_hole_d": 3.6,
+  "pegs": true,
+  "peg_x": 14.0,
+  "peg_w": 3.0,
+  "peg_l": 8.1,
+  "peg_h": 3.7,
+  "sockets": [
+   [
+    23.85,
+    12.6
+   ],
+   [
+    68.35,
+    8.6
+   ],
+   [
+    112.85,
+    12.6
+   ]
+  ],
+  "pad_x": [
+   9.5,
+   18.0
+  ],
+  "pad_extra": 4.4,
+  "retention": [
+   [
+    14.0,
+    83.5
+   ]
+  ],
+  "insert_d": 4.6,
+  "insert_depth": 7.5,
+  "shelf": {
+   "x": [
+    61.0,
+    77.0
+   ],
+   "y": [
+    -22.0,
+    6.5
+   ],
+   "z": [
+    2.0,
+    12.0
+   ],
+   "insert_y": [
+    -10.0,
+    -1.0
+   ],
+   "insert_x": 71.0
+  }
+ },
+ "parts": {
+  "Arch_Rail_Left_v4": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 19374.4,
+   "bbox": [
+    6.0,
+    18.0,
+    2.0,
+    135.0,
+    2.0,
+    58.2
+   ]
+  },
+  "Arch_Rail_Right_v4": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 23668.1,
+   "bbox": [
+    61.0,
+    77.0,
+    -22.0,
+    135.0,
+    2.0,
+    58.2
+   ]
+  }
+ },
+ "collisions": [],
+ "nearest": {
+  "Arch_Rail_Left_v4": [
+   [
+    0.0,
+    "Ref_ChassisDeck"
+   ],
+   [
+    0.2,
+    "Ref_BatteryBox"
+   ],
+   [
+    0.3,
+    "Ref_BatteryCells"
+   ],
+   [
+    0.3,
+    "Ref_DrvV5_Base_L"
+   ],
+   [
+    1.0,
+    "Ref_MastBase"
+   ],
+   [
+    6.3,
+    "Ref_S3Board"
+   ]
+  ],
+  "Arch_Rail_Right_v4": [
+   [
+    0.0,
+    "Ref_ChassisDeck"
+   ],
+   [
+    0.2,
+    "Ref_BatteryBox"
+   ],
+   [
+    0.3,
+    "Ref_BatteryCells"
+   ],
+   [
+    0.3,
+    "Ref_Breadboard"
+   ],
+   [
+    0.3,
+    "Ref_DrvV5_Base_R"
+   ],
+   [
+    1.0,
+    "Ref_MastBase"
+   ]
+  ]
+ },
+ "hardpoints": [
+  {
+   "y": 22.0,
+   "z": 40.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  },
+  {
+   "y": 35.5,
+   "z": 46.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  },
+  {
+   "y": 59.0,
+   "z": 45.0,
+   "owner": "hood",
+   "face_x_left": 9.5,
+   "face_x_right": 69.5
+  }
+ ],
+ "old_rail_volume_mm3": 28563.7,
+ "arch": {
+  "normal_thickness_mm": {
+   "24": 7.09,
+   "30": 7.41,
+   "36": 7.72,
+   "40": 7.9,
+   "48": 8.19,
+   "56": 8.39,
+   "68": 8.5,
+   "76": 8.46,
+   "90": 8.15,
+   "100": 7.75
+  },
+  "insert_floor_mm": 1.0,
+  "apex_extrados_z": 49.75,
+  "leg_bands_y": [
+   13.7,
+   20.7,
+   116.0,
+   123.0
+  ]
+ },
+ "stl": {
+  "Arch_Rail_Left_v4": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    56.2,
+    133.0,
+    12.0
+   ]
+  },
+  "Arch_Rail_Right_v4": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    56.2,
+    157.0,
+    16.0
+   ]
+  }
+ }
+}

@@ -1,0 +1,488 @@
+{
+ "plates": {
+  "R": {
+   "file": "Gladiator_v2_ORCA-R_Arch_Rails_Left-Right.3mf",
+   "extent_mm": [
+    124.4,
+    157.0
+   ],
+   "parts": [
+    {
+     "part": "Arch_Rail_Left_v4",
+     "at": [
+      75.9,
+      110.0
+     ],
+     "size": [
+      56.2,
+      133.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Support 1 (32 mm2, roof z 2.5)",
+      "Support 2 (32 mm2, roof z 2.5)",
+      "Support 3 (32 mm2, roof z 2.5)",
+      "Support 4 (27 mm2, roof z 5.6)",
+      "Support 5 (11 mm2, roof z 8.8)",
+      "Support 6 (11 mm2, roof z 5.8)"
+     ],
+     "notes": [
+      "support 1: 32 mm2 at x 52..56 y 62..70, roof z 2.5",
+      "support 2: 32 mm2 at x 52..56 y 18..26, roof z 2.5",
+      "support 3: 32 mm2 at x 52..56 y 107..115, roof z 2.5",
+      "support 4: 27 mm2 at x 45..52 y 80..83, roof z 5.6",
+      "support 5: 11 mm2 at x 0..4 y 7..9, roof z 8.8",
+      "support 6: 11 mm2 at x 0..4 y 124..126, roof z 5.8"
+     ]
+    },
+    {
+     "part": "Arch_Rail_Right_v4",
+     "at": [
+      144.1,
+      110.0
+     ],
+     "size": [
+      56.2,
+      157.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Support 1 (32 mm2, roof z 2.5)",
+      "Support 2 (32 mm2, roof z 2.5)",
+      "Support 3 (32 mm2, roof z 2.5)",
+      "Support 4 (27 mm2, roof z 5.6)",
+      "Support 5 (26 mm2, roof z 11.7)",
+      "Support 6 (26 mm2, roof z 11.7)",
+      "Support 7 (20 mm2, roof z 10.3)",
+      "Support 8 (11 mm2, roof z 5.8)",
+      "Support 9 (11 mm2, roof z 8.8)"
+     ],
+     "notes": [
+      "support 1: 32 mm2 at x 0..4 y 42..50, roof z 2.5",
+      "support 2: 32 mm2 at x 0..4 y 86..94, roof z 2.5",
+      "support 3: 32 mm2 at x 0..4 y 131..139, roof z 2.5",
+      "support 4: 27 mm2 at x 4..11 y 104..107, roof z 5.6",
+      "support 5: 26 mm2 at x 46..54 y 19..23, roof z 11.7",
+      "support 6: 26 mm2 at x 46..54 y 10..14, roof z 11.7",
+      "support 7: 20 mm2 at x 46..52 y 28..35, roof z 10.3",
+      "support 8: 11 mm2 at x 52..56 y 148..150, roof z 5.8",
+      "support 9: 11 mm2 at x 52..56 y 31..33, roof z 8.8"
+     ]
+    }
+   ],
+   "sha256": "97996c3032b46cfb45644b280612eec9a317a28df23d2286b6962992350ab4a5"
+  },
+  "D": {
+   "file": "Gladiator_v2_ORCA-D_Upper_Deck_v4.3mf",
+   "extent_mm": [
+    85.0,
+    140.0
+   ],
+   "parts": [
+    {
+     "part": "Upper_Deck_v4",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      85.0,
+      140.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports: the bed-side hole chamfers are 45 degrees, everything else rises from the glass"
+     ]
+    }
+   ],
+   "sha256": "d8cd68eec060c1f054890a1719288d7911f25b7186328bf74995b785cccf4c23"
+  },
+  "SW": {
+   "file": "Gladiator_v2_ORCA-SW_Switch_Holder_v3.3mf",
+   "extent_mm": [
+    14.5,
+    20.0
+   ],
+   "parts": [
+    {
+     "part": "Switch_Holder_v3",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      14.5,
+      20.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): [(134.7, 16.2), (19.8, 0.0), (9.2, 13.45), (6.0, 10.22), (5.8, 10.25)]"
+     ]
+    }
+   ],
+   "sha256": "75026ea10ed520bdf9d666a0a9f862c9bea9edec066670211d9f103cc572b8a6"
+  },
+  "IM": {
+   "file": "Gladiator_v2_ORCA-IM_INA226_Mount_v3_adapter.3mf",
+   "extent_mm": [
+    37.0,
+    13.3
+   ],
+   "parts": [
+    {
+     "part": "INA_Mount_v3",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      37.0,
+      13.3
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): [(28.2, 0.31), (28.2, 18.31), (11.3, 1.81), (11.3, 17.81), (4.6, 7.36), (4.6, 25.36)]"
+     ]
+    }
+   ],
+   "sha256": "ff387434dcadc0c007aba7c6426820114055f1b91e9445da280c16040b49fa1c"
+  },
+  "SPK": {
+   "file": "Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1.3mf",
+   "extent_mm": [
+    22.5,
+    47.0
+   ],
+   "parts": [
+    {
+     "part": "Speaker_Rail_Bracket_v1",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      22.5,
+      47.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): []"
+     ]
+    }
+   ],
+   "sha256": "864ef8d304dacedd0965b3b05ab65f1bbc302f5aaf679f9345de9c0452e4e1ec"
+  },
+  "ALL": {
+   "file": "Gladiator_v2_ORCA-ALL_Rails-and-Deck_one-plate.3mf",
+   "extent_mm": [
+    207.4,
+    157.0
+   ],
+   "parts": [
+    {
+     "part": "Arch_Rail_Left_v4",
+     "at": [
+      34.4,
+      110.0
+     ],
+     "size": [
+      56.2,
+      133.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Support 1 (32 mm2, roof z 2.5)",
+      "Support 2 (32 mm2, roof z 2.5)",
+      "Support 3 (32 mm2, roof z 2.5)",
+      "Support 4 (27 mm2, roof z 5.6)",
+      "Support 5 (11 mm2, roof z 8.8)",
+      "Support 6 (11 mm2, roof z 5.8)"
+     ],
+     "notes": [
+      "support 1: 32 mm2 at x 52..56 y 62..70, roof z 2.5",
+      "support 2: 32 mm2 at x 52..56 y 18..26, roof z 2.5",
+      "support 3: 32 mm2 at x 52..56 y 107..115, roof z 2.5",
+      "support 4: 27 mm2 at x 45..52 y 80..83, roof z 5.6",
+      "support 5: 11 mm2 at x 0..4 y 7..9, roof z 8.8",
+      "support 6: 11 mm2 at x 0..4 y 124..126, roof z 5.8"
+     ]
+    },
+    {
+     "part": "Arch_Rail_Right_v4",
+     "at": [
+      95.6,
+      110.0
+     ],
+     "size": [
+      56.2,
+      157.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [
+      "Support 1 (32 mm2, roof z 2.5)",
+      "Support 2 (32 mm2, roof z 2.5)",
+      "Support 3 (32 mm2, roof z 2.5)",
+      "Support 4 (27 mm2, roof z 5.6)",
+      "Support 5 (26 mm2, roof z 11.7)",
+      "Support 6 (26 mm2, roof z 11.7)",
+      "Support 7 (20 mm2, roof z 10.3)",
+      "Support 8 (11 mm2, roof z 5.8)",
+      "Support 9 (11 mm2, roof z 8.8)"
+     ],
+     "notes": [
+      "support 1: 32 mm2 at x 0..4 y 42..50, roof z 2.5",
+      "support 2: 32 mm2 at x 0..4 y 86..94, roof z 2.5",
+      "support 3: 32 mm2 at x 0..4 y 131..139, roof z 2.5",
+      "support 4: 27 mm2 at x 4..11 y 104..107, roof z 5.6",
+      "support 5: 26 mm2 at x 46..54 y 19..23, roof z 11.7",
+      "support 6: 26 mm2 at x 46..54 y 10..14, roof z 11.7",
+      "support 7: 20 mm2 at x 46..52 y 28..35, roof z 10.3",
+      "support 8: 11 mm2 at x 52..56 y 148..150, roof z 5.8",
+      "support 9: 11 mm2 at x 52..56 y 31..33, roof z 8.8"
+     ]
+    },
+    {
+     "part": "Upper_Deck_v4",
+     "at": [
+      171.2,
+      110.0
+     ],
+     "size": [
+      85.0,
+      140.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports: the bed-side hole chamfers are 45 degrees, everything else rises from the glass"
+     ]
+    }
+   ],
+   "sha256": "c09ab3c3db1ebb44dace8627b07d1c373653544f9e44265a9d12f07e319b0b19"
+  }
+ },
+ "settings_overridden_vs_template": {
+  "gcode_flavor": {
+   "template": "marlin2",
+   "now": "marlin"
+  },
+  "machine_max_acceleration_extruding": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_x": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_y": {
+   "template": [
+    "500"
+   ],
+   "now": [
+    "10000"
+   ]
+  },
+  "machine_max_acceleration_z": {
+   "template": [
+    "100"
+   ],
+   "now": [
+    "500"
+   ]
+  },
+  "machine_start_gcode": {
+   "template": "G90 ; absolute XYZ coordinates\r\nM83 ; relative extrusion\r\n\r\nM204 S[machine_max_acceleration_extruding] T[machine_max_acceleration_retracting]\r\n\r\nM104 S150 ; warm nozzle without excessive ooze\r\nM140 S[first_layer_bed_temperature] ; start heating bed\r\nM190 S[first_layer_bed_temperature] ; wait for bed to reach temperature\r\n\r\nG28 ; home all axes\r\nM420 S1 Z10 ; enable saved CR Touch mesh\r\n\r\nM104 S[first_layer_temperature] ; set final nozzle temperature\r\nM109 S[first_layer_temperature] ; wait for nozzle\r\n\r\nG92 E0\r\n\r\n; purge lines\r\nG1 Z2.0 F1200\r\nG1 X10 Y20 F3600\r\nG1 Z0.28 F600\r\nG1 Y180 E5.6 F900\r\nG1 X10.5 F1800\r\nG1 Y20 E5.6 F900\r\n\r\nG92 E0",
+   "now": "G90 ; absolute XYZ coordinates\r\nM83 ; relative extrusion\r\n\r\nM204 S[machine_max_acceleration_extruding] T[machine_max_acceleration_retracting]\r\n\r\nM104 S150 ; warm nozzle without excessive ooze\r\nM140 S[first_layer_bed_temperature] ; start heating bed\r\nM190 S[first_layer_bed_temperature] ; wait for bed to reach temperature\r\n\r\nG28 ; home all axes\r\nM420 S1 ; enable saved CR Touch mesh\r\n\r\nM104 S[first_layer_temperature] ; set final nozzle temperature\r\nM109 S[first_layer_temperature] ; wait for nozzle\r\n\r\nG92 E0\r\n\r\n; purge lines - LEFT SIDE OF BED\r\nG1 Z2.0 F1200\r\nG1 X10 Y20 F3600\r\nG1 Z0.28 F600\r\nG1 Y180 E5.6 F900\r\nG1 X10.5 F1800\r\nG1 Y20 E5.6 F900\r\n\r\nG92 E0"
+  },
+  "machine_end_gcode": {
+   "template": "G1 E-1.0 F2100 ; small retract\r\nG92 E0\r\n\r\nG1{if max_layer_z < max_print_height} Z{z_offset+min(max_layer_z+10, max_print_height)}{endif} F1200 ; lift nozzle\r\n\r\nM104 S0 ; hotend off\r\nM140 S0 ; bed off\r\nM107 ; fan off\r\n\r\nG1 X0 Y105 F3000 ; park head\r\nM84 ; disable motors",
+   "now": "G1 E-1.0 F2100 ; retract\nG92 E0.0\nG1{if max_layer_z < max_print_height} Z{z_offset+min(max_layer_z+30, max_print_height)}{endif} E-34.0 F720 ; move print head up & retract filament\nG4 ; wait\nM104 S0 ; turn off temperature\nM140 S0 ; turn off heatbed\nM107 ; turn off fan\nG1 X0 Y105 F3000 ; park print head\nM84 ; disable motors"
+  },
+  "layer_change_gcode": {
+   "template": "",
+   "now": ";AFTER_LAYER_CHANGE\n;[layer_z]"
+  },
+  "machine_pause_gcode": {
+   "template": "",
+   "now": "M601"
+  },
+  "printable_area": {
+   "template": [
+    "0x0",
+    "220x0",
+    "220x220",
+    "0x220"
+   ],
+   "now": [
+    "0x0",
+    "250x0",
+    "250x250",
+    "0x250"
+   ]
+  },
+  "complete_print_exhaust_fan_speed": {
+   "template": [
+    "80"
+   ],
+   "now": [
+    "70"
+   ]
+  },
+  "during_print_exhaust_fan_speed": {
+   "template": [
+    "60"
+   ],
+   "now": [
+    "70"
+   ]
+  },
+  "eng_plate_temp": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "0"
+   ]
+  },
+  "eng_plate_temp_initial_layer": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "0"
+   ]
+  },
+  "filament_flow_ratio": {
+   "template": [
+    "1"
+   ],
+   "now": [
+    "0.98"
+   ]
+  },
+  "required_nozzle_HRC": {
+   "template": [
+    "0"
+   ],
+   "now": [
+    "3"
+   ]
+  },
+  "supertack_plate_temp": {
+   "template": [
+    "35"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "supertack_plate_temp_initial_layer": {
+   "template": [
+    "35"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "temperature_vitrification": {
+   "template": [
+    "60"
+   ],
+   "now": [
+    "45"
+   ]
+  },
+  "textured_plate_temp": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "55"
+   ]
+  },
+  "textured_plate_temp_initial_layer": {
+   "template": [
+    "45"
+   ],
+   "now": [
+    "55"
+   ]
+  },
+  "filament_start_gcode": {
+   "template": [
+    "; filament start gcode\n"
+   ],
+   "now": [
+    "; Filament gcode\n"
+   ]
+  },
+  "filament_end_gcode": {
+   "template": [
+    "; filament end gcode \n"
+   ],
+   "now": [
+    "; filament end gcode\n"
+   ]
+  },
+  "elefant_foot_compensation": {
+   "template": "0.3",
+   "now": "0"
+  },
+  "sparse_infill_density": {
+   "template": "20%",
+   "now": "30%"
+  },
+  "sparse_infill_pattern": {
+   "template": "gyroid",
+   "now": "crosshatch"
+  },
+  "line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "outer_wall_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "top_surface_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "initial_layer_line_width": {
+   "template": "0.45",
+   "now": "0.5"
+  },
+  "internal_solid_infill_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "support_line_width": {
+   "template": "0.42",
+   "now": "0.4"
+  },
+  "wall_loops": {
+   "template": "3",
+   "now": "4"
+  },
+  "layer_height": {
+   "template": "0.16",
+   "now": "0.2"
+  },
+  "top_shell_layers": {
+   "template": "5",
+   "now": "4"
+  }
+ }
+}

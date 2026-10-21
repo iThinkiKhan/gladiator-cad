@@ -1,0 +1,71 @@
+{
+  "status": "CONCEPT ONLY - NOT PRINT RELEASE",
+  "source": "current native master plus tray v5, INA cassette v2, switch v1b",
+  "assumptions": {
+    "roof_z": 108,
+    "wall_nominal": 2.4,
+    "lower_edge_z": 14,
+    "heatsink_opening_offset": 4,
+    "seam": 0.6
+  },
+  "panels": [
+    {
+      "name": "Rear_Hood",
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 97069.48939820689
+    },
+    {
+      "name": "Front_Left",
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 31287.12450193164
+    },
+    {
+      "name": "Front_Right",
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 30238.324501845393
+    }
+  ],
+  "collisions": [],
+  "native_reopen": [
+    {
+      "name": "Rear_Hood",
+      "valid": true,
+      "solids": 1
+    },
+    {
+      "name": "Front_Left",
+      "valid": true,
+      "solids": 1
+    },
+    {
+      "name": "Front_Right",
+      "valid": true,
+      "solids": 1
+    }
+  ],
+  "step_reopen": {
+    "valid": true,
+    "solids": 3,
+    "volume_difference_mm3": 1.7428130377084017e-05
+  },
+  "source_sha256": {
+    "cad/master/Gladiator_Master.FCStd": "7e093a02bd192b92f0da02ca7addcf4192adb326b94134510cc4ee3244ee0cec",
+    "cad/head/master/Gladiator_Head_Master.FCStd": "6443d8ffdf1df4fad25f8451f90801bebe3b738a294a9461a2743abfec106f65",
+    "cad/power-board/v5-tray/PowerBoardTray_v5.FCStd": "8a730c7b30d6d7fcb288678029031a8fddbb5bf65a54454e914b5251db7089d4",
+    "cad/power-board/ina-cassette-v2/INA226_Cassette_v2.FCStd": "b28fffb50c5afd077248e22b2c00257544255d5596e89408657342f230776e3b",
+    "cad/power-switch/v1b/PowerSwitchHolder_v1b.FCStd": "4795830733a710ef0ac423b7c1e44dea56dd2cf312add838104d29241679983c"
+  },
+  "unchecked": [
+    "wire harness and connector bend space",
+    "panel attachments and tool access",
+    "panel removal sweeps",
+    "track motion and deflection",
+    "head motion sweep",
+    "thermal and airflow performance",
+    "RF and actual antenna pigtail reach",
+    "manufacturing orientation and slicer checks"
+  ]
+}

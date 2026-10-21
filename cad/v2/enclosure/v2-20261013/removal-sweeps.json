@@ -1,0 +1,106 @@
+{
+  "hood_back_front_panels_off": {
+    "free_mm": 150,
+    "blocked_by": null,
+    "tested_to_mm": 150
+  },
+  "hood_back_front_panels_on": {
+    "free_mm": 150,
+    "blocked_by": null,
+    "tested_to_mm": 150
+  },
+  "front_right_45deg_pull": {
+    "free_mm": 120,
+    "blocked_by": null,
+    "tested_to_mm": 120
+  },
+  "front_left_leg1_45deg_pull": {
+    "free_mm": 23,
+    "blocked_by": "Head_Neck_Main"
+  },
+  "front_left_two_leg_path": {
+    "leg1": "pull outboard-and-up at 45 degrees",
+    "leg1_needed_mm": 20,
+    "leg1_available_mm": 23,
+    "slack_mm": 3,
+    "leg2": "then slide outboard at 15 degrees elevation (90 mm tested, free)"
+  },
+  "front_straight_pull_ring_60mm_cap": {
+    "Front_Right": [
+      {
+        "free_mm": 60,
+        "direction": "el45 az0",
+        "blocked_by": null
+      },
+      {
+        "free_mm": 21,
+        "direction": "el45 az15",
+        "blocked_by": "Ref_DrvV5_Fins_R"
+      },
+      {
+        "free_mm": 6,
+        "direction": "el0 az0",
+        "blocked_by": "Ref_DrvV5_Board_R"
+      },
+      {
+        "free_mm": 6,
+        "direction": "el0 az15",
+        "blocked_by": "Ref_DrvV5_Board_R"
+      }
+    ],
+    "Front_Left": [
+      {
+        "free_mm": 21,
+        "direction": "el45 az165",
+        "blocked_by": "Ref_DrvV5_Fins_L"
+      },
+      {
+        "free_mm": 21,
+        "direction": "el45 az180",
+        "blocked_by": "Head_Neck_Main"
+      },
+      {
+        "free_mm": 6,
+        "direction": "el0 az165",
+        "blocked_by": "Ref_DrvV5_Board_L"
+      },
+      {
+        "free_mm": 6,
+        "direction": "el0 az180",
+        "blocked_by": "Ref_DrvV5_Board_L"
+      }
+    ]
+  },
+  "roof_screw_access_10mm_column": [
+    {
+      "screw_xy": [
+        22,
+        72
+      ],
+      "free_height_above_roof_mm": 31.2
+    },
+    {
+      "screw_xy": [
+        33,
+        72
+      ],
+      "free_height_above_roof_mm": 53.0
+    },
+    {
+      "screw_xy": [
+        50,
+        72
+      ],
+      "free_height_above_roof_mm": null
+    },
+    {
+      "screw_xy": [
+        66,
+        72
+      ],
+      "free_height_above_roof_mm": null
+    }
+  ],
+  "runtime_s": 341.8,
+  "limits": "Rigid straight-line sweeps against the modelled references (head in its modelled pose, simplified tracks). No printed tolerance, no wiring, no flex, no rotation. Free = no volume overlap above 0.3 mm3."
+}

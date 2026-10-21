@@ -1,0 +1,40 @@
+{
+  "valid_single": true,
+  "removed_mm3": 81.43,
+  "volume_cm3": 46.83,
+  "skin_under_relief_mm": 0.5,
+  "insert_pocket_unchanged_probe_Z60_r2": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "ring_around_pocket_solid_Z60_r3.5": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "relief_open_Z56": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "skin_solid_Z54.7": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "screw_tip_Z_and_spare_to_floor_mm": {
+    "8": [
+      57.2,
+      2.2
+    ],
+    "10": [
+      55.2,
+      0.2
+    ]
+  }
+}

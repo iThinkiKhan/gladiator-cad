@@ -1,0 +1,116 @@
+{
+ "status": "v1 DRAFT - not printed",
+ "parameters": {
+  "face_x": 9.5,
+  "inserts": [
+   [
+    22.0,
+    40.0
+   ],
+   [
+    35.5,
+    46.0
+   ]
+  ],
+  "plate_t": 3.0,
+  "plate_y": [
+   5.0,
+   52.0
+  ],
+  "plate_z": [
+   30.0,
+   52.5
+  ],
+  "m3_clear": 3.6,
+  "m3_head_gap": 5.2,
+  "spk": {
+   "w": 28.0,
+   "h": 31.0,
+   "d": 15.0,
+   "ear_tip": 44.0,
+   "hole_c": 36.5,
+   "ear_t": 2.8,
+   "ear_mid": 7.5,
+   "ear_w": 10.0
+  },
+  "spk_cy": 28.75,
+  "spk_cz": 37.0,
+  "post_d": 7.0,
+  "pilot_d": 1.6,
+  "pilot_depth": 6.0
+ },
+ "part": {
+  "valid": true,
+  "solids": 1,
+  "volume_mm3": 4125.1,
+  "grams": 5.1
+ },
+ "fit": {
+  "speaker_vs_bracket": 0.0,
+  "heads_vs_speaker": [
+   0.0,
+   0.0
+  ],
+  "heads_vs_bracket": [
+   0.0,
+   0.0
+  ]
+ },
+ "collisions": {
+  "bracket": "clear",
+  "speaker": "clear"
+ },
+ "bracket_on_rail_face_gap_mm": 0.0,
+ "nearest_mm": {
+  "bracket": [
+   [
+    0.0,
+    "rail_left_installed"
+   ],
+   [
+    2.0,
+    "deck_v4"
+   ],
+   [
+    2.0,
+    "deck_v4_x+2"
+   ],
+   [
+    2.0,
+    "deck_v4_x-2"
+   ]
+  ],
+  "speaker": [
+   [
+    0.67,
+    "Ref_BatteryBox"
+   ],
+   [
+    0.67,
+    "Ref_BatteryCells"
+   ],
+   [
+    2.0,
+    "deck_v4"
+   ],
+   [
+    2.0,
+    "deck_v4_x+2"
+   ],
+   [
+    2.0,
+    "deck_v4_x-2"
+   ]
+  ]
+ },
+ "stl": {
+  "is_solid": true,
+  "non_manifold": false,
+  "size_mm": [
+   22.5,
+   47.0,
+   14.3
+  ],
+  "orientation": "rail face down on the bed, posts up, no supports"
+ }
+}

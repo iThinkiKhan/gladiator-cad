@@ -1,0 +1,28 @@
+GLADIATOR v2 - FIRST PRINT PLATES FOR ORCASLICER (2026-10-15, PLA)
+
+Rebuilt 2026-10-16: DECK V4. Its slots follow the real installed rails (pegs 58 mm apart at the rear, 60 at the front, rails splayed 2 mm toward the mast end). Open these in OrcaSlicer:
+
+  Gladiator_v2_ORCA-ALL_Rails-and-Deck_one-plate.3mf   all three parts, YOUR layout and settings   about 6 h 1 m   79 g
+  Gladiator_v2_ORCA-R_Arch_Rails_Left-Right.3mf        both rails                                  about 2 h 51 m   37 g
+  Gladiator_v2_ORCA-D_Upper_Deck_v4.3mf                the deck v4.1 (wider slots)                  about 2 h 45 m   42 g
+
+
+  Gladiator_v2_ORCA-SW_Switch_Holder_v3.3mf                the switch holder (DRAFT, test-fit your wired switch first)   about 18 m   4 g, 6 walls + 100% infill for the wall joints
+
+  Gladiator_v2_ORCA-IM_INA226_Mount_v3_adapter.3mf          INA226 upright adapter on the tray (DRAFT)   about 26 m   5 g
+
+  Gladiator_v2_ORCA-H_Rear_Hood_0.28_tree.3mf                rear hood v2.8 (55 mm inside, switch cradle, rail-foot saddle, speaker grille), 0.28 mm, tree   about 8 h 42 m   148 g
+  Gladiator_v2_ORCA-P_Front_Panels_0.28_tree.3mf             both front panels v2.8 (deeper heatsink notches), 0.28 mm, tree supports   about 7 h 51 m   119 g
+
+  Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1.3mf           speaker bracket for shell-off running (left rail inserts)   about 21 m   4 g
+
+Estimates are from a headless Orca 2.4.2 slice; the real print will differ a little. Nothing has been started or queued. You start the prints.
+
+ALL is the plate you reorganised, with the new geometry dropped in at your positions, your EnderNeo SAFE / FIrst Layer Comp settings and post-process script kept,
+supports on (normal, manual: only under the painted enforcers) and a 1.0 mm top Z gap on the rails. CHECK THE BED: your profile says 250 x 250, and at your positions
+the deck reaches X 231 and the left rail reaches Y 235 (both with brim). If the printer's real print area is 220 x 220, that does not fit.
+cad/v2/print-plates/ in the repo also holds my own ALL layout, which fits 220 (extrusions X 4..216).
+
+R and D use my settings (EnderNeo, Generic PLA First Print, 0.20 Standard, 4 walls, 30%).
+Look at the support preview before sending. Do not auto-orient.
+Details: cad/v2/print-plates/README.md

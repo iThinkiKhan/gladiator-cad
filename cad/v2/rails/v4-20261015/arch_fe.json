@@ -1,0 +1,56 @@
+{
+ "assumptions": {
+  "unit_mass_kg": 0.9,
+  "shock_g": 4.0,
+  "E_MPa": 2000.0,
+  "section_mm": [
+   8.5,
+   7.0
+  ],
+  "allowable_MPa": 20.0
+ },
+ "per_rail_load_N": 17.7,
+ "cases": {
+  "static weight (1 g, per rail)": {
+   "max_stress_MPa": 0.23,
+   "at_YZ": [
+    119.5,
+    6.0
+   ],
+   "apex_dx_mm": 0.0,
+   "apex_dy_mm": 0.0,
+   "apex_dz_mm": -0.012
+  },
+  "shock 4 g down": {
+   "max_stress_MPa": 0.93,
+   "at_YZ": [
+    119.5,
+    6.0
+   ],
+   "apex_dx_mm": 0.0,
+   "apex_dy_mm": 0.0,
+   "apex_dz_mm": -0.046
+  },
+  "shock 4 g along Y (braking / hitting a wall) + 1 g weight": {
+   "max_stress_MPa": 2.69,
+   "at_YZ": [
+    119.5,
+    6.0
+   ],
+   "apex_dx_mm": 0.0,
+   "apex_dy_mm": 0.077,
+   "apex_dz_mm": -0.012
+  },
+  "shock 4 g sideways (X, tipping or side hit) + 1 g weight": {
+   "max_stress_MPa": 3.62,
+   "at_YZ": [
+    119.5,
+    6.0
+   ],
+   "apex_dx_mm": 0.332,
+   "apex_dy_mm": 0.0,
+   "apex_dz_mm": -0.012
+  }
+ },
+ "note": "Rough estimate: pinned screws assumed rigid, no stress concentrations at pads/feet, mass is a guess, deck stiffness ignored (it helps)."
+}

@@ -1,0 +1,426 @@
+{
+  "status": "v2 REVIEW MODEL - NOT PRINT RELEASED (STLs are for review/slicing; Jim starts prints)",
+  "parameters": {
+    "wall": 2.4,
+    "skin": 1.1,
+    "skin_gap": 0.2,
+    "z_bottom": 14.0,
+    "rear_cham": 6.0,
+    "front_cham": 5.0,
+    "seam_hood": 78.0,
+    "seam_front": 78.6,
+    "split_x": 39.5,
+    "split_gap": 0.6,
+    "pod_x": [
+      21.5,
+      57.5
+    ],
+    "pod_y_back": -48.0,
+    "pod_z_top": 48.0,
+    "pod_z_cham": 34.0,
+    "sma_x": 68.0,
+    "sma_z": 84.5,
+    "sma_hole": 7.0,
+    "sma_web": 2.0,
+    "sma_clear": 11.0,
+    "spoke_t": 3.0,
+    "spoke_len": 19.0,
+    "spoke_h": 5.4,
+    "led_x": 21.0,
+    "led_y": 14.0,
+    "win": [
+      7.0,
+      37.0,
+      6.0,
+      22.0
+    ],
+    "rab": [
+      5.0,
+      39.0,
+      4.0,
+      24.0
+    ],
+    "box_x": 71.0,
+    "box_floor_z": 30.5,
+    "box_y_front": -30.0,
+    "box_insert_y": [
+      -18.0,
+      -9.0
+    ],
+    "screws": [
+      [
+        22.0,
+        72.0
+      ],
+      [
+        33.0,
+        72.0
+      ],
+      [
+        50.0,
+        72.0
+      ],
+      [
+        66.0,
+        72.0
+      ]
+    ],
+    "tab_x": [
+      [
+        -1.5,
+        37.0
+      ],
+      [
+        42.0,
+        80.5
+      ]
+    ],
+    "tab_y0": 65.0,
+    "ins_bore": 4.6,
+    "ins_depth": 7.5,
+    "m3_clear": 3.6,
+    "spk": {
+      "cx": 64.0,
+      "cy": 2.0,
+      "w": 28.0,
+      "h": 31.0,
+      "d": 15.0,
+      "ear_tip": 44.0,
+      "hole_c": 36.5,
+      "ear_t": 2.8,
+      "ear_mid": 7.5,
+      "ear_w": 10.0,
+      "pad_d": 7.0,
+      "pad_h": 3.5,
+      "pilot_d": 1.6,
+      "pilot_depth": 4.5,
+      "fence_t": 1.6,
+      "fence_h": 6.0,
+      "clr": 0.3,
+      "grille_r": 10.5,
+      "grille_hole": 2.4,
+      "grille_pitch": 3.6,
+      "lead_notch": 8.0
+    },
+    "saddle": {
+      "x": [
+        59.5,
+        81.5
+      ],
+      "y": [
+        -21.5,
+        -4.0
+      ],
+      "z_low": 9.0,
+      "clr": 0.3,
+      "lead_in": 2.0
+    }
+  },
+  "parts": {
+    "Rear_Hood": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 104530.4,
+      "bbox": [
+        -41.0,
+        120.0,
+        -32.0,
+        90.0,
+        0.0,
+        111.9
+      ]
+    },
+    "Front_Left": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 35194.9,
+      "bbox": [
+        -43.8,
+        82.0,
+        65.0,
+        148.0,
+        0.0,
+        109.4
+      ]
+    },
+    "Front_Right": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 35194.9,
+      "bbox": [
+        -3.0,
+        122.8,
+        65.0,
+        148.0,
+        0.0,
+        109.4
+      ]
+    },
+    "Lens_Plate": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1048.4,
+      "bbox": [
+        5.2,
+        38.8,
+        4.2,
+        23.8,
+        97.9,
+        110.6
+      ]
+    }
+  },
+  "collisions": [],
+  "min_distance": {
+    "Rear_Hood": [
+      [
+        0.15,
+        "Ref_ArchRail_Left_v4"
+      ],
+      [
+        0.15,
+        "Ref_ArchRail_Right_v4"
+      ],
+      [
+        2.8,
+        "Ref_S3Board"
+      ],
+      [
+        3.09,
+        "Ref_UpperDeck"
+      ],
+      [
+        4.0,
+        "Ref_Breadboard"
+      ],
+      [
+        6.6,
+        "Ref_BatteryBox"
+      ],
+      [
+        6.6,
+        "Ref_BatteryCells"
+      ],
+      [
+        7.06,
+        "Ref_INA226_v3_envelope"
+      ]
+    ],
+    "Front_Left": [
+      [
+        2.0,
+        "Ref_DrvV5_Board_L"
+      ],
+      [
+        3.0,
+        "Ref_MastTube"
+      ],
+      [
+        4.0,
+        "Ref_DrvV5_Fins_L"
+      ],
+      [
+        5.1,
+        "Ref_DrvV5_Base_L"
+      ],
+      [
+        5.1,
+        "Ref_DrvV5_Wedge_L"
+      ],
+      [
+        5.6,
+        "Ref_UpperDeck"
+      ],
+      [
+        6.0,
+        "Head_Neck_Clamp_Cap"
+      ],
+      [
+        6.0,
+        "Head_Neck_Main"
+      ]
+    ],
+    "Front_Right": [
+      [
+        2.0,
+        "Ref_DrvV5_Board_R"
+      ],
+      [
+        3.0,
+        "Ref_MastTube"
+      ],
+      [
+        4.0,
+        "Ref_DrvV5_Fins_R"
+      ],
+      [
+        5.1,
+        "Ref_DrvV5_Base_R"
+      ],
+      [
+        5.1,
+        "Ref_DrvV5_Wedge_R"
+      ],
+      [
+        5.6,
+        "Ref_UpperDeck"
+      ],
+      [
+        6.0,
+        "Head_Neck_Clamp_Cap"
+      ],
+      [
+        6.0,
+        "Head_Neck_Main"
+      ]
+    ],
+    "Lens_Plate": [
+      [
+        5.1,
+        "Ref_S3Board"
+      ],
+      [
+        27.69,
+        "Ref_Breadboard"
+      ]
+    ],
+    "Rear_Hood_to_track": 2.0,
+    "Front_Left_to_track": 7.0,
+    "Front_Right_to_track": 7.0
+  },
+  "thin_feature_probe": {
+    "Rear_Hood": "erosion failed: BRep_Tool:: no parameters on surface",
+    "Front_Left": {
+      "solids_after_0p4_erosion": 1,
+      "volume_ratio": -0.001
+    },
+    "Front_Right": {
+      "solids_after_0p4_erosion": 1,
+      "volume_ratio": -0.001
+    }
+  },
+  "switch_enclosure_on_hood": {
+    "Switch_Holder_v3": {
+      "overlap_with_hood_mm3": 0.0,
+      "overlaps_with_other_references": "none",
+      "gap_to_hood_mm": 0.0
+    }
+  },
+  "speaker": {
+    "front_z": 106.0,
+    "centre": [
+      64.0,
+      2.0
+    ],
+    "overlap_with_hood_mm3": 0.0,
+    "overlaps_with_references": "none",
+    "nearest": [
+      [
+        2.95,
+        "Ref_S3Board"
+      ],
+      [
+        11.0,
+        "Ref_Breadboard"
+      ]
+    ],
+    "grille_holes": 31
+  },
+  "saddle": {
+    "overlap_with_rail_mm3": 0.0,
+    "gap_to_rail_mm": 0.3,
+    "drop_to_contact_mm": 0.35,
+    "side_play_mm": 0.35
+  },
+  "deck_shift_check": {
+    "deck_x-2": {
+      "Rear_Hood": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 1.6
+      },
+      "Front_Left": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 5.6
+      },
+      "Front_Right": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 5.6
+      },
+      "Lens_Plate": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 35.18
+      }
+    },
+    "deck_x+2": {
+      "Rear_Hood": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 1.6
+      },
+      "Front_Left": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 5.6
+      },
+      "Front_Right": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 5.6
+      },
+      "Lens_Plate": {
+        "overlap_mm3": 0.0,
+        "gap_mm": 34.86
+      }
+    }
+  },
+  "stl": {
+    "Rear_Hood": {
+      "file": "Gladiator_Enclosure_v2_Rear_Hood.stl",
+      "triangles": 35652,
+      "is_solid": true,
+      "non_manifold": false,
+      "size_mm": [
+        118.3,
+        110.0,
+        102.9
+      ],
+      "bed_fit_220x220x250": true
+    },
+    "Front_Left": {
+      "file": "Gladiator_Enclosure_v2_Front_Left.stl",
+      "triangles": 4096,
+      "is_solid": false,
+      "non_manifold": false,
+      "size_mm": [
+        80.2,
+        83.0,
+        94.0
+      ],
+      "bed_fit_220x220x250": true
+    },
+    "Front_Right": {
+      "file": "Gladiator_Enclosure_v2_Front_Right.stl",
+      "triangles": 3960,
+      "is_solid": true,
+      "non_manifold": false,
+      "size_mm": [
+        80.2,
+        83.0,
+        94.0
+      ],
+      "bed_fit_220x220x250": true
+    },
+    "Lens_Plate": {
+      "file": "Gladiator_Enclosure_v2_Lens_Plate.stl",
+      "triangles": 596,
+      "is_solid": true,
+      "non_manifold": false,
+      "size_mm": [
+        33.6,
+        19.6,
+        12.7
+      ],
+      "bed_fit_220x220x250": true
+    }
+  },
+  "source_sha256": {
+    "concept/Gladiator_Enclosure_Concept.FCStd": "2724d278e355cf7cf4930aa0281b4caf04dd43859e3e54a4eeced47c9f9b79d1"
+  }
+}

@@ -1,0 +1,270 @@
+{
+ "status": "v3 DRAFT - not printed, not fitted; assumptions in README.md",
+ "parameters": {
+  "y0": 2.0,
+  "y1": 135.0,
+  "outer_x": 6.0,
+  "runner_w": 9.0,
+  "slab_z": [
+   43.5,
+   54.5
+  ],
+  "web_x": [
+   8.5,
+   12.5
+  ],
+  "web_z": [
+   37.0,
+   43.5
+  ],
+  "rear_leg": {
+   "x": [
+    6.0,
+    16.0
+   ],
+   "y": [
+    2.0,
+    15.0
+   ]
+  },
+  "front_leg": {
+   "x": [
+    6.0,
+    18.0
+   ],
+   "y": [
+    119.0,
+    135.0
+   ]
+  },
+  "foot_z": [
+   2.0,
+   6.0
+  ],
+  "foot_screws": [
+   [
+    10.5,
+    10.0
+   ],
+   [
+    13.5,
+    127.0
+   ]
+  ],
+  "shaft_d": 6.4,
+  "foot_hole_d": 3.6,
+  "peg_x": 10.5,
+  "peg_w": 3.6,
+  "sockets": [
+   [
+    22.0,
+    12.6
+   ],
+   [
+    68.0,
+    8.6
+   ],
+   [
+    114.0,
+    12.6
+   ]
+  ],
+  "socket_z0": 42.5,
+  "retention": [
+   [
+    10.5,
+    85.0
+   ]
+  ],
+  "insert_d": 4.6,
+  "insert_depth": 7.5,
+  "hardpoints": [
+   [
+    36.0,
+    49.0
+   ],
+   [
+    52.0,
+    49.0
+   ]
+  ],
+  "wire_ports": [
+   [
+    10.5,
+    44.0
+   ],
+   [
+    10.5,
+    92.0
+   ]
+  ],
+  "port_d": 6.0,
+  "arm_cx": 66.0,
+  "arm_w": 14.0,
+  "arm_cz": 40.0,
+  "arm_h": 16.8,
+  "arm_y": [
+   -27.3,
+   3.0
+  ],
+  "sw_body": [
+   6.8,
+   12.7,
+   6.37
+  ],
+  "sw_clear": 0.3,
+  "bezel_t": 1.2,
+  "bezel_screw_dx": 5.3
+ },
+ "parts": {
+  "SideRail_Left_v3": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 23920.9,
+   "bbox": [
+    6.0,
+    18.0,
+    2.0,
+    135.0,
+    2.0,
+    54.5
+   ]
+  },
+  "SideRail_Right_v3": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 28087.4,
+   "bbox": [
+    59.0,
+    73.0,
+    -27.3,
+    135.0,
+    2.0,
+    54.5
+   ]
+  },
+  "Switch_Bezel_v3": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 225.3,
+   "bbox": [
+    59.0,
+    73.0,
+    -28.5,
+    -27.3,
+    31.6,
+    48.4
+   ]
+  }
+ },
+ "collisions": [],
+ "nearest": {
+  "SideRail_Left_v3": [
+   [
+    0.0,
+    "Ref_ChassisDeck"
+   ],
+   [
+    0.0,
+    "Ref_UpperDeck"
+   ],
+   [
+    4.0,
+    "Ref_DrvV5_Base_L"
+   ],
+   [
+    4.0,
+    "Ref_MastBase"
+   ],
+   [
+    6.0,
+    "Ref_BatteryBox"
+   ],
+   [
+    6.0,
+    "Ref_BatteryCells"
+   ]
+  ],
+  "SideRail_Right_v3": [
+   [
+    0.0,
+    "Ref_ChassisDeck"
+   ],
+   [
+    0.0,
+    "Ref_UpperDeck"
+   ],
+   [
+    4.0,
+    "Ref_Breadboard"
+   ],
+   [
+    4.0,
+    "Ref_DrvV5_Base_R"
+   ],
+   [
+    4.0,
+    "Ref_MastBase"
+   ],
+   [
+    6.0,
+    "Ref_BatteryBox"
+   ]
+  ],
+  "Switch_Bezel_v3": [
+   [
+    27.97,
+    "Ref_UpperDeck"
+   ]
+  ]
+ },
+ "knob_tip_y": -32.3,
+ "references_used": [
+  "Ref_BatteryBox",
+  "Ref_BatteryCells",
+  "Ref_Breadboard",
+  "Ref_ChassisDeck",
+  "Ref_DrvV5_Base_L",
+  "Ref_DrvV5_Base_R",
+  "Ref_DrvV5_Board_L",
+  "Ref_DrvV5_Board_R",
+  "Ref_DrvV5_Fins_L",
+  "Ref_DrvV5_Fins_R",
+  "Ref_DrvV5_Wedge_L",
+  "Ref_DrvV5_Wedge_R",
+  "Ref_MastBase",
+  "Ref_MastTube",
+  "Ref_S3Board",
+  "Ref_UpperDeck"
+ ],
+ "old_rail_volume_mm3": 28563.7,
+ "stl": {
+  "SideRail_Left_v3": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    12.0,
+    133.0,
+    52.5
+   ]
+  },
+  "SideRail_Right_v3": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    14.0,
+    162.3,
+    52.5
+   ]
+  },
+  "Switch_Bezel_v3": {
+   "is_solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    14.0,
+    1.2,
+    16.8
+   ]
+  }
+ }
+}
