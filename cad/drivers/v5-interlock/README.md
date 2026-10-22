@@ -165,3 +165,52 @@ use the normal PLA process with supports off. Give the tall wedge section a brim
 5. Fins reach Z 115.3, unchecked against the mast head's swept field.
 
 Rebuild: `scripts/build_drv_v5.py`.
+
+## v5e base: countersink only (2026-10-19)
+
+**This replaces v5d.** v5d buried a 3.0 mm socket head in the 4.0 mm foot and left a 0.7 mm clamp floor (0.5 mm in the
+first versions). That was wrong: the printed bases had no usable clamping face. Jim's instruction: the ONLY change from the
+original (v5c) base is a countersink for flat-head screws, so the screw sits flush and clamps the base to the deck through
+the heat-set insert; the back wall makes room for the cone; supports go in the boss pockets so their ceilings do not sag.
+The wedge (printed), the deck (v4, printed) and every other base feature are unchanged, except the little extra spacing
+Jim asked to keep from v5d (below). v5d's head recess and insert relief are gone.
+
+Fault being fixed: the deck screws sit on the foot top (Z62), the wedge's bearing face, so a head standing proud held the
+wedge off (70 mm3 of overlap per socket-head screw on the v5c base).
+
+- **90 degree countersink at each deck screw**, seat sized for the worst case M3 flat head (DIN 7991 / ISO 10642, dk 6.72,
+  k 1.86, shank 3.0). Seat top diameter 7.3 at Z62, down to the D3.8 hole at Z60.24. The head finishes **0.3 mm
+  below the foot top** (a smaller dk 6.0 head sinks to about 0.7).
+- **Clamp seat under the head: 2.24 mm thick at the hole edge, resting on the boss top** (it was 0.7 mm), and the bearing
+  area is 35.8 mm2 (it was 12.4 mm2 flat). The base is clamped through the cone onto the boss ring and the insert.
+- **Extra spacing (kept from v5d, Jim):** deck-screw hole D3.6 -> D3.8 (the cone centres the head); tongue straight sides and
+  locator peg shaved 0.05 mm per side (peg top 0.05 too), so the guide clearances go 0.20 -> 0.25 mm. The R0.8 root fillets
+  keep 0.20. Bearing faces (seat, wall, foot underside) are untouched.
+- **Back wall carved out for the screw head (Jim):** the countersink continues up through the wall root as a vertical
+  cylinder of the seat's top diameter (7.3 mm, centred on the screw), 2.5 mm above the foot top (Z62 to 64.5). It reaches
+  X18.16, i.e. 1.16 mm into the wall face (X17), and leaves a 1.7 mm web under the lower joint screw hole (Z66.2). The head,
+  its driver and any head that ends up proud have a clean circular opening, and no lip hangs over the cone. The wedge flange
+  stays at X<=17 so it does not touch the notch. Cost: about 13 mm2 of the wall face's bearing area per screw, the wall root
+  band -8 %, the whole base 95 mm3 against v5c (16.11 -> 16.02 cm3), cones, wall carve and spacing together.
+- Checks (printed wedge, saved base): head vs base 0, head vs wedge 0, wedge drops on at 0..5 mm lift with zero overlap,
+  hex/Phillips access column open, base vs the v4 deck (+6.5 Z of this frame) 0.
+
+**Screws (flat head, length measured from the top of the head).**
+| Length | Tip Z | Engaged in the 7.05 mm insert | Deck pocket |
+|---|---|---|---|
+| M3 x 8 | 53.7 | 4.3 mm | clear |
+| **M3 x 10** | 51.7 | **6.3 mm** | clear |
+| M3 x 12 | 49.7 | 8.3 mm | hits the pocket floor (11 mm3) |
+Use M3 x 10 (M3 x 8 also works). Heat-set inserts must end flush with the boss top.
+
+**Printing: supports in the boss pockets.** The base prints deck-face-down, so the D9.8 pocket over each deck boss opens
+toward the bed and its ceiling (Z58, 6.0 above the bed) is a bridge. Plate L carries a support enforcer in each of the four
+pockets (R4.7, up to 0.3 above the ceiling); slice check: support only inside the pockets, layers 0.3 to 5.9 mm, nothing
+else on the plate. Pull the supports out through the pocket mouth after printing. The rest of the profile is the baseline
+D profile (4 walls, 30 % crosshatch, 0.20 mm). 2 h 06 m, 27.5 g for both bases.
+
+`scripts/build_drv_v5e_countersink.py` (base) and `scripts/build_plate_v5e.py` (plate L) derive from the saved v5c base
+because `build_drv_v5.py` can no longer reproduce the printed wedge (master drift). `build_drv_v5d_headrelief.py` is
+superseded. Previous outputs: `~/backups/drv-v5c-20261019/`.
+
+Print `Gladiator_PlateL_DRIVER-V5e-BASES-ONLY_countersunk-M3_pocket-supports_deck-face-down.3mf`.

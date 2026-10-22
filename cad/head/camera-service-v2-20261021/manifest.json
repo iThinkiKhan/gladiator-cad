@@ -1,0 +1,17 @@
+{
+  "generated-build.py": "0b723c7c8df5a30578890a12aee07833ca8467d5c6185cd7ca195f73daa69bea",
+  "build_camera_service_v2.py": "aa5838806673dfb625522c602da0ee788b37e26a93ddce7537187b8475fa12d8",
+  "independent-verification.json": "88436dbbd6bf1b66e01b89f728020dd64195ae1effdfecd6382d83b64ba4ab07",
+  "validation.json": "60d0c291a354f7bdd899724e0cd1b20a86290d63a2d9431b8491a4593af6724c",
+  "Gladiator_Camera_Service_v2_EXPLODED.FCStd": "f5cc5ea8c571ee4ee4cfff6f5300b5f279c7b60a08a3bb0aff3d675a4e364e90",
+  "verify_saved_v2.py": "2d76c930f66506293302d572571d3866b56ac944f001c4211abbf41efb03d2f7",
+  "assembled.png": "2bf5e2a1733cee3265526636b5cd3b1419698203080a9ea4d7bfb7445cef806c",
+  "Gladiator_Camera_Service_v2_REVIEW.FCStd": "04ae06937ce6fbf38f804bf20e2de569b3bce6417c995b35aee49c9a7c77dcfb",
+  "source-v4.py": "860f89fdcbd8914da2d4137be900799859ce45021e93cc349cde5a060da53bf5",
+  "README.md": "1bcd2c074c4c6b5747e62c544ae7a3fb44b217a6f2d700bf857f8f74d4eb30ed",
+  "run_verify_gui.py": "c97886fba6eaf07b29b25a59388b77b33ca568538aa555962ef3833bac99da8f",
+  "Gladiator_Camera_Service_v2.step": "f1cd3c4e70bd393427a15f0951a7597ad5826ab4f54334ac1c0d9d47695d5c26",
+  "exploded.png": "15228eeee9bef19d4f3f36ba6a4a19255346315d23a47eb22376ab7afddfd7ff",
+  "stl/Camera_Service_v2_Tray.stl": "012abba14aaddbfc432e0bcb29f8cc722d7b9556f41abd6524c80163fe447d41",
+  "stl/Camera_Service_v2_Lid.stl": "ef633e4184a062c81482aa5ff1bea47c4b7f81046657dfc1949ef06e59333bd9"
+}

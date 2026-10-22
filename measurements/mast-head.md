@@ -489,3 +489,60 @@ the recess facing UP and was "perfect". R3c prints it facing DOWN, so its 1.4 ro
 **Consequence:** do not print the receiver in Plate 3 as released until this is settled.
 
 **Fix (2026-10-03):** register cut clean through the 4.0 plate; the backbone fused behind it is a roof 3.8 deep, far past the 1.4 key. A confirming coupon (R3d) was built and then dropped at Jim's request; the fix is unproven until the receiver prints.
+
+### Horn height — Jim, 2026-10-05 (MEASURED)
+
+Jim: "bottom of ear to top of horn is 16.5mm" (horn pushed fully onto the spline).
+- The model assumed **13.25** to the top of the arms (11.0 case boss + 0.25 gap + 2.0 arm), with the hub boss
+  1.0 above that (14.25) and the spline top (14.5) poking through. **The real horn is 2.25-3.25 higher** and
+  covers the spline: its top is 2.0 above the spline top.
+- Which surface "top of horn" is was not stated: the raised hub ring on the screw side (about 1 proud of the
+  arms, per the 10-01 reading) or the flat arms. That is 1 mm of difference in where the pulley's pocket floor sits.
+- Jim also said: no confirming coupon for the GH44 through-window ("it will fit if its pass through"); coupons are
+  meant to save time and material.
+
+**Clarified directly by Jim in the Codex mast-head review, 2026-10-05:** the 16.5 mm reading is to the **raised center hub**, not the flat horn arms. This closes the surface ambiguity above. The arm top at 15.5 mm is derived using the previously recorded approximately 1.0 mm hub rise; it is not a separate caliper measurement.
+
+## Sensor measurements and corrected drawing — 2026-10-05 (current)
+
+Supersedes the historical square ToF envelope and missing radar hole coordinates above.
+
+Jim measured/confirmed SEN0628 ToF **42 wide x27.5 high, including ears**. The official
+DFRobot drawing (https://wiki.dfrobot.com/sen0628/; dimensional image copied as evidence
+in cad/head/integration-20261005/SEN0628-manufacturer-dimensions.webp) gives PCB1.6,
+total stack11.5 and six diameter3.1 holes. Derived from its dimension chains and R3.5
+lobes, hole centers from bounding bottom-left: (3.5,24),(38.5,24),(3.5,9),(38.5,9),
+(13.5,3.5),(28.5,3.5). These coordinates come from the drawing, not new caliper readings.
+
+Jim measured the presence detector **30 long x22 wide**, highest pieces **8**, four
+corner holes **diameter3**. The outside/top hole edges are **2 from the PCB edge**.
+Interpreted symmetrically at all four corners: centers3.5 in from each edge, derived
+pitch15 x23. PCB mounted upright22 wide x30 high. Height8 is used for the rear-component
+reservation, as requested in the preceding question; radar PCB thickness1.6 and front
+reservation8 remain assumptions, not measurements. Connector projection with plugs
+and wire bend radius remain unmeasured.
+
+v05 adapters use four of the six ToF holes (top two and bottom two), all four radar
+holes, calibrated diameter3.6 printed M3 passages and tested6.0AF/2.6deep nut pockets.
+Rear stand-offs14 ToF/12 radar include room for captive-nut feet plus component clearance;
+they are design allowances. Eight M3x16 PCB screws and six M2x6 adapter screws are nominal
+assembly specifications to check against actual stock. No new coupon or print requested.
+
+### v05 radar field clearance correction — 2026-10-05
+
+The first12 mm stand-off prototype cleared rigid parts but its conservative whole-board
+100 x80 degree radar field reached S3Board/AntennaPost at25 degrees downward tilt.
+Targeted forward shifts0..12 were checked:9 still intersects0.1293 mm3,10 clears all11
+previously affected poses. The final radar PCB is advanced10 mm, giving **22 mm rear
+stand-off** and **4 M3x25 radar screws** (ToF stays14 mm /4 M3x16). The radar clearance
+to nut feet is now11 mm. These are design allowances, not new hardware measurements.
+The whole field sweep and changed-part checks must pass before release. Initial failed
+candidate is preserved in cad/head/integration-20261005/v05-before-radar-shift/.
+
+### Horn arm thickness measured - 2026-10-06 (Jim)
+
+Cross-horn arm thickness is **2.0 mm** (Jim, calipers). The model assumed `ARM_T = 2.0`, so the
+assumption is now a measurement and no geometry changes. It had set the servo height and so the belt
+alignment. `head-config.json` still lists ARM_T under "assumed" because it is written by the generator
+(`scripts/build_head_v04.py` / `build_head_v05.py`); the next rebuild can move it to "settled".
+The boss-to-horn gap (0.25) and the radar PCB thickness (1.6) are still assumptions.

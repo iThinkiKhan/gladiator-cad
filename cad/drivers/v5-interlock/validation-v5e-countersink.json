@@ -1,0 +1,97 @@
+{
+  "source": "saved v5c Base_Left",
+  "ok": true,
+  "checks": {
+    "guide_clearance_mm_v5c_to_v5e": {
+      "tongue_sides": [
+        0.2,
+        0.25
+      ],
+      "locator_peg": [
+        0.2,
+        0.25
+      ]
+    },
+    "screw_hole_d_mm": [
+      3.6,
+      3.8
+    ],
+    "base_single_valid": true,
+    "volume_cm3_v5c_to_v5e": [
+      16.113,
+      16.018
+    ],
+    "removed_mm3": 95.0,
+    "seat_cone": {
+      "top_diameter_at_Z62": 7.32,
+      "hole_edge_Z": 60.24,
+      "seat_thickness_over_boss_top_at_hole_edge_mm": 2.24,
+      "reaches_X": 18.16,
+      "wall_face_X": 17.0
+    },
+    "bearing_area_mm2_cone_vs_old_flat_annulus": [
+      34.1,
+      12.4
+    ],
+    "head_top_Z": 61.7,
+    "head_top_below_foot_top_mm": 0.3,
+    "head_vs_base_mm3": [
+      0.0,
+      0.0
+    ],
+    "head_vs_wedge_mm3": [
+      0.0,
+      0.0
+    ],
+    "smaller_head_dk6.0_sinks_to_top_Z": 61.34,
+    "base_vs_wedge_mm3": 0.0,
+    "wedge_lift_overlap_mm3": {
+      "0.0": 0.0,
+      "0.5": 0.0,
+      "1.0": 0.0,
+      "2.0": 0.0,
+      "3.0": 0.0,
+      "5.0": 0.0
+    },
+    "wall_carve": {
+      "diameter": 7.32,
+      "height_above_foot_top": 2.5,
+      "reaches_X": 18.16,
+      "web_to_joint_hole_bottom_mm": 1.7,
+      "wall_face_bearing_lost_mm2_each": 13.4
+    },
+    "screw_access_blocked_mm3": [
+      0.0,
+      0.0
+    ],
+    "wall_root_band_X17_23_Z58_66_mm2_v5c_to_v5e": [
+      [
+        44.5,
+        40.93
+      ],
+      [
+        44.65,
+        41.08
+      ]
+    ],
+    "base_vs_deck_v4_mm3": 0.0,
+    "screw_lengths_vs_printed_deck": {
+      "8": {
+        "tip_Z": 53.7,
+        "engaged_in_insert_mm": 4.3,
+        "hits_deck_mm3": 0.0
+      },
+      "10": {
+        "tip_Z": 51.7,
+        "engaged_in_insert_mm": 6.3,
+        "hits_deck_mm3": 0.0
+      },
+      "12": {
+        "tip_Z": 49.7,
+        "engaged_in_insert_mm": 8.3,
+        "hits_deck_mm3": 11.31
+      }
+    },
+    "insert_bottom_Z_(7.05_long)": 50.95
+  }
+}

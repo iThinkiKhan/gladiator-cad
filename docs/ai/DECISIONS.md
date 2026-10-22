@@ -7,6 +7,47 @@ Use dated entries and include the reason or evidence behind the decision.
 
 Do not record brainstorming or unaccepted proposals as decisions.
 
+## 2026-10-15 - deck v3, one insert per rail, real 20 mm driver standoffs
+
+Jim (chat): one heat-set insert on each rail for the deck; build the new deck; re-use the printed motor (driver) mounts and the mast; the driver mounts carry 20 mm standoffs (the CAD wedge model, build_drv_v5.py, uses
+STANDOFF = 15, provisional); chamfer any hole that prints on the glass bed. Applied: cad/upper-deck/v3-20261015 (derived from the master deck; peg slots, slotted retention holes at (14|65, 83.5), wire holes, bed-side chamfers),
+pegs moved onto the rails (the deck prints top-up), enclosure v2.3 with boards and fins shifted 5 mm along their normals, shoulders widened 4 mm, apertures cut as the swept path, chamfers on bed-side holes in the shell and switch enclosure.
+Not decided: wire-hole positions (my placement), real standoff measurement, deck stiffness.
+
+## 2026-10-15 - arch rails and switch enclosure
+
+Jim (chat): nuts secure the rail feet; PETG will be used once a design is final; the portal rails still look like bridge towers, so use a geometric, strong, slim design (he suggested an arch with
+mount points); the power switch must not sit in a 'hallway': a separate enclosure with an open rear for wiring that bolts securely to a mount point on the rails or on the body.
+Applied as DRAFTS: cad/rails/v4-20261015 (elliptical arch, 8 x 6 mm band, peg-socket deck seat, shell hard points, right-rail switch shelf), cad/switch-enclosure/v1-20261015, enclosure v2.2.
+Not decided: deck v3, retention (gravity or one slotted screw per rail), arch proportions, switch pin pitch and rating.
+
+## 2026-10-14 - frame architecture: deck seats in the rails, shell is optional, switch on the frame
+
+Jim (chat, with photos X:/Projects/Gladiator/V1 Complete): the foot screws all align but are hard to reach; the six upper-deck screws almost never line up at once, so the
+upper deck should SIT IN the rails like the power board tray sat in its feet; the body is an optional add-on on hard points; charging may remove battery changes;
+the power switch must be usable and mounted with or without the shell. The deck, board, mast and head already lift off the rails as one unit.
+Applied as a DRAFT: cad/rails/v3-20261014/ (rails with peg sockets, hard points, wire ports, switch arm) and enclosure v2.1 (hood bolted to the rail hard points).
+Not decided: deck v3 (pegs, wire holes), retention (gravity only or one slotted screw per rail), rail width, switch pin pitch and rating.
+
+## 2026-10-14 - power switch on the body exterior (SUPERSEDED by the entry above: the switch is now frame-mounted)
+
+Jim (chat): the switch holder is too insecure to operate through a cutout; mount the switch on the exterior of the body instead. Applied in enclosure v2: housing and removable bezel
+on the front face of the front-right panel (cad/enclosure/v2-20261013/). Open: switch current rating, pin pitch, inline connector on the leads, ON-up marking.
+
+## 2026-10-14 - antenna mounts: nothing recessed around the nut or flange
+
+Jim (chat): the previous antenna design (master `AntennaPost`: O11 x 4 mm round pocket on the connector side) recesses the connector too much and is too difficult
+to turn and tighten; the improvement applies to every antenna mount. Applied to enclosure v2 (rear wall mount) and to a replacement pylon, cad/antenna-pylon/v3-20261014/.
+Rule: 2.0 mm land (SMA clamp limit about 2.2), flat on both faces, open flat zone of radius 11 mm around the axis, stiffness from ribs/spokes that start outside the zone.
+Not validated on a printed part yet.
+
+## 2026-10-13 - enclosure v2 direction
+
+Jim (chat): the primary aim is to hide the wiring; the heatsinks stay exposed as a styled, efficient feature; let the INA226
+poke out and work it into the look (wires will be routed); the S3 status light needs a light pipe or window; fix the antenna mount;
+the open top shown in his photo is the working space the body must enclose; build v2. Evidence: the chat, and the concept review in
+cad/enclosure/v2-20261013/README.md. Not decided: LED position, final panel attachment hardware after a trial fit, material.
+
 ## 2026-10-09 — mast end is FRONT
 
 Jim: "we have been using the mast as REAR, and I want it to be FRONT"; update

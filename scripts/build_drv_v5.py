@@ -51,6 +51,13 @@ DECK_TOP, FOOT_TOP = 52.0, 62.0
 DECK_BOSS_D, DECK_BOSS_TOP = 9.0, 58.0
 SCREWS = [(14.5, 95.0), (14.5, 135.0)]
 M3_CLEAR, INS_BORE, INS_DEPTH = 3.6, 4.6, 8.0
+# v5d base (2026-10-19): the deck screws sit on the foot top (Z62), the same face
+# the wedge seat bears on, so an M3 socket head (D5.5 x 3.0) kept the wedge from
+# seating. The foot gets a head recess; the printed wedges are untouched.
+DECK_HEAD_D, DECK_HEAD_H = 5.5, 3.0
+DECK_CBORE_D = 6.4            # 0.45 mm per side around the head
+DECK_HEAD_SINK = 0.3          # head top finishes this far below the foot top
+DECK_CBORE_FLOOR = FOOT_TOP - DECK_HEAD_H - DECK_HEAD_SINK
 RAIL_RELIEF = (12.0, 120.0, 8.0, 54.9)
 CLR, TRACK_X = 0.4, -50.0
 BU, BV = 49.5, 51.0
@@ -162,6 +169,12 @@ for x, y in SCREWS:
                                       A.Vector(x, y, DECK_TOP - 0.05)))
     base = base.cut(Part.makeCylinder(M3_CLEAR / 2, FOOT_TOP - DECK_BOSS_TOP + 0.2,
                                       A.Vector(x, y, DECK_BOSS_TOP - 0.1)))
+    # Head recess. The wall rises from X17 above the foot top, so keep it out of
+    # the cutter: the recess is open to the foot top only where the foot is bare.
+    cb = Part.makeCylinder(DECK_CBORE_D / 2, FOOT_TOP - DECK_CBORE_FLOOR + 0.5,
+                           A.Vector(x, y, DECK_CBORE_FLOOR))
+    cb = cb.cut(Part.makeBox(WALL_X1 - WALL_X0, 51.5, 20.0, A.Vector(WALL_X0, 89.0, FOOT_TOP)))
+    base = base.cut(cb)
 rx, ry, rd, rz = RAIL_RELIEF
 base = base.cut(Part.makeCylinder(rd / 2 + CLR / 2, rz - DECK_TOP + 0.05,
                                   A.Vector(rx, ry, DECK_TOP - 0.05)))
@@ -378,6 +391,22 @@ for x, y in SCREWS:
         Part.makeCylinder(1.5, FOOT_TOP - DECK_BOSS_TOP - 0.2,
                           A.Vector(x, y, DECK_BOSS_TOP + 0.1)), base) < 0.3
 
+# Deck screw heads against the seated wedge: a socket head sitting on the recess
+# floor must clear both the base and the wedge; on the bare foot top (v5c) it
+# must not, which is the fault this recess fixes.
+head_over, head_in_base, head_flat = [], [], []
+for x, y in SCREWS:
+    head = Part.makeCylinder(DECK_HEAD_D / 2, DECK_HEAD_H, A.Vector(x, y, DECK_CBORE_FLOOR))
+    head_in_base.append(round(hit(head, base), 3))
+    head_over.append(round(hit(head, wedge), 3))
+    flat = Part.makeCylinder(DECK_HEAD_D / 2, DECK_HEAD_H, A.Vector(x, y, FOOT_TOP))
+    head_flat.append(round(hit(flat, wedge), 1))
+rep['checks']['deck_head_vs_base_mm3'] = head_in_base
+rep['checks']['deck_head_vs_wedge_mm3'] = head_over
+rep['checks']['deck_head_on_foot_top_vs_wedge_mm3_v5c_fault'] = head_flat
+rep['checks']['deck_head_clearance_to_seat_mm'] = DECK_HEAD_SINK
+rep['checks']['deck_cbore_floor_mm'] = round(DECK_CBORE_FLOOR - DECK_BOSS_TOP, 2)
+
 board = Part.Face(Part.makePolygon([at(0, 0), at(BU, 0), at(BU, BV), at(0, BV),
                                     at(0, 0)])).extrude(A.Vector(N.x*PCB_T, N.y*PCB_T, N.z*PCB_T))
 fins = Part.Face(Part.makePolygon([
@@ -585,6 +614,8 @@ if (rep['checks']['base_single'] and rep['checks']['wedge_single'] and
         rep['checks']['groove_min_edge_web_mm'] >= 1.0 and
         rep['checks']['seat_roof_above_groove_mm'] >= 2.7 and
         rep['checks']['upper_counterbore_wall_above_mm'] >= 3.0 and
+        max(rep['checks']['deck_head_vs_base_mm3']) < 0.001 and
+        max(rep['checks']['deck_head_vs_wedge_mm3']) < 0.001 and
         not rep['checks']['clashes']):
     doc = A.newDocument('DriverMount_v5')
     main_objects = []

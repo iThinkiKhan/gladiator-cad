@@ -1,0 +1,74 @@
+{
+  "source": "saved v5c Base_Left",
+  "checks": {
+    "v5c_head_on_foot_top_vs_wedge_mm3": [
+      41.0,
+      41.0
+    ],
+    "tongue_side_gap_mm_v5c_to_v5d": [
+      0.2,
+      0.25
+    ],
+    "locator_gap_mm_v5c_to_v5d": [
+      0.2,
+      0.25
+    ],
+    "screw_hole_d_mm": 3.8,
+    "cbore_d_mm": 6.4,
+    "base_single_valid": true,
+    "base_cm3": [
+      16.113,
+      16.009
+    ],
+    "cbore_floor_above_boss_top_mm": 2.1,
+    "head_top_below_foot_top_mm": 0.25,
+    "head_vs_base_mm3": [
+      0.0,
+      0.0
+    ],
+    "head_vs_wedge_mm3": [
+      0.0,
+      0.0
+    ],
+    "base_vs_wedge_mm3": 0.0,
+    "wedge_lift_overlap_mm3": {
+      "0.0": 0.0,
+      "0.5": 0.0,
+      "1.0": 0.0,
+      "2.0": 0.0,
+      "3.0": 0.0,
+      "5.0": 0.0
+    },
+    "proud_insert_vs_base_mm3": {
+      "0.0": 0.0,
+      "0.2": 3.007,
+      "0.3": 4.51,
+      "0.4": 6.013,
+      "0.6": 9.02
+    },
+    "proud_insert_vs_v5c_base_mm3": {
+      "0.0": 0.0,
+      "0.2": 3.471,
+      "0.3": 5.207,
+      "0.4": 6.943,
+      "0.6": 10.414
+    },
+    "floor_over_relief_mm": 2.1,
+    "head_underside_Z_above_boss_top_mm": 2.1,
+    "screw_access_blocked_mm3": [
+      0.0,
+      0.0
+    ],
+    "removed_mm3": 104.3,
+    "deck_bbox_z_in_mount_frame": [
+      48.0,
+      62.0
+    ],
+    "base_vs_deck_v4_mm3": 0.0,
+    "deck_boss_ring_under_head_solid": [
+      true,
+      true
+    ]
+  },
+  "ok": true
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/cad/head/camera-service-v2-20261021/run_verify_gui.py", line 5, in <module>
+    exec(compile((p/'verify_saved_v2.py').read_text(),str(p/'verify_saved_v2.py'),'exec'))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/buralien/projects/gladiator-cad/cad/head/camera-service-v2-20261021/verify_saved_v2.py", line 49, in <module>
+    assert not wire_hits,wire_hits
+           ^^^^^^^^^^^^^
+AssertionError: [['ToF_Sensor_Frame', 0.3289366117708036]]

@@ -28,11 +28,11 @@
     "plate_top_belt_channel_bottom": 155.0,
     "arm_top": 152.2,
     "horn_underside": 150.2,
-    "servo_ear_plane": 138.95,
-    "servo_body_bottom": 121.44999999999999,
+    "servo_ear_plane": 136.7,
+    "servo_body_bottom": 119.19999999999999,
     "pad": [
-      131.45,
-      135.95
+      129.2,
+      133.7
     ],
     "pedestal_top_plate": [
       165.5,
@@ -44,15 +44,26 @@
     "inherited_tilt_lift": 1.5
   },
   "pending": {
-    "horn_height": "NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets the pan servo pad height (Neck_Main) and so the belt alignment. Model: 13.25",
-    "circlip_on_H3b2": "NOT reported: did the circlip seat in the groove on the winning post"
+    "sensor_mounting": "ToF/radar attachment not yet designed; dual carrier remains held.",
+    "harness_and_stops": "Flex routing, strain relief and mechanical stops are not designed.",
+    "horn_screws": "Actual screw head and available thread engagement need full assembly checks.",
+    "bearing_spacer": "The modeled 9 mm inner-race spacer is not confirmed available hardware.",
+    "screen": "Pocket fit passed; final window alignment and corner screws remain unreported."
   },
   "assumed": {
     "ARM_T": "2.0 horn arm thickness, NOT measured",
-    "HORN_G": "0.25 gap between the case boss and the horn underside, NOT measured",
+    "BOSS_UP": "1.0 hub ring above the arms (\"about 1\", Jim 10-01); sets the arm top under the 16.5 reading",
+    "LOWER_HUB_GAP": "0.25 case boss to the bottom of the horn lower hub, NOT measured",
     "SHAFT_NEAR": "5.9 from the near body end, about +-0.6",
     "servo_cross_centre": "shaft assumed centred across the 12 mm width",
     "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
+  },
+  "settled": {
+    "HORN_TOP": "16.5 ear underside to the top of the hub ring, horn fully on (Jim, 2026-10-05); arm top 15.5",
+    "circlip": "seats on the 2-notch post, \"circlip fits well\" (Jim, 2026-10-03)",
+    "POST_D": "20.05, H3b 2-notch post wins (Jim, 2026-10-01)",
+    "PILOT_M2": "2.35, H4b midway between 1 and 2 notches (Jim, 2026-10-01)",
+    "HORN_C": "0.15, H6a 1-notch snug pocket (Jim, 2026-10-01)"
   },
   "release": "DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). Not released."
 }

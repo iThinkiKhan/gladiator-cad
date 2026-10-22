@@ -1,0 +1,55 @@
+{
+  "native_reopened_valid": true,
+  "step_valid": true,
+  "step_solids": 24,
+  "step_relative_volume_error": 8.785515227657312e-11,
+  "geometry_changes_vs_reviewed_v04": [],
+  "symmetric_difference_mm3": {
+    "Neck_Main": 0.0,
+    "Neck_Clamp_Cap": 0.0,
+    "Pan_Servo_Carriage": 0.0,
+    "Pan_Bearing_Lower": 0.0,
+    "Pan_Bearing_Upper": 0.0,
+    "Pan_Inner_Spacer": 0.0,
+    "Pan_Circlip_Envelope": 0.0,
+    "Pan_Rotor": 0.0,
+    "Pan_Retainer": 0.0,
+    "Pan_Raised_Pedestal": 0.0,
+    "Pan_Drive_Pulley": 0.0,
+    "SG90_Pan_Reference": 0.0,
+    "Pan_Horn_Reference": 0.0,
+    "Pan_Belt_Reference": 0.0,
+    "SG90_Tilt_Reference": 0.0,
+    "Tilt_Horn_Reference": 0.0,
+    "Tilt_Yoke": 0.0,
+    "Tilt_Pivot_Bolt": 0.0,
+    "GH44_Tilt_Receiver": 0.0,
+    "GH44_Dual_Carrier": 0.0,
+    "Rear_Display_Frame": 0.0,
+    "ST7789_Board": 0.0,
+    "Dual_ToF_Envelope": 0.0,
+    "Dual_Radar_Envelope": 0.0
+  },
+  "plates": {
+    "Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf": {
+      "objects": 3,
+      "canonical_stl_topology_match": true,
+      "vertices_within_bed": true
+    },
+    "Gladiator_Head_v04_PLATE2_PanDrive_Rotor-Pulley-Carriage.3mf": {
+      "objects": 3,
+      "canonical_stl_topology_match": true,
+      "vertices_within_bed": true
+    },
+    "Gladiator_Head_v04_PLATE3_Tilt_Yoke-Receiver-DisplayFrame.3mf": {
+      "objects": 3,
+      "canonical_stl_topology_match": true,
+      "vertices_within_bed": true
+    },
+    "Gladiator_Head_v04_PLATE4_Neck_Main.3mf": {
+      "objects": 1,
+      "canonical_stl_topology_match": true,
+      "vertices_within_bed": true
+    }
+  }
+}

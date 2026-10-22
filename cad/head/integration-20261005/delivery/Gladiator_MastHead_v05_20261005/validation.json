@@ -1,0 +1,1261 @@
+{
+  "release": "v05 measured sensor mounts; prototype CAD checked, physical assembly not yet verified",
+  "source_sha256": {
+    "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "0b2bc7267ca5a5a4ae1fffe02ee9e54d85970d9cc780f7abbfea8a07bee3f913",
+    "/home/buralien/projects/gladiator-cad/cad/head/v03-belt/Gladiator_Head_v03_Belt.FCStd": "b7f5fc285b3093a877580b4aa0ca9a6333f624abe135da4b6ccb6cb4b585509b",
+    "/home/buralien/projects/gladiator-cad/scripts/build_head_v05.py": "b285625d5245912ab8ddd752b58c9bd98a0a3549f880ef2096234e65cc53ba3f"
+  },
+  "derived_from_v04_sha256": "228b5aab327ee1333d451dcba99aaa1191ff52ee734eecb20bdb387a5779d69e",
+  "parts": [],
+  "checks": {
+    "tilt_screw_shank_overlap_mm3": 0.0,
+    "tilt_screw_bearing_annulus_mm3": 4.1846014145816115,
+    "tilt_screw_bearing_annulus_expected_mm3": 4.184601414581621,
+    "tilt_screw_roof_thickness_mm": 1.2,
+    "sensor_mounts_pass": true,
+    "master_mast_top_z": "130.0 mm",
+    "robot_solids_compared": [
+      "MastTube",
+      "MastBase",
+      "UpperDeck",
+      "S3Board",
+      "Breadboard",
+      "AntennaPost",
+      "ChassisDeck",
+      "SideRailLeft",
+      "SideRailRight",
+      "PowerShield",
+      "BatteryBox",
+      "DrvV5_Base_L",
+      "DrvV5_Wedge_L",
+      "DrvV5_Base_R",
+      "DrvV5_Wedge_R",
+      "DrvV5_Board_L",
+      "DrvV5_Fins_L",
+      "DrvV5_Board_R",
+      "DrvV5_Fins_R"
+    ],
+    "robot_solids_missing": [],
+    "head_pair_pose_tests": 49093,
+    "robot_pair_pose_tests": 83524,
+    "carriage_end_pose_tests": 13200,
+    "cable_passage_11_9mm_overlap_mm3": 0.0,
+    "all_parts_single_valid_solid": true,
+    "belt_path_at_carriage_ends": {
+      "37.0": {
+        "pitch_path_length_mm": 175.09809077312016,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      },
+      "39.75": {
+        "pitch_path_length_mm": 180.52178055708052,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      },
+      "40.4": {
+        "pitch_path_length_mm": 181.80527151964554,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      }
+    },
+    "master_unchanged": true,
+    "sampled_geometry_pass": true
+  },
+  "collisions": [],
+  "pending": {
+    "sensor_hardware": "Measured-pattern frames designed; verify board orientation, M3 x16 lengths and connector/wire bends at assembly.",
+    "harness_and_stops": "Flex routing, strain relief and mechanical stops are not designed.",
+    "horn_screws": "Actual screw head and available thread engagement need full assembly checks.",
+    "bearing_spacer": "The modeled 9 mm inner-race spacer is not confirmed available hardware.",
+    "screen": "Pocket fit passed; final window alignment and corner screws remain unreported."
+  },
+  "assumed": {
+    "ARM_T": "2.0 horn arm thickness, NOT measured",
+    "BOSS_UP": "1.0 hub ring above the arms (\"about 1\", Jim 10-01); sets the arm top under the 16.5 reading",
+    "LOWER_HUB_GAP": "0.25 case boss to the bottom of the horn lower hub, NOT measured",
+    "SHAFT_NEAR": "5.9 from the near body end, about +-0.6",
+    "servo_cross_centre": "shaft assumed centred across the 12 mm width",
+    "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
+  },
+  "limitations": [
+    "Sensor mounts use measured radar dimensions and published ToF hole positions. Complete harness, strain relief and motion stops remain unfinished. Confirm connector orientation and wire bends in assembly.",
+    "The display holes are 58.25 x 26.00 (confirmed), but their offset to the board edges is ASSUMED symmetric. The pin edge is put at +X (the viewer's left from behind the robot); firmware can rotate the picture.",
+    "The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.",
+    "Settled by the final coupon plate (Jim, 2026-10-01): POST_D 20.05 (H3b), PILOT_M2 2.35 (H4b), HORN_C 0.15 (H6). Circlip seating confirmed by Jim, 2026-10-03.",
+    "The installed horn hub top is measured at 16.5 above the ear underside. Arm thickness 2.0, approximately 1 mm hub rise and lower hub geometry remain partly assumed; derived gap 2.50. Verify the complete screw and belt fit at first assembly.",
+    "Servo shaft position along the body is +-0.6. The carriage slot covers it.",
+    "Sampled rigid-solid checks every 5 degrees of pan and tilt. They do not prove clearance between samples, nor cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.",
+    "The belt can be fitted with the carriage at its slack end, but that is argued, not tested.",
+    "No load, torque or payload rating is claimed."
+  ],
+  "settled": {
+    "HORN_TOP": "16.5 ear underside to the top of the hub ring, horn fully on (Jim, 2026-10-05); arm top 15.5",
+    "circlip": "seats on the 2-notch post, \"circlip fits well\" (Jim, 2026-10-03)",
+    "POST_D": "20.05, H3b 2-notch post wins (Jim, 2026-10-01)",
+    "PILOT_M2": "2.35, H4b midway between 1 and 2 notches (Jim, 2026-10-01)",
+    "HORN_C": "0.15, H6a 1-notch snug pocket (Jim, 2026-10-01)"
+  },
+  "sensor_mounts": {
+    "coordinate_frame": "local: X right, Y rearward, Z up; sensor face -Y; z coordinates relative to tilt axis",
+    "ToF": {
+      "board_mm": [
+        42,
+        27.5
+      ],
+      "holes_drawing_xy_from_bottom_left_mm": [
+        [
+          3.5,
+          24
+        ],
+        [
+          38.5,
+          24
+        ],
+        [
+          3.5,
+          9
+        ],
+        [
+          38.5,
+          9
+        ],
+        [
+          13.5,
+          3.5
+        ],
+        [
+          28.5,
+          3.5
+        ]
+      ],
+      "drawing_url": "https://dfimg.dfrobot.com/62d52567aa9508d63a4247a1/wikien/778eca8cf06dcba34c8748d079867f14_0x0.jpg.webp",
+      "used_holes_relative_center_mm": [
+        [
+          -17.5,
+          10.25
+        ],
+        [
+          17.5,
+          10.25
+        ],
+        [
+          -7.5,
+          -10.25
+        ],
+        [
+          7.5,
+          -10.25
+        ]
+      ],
+      "center_x_mm": -15.0,
+      "rear_standoff_mm": 14,
+      "rear_component_reservation_mm": 9.9,
+      "rear_reservation_to_nut_foot_mm": 1.1,
+      "pcb_back_y_mm": -75.0
+    },
+    "radar": {
+      "board_mm": [
+        22,
+        30
+      ],
+      "hole_diameter_mm": 3,
+      "hole_edge_gap_mm": 2,
+      "derived_pitch_mm": [
+        15,
+        23
+      ],
+      "used_holes_relative_center_mm": [
+        [
+          -7.5,
+          -11.5
+        ],
+        [
+          -7.5,
+          11.5
+        ],
+        [
+          7.5,
+          -11.5
+        ],
+        [
+          7.5,
+          11.5
+        ]
+      ],
+      "center_x_mm": 24.0,
+      "rear_standoff_mm": 22,
+      "rear_component_height_measured_mm": 8,
+      "rear_component_to_nut_foot_mm": 11,
+      "pcb_back_y_mm": -83.0
+    },
+    "pcb_mount_screws": "ToF4 x M3 x16; radar4 x M3 x25;8 M3 nuts. No washers assumed; verify actual hardware",
+    "adapter_screws": "6 x M2 x6 from carrier rear; head diameter <=4.5, head height <=2.6; pilots 2.35",
+    "nut_pockets_mm": {
+      "across_flats": 6,
+      "depth": 2.6,
+      "insertion": "from outboard side of each post; fit nuts before installing the adapters"
+    },
+    "checks": [
+      {
+        "part": "ToF_Sensor_Frame",
+        "hole_xz_mm": [
+          -32.5,
+          10.25
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083474,
+        "seat_annulus_expected_mm3": 5.469434270083485,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 16,
+        "screw_tip_y_mm": -60.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 2.5999999999999943
+      },
+      {
+        "part": "ToF_Sensor_Frame",
+        "hole_xz_mm": [
+          2.5,
+          10.25
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083475,
+        "seat_annulus_expected_mm3": 5.469434270083486,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 16,
+        "screw_tip_y_mm": -60.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 2.5999999999999943
+      },
+      {
+        "part": "ToF_Sensor_Frame",
+        "hole_xz_mm": [
+          -22.5,
+          -10.25
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083474,
+        "seat_annulus_expected_mm3": 5.469434270083485,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 16,
+        "screw_tip_y_mm": -60.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 2.5999999999999943
+      },
+      {
+        "part": "ToF_Sensor_Frame",
+        "hole_xz_mm": [
+          -7.5,
+          -10.25
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083475,
+        "seat_annulus_expected_mm3": 5.469434270083486,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 16,
+        "screw_tip_y_mm": -60.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 2.5999999999999943
+      },
+      {
+        "part": "Radar_Sensor_Frame",
+        "hole_xz_mm": [
+          16.5,
+          -11.5
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083474,
+        "seat_annulus_expected_mm3": 5.469434270083485,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 25,
+        "screw_tip_y_mm": -59.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 1.5999999999999943
+      },
+      {
+        "part": "Radar_Sensor_Frame",
+        "hole_xz_mm": [
+          16.5,
+          11.5
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083474,
+        "seat_annulus_expected_mm3": 5.469434270083485,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 25,
+        "screw_tip_y_mm": -59.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 1.5999999999999943
+      },
+      {
+        "part": "Radar_Sensor_Frame",
+        "hole_xz_mm": [
+          31.5,
+          -11.5
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083475,
+        "seat_annulus_expected_mm3": 5.469434270083486,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 25,
+        "screw_tip_y_mm": -59.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 1.5999999999999943
+      },
+      {
+        "part": "Radar_Sensor_Frame",
+        "hole_xz_mm": [
+          31.5,
+          11.5
+        ],
+        "shank_overlap_mm3": 0.0,
+        "seat_annulus_mm3": 5.469434270083474,
+        "seat_annulus_expected_mm3": 5.469434270083485,
+        "nut_insertion_overlap_mm3": 0.0,
+        "pcb_screw_length_mm": 25,
+        "screw_tip_y_mm": -59.599999999999994,
+        "minimum_carrier_tip_clearance_mm": 1.5999999999999943
+      }
+    ],
+    "limitations": [
+      "ToF rectangular envelope intentionally over-reserves the ear cutouts.",
+      "ToF optical center and radar antenna location not measured; FOV reservations use stated board bounds.",
+      "Radar PCB thickness 1.6 and front height8 assumed. Rear height8 is Jim measured.",
+      "Both PCBs require clear radius3.5 mounting lands. Actual connector exits and cable bends need assembly checks."
+    ],
+    "assembly_tool_access_blockers": {
+      "radar rear M2 37.5 8.0": {},
+      "radar rear M2 37.5 -8.0": {},
+      "radar rear M2 24.5 12.0": {},
+      "GH44 before radar -16.0 -16.0": {},
+      "GH44 before radar -16.0 16.0": {},
+      "GH44 before radar 16.0 -16.0": {},
+      "GH44 before radar 16.0 16.0": {},
+      "display M2 before PCBs -32.0 -18.0": {},
+      "display M2 before PCBs -32.0 18.0": {},
+      "display M2 before PCBs 32.0 -18.0": {},
+      "display M2 before PCBs 32.0 18.0": {}
+    },
+    "assembly_order": [
+      "Fit nuts and attach ToF frame to carrier with 3 M2 x6 from rear, before carrier installation.",
+      "Attach carrier to receiver with 4 M3, with radar frame and both PCBs still absent.",
+      "Fit nuts and attach radar frame with 3 M2 x6 from rear, before display frame installation.",
+      "Attach rear display frame with 4 M2 from front, using a driver shaft no more than4.8 mm diameter.",
+      "Attach PCBs last: ToF4 x M3 x16, radar4 x M3 x25. Fit leads and check unpowered complete motion."
+    ]
+  },
+  "display": {
+    "board_mm": [
+      62.5,
+      29.0,
+      3.2
+    ],
+    "visible_mm": [
+      51.2,
+      25.6
+    ],
+    "visible_from_pin_edge_mm": 6.2,
+    "visible_from_top_mm": 1.5,
+    "hole_centres_mm": [
+      58.25,
+      26.0
+    ],
+    "hole_offset_to_edges": "ASSUMED symmetric",
+    "pin_edge": "+X, the viewer's left from behind the robot",
+    "window_margin_per_side_mm": 0.3,
+    "lip_mm": 3.0,
+    "board_screws": "4 x M2 x 4-5 from behind the board into the lip"
+  },
+  "validation_reuse": {
+    "strategy": "Retest all pairs involving changed solids; exact BRep symmetric-difference verifies every reused solid",
+    "changed_parts": [
+      "Dual_Radar_Envelope",
+      "Radar_Sensor_Frame"
+    ],
+    "solid_difference_vs_before_radar_shift_mm3": {
+      "Neck_Main": 0.0,
+      "Neck_Clamp_Cap": 0.0,
+      "Pan_Servo_Carriage": 0.0,
+      "Pan_Bearing_Lower": 0.0,
+      "Pan_Bearing_Upper": 0.0,
+      "Pan_Inner_Spacer": 0.0,
+      "Pan_Circlip_Envelope": 0.0,
+      "Pan_Rotor": 0.0,
+      "Pan_Retainer": 0.0,
+      "Pan_Raised_Pedestal": 0.0,
+      "Pan_Drive_Pulley": 0.0,
+      "SG90_Pan_Reference": 0.0,
+      "Pan_Horn_Reference": 0.0,
+      "Pan_Belt_Reference": 0.0,
+      "SG90_Tilt_Reference": 0.0,
+      "Tilt_Horn_Reference": 0.0,
+      "Tilt_Yoke": 0.0,
+      "Tilt_Pivot_Bolt": 0.0,
+      "GH44_Tilt_Receiver": 0.0,
+      "GH44_Dual_Carrier": 0.0,
+      "ToF_Sensor_Frame": 0.0,
+      "Radar_Sensor_Frame": 920.1724882364517,
+      "Dual_ToF_Envelope": 0.0,
+      "Dual_Radar_Envelope": 10523.363059141484,
+      "Rear_Display_Frame": 0.0,
+      "ST7789_Board": 0.0
+    },
+    "baseline_native_sha256": "1eebd02e66ed2cb0d1b570481e2aaabeff39f2dab5a15e35cda4ac07fc5e00b7",
+    "baseline_validation_sha256": "1d11b8fa553e80f8b9b0f6849ca919798ee778c011e5d9c70b11fa389588cf0c",
+    "runner_sha256": "33bee4fd3050fc165bec8622271a0b54574f4fee4f898afd4f39faabc4aecd09",
+    "baseline_rigid_and_tof_checks_pass": true,
+    "reused_comparison_counts": {
+      "head": 39024,
+      "robot": 66386,
+      "carriage": 12540
+    },
+    "fresh_comparison_counts": {
+      "head": 10069,
+      "robot": 17138,
+      "carriage": 660
+    }
+  },
+  "clearances": {
+    "drive_pulley_to_pedestal_mm": 1.0,
+    "drive_pulley_to_yoke_mm": 5.4,
+    "drive_pulley_to_retainer_mm": 4.0,
+    "drive_pulley_to_servo_body_mm": 1.711,
+    "servo_body_to_neck_mm": 0.4,
+    "neck_arm_to_rotor_mm": 1.0,
+    "spline_to_pulley_roof_mm": 2.6,
+    "horn_to_servo_boss_mm": 2.5
+  },
+  "service_paths": {
+    "retainer_screws_from_above": {
+      "pan_angles_with_all_four_open": [
+        25.0,
+        30.0,
+        35.0,
+        40.0,
+        45.0,
+        50.0,
+        55.0,
+        60.0,
+        65.0,
+        115.0,
+        120.0,
+        125.0,
+        130.0,
+        135.0,
+        140.0,
+        145.0,
+        150.0,
+        155.0
+      ],
+      "blocked_by_at_pan0": [
+        [
+          225,
+          "Pan_Drive_Pulley"
+        ]
+      ],
+      "note": "a vertical driver cylinder r3.5 over each screw head, against the moving parts"
+    },
+    "clamp_screws_from_above_pulley_fitted": {
+      "blocked_at_pans": {
+        "-20.0": [
+          [
+            "clamp_x-8.5",
+            "GH44_Dual_Carrier"
+          ],
+          [
+            "clamp_x-8.5",
+            "Rear_Display_Frame"
+          ],
+          [
+            "clamp_x+8.5",
+            "ToF_Sensor_Frame"
+          ],
+          [
+            "clamp_x+8.5",
+            "Dual_ToF_Envelope"
+          ]
+        ],
+        "-10.0": [
+          [
+            "clamp_x+8.5",
+            "GH44_Dual_Carrier"
+          ],
+          [
+            "clamp_x+8.5",
+            "ToF_Sensor_Frame"
+          ]
+        ],
+        "0.0": [
+          [
+            "clamp_x+8.5",
+            "GH44_Dual_Carrier"
+          ],
+          [
+            "clamp_x+8.5",
+            "Rear_Display_Frame"
+          ]
+        ]
+      },
+      "blocked_at_carriage_ends": {
+        "37.0": {
+          "-20.0": [
+            [
+              "clamp_x-8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x-8.5",
+              "Rear_Display_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "ToF_Sensor_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "-10.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "ToF_Sensor_Frame"
+            ]
+          ],
+          "0.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "Rear_Display_Frame"
+            ]
+          ]
+        },
+        "40.4": {
+          "-20.0": [
+            [
+              "clamp_x-8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x-8.5",
+              "Rear_Display_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "ToF_Sensor_Frame"
+            ],
+            [
+              "clamp_x+8.5",
+              "Dual_ToF_Envelope"
+            ]
+          ],
+          "-10.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "ToF_Sensor_Frame"
+            ]
+          ],
+          "0.0": [
+            [
+              "clamp_x+8.5",
+              "GH44_Dual_Carrier"
+            ],
+            [
+              "clamp_x+8.5",
+              "Rear_Display_Frame"
+            ]
+          ]
+        }
+      },
+      "note": "driver cylinder r4.0 over each M3 clamp screw"
+    },
+    "horn_screw_from_above": {
+      "blocked_at_pans": {
+        "-20.0": [
+          [
+            "horn_screw",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ],
+          [
+            "horn_screw",
+            "GH44_Tilt_Receiver"
+          ]
+        ],
+        "-10.0": [
+          [
+            "horn_screw",
+            "Pan_Raised_Pedestal"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ],
+          [
+            "horn_screw",
+            "GH44_Tilt_Receiver"
+          ]
+        ],
+        "0.0": [
+          [
+            "horn_screw",
+            "Pan_Raised_Pedestal"
+          ],
+          [
+            "horn_screw",
+            "Tilt_Yoke"
+          ]
+        ],
+        "10.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "20.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "30.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "40.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ],
+        "50.0": [
+          [
+            "horn_screw",
+            "Rear_Display_Frame"
+          ]
+        ]
+      },
+      "open_pans": [
+        60.0,
+        70.0,
+        80.0,
+        90.0,
+        100.0,
+        110.0,
+        120.0,
+        130.0,
+        140.0,
+        150.0,
+        160.0,
+        170.0,
+        180.0
+      ],
+      "note": "driver cylinder r3.5 down the pulley axis, from above the pulley roof"
+    },
+    "tilt_horn_screw_along_axis": {
+      "blocked_at_tilts": {},
+      "note": "driver r3.4 along the tilt axis from the left, through the receiver access hole"
+    },
+    "yoke_bolts_from_above": {
+      "blocked_at_tilts": {
+        "-25.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-20.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-15.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-10.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-5.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "0.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "5.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "10.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "15.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "20.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "25.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ]
+      },
+      "note": "blocked means: bolt the yoke to the pedestal BEFORE fitting the receiver"
+    },
+    "gh44_carrier_screws_from_front": {
+      "blocked_by": [
+        [
+          "x-16 z-16",
+          "Dual_ToF_Envelope"
+        ],
+        [
+          "x-16 z+16",
+          "Dual_ToF_Envelope"
+        ],
+        [
+          "x+16 z-16",
+          "Radar_Sensor_Frame"
+        ],
+        [
+          "x+16 z-16",
+          "Dual_Radar_Envelope"
+        ],
+        [
+          "x+16 z+16",
+          "Radar_Sensor_Frame"
+        ],
+        [
+          "x+16 z+16",
+          "Dual_Radar_Envelope"
+        ]
+      ],
+      "note": "blocked by a sensor means: screw the carrier on before the sensors"
+    }
+  },
+  "tof_fov_reservation": {
+    "full_angle_degrees": [
+      60,
+      60
+    ],
+    "near_plane_mm": [
+      42,
+      27.5
+    ],
+    "length_mm": 150,
+    "front_y_mm": -86.5,
+    "note": "conservative whole-board origin envelope; exact optical center unmeasured"
+  },
+  "fov_intersections": [],
+  "radar_fov_reservation": {
+    "forward_adjustment_mm": 10,
+    "full_angle_degrees": [
+      100,
+      80
+    ],
+    "near_plane_mm": [
+      22,
+      30
+    ],
+    "length_mm": 150,
+    "front_y_mm": -92.6,
+    "intersections": [],
+    "note": "whole-board geometric clearance reservation; no RF performance claim"
+  },
+  "drive": {
+    "teeth_drive_on_servo": 60,
+    "teeth_driven_on_head": 40,
+    "ratio_head_per_servo_deg": 1.5,
+    "head_travel_deg": [
+      -20.0,
+      180.0
+    ],
+    "servo_travel_needed_deg": 133.3,
+    "servo_sweep_measured_deg": 160,
+    "belt": "2GT 90T / 180 mm",
+    "groove": "2-notch, r0.65, depth 0.75 (passed on Jim's belt)",
+    "theory_centre_distance_mm": 39.486,
+    "carriage_travel_mm": [
+      37.0,
+      40.4
+    ],
+    "nominal_mm": 39.75,
+    "evidence_nominal": "tightest about mid-slot on H1 (eyeball)",
+    "tip_dia_60T_mm": 37.689,
+    "tip_dia_40T_mm": 24.957,
+    "flange_dia_60T_mm": 40.689,
+    "belt_channel_bottom_Z": 155.0
+  },
+  "stack_Z": {
+    "plate_rim": 151.0,
+    "plate_top_belt_channel_bottom": 155.0,
+    "arm_top": 152.2,
+    "horn_underside": 150.2,
+    "servo_ear_plane": 136.7,
+    "servo_body_bottom": 119.19999999999999,
+    "pad": [
+      129.2,
+      133.7
+    ],
+    "pedestal_top_plate": [
+      165.5,
+      169.5
+    ],
+    "tilt_axis_local": 206.5,
+    "tilt_axis_real": 216.5,
+    "mast_top_real": 130.0,
+    "inherited_tilt_lift": 1.5
+  },
+  "stl": [
+    {
+      "part": "Neck_Main",
+      "file": "Gladiator_Head_v05_Neck_Main.stl",
+      "print_orientation": "mast axis vertical, collar on the bed; the C arm, riser and pad need support",
+      "gate": "released: horn top 16.5 above the ear underside (Jim, 10-05) sets the pad height; circlip seats on the 2-notch post",
+      "size_mm": [
+        78.2,
+        86.2,
+        43.1
+      ],
+      "volume_cm3": 17.26,
+      "grams_pla": 21.4,
+      "bed_contact_mm2": 142,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.016,
+      "released": true
+    },
+    {
+      "part": "Neck_Clamp_Cap",
+      "file": "Gladiator_Head_v05_Neck_Clamp_Cap.stl",
+      "print_orientation": "as modelled, axis vertical, lugs on the bed; no support",
+      "gate": "none - tested geometry",
+      "size_mm": [
+        36.0,
+        13.7,
+        16.0
+      ],
+      "volume_cm3": 2.54,
+      "grams_pla": 3.1,
+      "bed_contact_mm2": 142,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.018,
+      "released": true
+    },
+    {
+      "part": "Pan_Servo_Carriage",
+      "file": "Gladiator_Head_v05_Pan_Servo_Carriage.stl",
+      "print_orientation": "flat, long axis along the bed X; no support",
+      "gate": "released: H4b settled the ear pilots (2.35)",
+      "size_mm": [
+        25.0,
+        44.0,
+        3.0
+      ],
+      "volume_cm3": 2.32,
+      "grams_pla": 2.9,
+      "bed_contact_mm2": 764,
+      "bed_relief_edges": 2,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 0,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.001,
+      "released": true
+    },
+    {
+      "part": "Pan_Rotor",
+      "file": "Gladiator_Head_v05_Pan_Rotor.stl",
+      "print_orientation": "axis vertical, LOWER bearing seat on the bed (relieved); no support",
+      "gate": "released: H4b settled the M2 pilots (2.35)",
+      "size_mm": [
+        43.0,
+        43.0,
+        23.0
+      ],
+      "volume_cm3": 15.37,
+      "grams_pla": 19.1,
+      "bed_contact_mm2": 512,
+      "bed_relief_edges": 2,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.031,
+      "released": true
+    },
+    {
+      "part": "Pan_Retainer",
+      "file": "Gladiator_Head_v05_Pan_Retainer.stl",
+      "print_orientation": "flat; no support",
+      "gate": "none - clearance holes only",
+      "size_mm": [
+        43.0,
+        43.0,
+        3.0
+      ],
+      "volume_cm3": 2.28,
+      "grams_pla": 2.8,
+      "bed_contact_mm2": 638,
+      "bed_relief_edges": 6,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.028,
+      "released": true
+    },
+    {
+      "part": "Pan_Raised_Pedestal",
+      "file": "Gladiator_Head_v05_Pan_Raised_Pedestal.stl",
+      "print_orientation": "axis vertical, base plate on the bed; support ONLY under the top plate, and block support from the belt channel",
+      "gate": "none for the geometry; the belt line is set by this part",
+      "size_mm": [
+        50.0,
+        51.5,
+        22.5
+      ],
+      "volume_cm3": 16.61,
+      "grams_pla": 20.6,
+      "bed_contact_mm2": 772,
+      "bed_relief_edges": 6,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.012,
+      "released": true
+    },
+    {
+      "part": "Pan_Drive_Pulley",
+      "file": "Gladiator_Head_v05_Pan_Drive_Pulley.stl",
+      "print_orientation": "axis vertical, horn plate on the bed (pocket faces the bed, relieved); no support",
+      "gate": "released: H6a snug pocket (0.15) won",
+      "size_mm": [
+        40.7,
+        40.7,
+        13.1
+      ],
+      "volume_cm3": 7.89,
+      "grams_pla": 9.8,
+      "bed_contact_mm2": 938,
+      "bed_relief_edges": 1,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.005,
+      "released": true
+    },
+    {
+      "part": "Tilt_Yoke",
+      "file": "Gladiator_Head_v05_Tilt_Yoke.stl",
+      "print_orientation": "floor on the bed; no support (the servo window and the pivot hole bridge)",
+      "gate": "released: H4b settled the ear pilots (2.35)",
+      "size_mm": [
+        60.0,
+        35.0,
+        60.0
+      ],
+      "volume_cm3": 12.13,
+      "grams_pla": 15.0,
+      "bed_contact_mm2": 1501,
+      "bed_relief_edges": 1,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.001,
+      "released": true
+    },
+    {
+      "part": "GH44_Tilt_Receiver",
+      "file": "Gladiator_Head_v05_GH44_Tilt_Receiver.stl",
+      "print_orientation": "GH44 face DOWN (through register opening on the bed, relieved), arms up; no support",
+      "gate": "released: H6a snug pocket (0.15) won",
+      "size_mm": [
+        54.0,
+        44.0,
+        46.1
+      ],
+      "volume_cm3": 9.97,
+      "grams_pla": 12.4,
+      "bed_contact_mm2": 1256,
+      "bed_relief_edges": 4,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 4,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.001,
+      "released": true
+    },
+    {
+      "part": "GH44_Dual_Carrier",
+      "file": "Gladiator_Head_v05_GH44_Dual_Carrier.stl",
+      "print_orientation": "sensor plate down, register key up; no support",
+      "gate": "prototype: tested GH44 interface; measured board patterns; verify connector routing and screws at assembly",
+      "size_mm": [
+        84.0,
+        44.0,
+        7.4
+      ],
+      "volume_cm3": 15.37,
+      "grams_pla": 19.1,
+      "bed_contact_mm2": 3180,
+      "bed_relief_edges": 14,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.004,
+      "released": true
+    },
+    {
+      "part": "Rear_Display_Frame",
+      "file": "Gladiator_Head_v05_Rear_Display_Frame.stl",
+      "print_orientation": "bezel face down; support under the four mounting tabs only",
+      "gate": "released: H4b settled the pilots (2.35); the hole-to-edge offset is still assumed symmetric",
+      "size_mm": [
+        74.0,
+        44.0,
+        61.2
+      ],
+      "volume_cm3": 14.72,
+      "grams_pla": 18.3,
+      "bed_contact_mm2": 1899,
+      "bed_relief_edges": 0,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 3,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.0,
+      "released": true
+    },
+    {
+      "part": "ToF_Sensor_Frame",
+      "file": "Gladiator_Head_v05_ToF_Sensor_Frame.stl",
+      "print_orientation": "carrier mating face DOWN, posts UP; no support; short 6 mm nut-slot bridges",
+      "gate": "prototype: tested nut and pilot fits; measured PCB pattern",
+      "size_mm": [
+        51.5,
+        39.5,
+        17.0
+      ],
+      "volume_cm3": 3.12,
+      "grams_pla": 3.9,
+      "bed_contact_mm2": 515,
+      "bed_relief_edges": 7,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.024,
+      "released": true
+    },
+    {
+      "part": "Radar_Sensor_Frame",
+      "file": "Gladiator_Head_v05_Radar_Sensor_Frame.stl",
+      "print_orientation": "carrier mating face DOWN, posts UP; no support; short 6 mm nut-slot bridges",
+      "gate": "prototype: tested nut and pilot fits; measured PCB pattern",
+      "size_mm": [
+        29.2,
+        33.0,
+        25.0
+      ],
+      "volume_cm3": 3.53,
+      "grams_pla": 4.4,
+      "bed_contact_mm2": 412,
+      "bed_relief_edges": 7,
+      "on_z0": true,
+      "probes_pass": true,
+      "n_probes": 2,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "mesh_volume_error_pct": 0.026,
+      "released": true
+    }
+  ]
+}

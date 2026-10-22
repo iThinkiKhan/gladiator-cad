@@ -1,0 +1,62 @@
+tilt horn screw roof: 4.185 of 4.185 mm3 solid, outer face x -21.10
+stack: ZC 155.00  plate rim 151.00  ARM_TOP 152.20  horn under 150.20  ZP 136.70  servo bottom 119.20  pad 129.20..133.70  tilt axis 206.5
+theory C 39.486  nominal 39.75  carriage 37.0..40.4
+
+Neck_Main                  fixed  vol   17258.0  z  104.0.. 147.1
+Neck_Clamp_Cap             fixed  vol    2539.0  z  104.0.. 120.0
+Pan_Servo_Carriage         fixed  vol    2318.7  z  133.7.. 136.7
+Pan_Bearing_Lower          fixed  vol    3430.6  z  121.0.. 128.0
+Pan_Bearing_Upper          fixed  vol    3430.6  z  137.0.. 144.0
+Pan_Inner_Spacer           fixed  vol    1187.2  z  128.0.. 137.0
+Pan_Circlip_Envelope       fixed  vol     230.4  z  144.2.. 145.4
+Pan_Rotor                  pan    vol   15398.8  z  121.0.. 144.0
+Pan_Retainer               pan    vol    2311.3  z  144.0.. 147.0
+Pan_Raised_Pedestal        pan    vol   16638.0  z  147.0.. 169.5
+Pan_Drive_Pulley           servo  vol    7901.9  z  151.0.. 164.1
+SG90_Pan_Reference         fixed  vol    7283.7  z  119.2.. 151.2
+Pan_Horn_Reference         servo  vol     561.7  z  147.9.. 153.2
+Pan_Belt_Reference         belt   vol    1098.2  z  155.5.. 161.5
+SG90_Tilt_Reference        pan    vol    7283.7  z  195.7.. 228.3
+Tilt_Horn_Reference        tilt   vol     561.7  z  197.0.. 216.0
+Tilt_Yoke                  pan    vol   12129.4  z  169.5.. 229.5
+Tilt_Pivot_Bolt            pan    vol     149.0  z  203.8.. 209.2
+GH44_Tilt_Receiver         tilt   vol    9972.4  z  184.5.. 228.5
+GH44_Dual_Carrier          tilt   vol   15391.0  z  184.5.. 228.5
+ToF_Sensor_Frame           tilt   vol    3127.1  z  186.2.. 225.8
+Radar_Sensor_Frame         tilt   vol    2620.9  z  190.0.. 223.0
+Dual_ToF_Envelope          tilt   vol   20072.6  z  192.8.. 220.2
+Dual_Radar_Envelope        tilt   vol    9107.8  z  191.5.. 221.5
+Rear_Display_Frame         tilt   vol   14718.0  z  184.5.. 228.5
+ST7789_Board               tilt   vol    5800.0  z  192.0.. 221.0
+
+tests: head 49093  robot 83524  carriage-end 13200
+collisions: 0   fov: 0   cable overlap 0.0000   master unchanged True
+clearances: {"drive_pulley_to_pedestal_mm": 1.0, "drive_pulley_to_yoke_mm": 5.4, "drive_pulley_to_retainer_mm": 4.0, "drive_pulley_to_servo_body_mm": 1.711, "servo_body_to_neck_mm": 0.4, "neck_arm_to_rotor_mm": 1.0, "spline_to_pulley_roof_mm": 2.6, "horn_to_servo_boss_mm": 2.5}
+retainer screws: all four open at 18 of 41 pan angles, e.g. [25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0]
+at pan 0 blocked: [(225, 'Pan_Drive_Pulley')]
+clamp screws (pulley fitted) blocked at pans: [-20.0, -10.0, 0.0]
+clamp screws blocked at carriage ends: {37.0: [-20.0, -10.0, 0.0], 40.4: [-20.0, -10.0, 0.0]}
+horn screw from above, open pans: [60.0, 70.0, 80.0, 90.0, 100.0, 110.0, 120.0, 130.0, 140.0, 150.0, 160.0, 170.0, 180.0]
+horn screw blocked by: ['GH44_Tilt_Receiver', 'Pan_Raised_Pedestal', 'Rear_Display_Frame', 'Tilt_Horn_Reference', 'Tilt_Yoke']
+tilt horn screw along the axis blocked: {}
+tilt horn screw roof: 4.185 of 4.185 mm3 solid, outer face x -21.10
+yoke bolts from above blocked: {-25.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], -20.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], -15.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], -10.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], -5.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 0.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 5.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 10.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 15.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 20.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')], 25.0: [('x+20', 'Tilt_Pivot_Bolt'), ('x-20', 'GH44_Tilt_Receiver'), ('x-20', 'SG90_Tilt_Reference'), ('x-20', 'Tilt_Horn_Reference')]}
+GH44 carrier screws from the front blocked by: ['Dual_Radar_Envelope', 'Dual_ToF_Envelope', 'Radar_Sensor_Frame']
+
+Neck_Main               78.2 x  86.2 x  43.1  17.26 cm3  bed  142  probes True  mesh ok
+Neck_Clamp_Cap          36.0 x  13.7 x  16.0   2.54 cm3  bed  142  probes True  mesh ok
+Pan_Servo_Carriage      25.0 x  44.0 x   3.0   2.32 cm3  bed  764  probes True  mesh ok
+Pan_Rotor               43.0 x  43.0 x  23.0  15.37 cm3  bed  512  probes True  mesh ok
+Pan_Retainer            43.0 x  43.0 x   3.0   2.28 cm3  bed  638  probes True  mesh ok
+Pan_Raised_Pedestal     50.0 x  51.5 x  22.5  16.61 cm3  bed  772  probes True  mesh ok
+Pan_Drive_Pulley        40.7 x  40.7 x  13.1   7.89 cm3  bed  938  probes True  mesh ok
+Tilt_Yoke               60.0 x  35.0 x  60.0  12.13 cm3  bed 1501  probes True  mesh ok
+GH44_Tilt_Receiver      54.0 x  44.0 x  46.1   9.97 cm3  bed 1256  probes True  mesh ok
+GH44_Dual_Carrier       84.0 x  44.0 x   7.4  15.37 cm3  bed 3180  probes True  mesh ok
+Rear_Display_Frame      74.0 x  44.0 x  61.2  14.72 cm3  bed 1899  probes True  mesh ok
+ToF_Sensor_Frame        51.5 x  39.5 x  17.0   3.12 cm3  bed  515  probes True  mesh ok
+Radar_Sensor_Frame      29.2 x  33.0 x  15.0   2.61 cm3  bed  412  probes True  mesh ok
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/scripts/build_head_v05.py", line 1349, in <module>
+    raise RuntimeError('v05 failed validation; do not regenerate or replace print plates.')
+RuntimeError: v05 failed validation; do not regenerate or replace print plates.

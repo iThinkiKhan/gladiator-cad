@@ -1,0 +1,9 @@
+GLADIATOR HEAD v05 — SENSOR PLATE5
+
+Carrier + orange/ToF frame + radar frame. PLA,0.2 mm,4 walls,30–40% infill.
+Carrier face DOWN/key UP. Adapter mating face DOWN/posts UP. No supports.
+Do not auto-orient. Check short6 mm nut-slot bridges in slicer.
+ToF4 M3x16; radar4 M3x25;8 M3 nuts;6 M2x6 for adapter frames. No washers assumed.
+Assembly: ToF frame -> carrier to receiver -> radar frame -> display frame -> PCBs.
+Rear stand-offs14 mm ToF/22 mm radar. Radar holes15 x23 centres.
+Read README.md for screw limits, assumptions and remaining physical checks.

@@ -1,0 +1,170 @@
+{
+ "case": {
+  "tray": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 11513.6,
+   "bbox_local": [
+    12.03,
+    43.98,
+    -87.96,
+    -58.0,
+    -29.48,
+    29.98
+   ]
+  },
+  "lid": {
+   "valid": true,
+   "solids": 1,
+   "volume_mm3": 4568.8,
+   "bbox_local": [
+    12.03,
+    43.98,
+    -89.96,
+    -65.5,
+    -29.48,
+    29.98
+   ]
+  }
+ },
+ "checks": {
+  "board_tray_overlap_mm3": 0.0,
+  "board_lid_overlap_mm3": 0.0,
+  "pcb_to_pads_mm": 0.0,
+  "pcb_to_lid_posts_mm": 0.3,
+  "lens_tip_local_y": -90.06,
+  "lens_tip_vs_lid_outer_face_mm": -0.1,
+  "lens_xz_local": [
+   28.0,
+   8.9
+  ],
+  "lens_hole_xz_local": [
+   28.0,
+   8.9
+  ],
+  "lens_to_lid_hole_edge_mm": 1.0,
+  "board_to_lid_min_mm": 0.3,
+  "dupont_pin_count": 16,
+  "dupont_vs_module_overlap_mm3": 0.0,
+  "module_to_tray_min_mm": 4.358,
+  "dupont_tray_overlap_max_mm3": 0.0,
+  "dupont_end_to_floor_mm": 3.0,
+  "dupont_wall_clearance_mm": 1.015,
+  "case_vs_GH44_Dual_Carrier_overlap_mm3": 0.0,
+  "case_vs_ToF_Sensor_Frame_overlap_mm3": 0.0,
+  "case_vs_Dual_ToF_Envelope_overlap_mm3": 0.0,
+  "case_vs_Rear_Display_Frame_overlap_mm3": 0.0,
+  "case_vs_GH44_Tilt_Receiver_overlap_mm3": 0.0,
+  "tray_to_carrier_mm": 0.0,
+  "case_to_ToF_frame_mm": 2.275,
+  "case_to_ToF_envelope_mm": 6.025,
+  "tray_floor_seats_on_carrier_face": true,
+  "screw_access_overlap_mm3": {
+   "display_M2_driver_r2.4 (32,18)": 0.0,
+   "display_M2_driver_r2.4 (32,-18)": 0.0,
+   "carrier_M3_driver_r2.2 (16,16)": 0.0,
+   "carrier_M3_head_pocket_r3.0_in_floor (16,16)": 0.0,
+   "carrier_M3_driver_r2.2 (16,-16)": 0.0,
+   "carrier_M3_head_pocket_r3.0_in_floor (16,-16)": 0.0,
+   "M2x6_shank_through_carrier_and_floor (37.5,8)": 0.0,
+   "M2x6_shank_through_carrier_and_floor (37.5,-8)": 0.0,
+   "M2x6_shank_through_carrier_and_floor (24.5,12)": 0.0,
+   "lid_screw_clear_hole (18,25.575)": 0.0,
+   "lid_screw_clear_hole (38,-25.075)": 0.0
+  },
+  "ToF_fov_45deg_vs_case_overlap_mm3": 0.0,
+  "ToF_fov_assumption": "square pyramid, 45 deg half-angle each axis (SEN0628 is 60 deg total), apex at the ToF front reservation plane y=-86.5, x=-15, z=0",
+  "camera_fov_40deg_vs_ToF_Sensor_Frame_overlap_mm3": 0.0,
+  "camera_fov_40deg_vs_Dual_ToF_Envelope_overlap_mm3": 0.0,
+  "camera_fov_40deg_vs_GH44_Dual_Carrier_overlap_mm3": 0.0,
+  "camera_fov_vs_lid_overlap_mm3": 0.0,
+  "camera_fov_assumption": "cone 40 deg half-angle (OV2640 is about 32 deg half diagonal) from 1.5 mm behind the lens tip",
+  "lens_tip_ahead_of_ToF_front_mm": 3.46,
+  "case_front_global_Y": 23.04,
+  "sweep": {
+   "static_overlap_max_mm3": 0.0,
+   "pan_moving_overlap_max_mm3": 0.0,
+   "poses_bbox_close": 0,
+   "poses": 231,
+   "min_static_gap_mm": null
+  },
+  "case_lowest_global_z_at_tilt_extremes": 162.76,
+  "neck_main_top_global_z": 157.1,
+  "review_additions": {
+   "M2_shank_r1.0_vs_carrier (37.5,8)": 0.0,
+   "M2_shank_r1.0_vs_carrier (37.5,-8)": 0.0,
+   "M2_shank_r1.0_vs_carrier (24.5,12)": 0.0,
+   "wire_probes_16_vs_tray_max_mm3": 0.0,
+   "wire_probe_count": 16,
+   "wire_slot_strut_removed": true,
+   "sd_card_path_vs_tray_mm3": 0.0,
+   "sd_card_path_vs_lid_mm3": 0.0,
+   "sd_wall_left_at_pocket_mm": 1.0,
+   "tilt_sweep_1deg_pan_moving_overlap_max_mm3": 0.0,
+   "tray_vs_lid_overlap_mm3": 0.0
+  }
+ },
+ "service_v2": {
+  "connector_insertion_hits_mm3": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wire_lay_in_hits_mm3": [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "dupont_vs_lid_max_mm3": 0.0,
+  "wires_vs_lid_max_mm3": 0.0,
+  "board_insertion_max_mm3": 0.0,
+  "cover_removal_max_mm3": 0.0,
+  "screw_vs_print_mm3": [
+   0.0,
+   0.0
+  ],
+  "driver_vs_case_mm3": [
+   0.0,
+   0.0
+  ],
+  "nut_seat_mm": [
+   6.0,
+   2.8
+  ],
+  "nominal_screw_length_mm": 12,
+  "screw_tip_beyond_nut_pocket_mm": 0.20000000000000284,
+  "closed_exit_height_mm": 4.5,
+  "wire_edge_chamfers_mm": [
+   0.6,
+   0.4
+  ],
+  "camera_side_shift_mm": 1.5,
+  "left_wire_exit_centre_outside_wall_mm": 1.1
+ }
+}

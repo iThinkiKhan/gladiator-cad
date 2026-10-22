@@ -1,0 +1,8 @@
+tilt horn screw roof: 4.185 of 4.185 mm3 solid, outer face x -21.10
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/scripts/build_head_v05.py", line 663, in <module>
+    tof_frame = sensor_frame('ToF_Sensor_Frame',TOF_X,TOF_HOLES,TOF_ATTACH,TOF_SEAT)
+  File "/home/buralien/projects/gladiator-cad/scripts/build_head_v05.py", line 657, in sensor_frame
+    assert route_overlap<1e-6, check
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: {'part': 'ToF_Sensor_Frame', 'hole_xz_mm': [-7.5, -10.25], 'shank_overlap_mm3': 0.0, 'seat_annulus_mm3': 5.469434270083475, 'seat_annulus_expected_mm3': 5.469434270083486, 'nut_insertion_overlap_mm3': 25.856567933458617, 'm3x16_tip_y_mm': -60.599999999999994, 'minimum_carrier_tip_clearance_mm': 2.5999999999999943}

@@ -1,0 +1,23 @@
+{
+  "Tray": {
+    "native_valid": true,
+    "stl_closed": true,
+    "stl_reconstructed_solid_valid": true,
+    "stl_volume_relative_error": 0.0002111841027969095
+  },
+  "Lid": {
+    "native_valid": true,
+    "stl_closed": true,
+    "stl_reconstructed_solid_valid": true,
+    "stl_volume_relative_error": 4.786808993971951e-06
+  },
+  "step_native_symmetric_difference_mm3": [
+    0.0,
+    0.0
+  ],
+  "hardware_board_case_connector_checks_pass": true,
+  "installed_wire_head_context_hits": [],
+  "hardware_motion_poses": 1071,
+  "hardware_motion_hits": [],
+  "pass": true
+}

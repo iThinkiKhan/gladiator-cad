@@ -1,0 +1,17 @@
+ESP32-CAM CASE v4 - PRINT PLATE FOR ORCASLICER (2026-10-13)
+
+Open: Gladiator_Head_ORCA-D_ESP32-CAM-Case_v4_Tray-and-Lid.3mf
+
+  Tray + lid on one plate, no supports, no brim. About 1 h 40 m, 18.9 g (headless Orca slice).
+  EnderNeo, Generic PLA First Print, 0.20 mm, 4 walls, 30% infill. Look at the preview before you send.
+  Tray prints floor down (the face that goes on the carrier is on the bed). Lid prints outer face down.
+  Small bridges: SD window roof (17 mm), four wire-slot roofs (9.7 mm). If the SD window sags, add a support there.
+
+Print the plate, then drop the ESP32-CAM board into the tray BEFORE you mount anything: check the lens sits
+in the middle of the lens hole position (hole is 9 mm for the 7 mm lens) and the SD card slides out the top window.
+
+Assembly order matters: tray on the carrier (3 x M2x6 from the carrier rear) -> display frame -> thread the wires out the side slots, plug all 16 jumpers on, lower the board in -> lid (4 x M2x8).
+Right-hand wires leave the right wall; left-hand wires the left wall. Tie/tape the bundles to the carrier face.
+All 16 pins are wired out, so you can flash through the jumpers (GPIO0 to GND, U0T/U0R) with the lid on.
+Full notes: cad/head/esp32-cam-case-v4/README.md in the gladiator-cad repo (also in X:\3D Printer\esp32-cam-case-v4).
+Nothing has been started. You start the prints.

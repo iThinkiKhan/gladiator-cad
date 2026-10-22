@@ -1,5 +1,136 @@
 # Current Handoff
 
+## Camera service v2 review — 2026-10-21 (Codex)
+
+Jim requested a cover/wiring redesign. Isolated native assembled/exploded models, STEP, review STLs, sources and validation: cad/head/camera-service-v2-20261021/. Two M3 nut-retained cover screws, open lay-in side channels with closing skirts, tie passages and wire-edge chamfers. Carrier hole pattern retained; camera moves 1.5 mm sideways for a 2.275 mm ToF-frame gap. Construction and independent saved-file checks passed. Desktop launcher: Gladiator Camera v2 - Review. Await Jim's CAD review; actual harness bend room, skirt fit and M3 stock need physical confirmation. Full bundle-to-mast routing not modeled. Existing CAD/plates/queue unchanged; no print started. Details: agents/codex-camera-service-v2-20261021.md.
+
+
+## Shell v2.8: taller hood, speaker back, deeper heatsink notches - 2026-10-21 (Claude)
+
+Jim: 55 mm inside from the deck underside; speaker over the dead space behind; heatsinks were cut off by the panel edge. Hood roof raised 3.9 (outer Z111.9) to Y57 then stepped down (raising the panels traps them under the neck arm, checked); speaker at X64 Y2; apertures also swept 15 mm straight down under the fins (shoulder edge Z90 -> ~76). Zero collisions, sweeps unchanged. Plates H 8 h 42 m, P 7 h 51 m in Incoming. Script backups v26/v27/v28 in ~/scratch_claude/.
+
+## Speaker ears corrected - 2026-10-21 (Claude)
+
+Jim: speaker ears take M2, are 2.8 thick and centred between the front and rear faces. Hood roof pads and the shell-off rail bracket posts adjusted; hood re-verified (zero collisions, sweeps unchanged). Plates H (8 h 10 m) and SPK (21 m) in Incoming.
+
+## Shell v2.7: switch in the hood, rail-foot saddle, speaker under the roof - 2026-10-20 (Claude)
+
+Jim: the rail foot should steady the rear of the shell (bolt optional); switch mounts in the shell; speaker up top. v2.6 recess withdrawn. Hood: flat rear (no pod), switch cradle as v2.5, saddle over the right rail foot shelf (0.3 clear), speaker cradle + grille under the roof at X64 Y38 (ears along Y, leads outboard). Shell-off speaker bracket on the left rail's rear hood inserts (`cad/v2/speaker-mount/v1-20261020/`).
+Zero collisions; sweeps re-run. Plates H (8 h 04 m, 140 g) and SPK (27 m) in Incoming. ASSUMED speaker ears 2.5 thick, flush with the cone, M2. Not printed.
+
+## Shell v2.6 finalised to the assembled v2 - 2026-10-20 (Claude)
+
+Jim has v2 assembled (rails, deck v4.1, new wiring, switch on the rail shelf, INA upright adapter) and confirmed the hard-point faces. Hood: INA pod removed (flat rear); switch stays on the rail shelf with the shell on, so the hood cradle/shelf/window are gone and the rear wall has a bottom-open framed recess around the rail-mounted holder; old INA refs replaced by the adapter + board; deck +-2 mm X checked (hood 1.6, panels 5.6).
+Zero collisions, sweeps unchanged. Plate H rebuilt (6 h 52 m, 127 g) via scripts/build_v2_savings_plates.py and copied to Incoming with P. Not printed. Open: loose wiring inside the hood volume (not modelled).
+
+## INA226 upright adapter - 2026-10-19 (Claude)
+
+Jim: mount the INA upright at the rear of the batteries/tray, underside toward the tray, header pins LEFT seen from the rear; adapter on the printed tray now, integrate into the tray later.
+Built `cad/v2/ina-mount/v3-20261019/` (v2 hook unchanged + 2 mm upright plate bearing on the tray wall and battery end, board on 4 mm stand-offs, M2 x 2) and plate IM (26 m, 5 g, printed lip-down, no supports).
+Checked on solids against tray v5, battery, deck, rails as installed, deck v4, switch holder, hood: no collisions. Not printed. Next: fuse into the tray once the adapter is proven.
+
+## Holder: looser pocket, one screw - 2026-10-16 (Claude)
+
+Jim: the pocket narrows around the switch body (too tight); the case is held by screws, so cut to one fastener. Holder now pocket 7.6 x 13.5, one M3 slot at the first shelf insert, 14.5 x 20.0 x 17.9; hood shelf one insert (Y-18.0) with guides; shell rebuilt, zero collisions. Plate SW 18 m. Deck v4.1 confirmed a perfect fit. Unverified: holder with the wired switch, rail-shelf twist with one screw, hood standoff lengths.
+
+## Deck v4.1 CONFIRMED a perfect fit - 2026-10-16 (Claude)
+
+Jim printed deck v4.1 and fitted it on the installed rails: perfect fit. The measured rail layout (symmetric about the mast, splay 1 mm per side over 89 mm, slot centres in `cad/v2/upper-deck/v4-20261016/README.md`) is now VERIFIED; the shell is built around it. Still unverified on hardware: hood standoff lengths (0.2 mm short of the modelled rail face) and the switch holder with the wired switch.
+
+## Holder cradle in the hood - 2026-10-16 (Claude)
+
+Jim: shape the holder to fit the shell attachment point. Hood shelf now has two side guides (15.0 apart, 0.25 each side of the 14.5 mm holder), window 15.4 wide on the same centre line, holder front flush with the outer skin (box_y_front -30.0, inserts Y-18.0 / -9.0). Holder unchanged (its floor slots still serve the printed rail shelf). Shell rebuilt, zero collisions, sweeps unchanged. Not printed.
+
+## Deck v4.1 + holder without inside rounding - 2026-10-16 (Claude)
+
+Jim tried printed deck v3 on the mast (rear left peg centred): all pegs sit outside their slots, left pegs increasingly toward the mast end, right rear peg outside by about 2 mm (he first said inward, then corrected), right front about twice. Deck v4.1: slot centres between the symmetric-rail model and Jim's offsets, 6.0 mm slots, all Y slots 12.6, tie-down slot 6.8 x 5.4 at X11.8 / 68.0. Still unknown: rails' Y position along the mast.
+Holder v3: inside corner rounding removed on Jim's request (exterior R1.0 only), 6 walls + 100 % infill kept. D and SW and both ALL plates re-delivered to Incoming.
+
+## Switch holder v3 - 2026-10-16 (Claude)
+
+Jim: the switch is already wired; keep essentially the holder he has, slightly stronger, with a better mount point for covered/uncovered use, screws from the shell interior, NO rail reprint (the printed right rail has the shelf with two inserts). Built `cad/v2/switch-enclosure/v3-20261016/` (rear-open holder, front wall with knob slot, two M2 side screws, two M3 slots to the shelf inserts) + plate SW (23 m). Hood shelf moved to box_y_front -28.6 (inserts Y-16.6 / -7.6) with a 16.0 wide window; shell rebuilt and re-verified, zero collisions.
+Deck: Jim printed deck v3 (wrong spacing) with the new rails, so nothing lined up; v4 not printed. OPEN: the rails' Y position relative to the mast is unmeasured (asked Jim to use v3 on the mast as a gauge: per peg offset to its slot).
+
+## Shell on the measured rails; switch box on hold - 2026-10-16 (Claude)
+
+Shell v2.5 rebuilt on the installed rails (see its README): no collisions, sweeps unchanged. Deck v4 is the deck reference.
+Switch: Jim's switch is already wired, so the v1 box (front insert, pins through a window) cannot take it; a drop-in v2 draft exists (`cad/v2/switch-enclosure/v2-20261016/`) but Jim then asked for essentially the holder he already has, with dedicated mount points on the rails and the shell, mounted from the shell interior, and NO rail reprint.
+Open: which existing holder (v1b? something else) and how it is mounted today; the printed right rail may already carry the 2 insert shelf (X61..77 in CAD, inserts X71, Y-10 and -1) which would be the rail mount point. No switch plate is queued; the v1 SW plate was removed from Incoming.
+
+## Deck v4 on the measured rails - 2026-10-16 (Claude)
+
+Jim measured the installed rails: pegs 58 mm (rear) and 60 mm (front) over their outer faces, tie-down holes 52 mm apart over inner faces, rails 15 mm from the mast tube each side, peg-to-peg 96.7 mm along the left rail. Rails splay about 1 mm per side over 89 mm; the CAD frame width was wrong.
+Deck v4 (`cad/v2/upper-deck/v4-20261016/`): per-row slot centres, 5.0 mm slots, one locating slot (left middle), tie-down slot 5.6 x 4.4 at X11.2 / 67.8; checked against the rails placed at the measured layout. Outline NOT widened (3 mm per side hits the driver wedges); waiting for Jim's body width.
+OPEN: the shell (hood standoffs, hard points) still assumes the CAD rail positions and must be rebuilt on the measured rails; the rear rail position is a symmetric assumption; plates D and ALL carry deck v4.
+
+## Rails installed 46.5 mm apart - 2026-10-16 (Claude)
+
+Jim installed the arch rails: inner faces 46.5 mm apart (CAD 43.0), no room to move sideways, printed deck v3 did not fit. Deck rebuilt with 7.7 mm wide peg slots (X12.25 / X66.75) and a 7.1 x 4.4 tie-down slot; verified at all three splits of the 3.5 mm; plates D and ALL (both layouts) regrafted and copied to Incoming. Rework of the printed deck by drilling and filing is in the deck README.
+OPEN: the split between the rails is unknown (asked Jim to measure outer faces or inner face to mast tube); the shell hood standoffs and hard points assume rails at X6..18 / 61..73 and may be about 1.75 mm short per side; why the CAD frame width is off by 3.5 mm.
+
+## Switch box 3 mm outboard + deck tie-down slot - 2026-10-15 later (Claude)
+
+Jim: keep the power board as is; move the switch box instead of the INA. Right rail shelf X61..77, inserts X71, box centre X71 on rail and hood shelves (distance to the INA cassette 2.0 -> 3.9 mm on the rail shelf, hood 11.3 mm); shell v2.4 rebuilt and re-verified (sweeps unchanged).
+Deck tie-down: Y83.5 kept (the only reachable spot: the S3 covers Y3..77 on the left, the breadboard Y15..61 on the right, driver bases start at Y89); slot now 6.0 x 4.4 at X13 / X66 so it serves the new insert (X14 / 65) and a drilled old-rail hole (X12 / 67). Checks are in the deck README.
+Plates rebuilt (R 2 h 51 m, D 2 h 45 m, ALL mine 5 h 36 m). Jim's reorganised ALL plate was regrafted with the new geometry into Incoming (his layout and settings, supports on, 1.0 mm rail gap). OPEN: his profile says 250 x 250 and the layout reaches X231 / Y235: confirm the real print area.
+
+## v2 folder move + first-print plates - 2026-10-15 (Claude)
+
+Jim: all changes from the enclosure/rails chat go into a sub folder `v2`; the first print is PLA, not PETG. Moved `cad/{rails,upper-deck,switch-enclosure,antenna-pylon}` and `cad/enclosure/v2-20261013` into `cad/v2/` (script paths updated;
+older entries in this file and DECISIONS.md still say `cad/rails/...` etc: read them as `cad/v2/...`). Codex's `cad/enclosure/concept-20261013/` was NOT moved (not from this chat; the scripts read it from there).
+New `cad/v2/print-plates/`: OrcaSlicer plates R (both arch rails, 2 h 48 m, 36.5 g, enforcers under the 6 pegs/pads/shelf overhangs) and D (deck v3 top-up, 4 mm brim, 2 h 45 m, 42.7 g), EnderNeo / Generic PLA First Print / 0.20 Standard,
+`scripts/build_v2_orca_plates.py`, `scripts/verify_v2_orca_plates.py`. Not opened in the Orca GUI, not printed, not queued. Windows mirror: C:\PlatformIO\Gladiator2.
+
+## Deck v3 built + enclosure v2.3 - 2026-10-15 (Claude)
+
+`cad/upper-deck/v3-20261015/` (README there): derived from the master UpperDeck by boolean edits (master untouched): six old rail-screw holes filled; six through slots for rail pegs (3.6 x 8.6 locating at Y68.35,
+3.6 x 12.6 slotted at Y23.85 and Y112.85, X14 / X65); slotted retention holes 3.6 x 7.2 at (14|65, 83.5) for ONE M3 x 12 per rail into the rail insert; two O10 wire holes at (23, 44) and (56, 44) (my guess); 0.8 mm underside
+chamfers on every new hole (the deck prints top-up on the glass). Mast bore/collar, the mast-front slot, the four driver bosses and the antenna bosses are unchanged, so the printed driver mounts and the mast are re-used.
+Rails now carry the pegs (3.0 x 8.1 x 3.7) and one retention insert pad at Y83.5. Enclosure v2.3: boards and fins shifted 5 mm out along their 45 degree normals (real standoffs are 20 mm, CAD wedge model says 15),
+shoulders 4 mm wider (X-41 / X120), apertures cut as the board's swept path (30 mm back along the pull), bed-side chamfers on roof holes / status window / mast notch, switch enclosure floor and bezel.
+Sweeps: hood back 150 mm, right panel 120 mm, left panel 20 mm of 45 degree pull then outboard, 3 mm slack (was 4). All drafts, nothing printed.
+Open: wire-hole positions; measure the real standoff and driver position; deck stiffness; the roof recess under the front-panel tabs prints as a 1.3 mm depression on the bed face and needs a thin support.
+
+## Arch rails v4.1 - direct inserts, gussets, distributed hard points - 2026-10-15 (Claude)
+
+Jim: rails thick enough that heat-set inserts go straight in (also the one from above) but no more; every attachment strong with fans under overhangs (save space, not plastic); hard points varied.
+`cad/rails/v4-20261015/` now: band 8.5 wide, radial 7.0 at the legs growing to 8.5 over the top (8.5 = 7.5 insert + 1.0 floor); no bosses; three mount pads per rail filled down to the arch (no pad overhangs air);
+lateral fans at both leg bases; two fans under the right-rail switch shelf; hard points Y22 (Z40, under the deck socket), Y35.5 (Z46), Y59 (Z45) per rail for the hood. Left rail 18.3 cm3 (master rail 28.6).
+Strength estimate (arch_fe.py): 3.6 MPa worst case (4 g sideways), 0.33 mm. Enclosure v2.2: six tapered fan bosses (hood, M3 x 25), roof screw bosses have fan cones, switch shelf has fans.
+**Tried and dropped:** a front-panel hard point at the front pad: its boss sits under the deck and the driver wedge, and the right panel's 45 degree pull-out stopped after 7 mm. The front panels hang from the hood roof tabs.
+Sweeps: hood back 150 mm, right panel 120 mm, left panel two-leg path with 4 mm slack (unchanged). Still not built: deck v3.
+
+## Arch rails v4 draft + switch enclosure + enclosure v2.2 - 2026-10-15 (Claude)
+
+Supersedes the v3 portal rails (kept in cad/rails/v3-20261014). `cad/rails/v4-20261015/` (README there): elliptical arch rails, band 8 x 6 mm, inner face X18 so they print flat with no supports, about half the
+plastic of the master rails, foot screws unchanged and open above their foot blocks, three peg-socket pads per rail (one tight, two slotted), shell hard points (Y30 Z38.3, Y56 Z44.9) in hardpoints.json,
+switch shelf on the right rail. Rough 3D frame estimate (arch_fe.py): 4.8 MPa worst case at 4 g sideways against a 20 MPa allowable, 0.5 mm sideways. `cad/switch-enclosure/v1-20261015/`: open-rear switch box +
+bezel, two M3 x 25 through the top into inserts, same part on the rail shelf (shell off) or a shelf inside the hood (shell on). Enclosure v2.2 reads the hard points from the rails and has a 15.1 x 18.5 bezel window.
+Drafts, not printed. **Not built: deck v3** (pegs 3.0 x 8.1 x 7 on the arch centreline X14/X65 at Y24/68.5/113, optional slotted hole at Y90, wire holes). Open: nuts under the aluminium (assumed), retention,
+switch pin pitch and rating, INA cassette position if the rail mount is used. Re-run verify_enclosure_v2.py after any rail or neck change.
+
+## Rails v3 draft + enclosure v2.1 - 2026-10-14 (Claude)
+
+`cad/rails/v3-20261014/` (README there): inverted-T 9 mm runners with no floor, foot screws kept at the master positions with open access shafts, three plain peg sockets per rail
+(one locating, two slotted along Y) for a drop-in upper deck, one optional retention insert per rail, two horizontal M3 hard points per rail outer face (Y36, Y52, Z49), two O6 wire
+ports per rail, and a switch arm built into the RIGHT rail (flush with the rail face, knob tip Y-32.3). Enclosure v2.1 (`cad/enclosure/v2-20261013/`): hood bolted to the hard points by four
+M3 x 20 through 12 mm standoffs; skids, edge ribs and the exterior switch housing removed; 9 x 13 knob window in the hood rear wall. Drafts, not printed.
+**Not built yet: deck v3** (pegs 3.0 x 8.1 x 11 at Y22/68/114, slotted retention holes, wire holes). Until it exists the sockets stay empty. Open: foot-screw hardware under the aluminium,
+rail width, switch pin pitch and rating, stiffness of the 9 mm runner. Re-run verify_enclosure_v2.py after any rail or neck change.
+
+## Enclosure v2 built - 2026-10-13 (Claude)
+
+`cad/enclosure/v2-20261013/` (the README there is the detail; concept-20261013 is untouched). Four parts: rear hood (INA pod, SMA boss, status
+lens window), front left/right (heatsink bays; the power switch now lives in an exterior housing with a screwed bezel on the front-right face, Jim 2026-10-14, replacing the cutout), lens plate with a light-pipe tube. The hood rests on two rear skids on the
+aluminium deck plus stop ribs and ledges under the upper-deck edge; the front panels hang from the hood by 4 vertical M3 into heat-set inserts (roof tabs).
+Verified: single valid solids, zero overlap, the hood slides back 150 mm, the right panel has one straight 45 degree pull, the left panel has a two-leg path
+with 4 mm slack against the head neck arm. STLs are in the folder in print orientation; **not queued, not printed, not sliced**.
+Open: (1) status LED position is ASSUMED (hood X21, Y14; `led_x`/`led_y`), only the small lens plate needs reprinting if wrong; (2) S3 USB end assumed to be
+the rear; (3) SMA hole O7.0 (the pylon's modelled value) and, per Jim 2026-10-14, NO pocket around the nut or flange (2.0 mm flat land + spokes from r11; replacement
+pylon at cad/antenna-pylon/v3-20261014/); the pigtail needs about 35 mm more reach for the shell mount; (4) rear pod depth 16 against a plugged
+Dupont housing, unmeasured; (5) left panel slack is only 4 mm; (6) thermals, slicer pass, wall slivers (the erosion probe failed) and wiring loops are not checked.
+Switch: pin window assumes the pins fit 5 x 10 mm (no pitch measurement); rating unknown; use an inline connector. Ask Jim before queuing prints.
+
 ## Orientation supersedes earlier directional descriptions — 2026-10-09 (Codex)
 
 Jim chose **mast = FRONT**. Read ../ORIENTATION.md first: +Y forward, low X
@@ -21,6 +152,42 @@ host checks passed80802 track/trim cases and2025 IMU rebases. Chassis native
 reload preserved162 original shapes. IMU/ToF/radar remain offline; actual
 motor motion and measured IMU orientation have not been physically confirmed.
 
+
+## Head print plates for OrcaSlicer — 2026-10-06 (Claude)
+
+Jim asked for the head plates combined and the supports painted. Built `cad/head/orca-plates/`
+(`scripts/build_head_orca_plates.py`): three OrcaSlicer projects with Jim's EnderNeo / Generic PLA /
+0.20 Standard (4 walls, 30%) settings and painted supports. **A** pedestal, retainer, clamp cap, rotor,
+pulley, carriage (4 h 35 m, 52.8 g); **B** display frame, carrier, receiver, yoke, ToF and radar frames
+(6 h 20 m, 64.7 g); **C** Neck_Main with 8 mm brim (2 h 08 m, 26.8 g). Times are from headless Orca slices.
+- Supports: pedestal and display frame use manual enforcers (top-plate underside clear of r 14.7 around the
+  belt flange; four corner tabs). Neck_Main is auto with blockers in both bores, the tube-top lip and the
+  two clamp-bolt ears. Nothing else is supported. `support-map-A/B/C.png` show where the slicer put them.
+- Geometry untouched: all 13 parts match the released plates (volume, size, orientation).
+- Placed in `~/3D-Printer/Incoming/Gladiator/` with `START_HERE_head-ORCA-plates.txt`. **Not printed; Jim starts.**
+  The older v04 PLATE1-4 / v05 PLATE5 3MFs stay there, unpainted and superseded.
+- Not done: opening the projects in the Orca GUI (command-line slice only). The receiver's three bridged
+  roofs and the pedestal's 22 mm bridged roof at z 2.0 are unsupported as released.
+- Jim measured the horn arm thickness: 2.0 (see `measurements/mast-head.md`).
+- Also `cad/head/master/Gladiator_Head_Master.FCStd`: head-only viewing file, regenerate with
+  `xvfb-run -a freecad scripts/build_head_master.py`.
+
+## Power switch holder v1b — 2026-10-05 (Claude)
+
+**v1b replaces v1 (wrong hand).** Jim: v1 "is shaped to fit the right leg, not the left". Cause: **the master's handedness.** The front is
+at Y 0 and Z is up, so **low X is the robot's RIGHT**. `SideRailLeft` and the tray's "Base, left" are physically on the right, and the
+robot's left rail is `SideRailRight` (X 61-73). v1 was built against `SideRailLeft`. v1b is the same part mirrored about X 39.5,
+with every check rerun against `SideRailRight`, the tray, and "Base, right". All pass, with the same clearances.
+When Jim says left or right, map it to the master this way. The object names are not renamed.
+
+Jim wants the slide power switch held on the **left rail** in the rear leg space, carried by the raceway floor. **Knob to the rear,
+pins forward** (Jim rejected knob-inboard and pins-toward-rail), up = ON. Built `cad/power-switch/v1b/`
+(`scripts/build_power_switch_holder_v1b.py`, all checks pass). Switch measurements in `measurements/components.md`.
+- Pocket in the gap between the rail and the tray leg on that side, beside the rail's rear wall; the knob top is flush with the deck's rear edge (Y 140).
+- C-clip tongues on the raceway floor edge, plus a flange behind the rail's rear face. The tray leg (0.89 away) traps it. Fit it with the tray out.
+- The tray lift path was swept and is clear. Nothing on top of the rail, so the upper deck is unaffected.
+- Knob width 4.0, measured (window 5.0). Not printed; the STL is in `~/3D-Printer/Incoming/Gladiator/`. Jim starts prints.
+- Jim: in tray v2 the tray leg should hold the switch instead.
 
 ## Power tray v5 + INA226 cassette v2 — 2026-10-03 (Claude)
 
@@ -208,3 +375,44 @@ Jim clarified that single-arm and cross SG90 horns are available and the shaft-t
 ### 60T horn fit coupon — 2026-09-22
 
 Jim reports five holes in each arm of the cross horn. An isolated 60T printed drive-pulley coupon was generated at cad/head/drive-coupons-20260922/ with radial M2 slots covering 7–14 mm center radius, the accepted two-notch GT2 groove, and a 5.5 mm center-screw access hole. Saved CAD, STEP, STL, preview, README, and validation are present; the STL is one solid, 40.09 x 40.09 x 7.4 mm, with ~1145 mm2 bed contact. This is an unpowered horn/belt fit piece, not a full-drive release. Source: scripts/build_head_drive_coupon.py. Await physical horn-hole/screw/clearance check before integrating it into a corrected head candidate.
+
+## Completed independent mast-head review — 2026-10-05 (Codex)
+
+Reviewed corrected candidate: `cad/head/review-20261005/README.md`; downloadable archive and native CAD/STEP/STLs are in the same tree. Confirmed and fixed the horn-height update removing the tilt screw seat, plus the 0.1 mm diaphragm left by the fused support arm after restoring the seat. The candidate has BOTH fixes. See `docs/ai/agents/codex-head-review-20261005.md` for the exact cuts.
+
+Validation: 117,950 part/pose comparisons, zero detected collisions; no modeled ToF obstruction; clear axial cable probe; 24 valid assembly solids and 11 solid/manifold STL exports. Native and STEP reopen, matching volume, and exact comparison to captured source passed. Only GH44_Tilt_Receiver changes geometry. Master unchanged. Belt-at-carriage-end checks now regenerate the belt envelope; tilt sampled every 5 degrees. No print initiated or queue changed by this review.
+
+IMPORTANT integration follow-up: the current `scripts/build_head_v04.py` observed at review completion has adopted the roof fix but not the final screw-shank recut after fusion. That leaves a 0.1 mm diaphragm. Apply BOTH fixes and rebuild Plate 3 before calling its receiver equivalent to the reviewed candidate. Keep concurrent v04 work intact. Sensor mounts, flex harness/strain relief/stops, actual horn screw fit, and inner-race spacer availability remain open. No additional coupon was made.
+
+### Current head continuation — 2026-10-05 (Codex)
+
+The earlier IMPORTANT v04 integration follow-up is **resolved**: the final shank recut
+is in canonical source/native/STL and rebuilt Plate3. The saved assembly exactly matches
+the reviewed candidate; native/STEP and all four mechanical plates independently pass.
+Measured sensor mounts are now in isolated scripts/build_head_v05.py and
+cad/head/v05-sensor-mounts/. Full sweeps and delivery packaging are in progress.
+See the latest section of docs/ai/agents/codex-head-review-20261005.md and
+measurements/mast-head.md. Preserve other agents' work and all review evidence.
+
+### Head continuation completed — 2026-10-05 (Codex)
+
+The in-progress v05 state above is now **complete and validated**. Current prototype:
+cad/head/v05-sensor-mounts/README.md; native/STEP,13 STL and3-part Plate5 are delivered.
+Corrected canonical v04 Plates1–4 are included; receiver shank/roof blocker closed.
+Measured radar hole pitch15x23. Final rear stand-offs14 ToF/22 radar, nominal screws
+4 M3x16/4 M3x25. Radar was advanced10 for full modeled downward-field clearance.
+145,817 comparisons covered with documented exact-geometry reuse; all final gates and
+native/STEP/plate/preview verification pass. Archive:
+cad/head/integration-20261005/Gladiator_MastHead_v05_20261005.zip.
+
+Next work depends on actual assembly: connector leads/flex harness,strain relief/stops,
+horn screw fit,belt fit,9 mm inner-race spacer availability,screen alignment/screws and
+loaded stiffness. Optical/antenna planes/radar RF performance are unmeasured. No new
+coupon or print initiated. Preserve backups and concurrent agents' work.
+
+
+## Enclosure concept - 2026-10-13 (Codex)
+
+User requested an outer body to conceal wiring and finish Gladiator, retaining exposed masthead/heatsinks and allowing exterior antenna relocation. Isolated review model: cad/enclosure/concept-20261013/README.md. Three angular panels, roof Z108, main width97, shoulders153, Y-32..148. Includes current chassis geometry, current oriented v05 head, tray v5, INA cassette v2, switch v1b. Existing CAD sources untouched. Valid native and STEP shell reopen, three single solids, zero detected static volume intersections against selected modeled hardware. Not a print release; no manufacturing meshes or print job.
+
+Next: user style feedback and whether wire loops can be rerouted. Actual harness/connector clearance, panel fasteners/registers/removal sweeps, dynamic tracks/head, SMA mounting-land thickness/pigtail reach, ventilation/temperature and print orientation remain open. Source hashes and explicit limits in validation.json. Do not silently treat the proposed dimensions as measurements. Files also copied to Storage/Projects/Gladiator/enclosure-concept-20261013.

@@ -1,0 +1,32 @@
+{
+  "file": "Gladiator_Head_v04_PLATE1_Pedestal-Retainer-Cap.3mf",
+  "parts": [
+    "Pan_Raised_Pedestal",
+    "Pan_Retainer",
+    "Neck_Clamp_Cap"
+  ],
+  "objects_in_3mf": 3,
+  "triangles_ok": true,
+  "offbed": 0,
+  "overlaps": 0,
+  "volume_cm3": 21.42,
+  "grams_pla": 27,
+  "unit_mm": true,
+  "footprints_mm": {
+    "Pan_Raised_Pedestal": [
+      50.0,
+      51.5,
+      22.5
+    ],
+    "Pan_Retainer": [
+      43.0,
+      43.0,
+      3.0
+    ],
+    "Neck_Clamp_Cap": [
+      36.0,
+      13.7,
+      16.0
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+GLADIATOR HEAD v04 — CORRECTED PLATES, 2026-10-05
+
+Plate3 includes the corrected horn screw roof and fully open screw passage.
+Plate4 Neck_Main uses the measured16.5 mm horn hub height; no horn-height hold.
+Plate1 pedestal supports under top plate only; none in belt groove.
+Plate2 no supports. Plate3 support display tabs only.
+Plate4 brim and supports under C arm, riser and pad.
+PLA,0.2 mm,4 walls,30–40% infill. Do not auto-orient.
+For actual sensor mounting use v05 Plate5 and its assembly instructions.
+Physical belt/screw/spacer/harness checks remain. No print initiated.

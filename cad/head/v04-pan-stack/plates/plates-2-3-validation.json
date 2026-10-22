@@ -23,8 +23,20 @@
     "triangles_ok": true,
     "offbed": 0,
     "overlaps": 0,
-    "volume_cm3": 37.75,
-    "grams_pla": 47,
+    "volume_cm3": 36.81,
+    "grams_pla": 46,
     "tallest_mm": 61.2
+  },
+  "Gladiator_Head_v04_PLATE4_Neck_Main.3mf": {
+    "parts": [
+      "Neck_Main"
+    ],
+    "objects_in_3mf": 1,
+    "triangles_ok": true,
+    "offbed": 0,
+    "overlaps": 0,
+    "volume_cm3": 17.25,
+    "grams_pla": 21,
+    "tallest_mm": 43.1
   }
 }

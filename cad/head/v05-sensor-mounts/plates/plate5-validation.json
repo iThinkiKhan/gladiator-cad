@@ -1,0 +1,16 @@
+{
+  "Gladiator_Head_v05_PLATE5_SensorCarrier-ToF-Radar.3mf": {
+    "parts": [
+      "GH44_Dual_Carrier",
+      "ToF_Sensor_Frame",
+      "Radar_Sensor_Frame"
+    ],
+    "objects_in_3mf": 3,
+    "triangles_ok": true,
+    "offbed": 0,
+    "overlaps": 0,
+    "volume_cm3": 22.02,
+    "grams_pla": 27,
+    "tallest_mm": 25.0
+  }
+}

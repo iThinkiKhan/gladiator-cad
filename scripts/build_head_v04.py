@@ -9,10 +9,8 @@ What this builds (everything the PAN drive needs, calibrated and re-based):
     Pan_Drive_Pulley            60T with a horn plate that takes the real SG90 cross horn
     SG90 / horn / belt / bearings as clearance references
 
-What it INHERITS from v0.3, unchanged except a 1 mm lift (the tilt side, stage 2):
-    Tilt_Yoke, GH44 receiver and carriers, display frame, sensor envelopes.
-    Their screw holes are still at the v0.3 nominal sizes. They are NOT print-ready.
-
+Stage 2 regenerates the tilt yoke, GH44 receiver, carrier and display frame.
+Only sensor clearance envelopes and unused carrier variants remain inherited references.
 Frame: local = mast axis at the origin, mast top drawn at Z 120. Everything is stored in the
 FreeCAD file at real position, which is local + (39.5, 113, LIFT=10), so it overlays the master.
 
@@ -75,7 +73,12 @@ HORN_LONG, HORN_SHORT = 36.0, 19.0
 LONG_W_HUB, LONG_W_TIP, SHORT_W = 6.8, 4.8, 3.8
 BOSS_D, BOSS_UP = 7.1, 1.0
 ARM_T = 2.0           # ASSUMED, not measured. H6 will show it.
-HORN_G = 0.25         # ASSUMED gap between the case boss and the horn underside
+# MEASURED 2026-10-05 (Jim): ear underside to the top of the raised hub ring, horn pushed fully on = 16.5.
+# The old model put the arm top at 13.25 (horn sitting 0.25 over the case boss); the real horn stands on a
+# lower hub that covers the spline, so the arm top is 16.5 - BOSS_UP = 15.5 above the ear underside.
+HORN_TOP = 16.5
+HORN_G = HORN_TOP - BOSS_UP - ARM_T - (BOSS_TOP - EAR_UNDER)   # case boss to arm underside, 2.5
+LOWER_HUB_GAP = 0.25  # ASSUMED gap between the case boss and the bottom of the horn's lower hub
 HORN_C = 0.15         # SETTLED 2026-10-01: Jim, H6 "one notch horn pocket" (snug 0.15, not easy 0.30)
 # The recess was 1.3 on the H6 coupon. Here the spline top stands 1.25 above the arms, so 1.3 left
 # 0.05 mm to the roof, and the plate would have rested on the spline instead of clamping the horn.
@@ -109,7 +112,7 @@ def digest(p):
     return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-before = {str(MASTER): digest(MASTER), str(SOURCE): digest(SOURCE)}
+before = {str(MASTER): digest(MASTER), str(SOURCE): digest(SOURCE), str(Path(__file__)): digest(__file__)}
 
 
 # ================================================================== helpers
@@ -228,19 +231,24 @@ report = {'release': 'DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). 
           'source_sha256': before, 'parts': [], 'checks': {}, 'collisions': [],
           'pending': {}, 'assumed': {}, 'limitations': []}
 report['pending'] = {
-    'horn_height': 'NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets '
-                   'the pan servo pad height (Neck_Main) and so the belt alignment. Model: %.2f'
-                   % (BOSS_TOP - EAR_UNDER + HORN_G + ARM_T),
-    'circlip_on_H3b2': 'NOT reported: did the circlip seat in the groove on the winning post',
+    'sensor_mounting': 'ToF/radar attachment not yet designed; dual carrier remains held.',
+    'harness_and_stops': 'Flex routing, strain relief and mechanical stops are not designed.',
+    'horn_screws': 'Actual screw head and available thread engagement need full assembly checks.',
+    'bearing_spacer': 'The modeled 9 mm inner-race spacer is not confirmed available hardware.',
+    'screen': 'Pocket fit passed; final window alignment and corner screws remain unreported.',
 }
 report['settled'] = {
+    'HORN_TOP': '%.1f ear underside to the top of the hub ring, horn fully on (Jim, 2026-10-05); arm top %.1f'
+                % (HORN_TOP, HORN_TOP - BOSS_UP),
+    'circlip': 'seats on the 2-notch post, "circlip fits well" (Jim, 2026-10-03)',
     'POST_D': '%.2f, H3b 2-notch post wins (Jim, 2026-10-01)' % POST_D,
     'PILOT_M2': '%.2f, H4b midway between 1 and 2 notches (Jim, 2026-10-01)' % PILOT_M2,
     'HORN_C': '%.2f, H6a 1-notch snug pocket (Jim, 2026-10-01)' % HORN_C,
 }
 report['assumed'] = {
     'ARM_T': '%.1f horn arm thickness, NOT measured' % ARM_T,
-    'HORN_G': '%.2f gap between the case boss and the horn underside, NOT measured' % HORN_G,
+    'BOSS_UP': '%.1f hub ring above the arms ("about 1", Jim 10-01); sets the arm top under the 16.5 reading' % BOSS_UP,
+    'LOWER_HUB_GAP': '%.2f case boss to the bottom of the horn lower hub, NOT measured' % LOWER_HUB_GAP,
     'SHAFT_NEAR': '%.1f from the near body end, about +-0.6' % SHAFT_NEAR,
     'servo_cross_centre': 'shaft assumed centred across the 12 mm width',
     'horn_screw_head': 'about 4 mm, read off a photo, NOT measured',
@@ -416,8 +424,10 @@ def servo_shape():
 
 
 def horn_shape(z_under):
-    h = fuse(horn_solid(0.0, z_under, ARM_T), cyl(BOSS_D / 2, z_under + ARM_T, BOSS_UP))
-    return h.cut(cyl(2.5, z_under - 0.1, ARM_T + BOSS_UP + 0.2))      # the spline socket
+    lower = HORN_G - LOWER_HUB_GAP
+    h = fuse(horn_solid(0.0, z_under, ARM_T), cyl(BOSS_D / 2, z_under + ARM_T, BOSS_UP),
+             cyl(BOSS_D / 2, z_under - lower, lower + 0.01))    # lower hub over the spline (diameter ASSUMED 7.1)
+    return h.cut(cyl(2.5, z_under - HORN_G, HORN_G + ARM_T - 0.9))   # the spline socket, blind: about 2.0 over the spline
 
 
 def horn_plate(z_rim, z_far, wall=2.0):
@@ -549,7 +559,25 @@ far_l = TS_X0 - (-21.0) + 0.5                                     # reaches 0.5 
 tilt_plate = to_tilt(horn_plate(rim_l, far_l))
 rec = fuse(rec, backbone, left_arm, right_arm, tilt_plate)
 rec = rec.cut(box(-9, -53, TZ - 5, 18, 12, 10))                  # cable window
-rec = rec.cut(cx(3.5, -25.5, 7.0, T.y, TZ))                       # driver access to the horn screw
+# Driver access to the horn screw. It must stop at the outer face of the 1.2 roof the screw head bears on:
+# a fixed 7.0 cut removed that roof completely once the 16.5 horn height moved the plate outward
+# (found by Codex, 2026-10-05). The assert below checks the bearing annulus is still solid.
+ROOF_OUT_X = TS_X0 - (rim_l + POCKET_DEPTH + BOSS_RECESS + ROOF_T)
+rec = rec.cut(cx(3.5, -25.5, ROOF_OUT_X - (-25.5), T.y, TZ))
+# Recut the screw passage AFTER fusing the supporting arm. Its x=-21 face
+# otherwise seals 0.1 mm of the hole after the horn-height correction.
+rec = rec.cut(cx(CENTRE_HOLE / 2, -25.6, TS_X0 - rim_l + 25.7, T.y, TZ))
+_shank = cx(CENTRE_HOLE / 2 - .01, -25.5, TS_X0 - rim_l + 25.5, T.y, TZ)
+_shank_overlap = rec.common(_shank).Volume
+assert _shank_overlap < 1e-6, 'tilt horn screw passage blocked after fusion'
+report['checks']['tilt_screw_shank_overlap_mm3'] = _shank_overlap
+_ann = cx(2.0, ROOF_OUT_X, ROOF_T, T.y, TZ).cut(cx(CENTRE_HOLE / 2, ROOF_OUT_X - 0.1, ROOF_T + 0.2, T.y, TZ))
+_left = rec.common(_ann).Volume
+print('tilt horn screw roof: %.3f of %.3f mm3 solid, outer face x %.2f' % (_left, _ann.Volume, ROOF_OUT_X))
+assert abs(_left - _ann.Volume) < 1e-6, 'the driver cut ate the horn screw roof'
+report['checks']['tilt_screw_bearing_annulus_mm3'] = _left
+report['checks']['tilt_screw_bearing_annulus_expected_mm3'] = _ann.Volume
+report['checks']['tilt_screw_roof_thickness_mm'] = ROOF_T
 addp('GH44_Tilt_Receiver', rec, 'tilt', 'tested register; horn plate drive; M3 pivot hole', 'Tilt')
 
 # --- GH44 dual carrier --------------------------------------------------------------------------------
@@ -632,14 +660,16 @@ report['checks']['robot_solids_missing'] = [n for n in ROBOT_NAMES if n not in r
 A.closeDocument(master.Name)
 
 # ================================================================== collision sweeps
-TILTS = (-25.0, 0.0, 25.0)
+TILTS = tuple(float(t) for t in range(-25, 26, 5))
 PAN_SAMPLES = [float(a) for a in range(int(HEAD_TRAVEL[0]), int(HEAD_TRAVEL[1]) + 1, 5)]
 SERVO_SIDE = ('SG90_Pan_Reference', 'Pan_Servo_Carriage', 'Pan_Drive_Pulley', 'Pan_Horn_Reference',
               'Pan_Belt_Reference')
 
 
 def posed(p, pan=0.0, tilt=0.0, C=None):
-    s = p['shape'].copy()
+    # A sliding servo changes both pulley spacing and the belt path. This is
+    # a taut-path envelope; slack/sag and installation need physical checks.
+    s = rotF(belt_for(C)) if C is not None and p.get('name') == 'Pan_Belt_Reference' else p['shape'].copy()
     if C is not None and p.get('name') in SERVO_SIDE and p['name'] != 'Pan_Belt_Reference':
         u = A.Vector(math.cos(math.radians(SERVO_ANG)), math.sin(math.radians(SERVO_ANG)), 0)
         s.translate(u * (C - C_NOM))
@@ -698,9 +728,13 @@ for a, b in itertools.combinations(plist, 2):
 report['checks']['head_pair_pose_tests'] = tests
 
 tests = 0
-for pan in PAN_SAMPLES:
-    for tilt in TILTS:
-        for p in plist:
+for p in plist:
+    # Test each distinct pose. Fixed parts ignore both axes; pan-only parts
+    # ignore tilt. This preserves coverage without repeating the same Boolean.
+    pans = PAN_SAMPLES if p['motion'] in ('pan', 'tilt', 'servo') else (0.0,)
+    tilts = TILTS if p['motion'] == 'tilt' else (0.0,)
+    for pan in pans:
+        for tilt in tilts:
             s = posed(p, pan, tilt)
             for n, r in robot:
                 tests += 1
@@ -713,7 +747,7 @@ report['checks']['robot_pair_pose_tests'] = tests
 tests = 0
 for C in (C_MIN, C_MAX):
     for pan in range(-20, 181, 20):
-        for tilt in (0.0, 25.0):
+        for tilt in (-25.0, 0.0, 25.0):
             for a in [byname[n] for n in SERVO_SIDE]:
                 sa = posed(a, float(pan), tilt, C)
                 for b in plist:
@@ -819,7 +853,7 @@ report['service_paths']['horn_screw_from_above'] = {
 
 # service paths 5-7, the tilt side.
 # 5: the tilt horn screw, driver along the tilt axis from the left, through the receiver's access hole
-tilt_cyl = cx(3.4, -90.0, 90.0 - 19.2, T.y, TZ)
+tilt_cyl = cx(3.4, -90.0, (ROOF_OUT_X - 0.05) + 90.0, T.y, TZ)   # stops at the roof the screw head bears on
 tilt_bad = {}
 for tilt in TILTS:
     for p in plist:
@@ -889,6 +923,11 @@ for pan in PAN_SAMPLES:
 
 report['checks']['all_parts_single_valid_solid'] = all(p['shape'].isValid() and len(p['shape'].Solids) == 1
                                                        for p in plist)
+report['checks']['belt_path_at_carriage_ends'] = {
+    str(c): {'pitch_path_length_mm': belt_len(c, R_DRIVE_P, R_DRIVEN_P),
+             'available_belt_length_mm': BELT_TEETH * PITCH,
+             'note': 'Taut envelope only; set tension on the actual belt, not at a prescribed stop.'}
+    for c in (C_MIN, C_NOM, C_MAX)}
 report['drive'] = {
     'teeth_drive_on_servo': N_DRIVE, 'teeth_driven_on_head': N_DRIVEN,
     'ratio_head_per_servo_deg': RATIO, 'head_travel_deg': list(HEAD_TRAVEL),
@@ -907,7 +946,7 @@ report['stack_Z'] = {'plate_rim': PLATE_RIM_Z, 'plate_top_belt_channel_bottom': 
 
 # ================================================================== the FreeCAD document
 doc = A.newDocument('GladiatorHeadV04')
-doc.Label = 'Gladiator head v0.4 - pan stack (stage 1)'
+doc.Label = 'Gladiator head v0.4 - pan and tilt, corrected 2026-10-05'
 groups = {}
 def grp(name):
     if name not in groups:
@@ -986,7 +1025,7 @@ def bed_area(shape):
 rp = R_ROT - 0.7
 exports = {
     'Neck_Main': (neck, 'mast axis vertical, collar on the bed; the C arm, riser and pad need support',
-                  'HOLD: the horn height above the ear underside is not measured (it sets the pad height); the circlip on the winning post was not reported',
+                  'released: horn top 16.5 above the ear underside (Jim, 10-05) sets the pad height; circlip seats on the 2-notch post',
                   [((0, 12.5, 110), True), ((0, 0, 110), False), ((0, 9.3, 112), True)]),
     'Neck_Clamp_Cap': (front, 'as modelled, axis vertical, lugs on the bed; no support', 'none - tested geometry',
                        [((0, -12, 110), True), ((0, -8, 110), False)]),
@@ -1012,7 +1051,7 @@ exports = {
                   'released: H4b settled the ear pilots (2.35)',
                   [((-1.3, T.y, TZ + 5), False), ((30.5, -30, TZ - 10), True), ((30.5, T.y, TZ), False)]),
     'GH44_Tilt_Receiver': (parts['GH44_Tilt_Receiver']['shape'],
-                           'GH44 face DOWN (register recess on the bed, relieved), arms up; no support',
+                           'GH44 face DOWN (through register opening on the bed, relieved), arms up; no support',
                            'released: H6a snug pocket (0.15) won',
                            [((10, -51.5, TZ + 8), False), ((18, -50, TZ), True), ((25.5, T.y, TZ), False),
                             ((25.5, -40, TZ), True)]),
@@ -1026,7 +1065,7 @@ exports = {
 }
 # print orientation: a rotation applied before dropping each part onto the bed
 X_AXIS = A.Vector(1, 0, 0)
-HOLD = {'Neck_Main', 'GH44_Dual_Carrier'}       # the horn height; the sensor mounting
+HOLD = {'GH44_Dual_Carrier'}       # the sensor mounting (Neck_Main released 2026-10-05: horn top 16.5)
 ROT = {'GH44_Tilt_Receiver': (X_AXIS, 90.0),      # the face (y = -52) goes down
        'GH44_Dual_Carrier': (X_AXIS, 90.0),       # the sensor plate (y = -58) goes down
        'Rear_Display_Frame': (X_AXIS, -90.0)}     # the bezel face (y = +6.2) goes down
@@ -1075,11 +1114,12 @@ report['limitations'] = [
     'the picture.',
     'The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.',
     'Settled by the final coupon plate (Jim, 2026-10-01): POST_D %.2f (H3b), PILOT_M2 %.2f (H4b), '
-    'HORN_C %.2f (H6). Not reported: whether the circlip seated on the winning post.' % (POST_D, PILOT_M2, HORN_C),
-    'The horn arm thickness (%.1f) and the boss-to-horn gap (%.2f) are ASSUMED. They set the servo height, so '
-    'they set the belt alignment. The first assembly should leave room to shim it.' % (ARM_T, HORN_G),
+    'HORN_C %.2f (H6). Circlip seating confirmed by Jim, 2026-10-03.' % (POST_D, PILOT_M2, HORN_C),
+    'The installed horn hub top is measured at 16.5 above the ear underside. Arm thickness %.1f, '
+    'approximately 1 mm hub rise and lower hub geometry remain partly assumed; derived gap %.2f. '
+    'Verify the complete screw and belt fit at first assembly.' % (ARM_T, HORN_G),
     'Servo shaft position along the body is +-0.6. The carriage slot covers it.',
-    'Sampled rigid-solid checks every 5 degrees of pan. They do not prove clearance between samples, nor '
+    'Sampled rigid-solid checks every 5 degrees of pan and tilt. They do not prove clearance between samples, nor '
     'cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.',
     'The belt can be fitted with the carriage at its slack end, but that is argued, not tested.',
     'No load, torque or payload rating is claimed.']
@@ -1088,11 +1128,15 @@ report['checks']['sampled_geometry_pass'] = (
     not [c for c in report['collisions']] and not report['fov_intersections']
     and report['checks']['all_parts_single_valid_solid']
     and report['checks']['cable_passage_11_9mm_overlap_mm3'] < .01
-    and report['checks']['master_unchanged'])
+    and report['checks']['master_unchanged']
+    and not report['checks']['robot_solids_missing']
+    and not tilt_bad
+    and all(r['on_z0'] and r['probes_pass'] and r['mesh_solid']
+            and not r['mesh_non_manifold'] and r['mesh_volume_error_pct'] < .1 for r in exp_report))
 (OUT / 'validation.json').write_text(json.dumps(report, indent=2, default=str) + '\n')
 (OUT / 'head-config.json').write_text(json.dumps({
     'drive': report['drive'], 'stack_Z': report['stack_Z'], 'pending': report['pending'],
-    'assumed': report['assumed'], 'release': report['release']}, indent=2) + '\n')
+    'assumed': report['assumed'], 'settled': report['settled'], 'release': report['release']}, indent=2) + '\n')
 
 NL = chr(10)
 lines = ['stack: ZC %.2f  plate rim %.2f  ARM_TOP %.2f  horn under %.2f  ZP %.2f  servo bottom %.2f  pad %.2f..%.2f  tilt axis %.1f'
@@ -1115,6 +1159,7 @@ lines += ['', 'tests: head %d  robot %d  carriage-end %d' % (
     'horn screw from above, open pans: %s' % report['service_paths']['horn_screw_from_above']['open_pans'],
     'horn screw blocked by: %s' % sorted(set(x[1] for v in horn_bad.values() for x in v)),
     'tilt horn screw along the axis blocked: %s' % tilt_bad,
+    'tilt horn screw roof: %.3f of %.3f mm3 solid, outer face x %.2f' % (_left, _ann.Volume, ROOF_OUT_X),
     'yoke bolts from above blocked: %s' % {k: sorted(set(v)) for k, v in yb_bad.items()},
     'GH44 carrier screws from the front blocked by: %s' % sorted(set(b for _, b in gh_bad)), '']
 seen = {}
@@ -1128,6 +1173,9 @@ for r in exp_report:
     lines.append('%-22s %5.1f x %5.1f x %5.1f  %5.2f cm3  bed %4s  probes %s  mesh %s' % (
         r['part'], r['size_mm'][0], r['size_mm'][1], r['size_mm'][2], r['volume_cm3'], r['bed_contact_mm2'],
         r['probes_pass'], 'ok' if r['mesh_solid'] and not r['mesh_non_manifold'] else 'BAD'))
+(OUT / 'build-summary.txt').write_text(NL.join(lines))
 Path('/tmp/v04_summary.txt').write_text(NL.join(lines))
 print(NL.join(lines))
 A.closeDocument(doc.Name)
+if not report['checks']['sampled_geometry_pass']:
+    raise RuntimeError('v04 failed validation; do not regenerate or replace print plates.')

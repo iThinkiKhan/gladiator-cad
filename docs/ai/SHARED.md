@@ -32,3 +32,10 @@ a centered servo home). Historical aliases and print plates stay unchanged.
 No cross-agent state has been formally summarized here yet.
 
 Agents should add concise, verified current state as work proceeds.
+
+## Current measured head prototype — 2026-10-05
+
+cad/head/v05-sensor-mounts/README.md: reviewed v04 mechanics with corrected tilt screw
+roof/passage,42x27.5 ToF and22x30 radar on removable frames. CAD/meshes/plates validated;
+canonical v04 Plates1–4 plus sensor Plate5 delivered. Measurement provenance in
+measurements/mast-head.md; remaining physical/harness work in HANDOFF.md.

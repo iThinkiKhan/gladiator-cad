@@ -1,0 +1,47 @@
+{
+  "native_reopened_valid": true,
+  "step_valid": true,
+  "step_solids": 26,
+  "step_relative_volume_error": 8.573764263915583e-11,
+  "preview_matches_final_native": true,
+  "geometry_changes_vs_reviewed_v04": [
+    "GH44_Dual_Carrier",
+    "ToF_Sensor_Frame",
+    "Radar_Sensor_Frame",
+    "Dual_ToF_Envelope",
+    "Dual_Radar_Envelope"
+  ],
+  "symmetric_difference_mm3": {
+    "Neck_Main": 0.0,
+    "Neck_Clamp_Cap": 0.0,
+    "Pan_Servo_Carriage": 0.0,
+    "Pan_Bearing_Lower": 0.0,
+    "Pan_Bearing_Upper": 0.0,
+    "Pan_Inner_Spacer": 0.0,
+    "Pan_Circlip_Envelope": 0.0,
+    "Pan_Rotor": 0.0,
+    "Pan_Retainer": 0.0,
+    "Pan_Raised_Pedestal": 0.0,
+    "Pan_Drive_Pulley": 0.0,
+    "SG90_Pan_Reference": 0.0,
+    "Pan_Horn_Reference": 0.0,
+    "Pan_Belt_Reference": 0.0,
+    "SG90_Tilt_Reference": 0.0,
+    "Tilt_Horn_Reference": 0.0,
+    "Tilt_Yoke": 0.0,
+    "Tilt_Pivot_Bolt": 0.0,
+    "GH44_Tilt_Receiver": 0.0,
+    "GH44_Dual_Carrier": 1812.75574165,
+    "Dual_ToF_Envelope": 22794.51014921,
+    "Dual_Radar_Envelope": 19091.75242537,
+    "Rear_Display_Frame": 0.0,
+    "ST7789_Board": 0.0
+  },
+  "plates": {
+    "Gladiator_Head_v05_PLATE5_SensorCarrier-ToF-Radar.3mf": {
+      "objects": 3,
+      "canonical_stl_topology_match": true,
+      "vertices_within_bed": true
+    }
+  }
+}

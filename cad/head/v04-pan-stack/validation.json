@@ -2,10 +2,15 @@
   "release": "DESIGN CANDIDATE, stages 1 (pan stack) and 2 (tilt side). Not released.",
   "source_sha256": {
     "/home/buralien/projects/gladiator-cad/cad/master/Gladiator_Master.FCStd": "0b2bc7267ca5a5a4ae1fffe02ee9e54d85970d9cc780f7abbfea8a07bee3f913",
-    "/home/buralien/projects/gladiator-cad/cad/head/v03-belt/Gladiator_Head_v03_Belt.FCStd": "b7f5fc285b3093a877580b4aa0ca9a6333f624abe135da4b6ccb6cb4b585509b"
+    "/home/buralien/projects/gladiator-cad/cad/head/v03-belt/Gladiator_Head_v03_Belt.FCStd": "b7f5fc285b3093a877580b4aa0ca9a6333f624abe135da4b6ccb6cb4b585509b",
+    "/home/buralien/projects/gladiator-cad/scripts/build_head_v04.py": "228b5aab327ee1333d451dcba99aaa1191ff52ee734eecb20bdb387a5779d69e"
   },
   "parts": [],
   "checks": {
+    "tilt_screw_shank_overlap_mm3": 0.0,
+    "tilt_screw_bearing_annulus_mm3": 4.1846014145816115,
+    "tilt_screw_bearing_annulus_expected_mm3": 4.184601414581621,
+    "tilt_screw_roof_thickness_mm": 1.2,
     "master_mast_top_z": "130.0 mm",
     "robot_solids_compared": [
       "MastTube",
@@ -29,22 +34,43 @@
       "DrvV5_Fins_R"
     ],
     "robot_solids_missing": [],
-    "head_pair_pose_tests": 13432,
-    "robot_pair_pose_tests": 56088,
-    "carriage_end_pose_tests": 8360,
+    "head_pair_pose_tests": 39024,
+    "robot_pair_pose_tests": 66386,
+    "carriage_end_pose_tests": 12540,
     "cable_passage_11_9mm_overlap_mm3": 0.0,
     "all_parts_single_valid_solid": true,
+    "belt_path_at_carriage_ends": {
+      "37.0": {
+        "pitch_path_length_mm": 175.09809077312016,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      },
+      "39.75": {
+        "pitch_path_length_mm": 180.52178055708052,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      },
+      "40.4": {
+        "pitch_path_length_mm": 181.80527151964554,
+        "available_belt_length_mm": 180.0,
+        "note": "Taut envelope only; set tension on the actual belt, not at a prescribed stop."
+      }
+    },
     "master_unchanged": true,
     "sampled_geometry_pass": true
   },
   "collisions": [],
   "pending": {
-    "horn_height": "NOT measured: ear underside to the top of the horn arms, horn pushed fully on. It sets the pan servo pad height (Neck_Main) and so the belt alignment. Model: 13.25",
-    "circlip_on_H3b2": "NOT reported: did the circlip seat in the groove on the winning post"
+    "sensor_mounting": "ToF/radar attachment not yet designed; dual carrier remains held.",
+    "harness_and_stops": "Flex routing, strain relief and mechanical stops are not designed.",
+    "horn_screws": "Actual screw head and available thread engagement need full assembly checks.",
+    "bearing_spacer": "The modeled 9 mm inner-race spacer is not confirmed available hardware.",
+    "screen": "Pocket fit passed; final window alignment and corner screws remain unreported."
   },
   "assumed": {
     "ARM_T": "2.0 horn arm thickness, NOT measured",
-    "HORN_G": "0.25 gap between the case boss and the horn underside, NOT measured",
+    "BOSS_UP": "1.0 hub ring above the arms (\"about 1\", Jim 10-01); sets the arm top under the 16.5 reading",
+    "LOWER_HUB_GAP": "0.25 case boss to the bottom of the horn lower hub, NOT measured",
     "SHAFT_NEAR": "5.9 from the near body end, about +-0.6",
     "servo_cross_centre": "shaft assumed centred across the 12 mm width",
     "horn_screw_head": "about 4 mm, read off a photo, NOT measured"
@@ -53,14 +79,16 @@
     "Stage 2 regenerates the tilt yoke, GH44 receiver, dual carrier and display frame from code. Still NOT designed: how the ToF and radar boards fasten to the carrier (their hole coordinates are not measured), and the cable harness. The sensor envelopes and the other carrier variants are v0.3 references only.",
     "The display holes are 58.25 x 26.00 (confirmed), but their offset to the board edges is ASSUMED symmetric. The pin edge is put at +X (the viewer's left from behind the robot); firmware can rotate the picture.",
     "The tilt pivot is an M3 bolt running in a 3.6 hole in PLA: fine for a prototype, it will wear.",
-    "Settled by the final coupon plate (Jim, 2026-10-01): POST_D 20.05 (H3b), PILOT_M2 2.35 (H4b), HORN_C 0.15 (H6). Not reported: whether the circlip seated on the winning post.",
-    "The horn arm thickness (2.0) and the boss-to-horn gap (0.25) are ASSUMED. They set the servo height, so they set the belt alignment. The first assembly should leave room to shim it.",
+    "Settled by the final coupon plate (Jim, 2026-10-01): POST_D 20.05 (H3b), PILOT_M2 2.35 (H4b), HORN_C 0.15 (H6). Circlip seating confirmed by Jim, 2026-10-03.",
+    "The installed horn hub top is measured at 16.5 above the ear underside. Arm thickness 2.0, approximately 1 mm hub rise and lower hub geometry remain partly assumed; derived gap 2.50. Verify the complete screw and belt fit at first assembly.",
     "Servo shaft position along the body is +-0.6. The carriage slot covers it.",
-    "Sampled rigid-solid checks every 5 degrees of pan. They do not prove clearance between samples, nor cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.",
+    "Sampled rigid-solid checks every 5 degrees of pan and tilt. They do not prove clearance between samples, nor cable behaviour, belt tooth mesh, stiffness, creep, or that the belt can be fitted.",
     "The belt can be fitted with the carriage at its slack end, but that is argued, not tested.",
     "No load, torque or payload rating is claimed."
   ],
   "settled": {
+    "HORN_TOP": "16.5 ear underside to the top of the hub ring, horn fully on (Jim, 2026-10-05); arm top 15.5",
+    "circlip": "seats on the 2-notch post, \"circlip fits well\" (Jim, 2026-10-03)",
     "POST_D": "20.05, H3b 2-notch post wins (Jim, 2026-10-01)",
     "PILOT_M2": "2.35, H4b midway between 1 and 2 notches (Jim, 2026-10-01)",
     "HORN_C": "0.15, H6a 1-notch snug pocket (Jim, 2026-10-01)"
@@ -91,11 +119,11 @@
     "drive_pulley_to_pedestal_mm": 1.0,
     "drive_pulley_to_yoke_mm": 5.4,
     "drive_pulley_to_retainer_mm": 4.0,
-    "drive_pulley_to_servo_body_mm": 0.35,
+    "drive_pulley_to_servo_body_mm": 1.711,
     "servo_body_to_neck_mm": 0.4,
     "neck_arm_to_rotor_mm": 1.0,
-    "spline_to_pulley_roof_mm": 0.35,
-    "horn_to_servo_boss_mm": 0.25
+    "spline_to_pulley_roof_mm": 2.6,
+    "horn_to_servo_boss_mm": 2.5
   },
   "service_paths": {
     "retainer_screws_from_above": {
@@ -340,7 +368,151 @@
             "Tilt_Pivot_Bolt"
           ]
         ],
+        "-20.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-15.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-10.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "-5.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
         "0.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "5.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "10.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "15.0": [
+          [
+            "x-20",
+            "SG90_Tilt_Reference"
+          ],
+          [
+            "x-20",
+            "Tilt_Horn_Reference"
+          ],
+          [
+            "x-20",
+            "GH44_Tilt_Receiver"
+          ],
+          [
+            "x+20",
+            "Tilt_Pivot_Bolt"
+          ]
+        ],
+        "20.0": [
           [
             "x-20",
             "SG90_Tilt_Reference"
@@ -431,11 +603,11 @@
     "plate_top_belt_channel_bottom": 155.0,
     "arm_top": 152.2,
     "horn_underside": 150.2,
-    "servo_ear_plane": 138.95,
-    "servo_body_bottom": 121.44999999999999,
+    "servo_ear_plane": 136.7,
+    "servo_body_bottom": 119.19999999999999,
     "pad": [
-      131.45,
-      135.95
+      129.2,
+      133.7
     ],
     "pedestal_top_plate": [
       165.5,
@@ -451,14 +623,14 @@
       "part": "Neck_Main",
       "file": "Gladiator_Head_v04_Neck_Main.stl",
       "print_orientation": "mast axis vertical, collar on the bed; the C arm, riser and pad need support",
-      "gate": "HOLD: the horn height above the ear underside is not measured (it sets the pad height); the circlip on the winning post was not reported",
+      "gate": "released: horn top 16.5 above the ear underside (Jim, 10-05) sets the pad height; circlip seats on the 2-notch post",
       "size_mm": [
         78.2,
         86.2,
         43.1
       ],
-      "volume_cm3": 17.65,
-      "grams_pla": 21.9,
+      "volume_cm3": 17.26,
+      "grams_pla": 21.4,
       "bed_contact_mm2": 142,
       "bed_relief_edges": 0,
       "on_z0": true,
@@ -467,7 +639,7 @@
       "mesh_solid": true,
       "mesh_non_manifold": false,
       "mesh_volume_error_pct": 0.016,
-      "released": false
+      "released": true
     },
     {
       "part": "Neck_Clamp_Cap",
@@ -626,15 +798,15 @@
     {
       "part": "GH44_Tilt_Receiver",
       "file": "Gladiator_Head_v04_GH44_Tilt_Receiver.stl",
-      "print_orientation": "GH44 face DOWN (register recess on the bed, relieved), arms up; no support",
+      "print_orientation": "GH44 face DOWN (through register opening on the bed, relieved), arms up; no support",
       "gate": "released: H6a snug pocket (0.15) won",
       "size_mm": [
         54.0,
         44.0,
         46.1
       ],
-      "volume_cm3": 10.91,
-      "grams_pla": 13.5,
+      "volume_cm3": 9.97,
+      "grams_pla": 12.4,
       "bed_contact_mm2": 1256,
       "bed_relief_edges": 4,
       "on_z0": true,

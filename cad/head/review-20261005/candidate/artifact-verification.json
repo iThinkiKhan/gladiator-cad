@@ -1,0 +1,37 @@
+{
+  "native_reopened_valid": true,
+  "step_valid": true,
+  "step_solids": 24,
+  "step_relative_volume_error": 8.785515227657312e-11,
+  "changed_geometry_only": [
+    "GH44_Tilt_Receiver"
+  ],
+  "symmetric_difference_mm3": {
+    "Neck_Main": 0.0,
+    "Neck_Clamp_Cap": 0.0,
+    "Pan_Servo_Carriage": 0.0,
+    "Pan_Bearing_Lower": 0.0,
+    "Pan_Bearing_Upper": 0.0,
+    "Pan_Inner_Spacer": 0.0,
+    "Pan_Circlip_Envelope": 0.0,
+    "Pan_Rotor": 0.0,
+    "Pan_Retainer": 0.0,
+    "Pan_Raised_Pedestal": 0.0,
+    "Pan_Drive_Pulley": 0.0,
+    "SG90_Pan_Reference": 0.0,
+    "Pan_Horn_Reference": 0.0,
+    "Pan_Belt_Reference": 0.0,
+    "SG90_Tilt_Reference": 0.0,
+    "Tilt_Horn_Reference": 0.0,
+    "Tilt_Yoke": 0.0,
+    "Tilt_Pivot_Bolt": 0.0,
+    "GH44_Tilt_Receiver": 35.28636869,
+    "GH44_Dual_Carrier": 0.0,
+    "Rear_Display_Frame": 0.0,
+    "ST7789_Board": 0.0,
+    "Dual_ToF_Envelope": 0.0,
+    "Dual_Radar_Envelope": 0.0
+  },
+  "saved_receiver_screw_seat_mm3": 4.184601414581606,
+  "saved_receiver_screw_passage_overlap_mm3": 0.0
+}

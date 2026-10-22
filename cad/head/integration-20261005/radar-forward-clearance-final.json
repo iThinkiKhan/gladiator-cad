@@ -1,0 +1,22 @@
+[
+  {
+    "forward_shift_mm": 9,
+    "hits": 1,
+    "maximum_intersection_mm3": 0.12932362706042377
+  },
+  {
+    "forward_shift_mm": 10,
+    "hits": 0,
+    "maximum_intersection_mm3": 0
+  },
+  {
+    "forward_shift_mm": 11,
+    "hits": 0,
+    "maximum_intersection_mm3": 0
+  },
+  {
+    "forward_shift_mm": 12,
+    "hits": 0,
+    "maximum_intersection_mm3": 0
+  }
+]

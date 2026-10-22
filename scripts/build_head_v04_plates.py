@@ -3,8 +3,8 @@
     Plate 2, pan drive:  Pan_Rotor, Pan_Drive_Pulley, Pan_Servo_Carriage       (no supports)
     Plate 3, tilt side:  Tilt_Yoke, GH44_Tilt_Receiver, Rear_Display_Frame     (supports: frame tabs)
 
-Held back on purpose: Neck_Main (the horn height is not measured) and GH44_Dual_Carrier (no sensor
-mounting yet). Plate 1 is built by build_head_v04_plate1.py and is unchanged.
+Plate 4, Neck_Main, added 2026-10-05 once the horn height was measured (16.5 to the hub ring top).
+Held back on purpose: GH44_Dual_Carrier (no sensor mounting yet). Plate 1 is built by build_head_v04_plate1.py and is unchanged.
 Reads the STLs written by build_head_v04.py. Run with freecadcmd on the CAD server.
 """
 import sys, zipfile, json
@@ -21,7 +21,16 @@ PLATES = {
         ['Pan_Rotor', 'Pan_Drive_Pulley', 'Pan_Servo_Carriage'],
     'Gladiator_Head_v04_PLATE3_Tilt_Yoke-Receiver-DisplayFrame.3mf':
         ['Tilt_Yoke', 'GH44_Tilt_Receiver', 'Rear_Display_Frame'],
+    'Gladiator_Head_v04_PLATE4_Neck_Main.3mf':
+        ['Neck_Main'],
 }
+validation = json.loads((OUT / 'validation.json').read_text())
+assert validation['checks']['sampled_geometry_pass'], 'Head build must pass before plate generation'
+approved = {r['part']: r for r in validation['stl']}
+for names in PLATES.values():
+    for name in names:
+        assert approved[name]['released'], name + ' is held'
+        assert approved[name]['mesh_solid'] and not approved[name]['mesh_non_manifold'], name
 NL = chr(10)
 
 
@@ -99,6 +108,7 @@ for fname, names in PLATES.items():
             a, b = items[i][1].BoundBox, items[j][1].BoundBox
             if a.XMin < b.XMax and b.XMin < a.XMax and a.YMin < b.YMax and b.YMin < a.YMax:
                 overlaps += 1
+    assert offbed == 0 and overlaps == 0, fname + ' layout failed'
     path = OUT / 'plates' / fname
     write_3mf(str(path), fname[:-4], items)
     xml = zipfile.ZipFile(str(path)).read('3D/3dmodel.model').decode()
