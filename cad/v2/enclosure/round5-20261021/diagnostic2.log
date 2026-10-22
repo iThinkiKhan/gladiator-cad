@@ -1,0 +1,34 @@
+Compound 
+CASCADE Topology V1, (c) Matra-Datavision
+Locations 25
+1
+              1               0               0               0 
+              0               1               0               0 
+              0               0               1               0 
+1
+0.707106781186548               0 0.707106781
+read True 104530.3550347648
+fuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+multiFuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+generalFuse True 3 105530.35524777762
+cut True 1 104510.35509636672
+solid True 104530.35504677813
+fuse True 1 105510.35510281107
+multiFuse True 1 105510.35510281107
+generalFuse True 3 105510.35520891954
+cut True 1 104510.35510235945
+refine True 104530.35502878248
+fuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+multiFuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+generalFuse True 3 105530.35524188724
+cut True 1 104510.35509636672
+shell True 104530.35504677813
+fuse True 1 105510.35510281107
+multiFuse True 1 105510.35510281107
+generalFuse True 3 105510.35520891954
+cut True 1 104510.35510235945
+file True 104530.3550347648
+fuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+multiFuse {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/
+generalFuse True 3 105530.35524777762
+cut True 1 104510.35509636672

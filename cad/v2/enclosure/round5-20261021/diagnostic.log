@@ -1,0 +1,19 @@
+source True 1 104530.3550347648 Placement [Pos=(0,0,0), Yaw-Pitch-Roll=(0,0,0)] None
+0 common False True 180.00000000000043 1
+Traceback (most recent call last):
+  File "/tmp/r5diag.py", line 10, in <module>
+    r=getattr(s,op)(q);log(index,op,r.isNull(),r.isValid(),r.Volume,len(r.Solids))
+ValueError: {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/TopoShapeExpansion.cpp', 'iline': 1395, 'sfunction': 'Part::TopoShape& Part::TopoShape::makeShapeWithElementMap(const TopoDS_Shape&, const Mapper&, const std::vector<Part::TopoShape>&, const char*)', 'swhat': 'Null shape', 'btranslatable': False, 'breported': False}
+
+1 common False True 20.000000000000284 1
+Traceback (most recent call last):
+  File "/tmp/r5diag.py", line 10, in <module>
+    r=getattr(s,op)(q);log(index,op,r.isNull(),r.isValid(),r.Volume,len(r.Solids))
+ValueError: {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/TopoShapeExpansion.cpp', 'iline': 1395, 'sfunction': 'Part::TopoShape& Part::TopoShape::makeShapeWithElementMap(const TopoDS_Shape&, const Mapper&, const std::vector<Part::TopoShape>&, const char*)', 'swhat': 'Null shape', 'btranslatable': False, 'breported': False}
+
+2 common False True 0.0 0
+Traceback (most recent call last):
+  File "/tmp/r5diag.py", line 10, in <module>
+    r=getattr(s,op)(q);log(index,op,r.isNull(),r.isValid(),r.Volume,len(r.Solids))
+ValueError: {'sclassname': 'N4Part18NullShapeExceptionE', 'sErrMsg': 'Null shape', 'sfile': './src/Mod/Part/App/TopoShapeExpansion.cpp', 'iline': 1395, 'sfunction': 'Part::TopoShape& Part::TopoShape::makeShapeWithElementMap(const TopoDS_Shape&, const Mapper&, const std::vector<Part::TopoShape>&, const char*)', 'swhat': 'Null shape', 'btranslatable': False, 'breported': False}
+

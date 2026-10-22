@@ -1,0 +1,12 @@
+{
+  "valid": true,
+  "solids": 1,
+  "original_removed_mm3": 0.0,
+  "new_material_added_mm3": 0.0,
+  "styling_trimmed_mm3": 11.871235804956113,
+  "exterior_accounting_mm3": {
+    "extracted": 10804.04441378013,
+    "volume_increase": 10804.044714514457,
+    "difference": -0.00030073432753852103
+  }
+}

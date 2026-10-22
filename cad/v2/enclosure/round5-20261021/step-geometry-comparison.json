@@ -1,0 +1,204 @@
+{
+  "parts": [
+    {
+      "name": "Tablet_L",
+      "native_volume": 1410.3873045569414,
+      "step_volume": 1410.3873045570538,
+      "difference": 1.1232259566895664e-10,
+      "relative_error": 7.963953965413891e-14,
+      "centre_error_mm": 1.1659181411560793e-13,
+      "bbox_error_mm": 1.8474111129762605e-13
+    },
+    {
+      "name": "Tablet_R",
+      "native_volume": 1410.3873045569421,
+      "step_volume": 1410.387304557053,
+      "difference": 1.1095835361629725e-10,
+      "relative_error": 7.867225779599144e-14,
+      "centre_error_mm": 2.178772448710044e-13,
+      "bbox_error_mm": 1.8474111129762605e-13
+    },
+    {
+      "name": "Scutum_Field_L",
+      "native_volume": 4023.3515031949955,
+      "step_volume": 4023.351015238506,
+      "difference": -0.0004879564894508803,
+      "relative_error": 1.212810983736787e-07,
+      "centre_error_mm": 9.987791178498663e-07,
+      "bbox_error_mm": 6.2480813767251675e-06
+    },
+    {
+      "name": "Scutum_Emblem_L",
+      "native_volume": 489.6022494808697,
+      "step_volume": 489.6015153811459,
+      "difference": -0.0007340997238429736,
+      "relative_error": 1.4993798019133839e-06,
+      "centre_error_mm": 8.385817495616611e-06,
+      "bbox_error_mm": 6.797288506277255e-06
+    },
+    {
+      "name": "Scutum_Boss_L",
+      "native_volume": 84.12770486182907,
+      "step_volume": 84.12770660742683,
+      "difference": 1.7455977570079995e-06,
+      "relative_error": 2.0749380479058126e-08,
+      "centre_error_mm": 9.272487109067694e-08,
+      "bbox_error_mm": 0.0006387330831110205
+    },
+    {
+      "name": "Scutum_Field_R",
+      "native_volume": 4023.351503194994,
+      "step_volume": 4023.3510152385074,
+      "difference": -0.0004879564867223962,
+      "relative_error": 1.2128109769551675e-07,
+      "centre_error_mm": 9.987791169159106e-07,
+      "bbox_error_mm": 6.2480813767251675e-06
+    },
+    {
+      "name": "Scutum_Emblem_R",
+      "native_volume": 489.60224948087097,
+      "step_volume": 489.601515381138,
+      "difference": -0.000734099732994764,
+      "relative_error": 1.4993798206056767e-06,
+      "centre_error_mm": 8.385817548596264e-06,
+      "bbox_error_mm": 6.797288506277255e-06
+    },
+    {
+      "name": "Scutum_Boss_R",
+      "native_volume": 84.12770486182906,
+      "step_volume": 84.12770660742679,
+      "difference": 1.74559772858629e-06,
+      "relative_error": 2.0749380141218062e-08,
+      "centre_error_mm": 9.272486382598092e-08,
+      "bbox_error_mm": 0.0006387330830932569
+    },
+    {
+      "name": "Aquila_Relief",
+      "native_volume": 652.3096090709616,
+      "step_volume": 652.4718290334117,
+      "difference": 0.16221996245008086,
+      "relative_error": 0.00024868553244389465,
+      "centre_error_mm": 0.0005275642512270296,
+      "bbox_error_mm": 4.689582056016661e-13
+    },
+    {
+      "name": "Crest_Clamp",
+      "native_volume": 806.481559827282,
+      "step_volume": 806.481560626892,
+      "difference": 7.996100066520739e-07,
+      "relative_error": 9.914795904612132e-10,
+      "centre_error_mm": 4.2623597809967316e-09,
+      "bbox_error_mm": 0.0
+    },
+    {
+      "name": "Crest_Clamp_Shoe",
+      "native_volume": 13.200000000000015,
+      "step_volume": 13.200000000000015,
+      "difference": 0.0,
+      "relative_error": 0.0,
+      "centre_error_mm": 0.0,
+      "bbox_error_mm": 0.0
+    },
+    {
+      "name": "Galea_Crest",
+      "native_volume": 5310.286152774846,
+      "step_volume": 5310.28610941636,
+      "difference": -4.335848643677309e-05,
+      "relative_error": 8.164999999880698e-09,
+      "centre_error_mm": 1.2694699814953297e-07,
+      "bbox_error_mm": 4.263256414560601e-14
+    },
+    {
+      "name": "Crest_Holder_Trim",
+      "native_volume": 122.26400000000035,
+      "step_volume": 122.26400000000078,
+      "difference": 4.263256414560601e-13,
+      "relative_error": 3.4869269895967653e-15,
+      "centre_error_mm": 3.362902011246897e-13,
+      "bbox_error_mm": 0.0
+    },
+    {
+      "name": "Neck_Clamp_0",
+      "native_volume": 678.3121969370235,
+      "step_volume": 678.3121969370234,
+      "difference": -1.1368683772161603e-13,
+      "relative_error": 1.676025261450091e-16,
+      "centre_error_mm": 8.987733679556355e-14,
+      "bbox_error_mm": 2.842170943040401e-14
+    },
+    {
+      "name": "Neck_Clamp_1",
+      "native_volume": 678.3121969370235,
+      "step_volume": 678.3121969370234,
+      "difference": -1.1368683772161603e-13,
+      "relative_error": 1.676025261450091e-16,
+      "centre_error_mm": 1.0634429903501374e-13,
+      "bbox_error_mm": 2.842170943040401e-14
+    },
+    {
+      "name": "Neck_Guard",
+      "native_volume": 1271.4414168308988,
+      "step_volume": 1271.4414168308658,
+      "difference": -3.296918293926865e-11,
+      "relative_error": 2.5930556062461142e-14,
+      "centre_error_mm": 7.418283949015283e-14,
+      "bbox_error_mm": 0.0
+    },
+    {
+      "name": "Rear_Hood",
+      "native_volume": 115346.27103399165,
+      "step_volume": 115346.26801104251,
+      "difference": -0.0030229491385398433,
+      "relative_error": 2.6207601784101054e-08,
+      "centre_error_mm": 1.6080026750475395e-06,
+      "bbox_error_mm": 1.8474111129762605e-13
+    },
+    {
+      "name": "Front_Left",
+      "native_volume": 36716.10491454079,
+      "step_volume": 36716.1065542849,
+      "difference": 0.0016397441140725277,
+      "relative_error": 4.4660078128906724e-08,
+      "centre_error_mm": 2.275381540978273e-06,
+      "bbox_error_mm": 5.044853423896711e-13
+    },
+    {
+      "name": "Front_Right",
+      "native_volume": 36716.112857963955,
+      "step_volume": 36716.10016116144,
+      "difference": -0.012696802514255978,
+      "relative_error": 3.4581009605710376e-07,
+      "centre_error_mm": 1.5349018984507534e-05,
+      "bbox_error_mm": 5.400124791776761e-13
+    },
+    {
+      "name": "Lens_Plate",
+      "native_volume": 1048.402167179414,
+      "step_volume": 1048.402167179404,
+      "difference": -1.000444171950221e-11,
+      "relative_error": 9.542561082659554e-15,
+      "centre_error_mm": 1.7763568394002505e-15,
+      "bbox_error_mm": 1.4210854715202004e-14
+    },
+    {
+      "name": "Neck_Clamp_Shoe_21_5",
+      "native_volume": 15.0,
+      "step_volume": 15.0,
+      "difference": 0.0,
+      "relative_error": 0.0,
+      "centre_error_mm": 0.0,
+      "bbox_error_mm": 0.0
+    },
+    {
+      "name": "Neck_Clamp_Shoe_57_5",
+      "native_volume": 15.0,
+      "step_volume": 15.0,
+      "difference": 0.0,
+      "relative_error": 0.0,
+      "centre_error_mm": 0.0,
+      "bbox_error_mm": 0.0
+    }
+  ],
+  "total_native": 211404.43563024313,
+  "total_step": 211405.27372841517
+}

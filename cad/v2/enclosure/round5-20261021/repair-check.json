@@ -1,0 +1,10 @@
+{
+  "mesh": {
+    "original_boundary_vertices": 4,
+    "maximum_vertex_displacement_mm": 0.0007180138893586579,
+    "solid": true,
+    "nonmanifold": false,
+    "facets": 12790
+  },
+  "error": "Traceback (most recent call last):\n  File \"/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-20261021/finish_export_repair.py\", line 23, in <module>\n    out['interior_extra']=dict(volume=added.Volume,bbox=[bb.XMin,bb.XMax,bb.YMin,bb.YMax,bb.ZMin,bb.ZMax],centre=list(added.CenterOfMass),vertex_count=len(added.Vertexes))\n                                                                                                                      ^^^^^^^^^^^^^^^^^^\nAttributeError: 'Part.Compound' object has no attribute 'CenterOfMass'\n"
+}

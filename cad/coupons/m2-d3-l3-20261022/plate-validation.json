@@ -1,0 +1,60 @@
+{
+  "mesh_matches_stl": true,
+  "bed_mm": [
+    220,
+    220,
+    250
+  ],
+  "on_bed": true,
+  "settings_overrides": {
+    "printable_area": [
+      "0x0",
+      "220x0",
+      "220x220",
+      "0x220"
+    ],
+    "printable_height": "250",
+    "layer_height": "0.2",
+    "initial_layer_print_height": "0.2",
+    "wall_loops": "4",
+    "top_shell_layers": "4",
+    "bottom_shell_layers": "4",
+    "sparse_infill_density": "25%",
+    "enable_support": "0",
+    "brim_type": "no_brim",
+    "brim_width": "0",
+    "post_process": []
+  },
+  "printer": "EnderNeo",
+  "filament": [
+    "Generic PLA @System - First Print"
+  ],
+  "status": "OrcaSlicer 2.4.2 slice passed without warnings",
+  "slice_result": {
+    "error_string": "Success.",
+    "export_time": 0,
+    "layer_height": 0.20000000298023224,
+    "plate_index": 0,
+    "prepare_time": 1,
+    "return_code": 0,
+    "sliced_plates": [
+      {
+        "id": 1,
+        "sliced_time": 4,
+        "sliced_time_with_cache": 3,
+        "triangle_count": 245738,
+        "warning_message": ""
+      }
+    ],
+    "sparse_infill_density": 25.0,
+    "wall_loops": 4
+  },
+  "statistics": [
+    "; filament used [mm] = 3079.43",
+    "; filament used [cm3] = 7.41",
+    "; filament used [g] = 9.18",
+    "; total filament used [g] = 9.18",
+    "; total filament cost = 0.18",
+    "; estimated printing time (normal mode) = 43m 43s"
+  ]
+}

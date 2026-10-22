@@ -1,0 +1,83 @@
+{
+  "original_mesh": {
+    "facets": 12790,
+    "solid": true,
+    "nonmanifold": false,
+    "boundary_edges": 0,
+    "boundary_vertices": []
+  },
+  "mesh_methods": [
+    "fillupHoles",
+    "fixCaps",
+    "fixDeformations",
+    "fixDegenerations",
+    "fixIndices",
+    "fixSelfIntersections",
+    "flipNormals",
+    "getPointNormals",
+    "harmonizeNormals",
+    "isSolid",
+    "removeDuplicatedFacets",
+    "removeDuplicatedPoints"
+  ],
+  "variants": [],
+  "extra_bbox": [
+    -9.0,
+    0.7082039324993588,
+    -32.0,
+    -26.0,
+    98.48359213500127,
+    111.9
+  ],
+  "extra_vertices": [
+    [
+      -3.0,
+      -32.0,
+      100.0
+    ],
+    [
+      -3.0,
+      -31.92,
+      100.0
+    ],
+    [
+      -2.33123878660065,
+      -31.92,
+      100.0
+    ],
+    [
+      -2.24179606750064,
+      -32.0,
+      100.0
+    ],
+    [
+      -3.0,
+      -32.0,
+      103.0
+    ],
+    [
+      -3.0,
+      -31.92,
+      103.0
+    ],
+    [
+      -0.831238786600653,
+      -31.92,
+      103.0
+    ],
+    [
+      -0.741796067500642,
+      -32.0,
+      103.0
+    ]
+  ],
+  "core_comparison": {
+    "valid": true,
+    "core_volume_mm3": 104530.70634755999,
+    "baseline_volume_mm3": 104530.35504677813,
+    "added_to_core_mm3": 0.3512358149456022,
+    "removed_from_core_mm3": 0.0,
+    "added_solids": 1,
+    "removed_solids": 0
+  }
+}

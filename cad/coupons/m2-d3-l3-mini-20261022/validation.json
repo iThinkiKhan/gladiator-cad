@@ -1,0 +1,85 @@
+{
+  "status": "CAD verified; physical fit pending",
+  "bores_mm": [
+    2.8,
+    2.9,
+    3.0,
+    3.1
+  ],
+  "sites": [
+    {
+      "id": "V1",
+      "diameter_mm": 2.8,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        5,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V2",
+      "diameter_mm": 2.9,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        15,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V3",
+      "diameter_mm": 3.0,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        25,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V4",
+      "diameter_mm": 3.1,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        35,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    }
+  ],
+  "entry_chamfer_mm": 0.15,
+  "cylindrical_land_mm": 3.45,
+  "upright_floor_mm": 2.4,
+  "min_boss_radial_wall_mm": 1.95,
+  "size_mm": [
+    40.0,
+    13.0,
+    6.0
+  ],
+  "valid": true,
+  "solids": 1,
+  "volume_mm3": 1487.379797113762,
+  "solid_mesh": true,
+  "nonmanifold": false
+}

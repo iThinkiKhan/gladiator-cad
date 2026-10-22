@@ -1,0 +1,106 @@
+{
+  "native_reopen": true,
+  "step_reopen": true,
+  "step_volume_error_mm3": 6.548361852765083e-11,
+  "mesh_solid": true,
+  "mesh_volume_relative_error": 1.917201349222344e-05,
+  "all_16_blind_bores_verified": true,
+  "checks": [
+    {
+      "id": "V1",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.49087385212340534,
+      "wall_volume_mm3": 0.6940406490310576
+    },
+    {
+      "id": "H1",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.4908738521234075,
+      "wall_volume_mm3": 0.694040649031054
+    },
+    {
+      "id": "V2",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.5309291584566753,
+      "wall_volume_mm3": 0.7204300273212141
+    },
+    {
+      "id": "H2",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.5309291584566775,
+      "wall_volume_mm3": 0.7204300273212123
+    },
+    {
+      "id": "V3",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.5725552611167399,
+      "wall_volume_mm3": 0.7468194056113671
+    },
+    {
+      "id": "H3",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.5725552611167425,
+      "wall_volume_mm3": 0.7468194056113617
+    },
+    {
+      "id": "V4",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.6157521601035993,
+      "wall_volume_mm3": 0.7732087839015129
+    },
+    {
+      "id": "H4",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.6157521601036026,
+      "wall_volume_mm3": 0.7732087839015183
+    },
+    {
+      "id": "V5",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.6605198554172544,
+      "wall_volume_mm3": 0.7995981621916748
+    },
+    {
+      "id": "H5",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.6605198554172571,
+      "wall_volume_mm3": 0.7995981621916695
+    },
+    {
+      "id": "V6",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.7068583470577035,
+      "wall_volume_mm3": 0.8259875404818402
+    },
+    {
+      "id": "H6",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.706858347057707,
+      "wall_volume_mm3": 0.8259875404818242
+    },
+    {
+      "id": "V7",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.7547676350249481,
+      "wall_volume_mm3": 0.852376918771995
+    },
+    {
+      "id": "H7",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.7547676350249517,
+      "wall_volume_mm3": 0.8523769187719772
+    },
+    {
+      "id": "V8",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.804247719318987,
+      "wall_volume_mm3": 0.8787662970621248
+    },
+    {
+      "id": "H8",
+      "clear_volume_mm3": 0.0,
+      "floor_volume_mm3": 0.8042477193189908,
+      "wall_volume_mm3": 0.8787662970621408
+    }
+  ]
+}

@@ -94,3 +94,11 @@ Jim: "the taller v2 tube. We are not buying a tube, drop that." The v2 tube (top
 carbon tube is withdrawn from `docs/print-plan.md` and `docs/GLADIATOR_DESIGN.md`. The head
 designs to this tube. Its index flat was checked against both the master and the printed STL:
 0.9 deep, 8.0 wide, on the rear, running 15 down from the top.
+
+## 2026-10-21 — Round 5 styling, original structural CAD preserved
+
+Jim selected curved scuta and a lightning-bolt aquila from the styling guide, requested firmly mounted insets and a more detailed eagle, and authorized adaptations needed to make the CAD work. The implementation must remain a separate version and preserve the original CAD and existing structural/fit interfaces. Review implementation: cad/v2/enclosure/round5-20261021/. New insert calibration and physical accessory testing are not accepted results.
+
+## 2026-10-22 — SD card and Jim's SAFE/material presets
+
+Jim confirmed these prints will run from SD card and explicitly requested his EnderNeo SAFE settings and the separate silk filament settings. Use full inherited presets, preserving the SAFE start-code checker; apply necessary layer/support/orientation changes per plate. The incoming M2 inserts have not been measured yet; no bore or retention result is accepted by this decision.

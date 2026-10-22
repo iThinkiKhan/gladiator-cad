@@ -1,0 +1,38 @@
+{
+  "nominal_listing_data": "M2,D3,L3; physical stock measurement still pending",
+  "orientation": "horizontal bores; flat40x6 base down",
+  "bore_tests": [
+    {
+      "diameter_mm": 2.8,
+      "axis": "horizontalY",
+      "working_depth_mm": 3.6,
+      "void_clear": true,
+      "blind_floor_present": true
+    },
+    {
+      "diameter_mm": 2.9,
+      "axis": "horizontalY",
+      "working_depth_mm": 3.6,
+      "void_clear": true,
+      "blind_floor_present": true
+    },
+    {
+      "diameter_mm": 3.0,
+      "axis": "horizontalY",
+      "working_depth_mm": 3.6,
+      "void_clear": true,
+      "blind_floor_present": true
+    },
+    {
+      "diameter_mm": 3.1,
+      "axis": "horizontalY",
+      "working_depth_mm": 3.6,
+      "void_clear": true,
+      "blind_floor_present": true
+    }
+  ],
+  "shape_valid": true,
+  "solid_count": 1,
+  "mesh_solid": true,
+  "physical_winner_pending": true
+}

@@ -68,6 +68,8 @@ PARTS = {
     "INA_Mount_v3": load_stl(ROOT / "cad/v2/ina-mount/v3-20261019/Gladiator_INA_Mount_v3.stl"),
     "Speaker_Rail_Bracket_v1": load_stl(ROOT / "cad/v2/speaker-mount/v1-20261020/Gladiator_Speaker_Rail_Bracket_v1.stl"),
     "Coupon_M2_Inserts": load_stl(ROOT / "cad/coupons/m2-insert-v1/Gladiator_Coupon_M2_Inserts.stl"),
+    "Scutum_Emblem_v2_L": load_stl(ROOT / "cad/v2/enclosure/round5-print-20261022/emblem-v2/Scutum_Emblem_v2.stl"),
+    "Scutum_Emblem_v2_R": load_stl(ROOT / "cad/v2/enclosure/round5-print-20261022/emblem-v2/Scutum_Emblem_v2.stl"),
 }
 v, t = PARTS["Upper_Deck_v4"]
 PARTS["Upper_Deck_v4"] = (v - np.array([0, 0, v[:, 2].min()]), t)     # top-up: underside (Z54.5) onto the glass
@@ -79,6 +81,7 @@ PLATES = [
     dict(key="IM", name="Gladiator_v2_ORCA-IM_INA226_Mount_v3_adapter", rows=[["INA_Mount_v3"]], gap=10.0),
     dict(key="SPK", name="Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1", rows=[["Speaker_Rail_Bracket_v1"]], gap=10.0),
     dict(key="CM2", name="Gladiator_COUPON-M2_Insert_Bores_upright-and-sideways", rows=[["Coupon_M2_Inserts"]], gap=10.0),
+    dict(key="EMB", name="R5_04B_White_Shield_Emblems_v2_STRONGER", rows=[["Scutum_Emblem_v2_L", "Scutum_Emblem_v2_R"]], gap=12.0),
     dict(key="ALL", name="Gladiator_v2_ORCA-ALL_Rails-and-Deck_one-plate", rows=[["Arch_Rail_Left_v4", "Arch_Rail_Right_v4", "Upper_Deck_v4"]], gap=5.0, deck_brim=3),
 ]
 
@@ -94,7 +97,7 @@ def paint(name, v, t):
             vols.append(("support_enforcer", *shape_to_mesh(e), "Support %d (%.0f mm2, roof z %.1f)" % (k, c["area"], c["z0"])))
             notes.append("support %d: %.0f mm2 at x %.0f..%.0f y %.0f..%.0f, roof z %.1f" % (k, c["area"], c["xmin"], c["xmax"], c["ymin"], c["ymax"], c["z0"]))
         return "normal(manual)", vols, notes
-    if name.startswith(("Switch_", "INA_", "Speaker_", "Coupon_")):
+    if name.startswith(("Switch_", "INA_", "Speaker_", "Coupon_", "Scutum_")):
         big = [c for c in overhang_clusters(v, t, minarea=3.0)]
         return "normal(manual)", [], ["no supports painted; overhang clusters seen (area, z0): %s" % [(round(c["area"], 1), round(c["z0"], 2)) for c in big]]
     return "normal(manual)", [], ["no supports: the bed-side hole chamfers are 45 degrees, everything else rises from the glass"]

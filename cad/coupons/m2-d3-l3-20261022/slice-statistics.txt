@@ -1,0 +1,6 @@
+; filament used [mm] = 3079.43
+; filament used [cm3] = 7.41
+; filament used [g] = 9.18
+; total filament used [g] = 9.18
+; total filament cost = 0.18
+; estimated printing time (normal mode) = 43m 43s

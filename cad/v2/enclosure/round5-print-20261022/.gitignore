@@ -1,0 +1,9 @@
+slice-check/
+support-comparison/
+sd-staging/
+SD_PACKAGE/
+*.zip
+__pycache__/
+*.FCBak
+*.log
+*_ERROR.txt

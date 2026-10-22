@@ -1,0 +1,134 @@
+{
+  "failures": [
+    "Mesh Front_Left"
+  ],
+  "static_intersections": [],
+  "new_part_intersections": [],
+  "head_motion_hits": [],
+  "native_and_stl": {
+    "Tablet_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1340.0721252462995
+    },
+    "Tablet_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1340.0721252462995
+    },
+    "Scutum_Field_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 4023.3515031949955
+    },
+    "Scutum_Emblem_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 489.6022494808697
+    },
+    "Scutum_Boss_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 84.12770486182907
+    },
+    "Scutum_Field_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 4023.351503194994
+    },
+    "Scutum_Emblem_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 489.60224948087097
+    },
+    "Scutum_Boss_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 84.12770486182906
+    },
+    "Aquila_Relief": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 652.3096090709616
+    },
+    "Crest_Clamp": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 806.481559827282
+    },
+    "Crest_Clamp_Shoe": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 13.200000000000019
+    },
+    "Galea_Crest": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 5310.286152774846
+    },
+    "Crest_Holder_Trim": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 122.26400000000035
+    },
+    "Neck_Clamp_0": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 678.3121969370235
+    },
+    "Neck_Clamp_1": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 678.3121969370235
+    },
+    "Neck_Guard": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1271.4414168308988
+    },
+    "Rear_Hood": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 115346.27103399165
+    },
+    "Front_Left": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 36716.10491454079
+    },
+    "Front_Right": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 36716.112857963955
+    },
+    "Lens_Plate": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1048.402167179414
+    },
+    "Neck_Clamp_Shoe_21_5": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 15.0
+    },
+    "Neck_Clamp_Shoe_57_5": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 15.0
+    }
+  },
+  "baseline_material_retained": {
+    "Rear_Hood": 0.0,
+    "Front_Left": 0.0,
+    "Front_Right": 0.0,
+    "Lens_Plate": 0.0
+  },
+  "unchanged_context_count": 58,
+  "max_context_difference_mm3": 0.0,
+  "source_hashes_match": true,
+  "camera_context_objects": [
+    "CameraContext_Mount_Tray",
+    "CameraContext_Screw_Cover"
+  ],
+  "hardware_intersections": []
+}

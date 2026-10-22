@@ -1,0 +1,14 @@
+# Codex Round 5 styling review — 2026-10-21
+
+Jim selected Round 5 from the supplied styling kit: curved scuta, lightning-bolt aquila, secure insets. He authorized engineering changes needed to realize the guide, while preserving the current CAD and all existing fit/structural interfaces.
+
+New model: `cad/v2/enclosure/round5-20261021/Gladiator_Round5.FCStd`. Derived from the saved v2.8 native model, not an older concept or a regenerated baseline. Native model, STEP, 22 print-oriented STL parts, guide, generation/presentation scripts, independent verifier, and local mirrored package are provided. The original enclosure directory's nine protected files are hash-checked unchanged; frozen bytes are in `baseline-v28/`.
+
+All badge receivers are additive outside the original shell. No original wall is thinned and no existing hole or hardware interface is moved. Shields: R28 red field, pre-curved white 1 mm winged fulmen with side allowance and recessed seating, silk boss and M2 retention. Tablets: two M2 screws each, raised red GLADIATOR lettering on white. Aquila: rounded head/breast, tapered feather relief, four forked lightning strokes, one central M2 and two hidden anti-rotation pegs. Lorica lips adapt to the existing vent slots. Cap and belt are colour regions of the exact existing shell volume.
+
+The illustrated yoke top bar does not exist in the current head. New removable regular-PLA clamps attach to the receiver/carrier and rear display top edges, carrying the crest/holder trim/neck guard. Captive contact shoes spread screw force without drilling or cutting the existing head. These accessories follow the tilt group; existing travel limits are unchanged. The existing camera service v2 review is included as additional clearance context, without integrating or modifying its CAD.
+
+Independent saved-file verification is recorded in `independent-verification.json`: original material retained; 58 unchanged context shapes; no static/new-part/hardware interference; inherited service paths authenticated and additions replayed at 1 mm; 11 relative tilt poses with fixed-envelope Z separation and sensor-plane separation; vents and SMA access; clear new insert bores; valid native parts, manifold STLs, and STEP reopen with matching count and per-part spatial fidelity checks. See actual report for numeric evidence and tolerances.
+
+Physical follow-up: M2 insert bores remain adjustable 3.6 mm × 4.0 mm deep, assuming 3.0 mm inserts. Existing M2-A coupon results and actual insert dimensions are still pending. Weigh new head accessories and check loaded tilt operation. Wiring, thermal behaviour and vibration retention are not physically tested. The new exterior seats increase badge projection; this tradeoff preserves wall thickness and internal clearances. No print queue, slicer plate, printer, firmware or existing CAD was changed.
+

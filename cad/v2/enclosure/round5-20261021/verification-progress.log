@@ -1,0 +1,27 @@
+35.9 native material and sources checked
+52.2 static [] new pairs [['Galea_Crest', 'Neck_Guard', 5.951999999999661], ['Neck_Clamp_0', 'Neck_Guard', 25.505599357057516], ['Neck_Clamp_1', 'Neck_Guard', 25.505599357057523]]
+71.1 hood sweep {'samples': 151, 'hits': [{'step': 1, 'translation': [0.0, -1.0, 0.0], 'obstacle': 'Hood_Speaker_envelope', 'overlap_mm3': 2.6608409750895827}], 'passed': False}
+37.9 native material and sources checked
+53.0 static [] new pairs []
+16.3 Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-20261021/verify_round5.py", line 28, in <module>
+    s=S[n];native[n]=dict(valid=s.isValid(),solids=len(s.Solids),volume_mm3=s.Volume)
+      ~^^^
+KeyError: 'Neck_Clamp_Shoe_21.5'
+
+37.5 native material and sources checked
+54.1 static [] new pairs [] hardware []
+275.1 hood sweep {'samples': 151, 'boolean_comparisons': 11, 'hits': [], 'passed': True}
+37.7 native material and sources checked
+54.4 static [] new pairs [] hardware []
+54.4 extract exterior additions Rear_Hood
+54.9 exterior pieces Rear_Hood 7 10815.564413780108
+54.9 extract exterior additions Front_Left
+55.0 exterior pieces Front_Left 1 1521.2441917850224
+55.0 extract exterior additions Front_Right
+55.0 exterior pieces Front_Right 1 1521.2441917850228
+272.1 hood sweep {'samples': 151, 'boolean_comparisons': 11, 'hits': [], 'passed': True}
+347.2 right sweep {'samples': 121, 'boolean_comparisons': 94, 'hits': [], 'passed': True}
+416.0 left sweep {'samples': 111, 'boolean_comparisons': 80, 'hits': [], 'passed': True}
+429.2 head motion checked []
+434.8 DONE False ['Mesh Front_Left', 'Unaccounted internal material Rear_Hood', 'STEP reopen mismatch']

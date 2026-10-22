@@ -1,0 +1,271 @@
+{
+  "status": "CAD verified; physical fit pending",
+  "bores_mm": [
+    2.6,
+    2.7,
+    2.8,
+    2.9,
+    3.0,
+    3.1,
+    3.2,
+    3.3
+  ],
+  "sites": [
+    {
+      "id": "V1",
+      "diameter_mm": 2.6,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        5,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H1",
+      "diameter_mm": 2.6,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        5,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V2",
+      "diameter_mm": 2.7,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        15,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H2",
+      "diameter_mm": 2.7,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        15,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V3",
+      "diameter_mm": 2.8,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        25,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H3",
+      "diameter_mm": 2.8,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        25,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V4",
+      "diameter_mm": 2.9,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        35,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H4",
+      "diameter_mm": 2.9,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        35,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V5",
+      "diameter_mm": 3.0,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        45,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H5",
+      "diameter_mm": 3.0,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        45,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V6",
+      "diameter_mm": 3.1,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        55,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H6",
+      "diameter_mm": 3.1,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        55,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V7",
+      "diameter_mm": 3.2,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        65,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H7",
+      "diameter_mm": 3.2,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        65,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "V8",
+      "diameter_mm": 3.3,
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "entry_mm": [
+        75,
+        8,
+        6
+      ],
+      "depth_mm": 3.6
+    },
+    {
+      "id": "H8",
+      "diameter_mm": 3.3,
+      "axis": [
+        0,
+        -1,
+        0
+      ],
+      "entry_mm": [
+        75,
+        25,
+        5.5
+      ],
+      "depth_mm": 3.6
+    }
+  ],
+  "entry_chamfer_mm": 0.15,
+  "cylindrical_land_mm": 3.45,
+  "upright_floor_mm": 2.4,
+  "sideways_back_wall_mm": 2.4,
+  "min_boss_radial_wall_mm": 1.85,
+  "min_sideways_roof_mm": 2.35,
+  "size_mm": [
+    80.0,
+    25.0,
+    9.89
+  ],
+  "valid": true,
+  "solids": 1,
+  "volume_mm3": 8226.164548075205,
+  "solid_mesh": true,
+  "nonmanifold": false
+}

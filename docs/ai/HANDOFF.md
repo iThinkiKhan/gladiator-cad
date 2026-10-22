@@ -1,5 +1,34 @@
 # Current Handoff
 
+## Stronger white shield emblems (plate 04B) - 2026-10-22 (Claude)
+
+Jim: both printed Round 5 white shield insets failed; need stronger, same fit in the printed red shields. `cad/v2/enclosure/round5-print-20261022/emblem-v2/`: 1.8 mm thick (was 1.0), recess-filling base (0.05/side) plus a wider top layer on the red surface (bolts 1.75, feathers 2.25), printed lying on the back with snug supports. Zero overlap with field/panel; boss rides 0.8 higher, M2 x 6 unchanged. Plate 04B 58 m / 4.2 g, SAFE guard passed; copied to Incoming Round5_SD_20261022/PRINT_FIRST and X: package, old 04 G-code renamed .superseded (SHA256SUMS in the package now out of date for that file).
+
+## Independent check of the Round 5 print release - 2026-10-22 (Claude)
+
+Read-only review of `cad/v2/enclosure/round5-print-20261022/` before the event prints. Round 5 baseline-v28 files are byte-identical to the final v2.8 shell. Fuzzy-Boolean containment: R5 Rear_Hood, Front_Right and Lens_Plate contain the v2.8 parts exactly (0 mm3 missing); Front_Left Boolean fails in OCC but equals the mirrored R5 Front_Right within 28 mm3; panel additions are only the 1521 mm3 shield seats on the front faces. Badges (tablets, letters, aquila, shields) clear every robot/head reference (nearest 8.7 mm). Removal sweeps re-run with shells + badges as one body: hood back 150 mm, right panel 120 mm, left panel 20 mm leg with 3 mm slack: unchanged. Hood/panel SD G-code: extrusions within 220 x 220, PLA 200/60, SAFE start, 6 M0 each. Gate unchanged: M2 bore (CFG insert_bore 3.6 in round5-20261021/build_round5.py) awaits the D3 L3 coupon result. Work files: ~/scratch_claude/r5check/.
+
+## 2026-10-22 — Round5 SD print preparation; hardware fit still pending
+
+Jim confirmed SD card, EnderNeo SAFE and his separate silk settings. New production derivative/plates: `cad/v2/enclosure/round5-print-20261022/`. Read `docs/ai/agents/codex-round5-print-20261022.md` and generated `SD_PACKAGE/START_HERE.md`. Full presets retained; all22parts included, SAFE/bed/support checks pass. Reinforced ONLY the new crest clamp, with51pose yoke-clearance check; old v2.8 and styling native unchanged. Roughly25h printing (shells18h13m), excluding colour-stop waiting and assembly.
+
+**Latest calibration choice:** shared coupon note identifies nominal M2 D3 L3 listing data; Jim selected the four-hole mini. This package uses that geometry with full SAFE settings (10m33) and offers a separate optional sideways four-hole test (9m52). No physical winner. Fit-seat01 is also held until the bore is updated. The3.6mm candidates are not approved for nominalD3 stock.
+
+**Still required:** inserts arrive today; Jim will measure OD/length. Bore3.6/depth4/assumed3mm inserts are provisional. Generic coupon and actual inset/clamp retention need physical results; original shell fit over current wiring was not confirmed. SD LCD diagnostic/tablet colour test also pending. Shells/clamps in generated package have `.pending` suffix until hardware sizing is settled. No printer job queued/started. Windows delivery: `X:/Projects/Gladiator/print-release-round5-20261022/package/`; cad-lab Incoming also has `Round5_SD_20261022/`.
+
+
+## M2 D3 L3 coupon — 2026-10-22 (Codex)
+
+**Current revision:** Jim requested a smaller first pass. Use cad/coupons/m2-d3-l3-mini-20261022/ (four upright holes 2.8/2.9/3.0/3.1 mm). Incoming coupon updated to mini. Geometry and warning-free slice verified; physical winner pending. The larger version below is retained as history.
+
+Insert-specific coupon delivered at cad/coupons/m2-d3-l3-20261022/; new 3MF in Incoming. Listing nominal M2 x OD3 x L3. Tests 2.60–3.30 by 0.10, 3.60 deep, upright and sideways. CAD/mesh/plate and warning-free Orca slice verified. Physical winners pending; do not apply bore changes yet. Existing M2-A and project parts preserved. See agents/codex-m2-d3-l3-coupon-20261022.md.
+
+
+## Round 5 styling CAD review — 2026-10-21 (Codex)
+
+Jim requested Round 5 styling while keeping v2.8 and its fit/structural geometry untouched. New model and complete review package: cad/v2/enclosure/round5-20261021/. Additive exterior receivers, M2-retained curved scuta/tablets/aquila, sculpted eagle relief, existing vent locations preserved, removable head clamps with captive contact shoes. Independent native/STEP/STL, material-preservation, interface, interference and service-path checks pass; source hashes unchanged. Physical follow-up: existing M2-A bore calibration/insert dimensions and loaded head movement/accessory weight. No print or existing CAD changed. Details: agents/codex-round5-styling-20261021.md.
+
+
 ## Camera service v2 review — 2026-10-21 (Codex)
 
 Jim requested a cover/wiring redesign. Isolated native assembled/exploded models, STEP, review STLs, sources and validation: cad/head/camera-service-v2-20261021/. Two M3 nut-retained cover screws, open lay-in side channels with closing skirts, tie passages and wire-edge chamfers. Carrier hole pattern retained; camera moves 1.5 mm sideways for a 2.275 mm ToF-frame gap. Construction and independent saved-file checks passed. Desktop launcher: Gladiator Camera v2 - Review. Await Jim's CAD review; actual harness bend room, skirt fit and M3 stock need physical confirmation. Full bundle-to-mast routing not modeled. Existing CAD/plates/queue unchanged; no print started. Details: agents/codex-camera-service-v2-20261021.md.

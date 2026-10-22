@@ -1,0 +1,380 @@
+{
+  "configuration": {
+    "insert_bore": 3.6,
+    "insert_depth": 4.0,
+    "insert_length_assumed": 3.0,
+    "badge_clearance_per_side": 0.25,
+    "cap_height": 12.0,
+    "belt_z": [
+      50.0,
+      56.0
+    ],
+    "shield_radius": 28.0,
+    "shield_width": 27.3,
+    "shield_height": 41.6,
+    "note": "M2 bore and insert length are provisional until existing M2-A coupon/hardware results. No structural pockets."
+  },
+  "source_hashes": {
+    "cad/v2/enclosure/v2-20261013/Gladiator_Enclosure_v2.FCStd": "875c6cc890b39bf82f387eeee51b7bb677dd98594bc630051f9685977ba5258c",
+    "cad/v2/enclosure/v2-20261013/Gladiator_Enclosure_v2_Front_Left.stl": "daa277e375e0d3b145c56e08b29620d2bfb0b65a3a948871ee5514f10ad5b91a",
+    "cad/v2/enclosure/v2-20261013/Gladiator_Enclosure_v2_Rear_Hood.stl": "6ec437c5c7c5d5c91131221d3dcce778c42a3a6f2c14ff48e27595e798337c42",
+    "cad/v2/enclosure/v2-20261013/Gladiator_Enclosure_v2_Lens_Plate.stl": "69a6a5a934f8ff0c67b5d08e8df4396041288f6044fdb247f6bbb271e338df9b",
+    "cad/v2/enclosure/v2-20261013/Gladiator_Enclosure_v2_Front_Right.stl": "7274f7d9e0218bf35b5e83c6ef86f6446ccb02da40b98811f3f001188f75c401",
+    "cad/v2/enclosure/v2-20261013/build_enclosure_v2.py": "dd264838eed4e6fe8916bfce4e04e72501e36bedd6cb59a0c67e90d5aa9bae74",
+    "cad/v2/enclosure/v2-20261013/verify_enclosure_v2.py": "b4ce1814a73bbe050df9ffa3587872502076e1170bfa1532bfae40bc44fbcb1d",
+    "cad/v2/enclosure/v2-20261013/validation.json": "43d26e690cad903630713221d312f2d535dcc4b3a4d36571b9bff001af1e4a7e",
+    "cad/v2/enclosure/v2-20261013/removal-sweeps.json": "e7600d6b267df5a6e9e4cd4ef09835640f9618efc56bf4b72b792f1e2120a38b"
+  },
+  "parts": {
+    "Tablet_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1410.38730455694,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        62.0,
+        16.0,
+        2.1000000000000014
+      ]
+    },
+    "Tablet_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1410.38730455694,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        62.0,
+        16.0,
+        2.1000000000000014
+      ]
+    },
+    "Scutum_Field_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 4023.35150319499,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        27.300000000000004,
+        5.050000000000003,
+        41.6
+      ]
+    },
+    "Scutum_Emblem_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 489.60224948087114,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        27.3,
+        4.6117216124207845,
+        41.599999999999994
+      ]
+    },
+    "Scutum_Boss_L": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 84.12770486182919,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        8.499901724643411,
+        8.47879708449258,
+        2.667535335689049
+      ]
+    },
+    "Scutum_Field_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 4023.35150319499,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        27.300000000000004,
+        5.050000000000003,
+        41.6
+      ]
+    },
+    "Scutum_Emblem_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 489.60224948087114,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        27.3,
+        4.6117216124207845,
+        41.599999999999994
+      ]
+    },
+    "Scutum_Boss_R": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 84.12770486182919,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        8.499901724643411,
+        8.47879708449258,
+        2.667535335689049
+      ]
+    },
+    "Aquila_Relief": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 652.309609070962,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        41.6,
+        17.6,
+        3.3245563714033883
+      ]
+    },
+    "Crest_Clamp": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 806.4815598272819,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        12.0,
+        17.44999999999999,
+        7.199999999999989
+      ]
+    },
+    "Crest_Clamp_Shoe": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 13.200000000000017,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        4.400000000000006,
+        3.0,
+        1.0
+      ]
+    },
+    "Galea_Crest": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 5310.286152774854,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        29.80000000000001,
+        61.0,
+        4.799999999999997
+      ]
+    },
+    "Crest_Holder_Trim": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 122.26400000000041,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        9.599999999999994,
+        15.0,
+        2.9000000000000057
+      ]
+    },
+    "Neck_Clamp_0": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 678.3121969370235,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        8.0,
+        14.450000000000003,
+        9.200000000000017
+      ]
+    },
+    "Neck_Clamp_1": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 678.3121969370236,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        8.0,
+        14.450000000000003,
+        9.200000000000017
+      ]
+    },
+    "Neck_Guard": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1271.4414168308988,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        63.0,
+        14.900000000000006,
+        8.399999999999977
+      ]
+    },
+    "Rear_Hood": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 115334.39976129259,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        118.33333333333339,
+        115.80000000000001,
+        102.90000000000002
+      ]
+    },
+    "Front_Left": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 36716.10491454079,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        80.19999999999999,
+        87.79999999999998,
+        94.00000000000001
+      ]
+    },
+    "Front_Right": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 36716.112857963926,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        80.2,
+        87.79999999999998,
+        94.00000000000001
+      ]
+    },
+    "Lens_Plate": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 1048.402167179414,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        33.599999999999994,
+        19.6,
+        12.699999999999989
+      ]
+    },
+    "Neck_Clamp_Shoe_21_5": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 15.0,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        5.0,
+        3.0,
+        1.0
+      ]
+    },
+    "Neck_Clamp_Shoe_57_5": {
+      "valid": true,
+      "solids": 1,
+      "volume_mm3": 15.0,
+      "mesh_solid": true,
+      "mesh_nonmanifold": false,
+      "size_mm": [
+        5.0,
+        3.0,
+        1.0
+      ]
+    }
+  },
+  "baseline_preservation": {
+    "Rear_Hood": {
+      "removed_mm3": 0.0,
+      "added_mm3": 10804.044714514457
+    },
+    "Front_Left": {
+      "removed_mm3": 0.0,
+      "added_mm3": 1521.2439460308888
+    },
+    "Front_Right": {
+      "removed_mm3": 0.0,
+      "added_mm3": 1521.2451792507345
+    },
+    "Lens_Plate": {
+      "removed_mm3": 0.0,
+      "added_mm3": 0.0
+    }
+  },
+  "collisions": [],
+  "mounts": [
+    {
+      "name": "Tablet_L_M2_0",
+      "owner": "Rear_Hood",
+      "screw": "M2x4",
+      "seat_local_mm": 6.3,
+      "tip_local_mm": 2.3
+    },
+    {
+      "name": "Tablet_L_M2_1",
+      "owner": "Rear_Hood",
+      "screw": "M2x4",
+      "seat_local_mm": 6.3,
+      "tip_local_mm": 2.3
+    },
+    {
+      "name": "Tablet_R_M2_0",
+      "owner": "Rear_Hood",
+      "screw": "M2x4",
+      "seat_local_mm": 6.3,
+      "tip_local_mm": 2.3
+    },
+    {
+      "name": "Tablet_R_M2_1",
+      "owner": "Rear_Hood",
+      "screw": "M2x4",
+      "seat_local_mm": 6.3,
+      "tip_local_mm": 2.3
+    },
+    {
+      "name": "Scutum_L_M2",
+      "owner": "Front_Left",
+      "screw": "M2x6",
+      "seat_local_mm": 7.15,
+      "tip_local_mm": 1.1500000000000004
+    },
+    {
+      "name": "Scutum_R_M2",
+      "owner": "Front_Right",
+      "screw": "M2x6",
+      "seat_local_mm": 7.15,
+      "tip_local_mm": 1.1500000000000004
+    },
+    {
+      "name": "Aquila_Centre_M2",
+      "owner": "Rear_Hood",
+      "screw": "M2x6",
+      "seat_local_mm": 7.4,
+      "tip_local_mm": 1.4000000000000004
+    }
+  ],
+  "source_files_unchanged": true,
+  "status": "Round 5 CAD REVIEW \u2014 independent geometry checks PASS; M2 calibration and loaded head physical checks pending",
+  "final_lame_trim": {
+    "valid": true,
+    "solids": 1,
+    "original_removed_mm3": 0.0,
+    "new_material_added_mm3": 0.0,
+    "styling_trimmed_mm3": 11.871235804956113
+  },
+  "mesh_repair": {
+    "part": "Front_Left",
+    "maximum_boundary_vertex_displacement_mm": 0.0007180138893586579,
+    "native_geometry_changed": false,
+    "solid_after_repair": true
+  },
+  "independent_verification": "independent-verification.json"
+}

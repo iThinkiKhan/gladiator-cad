@@ -70,7 +70,7 @@
      ]
     }
    ],
-   "sha256": "d99f993c4d4f9aabaa8ae70e35b56e6370fe6855756bc318b60f42b4757c8a19"
+   "sha256": "491bcd6cf88b3185bffd560aef75875118a7c8935393d98c7825c5c877fd6c2f"
   },
   "D": {
    "file": "Gladiator_v2_ORCA-D_Upper_Deck_v4.3mf",
@@ -96,7 +96,7 @@
      ]
     }
    ],
-   "sha256": "484c573c48d32c483291b7fa199527109c1f708528e67dab69da48750d78ee42"
+   "sha256": "1841519a4a312c43689ce31831998c212c45d6b2700b4697d2e332039a34aaaa"
   },
   "SW": {
    "file": "Gladiator_v2_ORCA-SW_Switch_Holder_v3.3mf",
@@ -122,7 +122,7 @@
      ]
     }
    ],
-   "sha256": "db198743b80fec9326e0910d048835f9fb04f424cb1d4d82484f482dc44a3ec5"
+   "sha256": "c875862ebed4844887759d4dc09eb37040396902d18134cc7574f58471f6dc02"
   },
   "IM": {
    "file": "Gladiator_v2_ORCA-IM_INA226_Mount_v3_adapter.3mf",
@@ -148,7 +148,7 @@
      ]
     }
    ],
-   "sha256": "92395f0082ec92bcf8194d5ac5a2db823c75598c2b49ecdf1ecc039db32f00bf"
+   "sha256": "94f2c183b751a8a9c850b804a76e35d839ba43f15325a45d8064265c10b012c7"
   },
   "SPK": {
    "file": "Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1.3mf",
@@ -174,7 +174,7 @@
      ]
     }
    ],
-   "sha256": "12ccfdbb86897118dff0684acf68631924f25d19f057cd67053fff8df10c599c"
+   "sha256": "01ed6da4406ae84f74da0c2721ecf51d7a4f9b0657cecc8e1bbc019cbb2b07f2"
   },
   "CM2": {
    "file": "Gladiator_COUPON-M2_Insert_Bores_upright-and-sideways.3mf",
@@ -200,7 +200,49 @@
      ]
     }
    ],
-   "sha256": "88ee2968a5f5c40718ad3b112bd1a287843e313780d4a6e1ba595a29a88c0988"
+   "sha256": "ddbcea6039cddaf17731caa5e47eb2c10081d64430c18ffa2dae0cf22c9710c3"
+  },
+  "EMB": {
+   "file": "R5_04B_White_Shield_Emblems_v2_STRONGER.3mf",
+   "extent_mm": [
+    66.6,
+    41.6
+   ],
+   "parts": [
+    {
+     "part": "Scutum_Emblem_v2_L",
+     "at": [
+      90.4,
+      110.0
+     ],
+     "size": [
+      27.3,
+      41.6
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): [(523.9, 0.0), (16.0, 2.46), (16.0, 2.46), (14.3, 1.57), (14.3, 1.57), (8.6, 1.57), (8.6, 1.57), (3.5, 3.86)]"
+     ]
+    },
+    {
+     "part": "Scutum_Emblem_v2_R",
+     "at": [
+      129.6,
+      110.0
+     ],
+     "size": [
+      27.3,
+      41.6
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): [(523.9, 0.0), (16.0, 2.46), (16.0, 2.46), (14.3, 1.57), (14.3, 1.57), (8.6, 1.57), (8.6, 1.57), (3.5, 3.86)]"
+     ]
+    }
+   ],
+   "sha256": "609b89dcecbe748949725db16850ec8256cf81b5412f77350794491d1fa49e82"
   },
   "ALL": {
    "file": "Gladiator_v2_ORCA-ALL_Rails-and-Deck_one-plate.3mf",
@@ -288,7 +330,7 @@
      ]
     }
    ],
-   "sha256": "027e8954ae2a75798efa99cff35782f0ad984327413698667600b03dd22259b0"
+   "sha256": "e90ebff60da35cd97ae70cc36e4a51a6def148571db8d4058ef5bcf0e67d6075"
   }
  },
  "settings_overridden_vs_template": {
