@@ -16,6 +16,8 @@ Rebuilt 2026-10-16: DECK V4. Its slots follow the real installed rails (pegs 58 
 
   Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1.3mf           speaker bracket for shell-off running (left rail inserts)   about 21 m   4 g
 
+  Gladiator_COUPON-M2_Insert_Bores_upright-and-sideways.3mf   M2 heat-set insert coupon: bores 2.8..3.8 left to right, upright row + sideways row   about 48 m   11 g
+
 Estimates are from a headless Orca 2.4.2 slice; the real print will differ a little. Nothing has been started or queued. You start the prints.
 
 ALL is the plate you reorganised, with the new geometry dropped in at your positions, your EnderNeo SAFE / FIrst Layer Comp settings and post-process script kept,

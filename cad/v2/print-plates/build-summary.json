@@ -70,7 +70,7 @@
      ]
     }
    ],
-   "sha256": "97996c3032b46cfb45644b280612eec9a317a28df23d2286b6962992350ab4a5"
+   "sha256": "d99f993c4d4f9aabaa8ae70e35b56e6370fe6855756bc318b60f42b4757c8a19"
   },
   "D": {
    "file": "Gladiator_v2_ORCA-D_Upper_Deck_v4.3mf",
@@ -96,7 +96,7 @@
      ]
     }
    ],
-   "sha256": "d8cd68eec060c1f054890a1719288d7911f25b7186328bf74995b785cccf4c23"
+   "sha256": "484c573c48d32c483291b7fa199527109c1f708528e67dab69da48750d78ee42"
   },
   "SW": {
    "file": "Gladiator_v2_ORCA-SW_Switch_Holder_v3.3mf",
@@ -122,7 +122,7 @@
      ]
     }
    ],
-   "sha256": "75026ea10ed520bdf9d666a0a9f862c9bea9edec066670211d9f103cc572b8a6"
+   "sha256": "db198743b80fec9326e0910d048835f9fb04f424cb1d4d82484f482dc44a3ec5"
   },
   "IM": {
    "file": "Gladiator_v2_ORCA-IM_INA226_Mount_v3_adapter.3mf",
@@ -148,7 +148,7 @@
      ]
     }
    ],
-   "sha256": "ff387434dcadc0c007aba7c6426820114055f1b91e9445da280c16040b49fa1c"
+   "sha256": "92395f0082ec92bcf8194d5ac5a2db823c75598c2b49ecdf1ecc039db32f00bf"
   },
   "SPK": {
    "file": "Gladiator_v2_ORCA-SPK_Speaker_Rail_Bracket_v1.3mf",
@@ -174,7 +174,33 @@
      ]
     }
    ],
-   "sha256": "864ef8d304dacedd0965b3b05ab65f1bbc302f5aaf679f9345de9c0452e4e1ec"
+   "sha256": "12ccfdbb86897118dff0684acf68631924f25d19f057cd67053fff8df10c599c"
+  },
+  "CM2": {
+   "file": "Gladiator_COUPON-M2_Insert_Bores_upright-and-sideways.3mf",
+   "extent_mm": [
+    60.0,
+    30.0
+   ],
+   "parts": [
+    {
+     "part": "Coupon_M2_Inserts",
+     "at": [
+      110.0,
+      110.0
+     ],
+     "size": [
+      60.0,
+      30.0
+     ],
+     "support_mode": "normal(manual)",
+     "painted": [],
+     "notes": [
+      "no supports painted; overhang clusters seen (area, z0): [(17.6, 9.36), (17.2, 9.26), (15.8, 9.22), (15.3, 9.12), (14.4, 9.05), (13.4, 8.98)]"
+     ]
+    }
+   ],
+   "sha256": "88ee2968a5f5c40718ad3b112bd1a287843e313780d4a6e1ba595a29a88c0988"
   },
   "ALL": {
    "file": "Gladiator_v2_ORCA-ALL_Rails-and-Deck_one-plate.3mf",
@@ -262,7 +288,7 @@
      ]
     }
    ],
-   "sha256": "c09ab3c3db1ebb44dace8627b07d1c373653544f9e44265a9d12f07e319b0b19"
+   "sha256": "027e8954ae2a75798efa99cff35782f0ad984327413698667600b03dd22259b0"
   }
  },
  "settings_overridden_vs_template": {

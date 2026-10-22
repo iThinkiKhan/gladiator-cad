@@ -155,3 +155,6 @@ Building in PLA is a deliberate choice (Jim, 2026-09-18) and every number here i
   prototype; not a reason to stop, but a reason not to treat these as final parts.
 - **Heat-set inserts run cooler in PLA** — around 200 C rather than 240-250. Let the insert sink
   under its own weight rather than pushing, or it will bulge the boss.
+
+## M2 heat-set inserts (pending, 2026-10-21)
+Jim: M2 heat-set inserts in every print from now on. Coupon M2-A (`cad/coupons/m2-insert-v1/`) tests bores 2.8 to 3.8 nominal, upright and sideways. Results not in yet.

@@ -1,0 +1,30 @@
+{
+ "bores_left_to_right": [
+  2.8,
+  3.0,
+  3.2,
+  3.4,
+  3.6,
+  3.8
+ ],
+ "depth_mm": 6.0,
+ "upright_boss_d": 7.0,
+ "wall_bore_centre_z": 8.0,
+ "valid": true,
+ "solids": 1,
+ "volume_mm3": 12725.5,
+ "grams": 15.8,
+ "min_wall_around_largest_upright_bore_mm": 1.6,
+ "wall_over_horizontal_bores_mm": 3.1,
+ "wall_under_horizontal_bores_mm": 6.1,
+ "stl": {
+  "is_solid": true,
+  "non_manifold": false,
+  "size_mm": [
+   60.0,
+   30.0,
+   13.0
+  ],
+  "orientation": "plate down as modelled, no supports (the horizontal bores bridge, as they will in real parts)"
+ }
+}
