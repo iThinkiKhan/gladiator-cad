@@ -1,5 +1,14 @@
 # Current Handoff
 
+## CURRENT: final print set, M600, emblem cradle - 2026-10-22 evening (Claude)
+
+Supersedes the GLAD_*_JIMSET files below. Final set in X:/3D Printer (and cad-lab ~/3D-Printer/Incoming/Gladiator/GLAD_FINAL_20261022), each with a G-code-drawn .png:
+1 white emblems on cradle 46m, 2 silk 20m, 3 black clamps 26m, 4 hood 12h13 (M600 x3), 5 front panels 8h55 (M600 x3).
+- White emblems kept balling up even on Jim's own GUI slice: the arch stands on two 0.5 mm edge lines and the lattice hangs over sparse tree tips. Fix: printed cradle (emblem-v2/build_cradle.py) filling the arch, 0.2 mm radial gap, 0.4 mm clear of edges; supports off. Emblem geometry unchanged.
+- Colour changes converted from the R5 M0 two-click blocks to `M600 X5 Y200 Z10` after `;_SET_FAN_SPEED_CHANGING_LAYER` of the first new-colour layer (to_m600.py; diff = inserted lines only).
+- Hood/panels: Jim's tree supports left the top of a 40 mm window in each panel side wall unsupported and put a branch through the SMA hole. Using normal(auto) + snug + 45 deg threshold (Codex's validated combo) with all other Jim values: 0 unsupported model cells, 0 hits on 24 fastener paths.
+- Full config of std jobs equals Jim's GUI export display2.gcode except supports. Scripts: jim-settings-reslice/source (undercheck.py, render_plate.py, wallview.py, supcheck.py, to_m600.py, slice_normal.py, slice_cradle.py).
+
 ## CURRENT: print files re-sliced on Jim's own Orca presets - 2026-10-22 (Claude)
 
 Jim: "there is something wrong with the gcode, it keeps failing. Make sure you are using my settings." Root cause: all Round 5 G-code (GLAD_01..05) was sliced from hand-edited project settings, not Jim's presets: 0.20 first layer instead of his 0.25 "FIrst Layer Comp" on the small jobs, 0.12/0.16/0.28 layers, slower walls, normal/snug supports, post_process (SAFE guard) blank. **Do not print or reuse those settings.**

@@ -1,0 +1,17 @@
+{
+ "cradle_volume_mm3": 2487.9,
+ "bbox": [
+  -13.241,
+  13.241,
+  -20.4,
+  20.4,
+  0.0,
+  3.412
+ ],
+ "mesh_solid": true,
+ "mesh_nonmanifold": false,
+ "emblem_mesh_volume_mm3": 1052.6,
+ "cradle_emblem_overlap_mm3": 0.0,
+ "min_gap_mm": 0.195,
+ "faces_added": 176
+}

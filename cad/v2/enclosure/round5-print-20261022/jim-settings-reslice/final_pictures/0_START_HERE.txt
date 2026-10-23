@@ -1,0 +1,19 @@
+GLADIATOR PRINT BONANZA - 22 Oct 2026 (all on your Orca presets, SAFE check passes on all 5)
+Each file has a matching .png drawn from the G-code. Nothing was started.
+
+1_WHITE_SHIELD_EMBLEMS_on_cradle   WHITE   46 min   supports off
+   Each emblem sits on a printed cradle 0.2 mm under it (fills the arch). Snap the cradle off after.
+2_SILK_aquila_bosses_trim_neckguard SILK    20 min   your silk presets
+3_BLACK_crest_and_neck_clamps       BLACK   26 min
+4_HOOD_start_RED_3x_M600            RED    12 h 13 min
+   M600 GREY at ~3h29, RED at ~8h51, GREY at ~9h18
+5_FRONT_PANELS_start_RED_3x_M600    RED     8 h 55 min (both panels)
+   M600 GREY at ~2h39, RED at ~5h57, GREY at ~6h26
+
+Colour changes use M600 (lifts 10 mm, parks front-left X5 Y200): follow the printer screen,
+load the new colour, purge until clean, wipe the nozzle, resume. Have the next colour ready.
+
+Hood and panels use normal snug supports at 45 degrees instead of your tree supports. With tree
+supports, the top of a 40 mm window in each panel side wall printed in mid-air, and a branch grew
+through the antenna hole. Every other setting is yours. All 24 checked screw/insert paths are
+support-free, and every part area has something printed under it.
