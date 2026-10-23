@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-calibrated-28-20261022/mount-checked-release/correct_speaker_mount.py", line 32, in <module>
+    meta=d.addObject('App::Feature','Speaker_Heatsets_20261022');meta.addProperty('App::PropertyString','ManufacturingNotes');meta.ManufacturingNotes='Two calibrated M2 heat-set pockets:2.8mm x4.0mm, install flush from inside before fitting speaker. For measured2.8mm ears use M2x6 machine screws. Original 1.6mm pilot tails remain below the usable pocket; roof and7mm pads unchanged.'
+TypeError: {'sclassname': 'N4Base9TypeErrorE', 'sErrMsg': "'App::Feature' is not a document object type", 'sfile': '', 'iline': 0, 'sfunction': '', 'swhat': "'App::Feature' is not a document object type", 'btranslatable': False, 'breported': False}

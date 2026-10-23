@@ -1,0 +1,19 @@
+{
+  "READY_TO_PRINT/GLAD_04_HOOD_SD_M2_28.gcode": "ea6dac92e5e9f8551777d185f72c998589387eb45146a87426b14d46d88ab68b",
+  "READY_TO_PRINT/GLAD_05_PANELS_SD_M2_28.gcode": "b1b3f125e0b7bc3913829de02f1910107a58c58a2e8ebe2ed8d572f6b75fceec",
+  "START_HERE.md": "659fa09bd509211d6c2080e423e8394eca7a1b8a39343bcb070387ba10edad7e",
+  "build-summary.json": "e0d8128b4b7a2588b1df731b3a708f737bc18ad59b8c13e1fb38a90897d19f1f",
+  "finalize_checked.py": "4d16d768f1a01719c8b37176c386c1a45fc8df9629b43a156ab735e95de8b0de",
+  "plates/GLAD_04_HOOD_SD_M2_28.3mf": "1a49f375acce02ca36d13608cdabafc93c260babefbc629377f84a9656443a7d",
+  "plates/GLAD_05_PANELS_SD_M2_28.3mf": "418867280f38f18f30448b793c3c2488f1d5f06faa2814a64c91e2b7d37467d4",
+  "previews/07-toolpaths.png": "c54ca1f2668a2fabef0b1c9070b765aaa931bf5fdb49884694355813b4d3d8d2",
+  "previews/08-toolpaths.png": "c0b7a7036c1ee128d0930bd5cc30847656c72507de18053071586df3b77d8238",
+  "reports/GLAD_04_HOOD_SD_M2_28-colour-stops.json": "057800af94bc30aa4da41f797b08f9f76d9a48bca5fa4ac8fab67555cdb3f69f",
+  "reports/GLAD_05_PANELS_SD_M2_28-colour-stops.json": "4fa5551b1d7207cf2667f7e7f3a32cb7ed87616e6b1beb08dcdeb0334fe53e06",
+  "reports/SD-pause-state-verification.json": "738fb368cb64c4accd89a22157e3db27f232164423b7fd09cb60986ae1963675",
+  "reports/benchmarks.json": "1d8e61ccf2dca204d5f8b80d89279853969d9d800d40cac1615dfaf10cdcfa9a",
+  "reports/jobs.json": "8d73c30bbe70f3e48103bae7fb2dc33865b88c0db036babf1832f56a2a189fe2",
+  "reports/slice-checks.json": "bd09be9bf238dc2dd2e832802fa56dd7667afaafef65bed299f4ad9d170480a7",
+  "reports/structural-preservation.json": "ef1eda45be151f90a0e0d9325f58a63547ea0151836fe975057ee9aa960ed12e",
+  "reports/support-clearance.json": "30876a6072ab50e4102dc68167ddfb765b151a5eca4313e4dd85f86c4b15feed"
+}

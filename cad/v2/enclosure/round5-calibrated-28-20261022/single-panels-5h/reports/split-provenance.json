@@ -1,0 +1,22 @@
+{
+  "08L": {
+    "single_build_object": "2",
+    "part": "Front_Left",
+    "geometry_files_byte_identical": [
+      "3D/Objects/Front_Left.model"
+    ],
+    "support_blocker_preserved": true,
+    "settings_byte_identical": true,
+    "placement_unchanged": true
+  },
+  "08R": {
+    "single_build_object": "4",
+    "part": "Front_Right",
+    "geometry_files_byte_identical": [
+      "3D/Objects/Front_Right.model"
+    ],
+    "support_blocker_preserved": true,
+    "settings_byte_identical": true,
+    "placement_unchanged": true
+  }
+}

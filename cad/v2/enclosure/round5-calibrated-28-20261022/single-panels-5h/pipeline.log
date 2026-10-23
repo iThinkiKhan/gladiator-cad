@@ -1,0 +1,60 @@
+Splitting front-panel plate without changing parts, placement or settings
+Slicing left and right individually
+Checking supports, SAFE starts and SD colour changes
+PASSED - individual panels ready
+{
+  "archive": "/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-calibrated-28-20261022/Gladiator_Single_Front_Panels_5h_20261022.zip",
+  "jobs": [
+    {
+      "key": "08L",
+      "file": "GLAD_05L_PANEL_SD_M2_28.gcode",
+      "part": "Front_Left",
+      "seconds": 15073,
+      "grams": 61.06,
+      "swaps": [
+        {
+          "load": "GREY",
+          "boundary_mm": 12.01,
+          "estimated_elapsed_seconds": 4033
+        },
+        {
+          "load": "RED",
+          "boundary_mm": 52.05,
+          "estimated_elapsed_seconds": 8713
+        },
+        {
+          "load": "GREY",
+          "boundary_mm": 57.93,
+          "estimated_elapsed_seconds": 9913
+        }
+      ],
+      "sha256": "e075719b521759be24c0d4ccf9589d352f688408fef7b5f68b9cb2a20639c95b"
+    },
+    {
+      "key": "08R",
+      "file": "GLAD_05R_PANEL_SD_M2_28.gcode",
+      "part": "Front_Right",
+      "seconds": 15300,
+      "grams": 61.46,
+      "swaps": [
+        {
+          "load": "GREY",
+          "boundary_mm": 12.01,
+          "estimated_elapsed_seconds": 4080
+        },
+        {
+          "load": "RED",
+          "boundary_mm": 52.05,
+          "estimated_elapsed_seconds": 8820
+        },
+        {
+          "load": "GREY",
+          "boundary_mm": 57.93,
+          "estimated_elapsed_seconds": 10020
+        }
+      ],
+      "sha256": "2e8fd8dceb509b679c6e66b841c9c5aba17d5025527d341fe82055c779a3693e"
+    }
+  ],
+  "recommended": "GLAD_05L_PANEL_SD_M2_28.gcode"
+}

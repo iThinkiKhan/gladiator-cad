@@ -1,0 +1,295 @@
+{
+  "source_hashes_unchanged": true,
+  "all_22_source_parts_covered": true,
+  "all_slicer_guards_passed": true,
+  "all_extrusions_fit_220": true,
+  "slicer_errors": {
+    "00": [],
+    "00H": [],
+    "01": [],
+    "02": [],
+    "03": [],
+    "04": [],
+    "05": [],
+    "06": [],
+    "07": [],
+    "08": [],
+    "09": []
+  },
+  "support_inside_new_insert_bores": {
+    "Crest_side": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Crest_top": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Neck0_side": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Neck0_top": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Neck1_side": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Neck1_top": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 0,
+      "note": "No support extrusion anywhere on this plate; clamps print on broad sides."
+    },
+    "Tablet_L_-6": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_L_48": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_R_-6": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_R_48": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Aquila": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Scutum_L": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 1473267,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 491089
+    },
+    "Scutum_R": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 1473267,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 491089
+    }
+  },
+  "source_part_count": 22,
+  "all_plates_seconds": 85716,
+  "shells_seconds": 65693
+}
+colour changes {
+  "05": {
+    "plate": "05",
+    "start_colour": "WHITE",
+    "changes": [
+      {
+        "target_boundary_mm": 1.5,
+        "actual_model_boundary_mm": 1.5,
+        "before_model_layer_z_mm": 1.62,
+        "load_colour": "RED",
+        "saved_xyz_mm": [
+          88.992,
+          83.585,
+          1.5
+        ],
+        "saved_e_mm": 88.41164000000006,
+        "saved_feed_mm_min": 1800.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 3.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          6.5
+        ],
+        "nozzle_c": 200.0
+      }
+    ],
+    "original_bytes_preserved_outside_pause_blocks": true,
+    "source_sha256": "48380749cf0d51b853a39f8bad8608dea1478fa2318e230a9b750662b9e36817",
+    "output_sha256": "56190368329327aae0b554d06466d9d37d66fb4b3ce7866da05766717bb3927c",
+    "physical_SD_pause_test_required": true,
+    "manual_swap": "Click when present; wait for heat; release extruder idler, swap and hand-purge to pure new colour, wipe nozzle, reengage idler, click. Keep bed/head still. No firmware-managed unloading assumed.",
+    "runtime_idle_timeout": "0 while paused;120s after resume; no EEPROM writes."
+  },
+  "07": {
+    "plate": "07",
+    "start_colour": "RED",
+    "changes": [
+      {
+        "target_boundary_mm": 12,
+        "actual_model_boundary_mm": 12.01,
+        "before_model_layer_z_mm": 12.29,
+        "load_colour": "GREY",
+        "saved_xyz_mm": [
+          65.432,
+          111.978,
+          12.21
+        ],
+        "saved_e_mm": 46.18182000000003,
+        "saved_feed_mm_min": 2400.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 407.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          17.21
+        ],
+        "nozzle_c": 200.0
+      },
+      {
+        "target_boundary_mm": 55.9,
+        "actual_model_boundary_mm": 55.97,
+        "before_model_layer_z_mm": 56.25,
+        "load_colour": "RED",
+        "saved_xyz_mm": [
+          150.83,
+          158.448,
+          56.19
+        ],
+        "saved_e_mm": 26.50159000000001,
+        "saved_feed_mm_min": 3600.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 159.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          61.19
+        ],
+        "nozzle_c": 200.0
+      },
+      {
+        "target_boundary_mm": 61.9,
+        "actual_model_boundary_mm": 61.85,
+        "before_model_layer_z_mm": 62.13,
+        "load_colour": "GREY",
+        "saved_xyz_mm": [
+          77.235,
+          69.7,
+          61.93
+        ],
+        "saved_e_mm": 23.915990000000015,
+        "saved_feed_mm_min": 3600.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 138.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          66.93
+        ],
+        "nozzle_c": 200.0
+      }
+    ],
+    "original_bytes_preserved_outside_pause_blocks": true,
+    "source_sha256": "476ce94183f4ae57e6f072379660e8784c8d3b0edb2a3f6e5a8f226b6692c4d3",
+    "output_sha256": "ea6dac92e5e9f8551777d185f72c998589387eb45146a87426b14d46d88ab68b",
+    "physical_SD_pause_test_required": true,
+    "manual_swap": "Click when present; wait for heat; release extruder idler, swap and hand-purge to pure new colour, wipe nozzle, reengage idler, click. Keep bed/head still. No firmware-managed unloading assumed.",
+    "runtime_idle_timeout": "0 while paused;120s after resume; no EEPROM writes."
+  },
+  "08": {
+    "plate": "08",
+    "start_colour": "RED",
+    "changes": [
+      {
+        "target_boundary_mm": 12,
+        "actual_model_boundary_mm": 12.01,
+        "before_model_layer_z_mm": 12.29,
+        "load_colour": "GREY",
+        "saved_xyz_mm": [
+          93.81,
+          71.633,
+          12.01
+        ],
+        "saved_e_mm": 108.47031,
+        "saved_feed_mm_min": 4800.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 377.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          17.009999999999998
+        ],
+        "nozzle_c": 200.0
+      },
+      {
+        "target_boundary_mm": 52,
+        "actual_model_boundary_mm": 52.05,
+        "before_model_layer_z_mm": 52.33,
+        "load_colour": "RED",
+        "saved_xyz_mm": [
+          45.321,
+          139.712,
+          52.05
+        ],
+        "saved_e_mm": 122.19026,
+        "saved_feed_mm_min": 4800.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 218.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          57.05
+        ],
+        "nozzle_c": 200.0
+      },
+      {
+        "target_boundary_mm": 58,
+        "actual_model_boundary_mm": 57.93,
+        "before_model_layer_z_mm": 58.21,
+        "load_colour": "GREY",
+        "saved_xyz_mm": [
+          27.028,
+          128.069,
+          57.93
+        ],
+        "saved_e_mm": 169.4368900000001,
+        "saved_feed_mm_min": 4800.0,
+        "original_retraction_mm": 0.0,
+        "remaining_estimated_minutes": 178.0,
+        "park_xyz_mm": [
+          10,
+          180,
+          62.93
+        ],
+        "nozzle_c": 200.0
+      }
+    ],
+    "original_bytes_preserved_outside_pause_blocks": true,
+    "source_sha256": "3dcb3c85ccbcb869a829a050c7d36742a92507d34bc618b19c1b406c43804ac2",
+    "output_sha256": "677a3fce3df24eb0eb19913d7a2b96c5c755245902ec054ad31ff815abcd966b",
+    "physical_SD_pause_test_required": true,
+    "manual_swap": "Click when present; wait for heat; release extruder idler, swap and hand-purge to pure new colour, wipe nozzle, reengage idler, click. Keep bed/head still. No firmware-managed unloading assumed.",
+    "runtime_idle_timeout": "0 while paused;120s after resume; no EEPROM writes."
+  }
+}

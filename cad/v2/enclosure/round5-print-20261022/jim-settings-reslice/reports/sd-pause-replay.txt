@@ -1,0 +1,10 @@
+GLAD_04_HOOD_SD_JIMSET.gcode
+   GREY at Z12.05: state restored True (max err 0.000000), park Z 17.05 vs printed top 12.05
+   RED at Z55.85: state restored True (max err 0.000000), park Z 60.85 vs printed top 55.85
+   GREY at Z61.85: state restored True (max err 0.000000), park Z 66.85 vs printed top 61.85
+   pauses checked: 3
+GLAD_05_PANELS_SD_JIMSET.gcode
+   GREY at Z12.05: state restored True (max err 0.000000), park Z 17.05 vs printed top 12.05
+   RED at Z52.05: state restored True (max err 0.000000), park Z 57.05 vs printed top 52.05
+   GREY at Z58.05: state restored True (max err 0.000000), park Z 63.05 vs printed top 58.05
+   pauses checked: 3

@@ -1,0 +1,40 @@
+{
+  "GLAD_04_HOOD_SD_M2_28.gcode": {
+    "all_motion_within_220x220x250": true,
+    "max_z_mm": 133.01,
+    "pause_state_checks": [
+      {
+        "state_restored": true,
+        "max_error": 1.4210854715202004e-14
+      },
+      {
+        "state_restored": true,
+        "max_error": 1.0658141036401503e-14
+      },
+      {
+        "state_restored": true,
+        "max_error": 1.0658141036401503e-14
+      }
+    ],
+    "physical_LCD_and_manual_purge_not_simulated": true
+  },
+  "GLAD_05_PANELS_SD_M2_28.gcode": {
+    "all_motion_within_220x220x250": true,
+    "max_z_mm": 124.05,
+    "pause_state_checks": [
+      {
+        "state_restored": true,
+        "max_error": 6.394884621840902e-14
+      },
+      {
+        "state_restored": true,
+        "max_error": 2.1316282072803006e-14
+      },
+      {
+        "state_restored": true,
+        "max_error": 1.7763568394002505e-13
+      }
+    ],
+    "physical_LCD_and_manual_purge_not_simulated": true
+  }
+}

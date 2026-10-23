@@ -1,0 +1,54 @@
+[
+  {
+    "key": "07",
+    "file": "GLAD_04_HOOD_SD_M2_28.gcode",
+    "seconds": 34744,
+    "grams": 156.64,
+    "saved_seconds": 269,
+    "start_colour": "RED",
+    "changes": [
+      {
+        "load": "GREY",
+        "boundary_mm": 12.01,
+        "elapsed_seconds": 10564
+      },
+      {
+        "load": "RED",
+        "boundary_mm": 55.97,
+        "elapsed_seconds": 25444
+      },
+      {
+        "load": "GREY",
+        "boundary_mm": 61.85,
+        "elapsed_seconds": 26644
+      }
+    ],
+    "sha256": "6cfe805e60420ccb2da8c9ebdba458df0741d5f0953293578d4e37a1b6c64cf6"
+  },
+  {
+    "key": "08",
+    "file": "GLAD_05_PANELS_SD_M2_28.gcode",
+    "seconds": 25234,
+    "grams": 124.25,
+    "saved_seconds": 5446,
+    "start_colour": "RED",
+    "changes": [
+      {
+        "load": "GREY",
+        "boundary_mm": 12.01,
+        "elapsed_seconds": 7774
+      },
+      {
+        "load": "RED",
+        "boundary_mm": 52.05,
+        "elapsed_seconds": 16954
+      },
+      {
+        "load": "GREY",
+        "boundary_mm": 57.93,
+        "elapsed_seconds": 18274
+      }
+    ],
+    "sha256": "b1b3f125e0b7bc3913829de02f1910107a58c58a2e8ebe2ed8d572f6b75fceec"
+  }
+]

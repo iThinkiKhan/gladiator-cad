@@ -1,0 +1,112 @@
+{
+  "bores": {
+    "Tablet_L_-6": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Tablet_L_48": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Tablet_R_-6": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Tablet_R_48": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Aquila": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Scutum_L": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Scutum_R": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Crest_side": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Crest_top": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Neck0_side": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Neck0_top": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Neck1_side": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    },
+    "Neck1_top": {
+      "CAD_diameter_mm": 2.8,
+      "radial_samples": 360,
+      "clear_at_radius_1_35_and_material_at_1_60": true
+    }
+  },
+  "changed_part_preservation": {
+    "Rear_Hood": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 80.47967089688436
+    },
+    "Front_Left": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 16.198051721909017
+    },
+    "Front_Right": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 16.198051721909028
+    },
+    "Crest_Clamp": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 31.579275690509974
+    },
+    "Neck_Clamp_0": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 31.610258494842626
+    },
+    "Neck_Clamp_1": {
+      "original_material_removed_mm3": 0.0,
+      "added_mm3": 31.61025849484259
+    }
+  },
+  "unchanged_parts": [
+    "Tablet_L",
+    "Tablet_R",
+    "Scutum_Field_L",
+    "Scutum_Field_R",
+    "Aquila_Relief",
+    "Crest_Clamp_Shoe",
+    "Galea_Crest",
+    "Crest_Holder_Trim",
+    "Neck_Clamp_Shoe_21_5",
+    "Neck_Clamp_Shoe_57_5",
+    "Neck_Guard",
+    "Lens_Plate"
+  ],
+  "STEP_valid_solid_count": 22,
+  "stronger_insets_v2_in_saved_native": true,
+  "passed": true
+}

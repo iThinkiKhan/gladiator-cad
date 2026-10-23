@@ -1,0 +1,466 @@
+{
+  "source_native_sha256": "3ad211af6069ffba8e4f5bee69836964b677894761519d153ee8a3d14cb1b3a4",
+  "context_objects": [
+    {
+      "name": "Ref_ArchRail_Left_v4",
+      "bounds": [
+        2.7517073602301982,
+        1.911497147486453,
+        2.0,
+        16.245237652842164,
+        135.03792548816867,
+        58.20000000000002
+      ]
+    },
+    {
+      "name": "Ref_ArchRail_Right_v4",
+      "bounds": [
+        62.485116446223074,
+        -22.13192901919933,
+        2.0,
+        78.87958722305854,
+        135.03792548816867,
+        58.20000000000002
+      ]
+    },
+    {
+      "name": "Hood_Speaker_envelope",
+      "bounds": [
+        48.5,
+        -20.0,
+        91.0,
+        83.5,
+        24.0,
+        106.0
+      ]
+    }
+  ],
+  "antenna": {
+    "external_nut_D12": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "external_socket_D16": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "external_socket_D20": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "inside_flange_D12": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "inside_tool_D16_short": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "inside_tool_D20_short": {
+      "hood_overlap_mm3": 0.0,
+      "assembled_reference_hits": []
+    },
+    "sampled_land_thickness_mm_range": [
+      1.9750000000000028,
+      1.9750000000000028
+    ],
+    "hole_surface_diameters_mm": [
+      22.0,
+      7.0
+    ]
+  },
+  "speaker": {
+    "hole_centres": [
+      {
+        "x": 64,
+        "y": -16.25,
+        "cylindrical_faces": [
+          {
+            "diameter_mm": 7.0,
+            "bounds_z": [
+              99.9,
+              109.5
+            ]
+          },
+          {
+            "diameter_mm": 1.6,
+            "bounds_z": [
+              99.9,
+              104.4
+            ]
+          }
+        ]
+      },
+      {
+        "x": 64,
+        "y": 20.25,
+        "cylindrical_faces": [
+          {
+            "diameter_mm": 7.0,
+            "bounds_z": [
+              99.9,
+              109.5
+            ]
+          },
+          {
+            "diameter_mm": 1.6,
+            "bounds_z": [
+              99.9,
+              104.4
+            ]
+          }
+        ]
+      }
+    ],
+    "driver_access": [
+      {
+        "centre": [
+          64,
+          -16.25
+        ],
+        "tool_diameter_mm": 5,
+        "hood_hits": 0.0,
+        "other_context_hits": []
+      },
+      {
+        "centre": [
+          64,
+          -16.25
+        ],
+        "tool_diameter_mm": 7,
+        "hood_hits": 0.0,
+        "other_context_hits": []
+      },
+      {
+        "centre": [
+          64,
+          20.25
+        ],
+        "tool_diameter_mm": 5,
+        "hood_hits": 0.0,
+        "other_context_hits": [
+          [
+            "Ref_Breadboard",
+            186.53206380689397
+          ]
+        ]
+      },
+      {
+        "centre": [
+          64,
+          20.25
+        ],
+        "tool_diameter_mm": 7,
+        "hood_hits": 0.0,
+        "other_context_hits": [
+          [
+            "Ref_Breadboard",
+            365.6028450615122
+          ]
+        ]
+      }
+    ]
+  },
+  "rail_mounts": [
+    {
+      "side": "L",
+      "hole_yz": [
+        22,
+        40
+      ],
+      "actual_rail_bore": {
+        "center": [
+          6.521132350381164,
+          21.938322914831037,
+          40.00000000000001
+        ],
+        "axis": [
+          0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          7.495228167508095,
+          19.64970333064697,
+          37.70000000000001,
+          15.046436918269562,
+          24.333677334801788,
+          42.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.05044502571058018,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        -9.0,
+        -9.0
+      ],
+      "grip_to_rail_mm": 16.52078564217723,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.52078564217723,
+          "nominal_entry_beyond_rail_face_mm": 3.4792143578227694,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.52078564217723,
+          "nominal_entry_beyond_rail_face_mm": 8.47921435782277,
+          "shaft_overlap_rail_material_mm3": 6.920313703436235,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    },
+    {
+      "side": "L",
+      "hole_yz": [
+        35.5,
+        46
+      ],
+      "actual_rail_bore": {
+        "center": [
+          6.369456531105342,
+          35.437470830379155,
+          46.00000000000001
+        ],
+        "axis": [
+          0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          7.343552348232274,
+          33.14885124619509,
+          43.70000000000001,
+          14.89476109899374,
+          37.83282525034991,
+          48.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.05129714601871882,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        -9.0,
+        -9.0
+      ],
+      "grip_to_rail_mm": 16.369106631694734,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.369106631694734,
+          "nominal_entry_beyond_rail_face_mm": 3.6308933683052658,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.369106631694734,
+          "nominal_entry_beyond_rail_face_mm": 8.630893368305266,
+          "shaft_overlap_rail_material_mm3": 7.069029649077246,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    },
+    {
+      "side": "L",
+      "hole_yz": [
+        59,
+        45
+      ],
+      "actual_rail_bore": {
+        "center": [
+          6.105428253106692,
+          58.93598757225922,
+          45.00000000000001
+        ],
+        "axis": [
+          0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          7.0795240702336235,
+          56.64736798807516,
+          42.70000000000001,
+          14.63073282099509,
+          61.33134199222998,
+          47.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.05278046655509172,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        -9.0,
+        -9.0
+      ],
+      "grip_to_rail_mm": 16.105072798632612,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.105072798632612,
+          "nominal_entry_beyond_rail_face_mm": 3.8949272013673877,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.105072798632612,
+          "nominal_entry_beyond_rail_face_mm": 8.894927201367388,
+          "shaft_overlap_rail_material_mm3": 7.06902964910833,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        22,
+        40
+      ],
+      "actual_rail_bore": {
+        "center": [
+          72.47886764961885,
+          21.938322914831044,
+          40.00000000000001
+        ],
+        "axis": [
+          -0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          63.95356308173046,
+          19.64970333064698,
+          37.70000000000001,
+          71.50477183249193,
+          24.333677334801795,
+          42.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.05044502571057308,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        88.0,
+        88.0
+      ],
+      "grip_to_rail_mm": 16.52078564217723,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.52078564217723,
+          "nominal_entry_beyond_rail_face_mm": 3.4792143578227694,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.52078564217723,
+          "nominal_entry_beyond_rail_face_mm": 8.47921435782277,
+          "shaft_overlap_rail_material_mm3": 6.920313703369864,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        35.5,
+        46
+      ],
+      "actual_rail_bore": {
+        "center": [
+          72.63054346889467,
+          35.43747083037916,
+          46.00000000000001
+        ],
+        "axis": [
+          -0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          64.10523890100627,
+          33.1488512461951,
+          43.70000000000001,
+          71.65644765176775,
+          37.83282525034992,
+          48.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.051297146018711715,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        88.0,
+        88.0
+      ],
+      "grip_to_rail_mm": 16.369106631694734,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.369106631694734,
+          "nominal_entry_beyond_rail_face_mm": 3.6308933683052658,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.369106631694734,
+          "nominal_entry_beyond_rail_face_mm": 8.630893368305266,
+          "shaft_overlap_rail_material_mm3": 7.06902964904464,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        59,
+        45
+      ],
+      "actual_rail_bore": {
+        "center": [
+          72.89457174689332,
+          58.93598757225923,
+          45.00000000000001
+        ],
+        "axis": [
+          -0.9999368826331938,
+          0.011235245872282999,
+          0.0
+        ],
+        "radius": 2.3000000000000003,
+        "bounds": [
+          64.36926717900492,
+          56.64736798807517,
+          42.70000000000001,
+          71.9204759297664,
+          61.33134199222999,
+          47.300000000000004
+        ]
+      },
+      "hole_axis_yz_error_at_entry_mm": 0.052780466555084615,
+      "angular_difference_deg": 0.643745714174742,
+      "screw_head_bearing_x_range_mm": [
+        88.0,
+        88.0
+      ],
+      "grip_to_rail_mm": 16.105072798632605,
+      "screw_length_tests": {
+        "20": {
+          "grip_to_rail_mm": 16.105072798632605,
+          "nominal_entry_beyond_rail_face_mm": 3.894927201367395,
+          "shaft_overlap_rail_material_mm3": 0.0,
+          "shaft_overlap_hood_mm3": 0.0
+        },
+        "25": {
+          "grip_to_rail_mm": 16.105072798632605,
+          "nominal_entry_beyond_rail_face_mm": 8.894927201367395,
+          "shaft_overlap_rail_material_mm3": 7.069029649152073,
+          "shaft_overlap_hood_mm3": 0.0
+        }
+      },
+      "external_D6_driver_hits": []
+    }
+  ]
+}

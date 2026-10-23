@@ -1,0 +1,10 @@
+{
+  "machine_material_process_settings_byte_identical_before_blockers": true,
+  "geometry_change": "two speaker heat-set pockets and six rail-axis clearance reliefs",
+  "new_support_exclusions": [
+    "Speaker_rear",
+    "Speaker_front"
+  ],
+  "mount_support_paths_clear": true,
+  "source_native_preserved": true
+}

@@ -1,0 +1,116 @@
+{
+  "source_native_sha256": "3ad211af6069ffba8e4f5bee69836964b677894761519d153ee8a3d14cb1b3a4",
+  "change": "Two speaker M2 heat-set pockets 2.8mm x4mm, plus six local 3.6mm rail-axis clearance reliefs following the saved rails. Other parts unchanged.",
+  "material_removed_mm3": 83.70150180899995,
+  "unexpected_removal_mm3": 0.0,
+  "speaker_mounts": [
+    {
+      "centre": [
+        64,
+        -16.25,
+        99.9
+      ],
+      "CAD_bore_mm": 2.8,
+      "usable_depth_mm": 4.0,
+      "ear_thickness_mm": 2.8,
+      "M2x6_nominal_thread_reach_past_ear_mm": 3.2,
+      "M2x6_tip_clearance_to_4mm_pocket_end_mm": 0.8,
+      "radial_wall_min_without_entry_chamfer_mm": 2.1,
+      "bore_checks_pass": true
+    },
+    {
+      "centre": [
+        64,
+        20.25,
+        99.9
+      ],
+      "CAD_bore_mm": 2.8,
+      "usable_depth_mm": 4.0,
+      "ear_thickness_mm": 2.8,
+      "M2x6_nominal_thread_reach_past_ear_mm": 3.2,
+      "M2x6_tip_clearance_to_4mm_pocket_end_mm": 0.8,
+      "radial_wall_min_without_entry_chamfer_mm": 2.1,
+      "bore_checks_pass": true
+    }
+  ],
+  "rail_clearance_checks": [
+    {
+      "side": "L",
+      "hole_yz": [
+        22,
+        40
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.4792143578227694
+    },
+    {
+      "side": "L",
+      "hole_yz": [
+        35.5,
+        46
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.6308933683052658
+    },
+    {
+      "side": "L",
+      "hole_yz": [
+        59,
+        45
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.8949272013673877
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        22,
+        40
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.4792143578227694
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        35.5,
+        46
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.6308933683052658
+    },
+    {
+      "side": "R",
+      "hole_yz": [
+        59,
+        45
+      ],
+      "aligned_bore_mm": 3.6,
+      "shaft_D3_2_overlap_mm3": 0.0,
+      "head_bearing_radius_2_6_all_samples_solid": true,
+      "M3x20_reach_past_rail_face_mm": 3.894927201367395
+    }
+  ],
+  "saved_STEP_valid_solids": 22,
+  "STL_solid_manifold": true,
+  "STL_bounds": [
+    21.33333396911621,
+    12.0,
+    -1.4210854715202004e-14,
+    139.6666717529297,
+    127.80000305175781,
+    102.9000015258789
+  ],
+  "source_preserved": true,
+  "passed": true
+}

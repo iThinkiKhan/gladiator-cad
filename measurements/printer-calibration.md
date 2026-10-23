@@ -158,3 +158,10 @@ Building in PLA is a deliberate choice (Jim, 2026-09-18) and every number here i
 
 ## M2 heat-set inserts (pending, 2026-10-21)
 Jim: M2 heat-set inserts in every print from now on. Coupon M2-A (`cad/coupons/m2-insert-v1/`) tests bores 2.8 to 3.8 nominal, upright and sideways. Results not in yet.
+
+
+## 2026-10-22 - M2 heat-set coupon accepted: 2.8 mm
+
+Jim reported in the current Codex chat: "The coupon is in - 2.8 is the right size for the m2 heat sets." Accepted CAD pilot bore: **2.8 mm** for the current small M2 heat-set stock in PLA on the Ender-3 Neo. This resolves the Round 5 insert-bore sizing gate; use it for all thirteen new Round 5 accessory mounts. Retain 4.0 mm production bore depth and the existing nominal 3.0 mm insert-length allowance. No new measured stock OD/length, iron temperature, pullout load or separate horizontal-coupon result was reported; do not invent them. The selected mini coupon has upright holes.
+
+This does not change the earlier larger-stock 4.6 mm insert calibration, M2 2.6 mm clearance holes, or the separate 2.35 mm thread-forming screw pilot.

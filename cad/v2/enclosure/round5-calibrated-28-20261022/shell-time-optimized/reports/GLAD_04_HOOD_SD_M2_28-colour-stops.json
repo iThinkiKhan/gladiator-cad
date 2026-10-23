@@ -1,0 +1,75 @@
+{
+  "plate": "07",
+  "start_colour": "RED",
+  "changes": [
+    {
+      "target_boundary_mm": 12,
+      "actual_model_boundary_mm": 12.01,
+      "before_model_layer_z_mm": 12.29,
+      "load_colour": "GREY",
+      "saved_xyz_mm": [
+        65.432,
+        111.978,
+        12.21
+      ],
+      "saved_e_mm": 46.18182000000003,
+      "saved_feed_mm_min": 2400.0,
+      "original_retraction_mm": 0.0,
+      "remaining_estimated_minutes": 407.0,
+      "park_xyz_mm": [
+        10,
+        180,
+        17.21
+      ],
+      "nozzle_c": 200.0
+    },
+    {
+      "target_boundary_mm": 55.9,
+      "actual_model_boundary_mm": 55.97,
+      "before_model_layer_z_mm": 56.25,
+      "load_colour": "RED",
+      "saved_xyz_mm": [
+        150.83,
+        158.448,
+        56.19
+      ],
+      "saved_e_mm": 26.50159000000001,
+      "saved_feed_mm_min": 3600.0,
+      "original_retraction_mm": 0.0,
+      "remaining_estimated_minutes": 159.0,
+      "park_xyz_mm": [
+        10,
+        180,
+        61.19
+      ],
+      "nozzle_c": 200.0
+    },
+    {
+      "target_boundary_mm": 61.9,
+      "actual_model_boundary_mm": 61.85,
+      "before_model_layer_z_mm": 62.13,
+      "load_colour": "GREY",
+      "saved_xyz_mm": [
+        77.235,
+        69.7,
+        61.93
+      ],
+      "saved_e_mm": 23.915990000000015,
+      "saved_feed_mm_min": 3600.0,
+      "original_retraction_mm": 0.0,
+      "remaining_estimated_minutes": 138.0,
+      "park_xyz_mm": [
+        10,
+        180,
+        66.93
+      ],
+      "nozzle_c": 200.0
+    }
+  ],
+  "original_bytes_preserved_outside_pause_blocks": true,
+  "source_sha256": "0c7b964e15208b4c530e22d5e40a6f03f0c7a2fdf52c4b7520908e11403f7db0",
+  "output_sha256": "34cf9d65499784e6d4045d5965352cf3570b4c368ae4b37290f702a2f126f33f",
+  "physical_SD_pause_test_required": true,
+  "manual_swap": "Click when present; wait for heat; release extruder idler, swap and hand-purge to pure new colour, wipe nozzle, reengage idler, click. Keep bed/head still. No firmware-managed unloading assumed.",
+  "runtime_idle_timeout": "0 while paused;120s after resume; no EEPROM writes."
+}

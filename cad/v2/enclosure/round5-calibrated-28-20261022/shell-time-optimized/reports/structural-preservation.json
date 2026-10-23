@@ -1,0 +1,25 @@
+{
+  "07": {
+    "config_changes": {},
+    "geometry_and_blockers_byte_identical": true,
+    "all_other_settings_unchanged": true,
+    "printed_shell_centerlines_identical_ignoring_path_direction": true,
+    "printed_shell_extrusion_mm_difference": 0.0,
+    "seconds_saved": 0,
+    "source_gcode_sha256": "476ce94183f4ae57e6f072379660e8784c8d3b0edb2a3f6e5a8f226b6692c4d3"
+  },
+  "08": {
+    "config_changes": {
+      "support_base_pattern_spacing": "3.5",
+      "support_style": "snug",
+      "support_type": "normal(auto)",
+      "support_closing_radius": "0"
+    },
+    "geometry_and_blockers_byte_identical": true,
+    "all_other_settings_unchanged": true,
+    "printed_shell_centerlines_identical_ignoring_path_direction": true,
+    "printed_shell_extrusion_mm_difference": 0.0,
+    "seconds_saved": 5446,
+    "source_gcode_sha256": "7390bf06ba0a74cd05f17a7e1708ab9e65b9a35a5a3be464127a03bbaf90b403"
+  }
+}

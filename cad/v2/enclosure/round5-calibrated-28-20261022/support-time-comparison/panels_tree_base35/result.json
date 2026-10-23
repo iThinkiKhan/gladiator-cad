@@ -1,0 +1,83 @@
+{
+  "key": "08",
+  "name": "panels_tree_base35",
+  "changes": {
+    "support_base_pattern_spacing": "3.5"
+  },
+  "exit_code": 0,
+  "warnings": [],
+  "source_meshes_and_blockers_unchanged": true,
+  "structural_settings_and_machine_filament_fields_unchanged": true,
+  "slice_seconds": 11.6,
+  "seconds": 30481,
+  "grams": 121.32,
+  "roles": {
+    "Custom": {
+      "length_mm": 320.0,
+      "extrusion_mm": 11.2,
+      "constant_speed_seconds": 21.333333333333332
+    },
+    "Brim": {
+      "length_mm": 4469.02498597344,
+      "extrusion_mm": 180.42289000000022,
+      "constant_speed_seconds": 223.4512492986724
+    },
+    "Support interface": {
+      "length_mm": 6607.10704023557,
+      "extrusion_mm": 255.83146999999866,
+      "constant_speed_seconds": 170.43945947544572
+    },
+    "Support": {
+      "length_mm": 299955.7205788694,
+      "extrusion_mm": 11647.15421000075,
+      "constant_speed_seconds": 5359.198612199185
+    },
+    "Inner wall": {
+      "length_mm": 369200.2356211589,
+      "extrusion_mm": 16762.782240000462,
+      "constant_speed_seconds": 4805.387879070847
+    },
+    "Outer wall": {
+      "length_mm": 167405.49899407336,
+      "extrusion_mm": 6494.547340000043,
+      "constant_speed_seconds": 2976.277508867732
+    },
+    "Bottom surface": {
+      "length_mm": 8690.533046010734,
+      "extrusion_mm": 351.9167599999992,
+      "constant_speed_seconds": 434.52665230053543
+    },
+    "Overhang wall": {
+      "length_mm": 11088.312661499202,
+      "extrusion_mm": 436.207639999996,
+      "constant_speed_seconds": 1108.416499295066
+    },
+    "Internal solid infill": {
+      "length_mm": 83169.88851164009,
+      "extrusion_mm": 3316.7429000000125,
+      "constant_speed_seconds": 1193.0041172942808
+    },
+    "Top surface": {
+      "length_mm": 11035.181266913967,
+      "extrusion_mm": 429.45695999999947,
+      "constant_speed_seconds": 220.7036253382788
+    },
+    "Sparse infill": {
+      "length_mm": 10584.396820602737,
+      "extrusion_mm": 470.7870499999957,
+      "constant_speed_seconds": 132.3049602575239
+    },
+    "Internal Bridge": {
+      "length_mm": 6402.219898316688,
+      "extrusion_mm": 311.40242999999987,
+      "constant_speed_seconds": 85.36293197755609
+    },
+    "Bridge": {
+      "length_mm": 217.1528940117419,
+      "extrusion_mm": 7.99989,
+      "constant_speed_seconds": 6.777731523047156
+    }
+  },
+  "SAFE_guard_passed": true,
+  "saved_seconds": 199
+}

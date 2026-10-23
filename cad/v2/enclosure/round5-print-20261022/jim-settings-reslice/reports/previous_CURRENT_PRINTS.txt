@@ -1,0 +1,1 @@
+CURRENT SHELLS: Round5_COMBINED_SHELLS_20261022/ - BOTH panels together7h01,hood9h44,total16h44 plus handling. All structure/Neo SAFE preserved. Other accessories/native CAD remain in Round5_CALIBRATED_M2_28_20261022/. Individual split-panel jobs optional. Windows G-code directly in X:/3D Printer.

@@ -1,0 +1,4 @@
+GLAD_04_HOOD_SD_JIMSET.gcode support segments 408566 | paths 22 | paths hit: {'SMA': (577, 1.28)}
+   nearest support to each path (mm from axis): {'Tablet_L_-6': 5.72, 'Tablet_L_48': 5.7, 'Tablet_R_-6': 5.7, 'Tablet_R_48': 5.69, 'Aquila': 3.93, 'Speaker_rear': 18.13, 'Speaker_front': 18.87, 'Rail_L_22': 5.35, 'Rail_R_22': 5.33, 'Rail_L_35.5': 5.35, 'Rail_R_35.5': 5.33, 'Rail_L_59': 5.34, 'Rail_R_59': 5.33, 'Roof_insert_22': 21.26, 'Roof_clearance_22': 2.98, 'Roof_insert_33': 31.89, 'Roof_clearance_33': 2.98, 'Roof_insert_50': 23.52, 'Roof_clearance_50': 2.98, 'Roof_insert_66': 7.72, 'Roof_clearance_66': 2.98, 'SMA': 1.28}
+GLAD_05_PANELS_SD_JIMSET.gcode support segments 89066 | paths 2 | paths hit: NONE
+   nearest support to each path (mm from axis): {'Scutum_L': 21.51, 'Scutum_R': 21.51}

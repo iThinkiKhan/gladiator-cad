@@ -1,0 +1,20 @@
+{
+  "support_inside_new_insert_bores": {
+    "Scutum_L": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 729555,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 243185
+    },
+    "Scutum_R": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 743712,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 247904
+    }
+  }
+}

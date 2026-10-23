@@ -1,0 +1,14 @@
+  File "/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-calibrated-28-20261022/run_pipeline.py", line 47
+    text=text[:a]+"expected=set(p.name for p in (root/'cad/v2/enclosure/round5-calibrated-28-20261022/style/stl').glob('*.stl'))\ncovered={p['name']+'.stl' for info in B['plates'].values() for p in info['parts'] if p['name']+'.stl' in expected}\n".replace('\n','
+                                                                                                                                                                                                                                                                     ^
+SyntaxError: unterminated string literal (detected at line 47)
+Waiting for calibrated style build
+native_mount_envelopes.py
+build_print_variant.py
+prepare_fit_samples.py
+verify_saved_28.py
+build_print_plates.py
+add_support_blockers.py
+slice_and_check.py
+verify_print_release.py
+CAD and slice checks PASSED; ready for packaging

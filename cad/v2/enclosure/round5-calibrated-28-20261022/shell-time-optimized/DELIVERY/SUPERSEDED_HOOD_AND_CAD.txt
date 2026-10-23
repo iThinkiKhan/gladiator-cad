@@ -1,0 +1,1 @@
+Hood/CAD superseded by mount-checked-release/DELIVERY. Use current corrected hood and native. Combined optimized panels unchanged. See docs/ai/HANDOFF.md.

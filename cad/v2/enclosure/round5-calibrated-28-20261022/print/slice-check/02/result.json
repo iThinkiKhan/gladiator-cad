@@ -1,0 +1,19 @@
+{
+	"error_string": "Success.",
+	"export_time": 0,
+	"layer_height": 0.1599999964237213,
+	"plate_index": 1,
+	"prepare_time": 0,
+	"return_code": 0,
+	"sliced_plates": [
+		{
+			"id": 1,
+			"sliced_time": 2,
+			"sliced_time_with_cache": 2,
+			"triangle_count": 5602,
+			"warning_message": ""
+		}
+	],
+	"sparse_infill_density": 40.0,
+	"wall_loops": 4
+}

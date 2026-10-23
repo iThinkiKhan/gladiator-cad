@@ -1,0 +1,36 @@
+GLADIATOR - PRINT FILES ON JIM'S OWN ORCA SETTINGS (re-sliced 22 Oct 2026, 19:30)
+
+All five files use exactly:
+  printer   EnderNeo SAFE (your SAFE start code, purge, mesh enable - line-for-line identical to your own display2.gcode)
+  process   0.20mm Standard - FIrst Layer Comp (0.20 layers, 0.25 first layer, 4 walls, 30%, your speeds)
+            silk job: 0.20mm Silk Toys @ First Print - SAFE
+  filament  Generic PLA @System - First Print (200 C / bed 60)
+            silk job: Generic PLA Silk @System - First Print (215 C, 220 first layer)
+Only change from your presets: supports ON (your tree(auto) settings) on the jobs that need them.
+Your SAFE check passes on every file. Everything stays inside the real 220 mm bed.
+
+WHY THE OLD FILES FAILED (moved to GLAD_OLD_not_Jim_settings_20261022, not deleted):
+  they were sliced from hand-edited settings, not your presets - 0.20 first layer instead of your 0.25
+  on the small jobs, 0.12/0.16/0.28 layers, slower walls, normal/snug supports, and your SAFE check
+  hook blank. The old files in GLAD_OPTIONAL also use the old settings - do not use them.
+
+ORDER / TIMES (estimates, plus heating and swaps)
+  GLAD_01_WHITE_EMBLEMS_V2_JIMSET   white   47 min
+  GLAD_02_SILK_DETAILS_JIMSET       silk    20 min
+  GLAD_03_BLACK_CLAMPS_JIMSET       black   26 min
+  GLAD_04_HOOD_SD_JIMSET            starts RED   12 h 22 min
+      pauses: GREY at about 3h25 (Z 12.05), RED at about 8h44 (Z 55.85), GREY at about 9h12 (Z 61.85)
+  GLAD_05_PANELS_SD_JIMSET          starts RED    6 h 22 min (both panels)
+      pauses: GREY at about 2h22 (Z 12.05), RED at about 4h23 (Z 52.05), GREY at about 4h40 (Z 58.05)
+
+COLOUR PAUSES (two clicks each): head lifts 5 mm and parks back-left; motors stay locked.
+  Click 1 = I'm here (reheats). Swap filament, hand-purge until clean, wipe nozzle, click 2 = resume.
+  Keep the bed and head still. Every pause was replayed: position, extrusion and temps restore exactly.
+
+AFTER THE HOOD PRINTS: your tree supports put one branch through the 7 mm antenna (SMA) hole.
+  Clear it with a knife or 7 mm drill. All other 21 fastener paths (rails, roof tabs, speaker, badges)
+  are support-free; both panel badge screw paths are support-free.
+
+Source 3MFs with these settings (open in Orca to look): cad-lab
+  ~/3D-Printer/Incoming/Gladiator/GLAD_JIM_SETTINGS_20261022/3MF_open_in_Orca
+No print was started.

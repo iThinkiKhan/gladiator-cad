@@ -1,0 +1,2 @@
+07 {"exit_code": 0, "header": ["; filament used [g] = 156.64", "; total filament used [g] = 156.64", "; total filament cost = 3.13", "; total layers count = 724", "; estimated printing time (normal mode) = 9h 39m 4s"], "extrusion_bounds_xy_mm": [10.0, 20.0, 171.081, 180.0], "extrusions_fit_220_with_0_5mm_margin": true}
+

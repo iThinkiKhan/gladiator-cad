@@ -1,0 +1,256 @@
+{
+  "07": [
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_L_-6_no_support",
+      "native_box_min": [
+        -16.3,
+        -8.25,
+        9.0
+      ],
+      "native_box_max": [
+        -7.300000000000001,
+        -3.75,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_L_48_no_support",
+      "native_box_min": [
+        -16.3,
+        45.75,
+        9.0
+      ],
+      "native_box_max": [
+        -7.300000000000001,
+        50.25,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_R_-6_no_support",
+      "native_box_min": [
+        86.3,
+        -8.25,
+        9.0
+      ],
+      "native_box_max": [
+        95.3,
+        -3.75,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_R_48_no_support",
+      "native_box_min": [
+        86.3,
+        45.75,
+        9.0
+      ],
+      "native_box_max": [
+        95.3,
+        50.25,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Aquila_no_support",
+      "native_box_min": [
+        23.75,
+        -38.199999237060545,
+        9.0
+      ],
+      "native_box_max": [
+        28.25,
+        -30.299999999999997,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Speaker_rear_no_support",
+      "native_box_min": [
+        61.75,
+        -18.5,
+        9.0
+      ],
+      "native_box_max": [
+        66.25,
+        -14.0,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Speaker_front_no_support",
+      "native_box_min": [
+        61.75,
+        18.0,
+        9.0
+      ],
+      "native_box_max": [
+        66.25,
+        22.5,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_L_22_no_support",
+      "native_box_min": [
+        -11.5,
+        19.55,
+        9.0
+      ],
+      "native_box_max": [
+        9.820785642177231,
+        24.45,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_R_22_no_support",
+      "native_box_min": [
+        69.17921435782279,
+        19.55,
+        9.0
+      ],
+      "native_box_max": [
+        90.5,
+        24.45,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_L_35.5_no_support",
+      "native_box_min": [
+        -11.5,
+        33.05,
+        9.0
+      ],
+      "native_box_max": [
+        9.669106631694735,
+        37.95,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_R_35.5_no_support",
+      "native_box_min": [
+        69.33089336830528,
+        33.05,
+        9.0
+      ],
+      "native_box_max": [
+        90.5,
+        37.95,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_L_59_no_support",
+      "native_box_min": [
+        -11.5,
+        56.55,
+        9.0
+      ],
+      "native_box_max": [
+        9.40507279863261,
+        61.45,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Rail_R_59_no_support",
+      "native_box_min": [
+        69.5949272013674,
+        56.55,
+        9.0
+      ],
+      "native_box_max": [
+        90.5,
+        61.45,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Roof_22_no_support",
+      "native_box_min": [
+        19.4,
+        69.4,
+        9.0
+      ],
+      "native_box_max": [
+        24.6,
+        74.6,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Roof_33_no_support",
+      "native_box_min": [
+        30.4,
+        69.4,
+        9.0
+      ],
+      "native_box_max": [
+        35.6,
+        74.6,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Roof_50_no_support",
+      "native_box_min": [
+        47.4,
+        69.4,
+        9.0
+      ],
+      "native_box_max": [
+        52.6,
+        74.6,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Roof_66_no_support",
+      "native_box_min": [
+        63.4,
+        69.4,
+        9.0
+      ],
+      "native_box_max": [
+        68.6,
+        74.6,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "SMA_no_support",
+      "native_box_min": [
+        63.8,
+        -34.5,
+        9.0
+      ],
+      "native_box_max": [
+        72.2,
+        -27.5,
+        111.9000015258789
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+[
+  {
+    "key": "07",
+    "name": "hood_base35",
+    "changes": {
+      "support_base_pattern_spacing": "3.5"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 10.9,
+    "seconds": 34136,
+    "grams": 155.85,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 877
+  },
+  {
+    "key": "07",
+    "name": "hood_support80",
+    "changes": {
+      "support_speed": "80"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 10.8,
+    "seconds": 34731,
+    "grams": 159.67,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 282
+  },
+  {
+    "key": "07",
+    "name": "hood_base35_speed80",
+    "changes": {
+      "support_base_pattern_spacing": "3.5",
+      "support_speed": "80"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 10.6,
+    "seconds": 33934,
+    "grams": 155.85,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 1079
+  },
+  {
+    "key": "08",
+    "name": "panels_normal",
+    "changes": {
+      "support_type": "normal(auto)",
+      "support_style": "snug",
+      "support_closing_radius": "0"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 7.5,
+    "seconds": 26567,
+    "grams": 132.54,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 4113
+  },
+  {
+    "key": "08",
+    "name": "panels_normal_base35",
+    "changes": {
+      "support_type": "normal(auto)",
+      "support_style": "snug",
+      "support_closing_radius": "0",
+      "support_base_pattern_spacing": "3.5"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 6.8,
+    "seconds": 25234,
+    "grams": 124.25,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 5446
+  },
+  {
+    "key": "08",
+    "name": "panels_tree_base35",
+    "changes": {
+      "support_base_pattern_spacing": "3.5"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 11.6,
+    "seconds": 30481,
+    "grams": 121.32,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 199
+  },
+  {
+    "key": "08",
+    "name": "panels_support80",
+    "changes": {
+      "support_speed": "80"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 12.3,
+    "seconds": 30645,
+    "grams": 122.48,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 35
+  },
+  {
+    "key": "08",
+    "name": "panels_tree_base35_speed80",
+    "changes": {
+      "support_base_pattern_spacing": "3.5",
+      "support_speed": "80"
+    },
+    "exit_code": 0,
+    "warnings": [],
+    "source_meshes_and_blockers_unchanged": true,
+    "structural_settings_and_machine_filament_fields_unchanged": true,
+    "slice_seconds": 9.0,
+    "seconds": 30460,
+    "grams": 121.26,
+    "SAFE_guard_passed": true,
+    "saved_seconds": 220
+  }
+]

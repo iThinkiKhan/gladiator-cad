@@ -1,0 +1,16 @@
+{
+  "READY_TO_PRINT/GLAD_05L_PANEL_SD_M2_28.gcode": "e075719b521759be24c0d4ccf9589d352f688408fef7b5f68b9cb2a20639c95b",
+  "READY_TO_PRINT/GLAD_05R_PANEL_SD_M2_28.gcode": "2e8fd8dceb509b679c6e66b841c9c5aba17d5025527d341fe82055c779a3693e",
+  "START_HERE.md": "aa3b54570504b3c49e42c5145741633f0f8636ff8891e8413150c3e365990c33",
+  "build-summary.json": "7e478fe5f883348f19bf116ad5a4b3e03b5c66f241f4e68578f527d275af119e",
+  "plates/GLAD_05L_PANEL_SD_M2_28.3mf": "64c297ff07312260692f733744a69d1b9add0471c0a3e5bbaea8f9636d1eb831",
+  "plates/GLAD_05R_PANEL_SD_M2_28.3mf": "f426ebd49959eca3bb34be9e2947aa011aa996730a77ade3f40349be9874fa9f",
+  "reports/08L-slice-check.json": "2ffb2961f3a765968508e8bd1a213c5064cbab33c85a40d03e835e682dbf6616",
+  "reports/08R-slice-check.json": "4dacce0b0cc7bc082cebb978b95025c419bfe40d14ac000f289b5ac4bd0045ba",
+  "reports/GLAD_05L_PANEL_SD_M2_28.gcode-colour-stops.json": "afd5ffe28ff3eb0e7d99623aaa810c404d3e238413958c029f5024c5b2663dd5",
+  "reports/GLAD_05R_PANEL_SD_M2_28.gcode-colour-stops.json": "6eb38b3ccbf05f084697c4cc237c4efcd8117848638197685d0d7461c4aa052e",
+  "reports/SD-pause-state-verification.json": "9d0ca5d2324980b87a878987181f736c1cac9c29b7101f87838214fc58f087f2",
+  "reports/jobs.json": "239ea6a83603aa0bff569dfee2724a2a32245defc3a9c6df8d493138bc791287",
+  "reports/split-provenance.json": "8b7cbf99a1ceafa8381a4b8dca49c6021f08d4de83d7820609433eb9491a165d",
+  "reports/support-bore-verification.json": "f28d4fcabbc0e3e3133c1a932c9339553b1c9a269ae44b788a7ecf6b1cc26ad8"
+}

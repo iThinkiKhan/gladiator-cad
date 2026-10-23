@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/cad/v2/enclosure/round5-calibrated-28-20261022/shell-time-optimized/verify_selected.py", line 40, in <module>
+    assert old==new,(k,'Structural toolpaths changed',missing,added)
+           ^^^^^^^^
+AssertionError: ('07', 'Structural toolpaths changed', 15, 15)

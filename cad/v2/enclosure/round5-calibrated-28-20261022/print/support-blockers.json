@@ -1,0 +1,148 @@
+{
+  "01": [
+    {
+      "part": "FIT_Scutum_Seat",
+      "label": "Scutum_L_no_support",
+      "native_box_min": [
+        13.75,
+        146.3,
+        56.0
+      ],
+      "native_box_max": [
+        18.25,
+        153.20000305175782,
+        102.0
+      ]
+    },
+    {
+      "part": "FIT_Tablet_End",
+      "label": "Tablet_R_-6_no_support",
+      "native_box_min": [
+        86.3,
+        -8.25,
+        59.0
+      ],
+      "native_box_max": [
+        94.20000305175782,
+        -3.75,
+        81.0
+      ]
+    },
+    {
+      "part": "FIT_Aquila_Seat",
+      "label": "Aquila_no_support",
+      "native_box_min": [
+        23.75,
+        -38.199999237060545,
+        57.0
+      ],
+      "native_box_max": [
+        28.25,
+        -30.299999999999997,
+        80.0
+      ]
+    }
+  ],
+  "07": [
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_L_-6_no_support",
+      "native_box_min": [
+        -16.3,
+        -8.25,
+        9.0
+      ],
+      "native_box_max": [
+        -7.300000000000001,
+        -3.75,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_L_48_no_support",
+      "native_box_min": [
+        -16.3,
+        45.75,
+        9.0
+      ],
+      "native_box_max": [
+        -7.300000000000001,
+        50.25,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_R_-6_no_support",
+      "native_box_min": [
+        86.3,
+        -8.25,
+        9.0
+      ],
+      "native_box_max": [
+        95.3,
+        -3.75,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Tablet_R_48_no_support",
+      "native_box_min": [
+        86.3,
+        45.75,
+        9.0
+      ],
+      "native_box_max": [
+        95.3,
+        50.25,
+        111.9000015258789
+      ]
+    },
+    {
+      "part": "Rear_Hood",
+      "label": "Aquila_no_support",
+      "native_box_min": [
+        23.75,
+        -38.199999237060545,
+        9.0
+      ],
+      "native_box_max": [
+        28.25,
+        -30.299999999999997,
+        111.9000015258789
+      ]
+    }
+  ],
+  "08": [
+    {
+      "part": "Front_Left",
+      "label": "Scutum_L_no_support",
+      "native_box_min": [
+        13.75,
+        146.3,
+        14.0
+      ],
+      "native_box_max": [
+        18.25,
+        153.20000305175782,
+        108.0
+      ]
+    },
+    {
+      "part": "Front_Right",
+      "label": "Scutum_R_no_support",
+      "native_box_min": [
+        60.75,
+        146.3,
+        14.0
+      ],
+      "native_box_max": [
+        65.25,
+        153.20000305175782,
+        108.0
+      ]
+    }
+  ]
+}

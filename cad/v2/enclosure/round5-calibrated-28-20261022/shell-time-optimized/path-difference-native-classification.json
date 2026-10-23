@@ -1,0 +1,1327 @@
+{
+  "07": {
+    "missing": [
+      {
+        "segment": [
+          91.267,
+          60.553,
+          91.644,
+          60.737,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.183,
+          59.629,
+          90.657,
+          60.174,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.949,
+          60.398,
+          91.231,
+          60.536,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          91.2,
+          60.053,
+          91.815,
+          60.387,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.48,
+          59.377,
+          90.951,
+          59.918,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.951,
+          59.918,
+          91.165,
+          60.034,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          91.332,
+          61.124,
+          90.738,
+          60.83,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          89.818,
+          59.94,
+          89.547,
+          59.466,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          91.431,
+          61.173,
+          91.368,
+          61.141,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          102.845,
+          55.294,
+          102.604,
+          55.347,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          101.53,
+          55.981,
+          101.186,
+          56.364,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          103.148,
+          55.228,
+          102.884,
+          55.286,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          103.078,
+          54.749,
+          103.235,
+          54.721,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          100.507,
+          56.498,
+          100.883,
+          55.942,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          102.555,
+          54.842,
+          103.038,
+          54.756,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      }
+    ],
+    "added": [
+      {
+        "segment": [
+          90.388,
+          59.865,
+          90.657,
+          60.174,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.949,
+          60.398,
+          91.644,
+          60.737,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.183,
+          59.629,
+          90.362,
+          59.835,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.857,
+          59.81,
+          90.951,
+          59.918,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.951,
+          59.918,
+          91.815,
+          60.387,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          90.48,
+          59.377,
+          90.831,
+          59.78,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          89.728,
+          59.782,
+          89.547,
+          59.466,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          91.431,
+          61.173,
+          90.738,
+          60.83,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          89.818,
+          59.94,
+          89.747,
+          59.817,
+          8.37,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          101.417,
+          56.107,
+          101.186,
+          56.364,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          103.148,
+          55.228,
+          102.604,
+          55.347,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          101.53,
+          55.981,
+          101.443,
+          56.077,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          100.793,
+          56.075,
+          100.883,
+          55.942,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          102.555,
+          54.842,
+          103.235,
+          54.721,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          100.507,
+          56.498,
+          100.771,
+          56.108,
+          10.61,
+          "Inner wall"
+        ],
+        "part": "Rear_Hood",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      }
+    ]
+  },
+  "08": {
+    "missing": [
+      {
+        "segment": [
+          120.052,
+          149.174,
+          120.383,
+          148.842,
+          0.53,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          84.478,
+          140.963,
+          86.038,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          86.038,
+          132.379,
+          77.453,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          132.379,
+          77.453,
+          130.393,
+          77.452,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          130.393,
+          77.452,
+          140.963,
+          88.023,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          88.023,
+          140.963,
+          90.008,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          90.008,
+          128.407,
+          77.452,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          128.407,
+          77.452,
+          126.422,
+          77.451,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          126.422,
+          77.451,
+          140.963,
+          91.993,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          91.993,
+          140.963,
+          93.978,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          93.978,
+          124.436,
+          77.451,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          124.436,
+          77.451,
+          122.876,
+          77.451,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          116.977,
+          76.747,
+          141.796,
+          76.75,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          143.087,
+          131.561,
+          143.61,
+          131.871,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          143.61,
+          131.871,
+          143.885,
+          131.989,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          143.885,
+          131.989,
+          144.336,
+          132.205,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          144.336,
+          132.205,
+          145.478,
+          132.512,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          145.478,
+          132.512,
+          145.863,
+          132.56,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          145.863,
+          132.56,
+          156.326,
+          132.588,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          157.147,
+          135.898,
+          157.1,
+          136.289,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          157.1,
+          136.289,
+          157.054,
+          136.68,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          157.054,
+          136.68,
+          157.007,
+          137.071,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          157.007,
+          137.071,
+          156.961,
+          137.462,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          156.961,
+          137.462,
+          156.914,
+          137.853,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          78.053,
+          76.751,
+          102.983,
+          76.747,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          63.617,
+          132.588,
+          74.289,
+          132.549,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          74.289,
+          132.549,
+          75.412,
+          132.299,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          75.412,
+          132.299,
+          76.566,
+          131.788,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          76.566,
+          131.788,
+          76.673,
+          131.716,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          76.673,
+          131.716,
+          76.78,
+          131.645,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          76.78,
+          131.645,
+          76.887,
+          131.574,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          76.887,
+          131.574,
+          76.993,
+          131.502,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          76.993,
+          131.502,
+          77.255,
+          131.276,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          77.255,
+          131.276,
+          77.516,
+          131.05,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          63.091,
+          137.892,
+          63.045,
+          137.505,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          63.045,
+          137.505,
+          62.999,
+          137.117,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          62.999,
+          137.117,
+          62.953,
+          136.73,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          62.953,
+          136.73,
+          62.907,
+          136.342,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          62.907,
+          136.342,
+          62.861,
+          135.955,
+          1.37,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          55.199,
+          137.02,
+          55.135,
+          137.056,
+          5.85,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          55.135,
+          137.056,
+          55.2,
+          137.091,
+          5.85,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          178.444,
+          129.582,
+          178.38,
+          129.619,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          178.38,
+          129.619,
+          178.445,
+          129.653,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          175.745,
+          133.915,
+          176.321,
+          133.409,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          172.681,
+          136.059,
+          172.867,
+          135.891,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          172.867,
+          135.891,
+          173.053,
+          135.723,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          173.053,
+          135.723,
+          173.239,
+          135.555,
+          8.93,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          35.221,
+          130.882,
+          35.157,
+          130.919,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          35.157,
+          130.919,
+          35.222,
+          130.953,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          35.925,
+          130.367,
+          36.348,
+          130.755,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          38.668,
+          132.875,
+          38.922,
+          133.06,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          38.922,
+          133.06,
+          39.175,
+          133.245,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          39.175,
+          133.245,
+          39.428,
+          133.43,
+          10.89,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          33.097,
+          130.506,
+          33.034,
+          130.543,
+          11.45,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          33.034,
+          130.543,
+          33.099,
+          130.577,
+          11.45,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          36.244,
+          132.211,
+          36.521,
+          132.403,
+          11.45,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          36.521,
+          132.403,
+          36.798,
+          132.594,
+          11.45,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          36.798,
+          132.594,
+          37.075,
+          132.786,
+          11.45,
+          "Internal solid infill"
+        ],
+        "part": "Front_Left",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          127.083,
+          71.5,
+          149.077,
+          71.5,
+          49.53,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          174.553,
+          128.191,
+          174.553,
+          77.174,
+          70.81,
+          "Internal solid infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      }
+    ],
+    "added": [
+      {
+        "segment": [
+          122.876,
+          77.451,
+          124.436,
+          77.451,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          124.436,
+          77.451,
+          140.963,
+          93.978,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          93.978,
+          140.963,
+          91.993,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          91.993,
+          126.422,
+          77.451,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          126.422,
+          77.451,
+          128.407,
+          77.452,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          128.407,
+          77.452,
+          140.963,
+          90.008,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          90.008,
+          140.963,
+          88.023,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          88.023,
+          130.393,
+          77.452,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          130.393,
+          77.452,
+          132.379,
+          77.453,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          132.379,
+          77.453,
+          140.963,
+          86.038,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      },
+      {
+        "segment": [
+          140.963,
+          86.038,
+          140.963,
+          84.478,
+          1.37,
+          "Sparse infill"
+        ],
+        "part": "Front_Right",
+        "inside_native_solid_samples": 5,
+        "sample_count": 5
+      }
+    ]
+  }
+}

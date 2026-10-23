@@ -102,3 +102,13 @@ Jim selected curved scuta and a lightning-bolt aquila from the styling guide, re
 ## 2026-10-22 — SD card and Jim's SAFE/material presets
 
 Jim confirmed these prints will run from SD card and explicitly requested his EnderNeo SAFE settings and the separate silk filament settings. Use full inherited presets, preserving the SAFE start-code checker; apply necessary layer/support/orientation changes per plate. The incoming M2 inserts have not been measured yet; no bore or retention result is accepted by this decision.
+
+
+## 2026-10-22 - Round 5 calibrated M2 bores and print status
+
+Jim accepted the coupon 2.8 mm M2 heat-set bore and requested all affected CAD/prints updated. Decorative tablets and red shields/crest are printed; silk remains, and the white insets need reprinting using the stronger v2 (plate 04B). Keep Neo SAFE and separate silk profiles, SD/LCD colour pauses. LED window remains open; cover is optional. No additional LCD diagnostic is required by Jim. Production derivative: cad/v2/enclosure/round5-calibrated-28-20261022/. Earlier structural geometry and insert sizes remain preserved.
+
+
+## 2026-10-22 - Keep both front panels together; preserve structure
+
+Jim: print both front panels at once, save time without compromising structure, with all day tomorrow available for shells. Single-panel variant is optional. Implemented only a panel support-layout change; all model geometry and structural extrusion settings retained. Current combined shell package is in the calibrated derivative shell-time-optimized/.

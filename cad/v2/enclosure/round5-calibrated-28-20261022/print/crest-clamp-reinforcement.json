@@ -1,0 +1,28 @@
+{
+  "change": "Add full-width lower web to new Crest_Clamp only; keep existing clamp/contact surfaces and all original robot geometry. Insert is fully surrounded; bottom wall1.7mm except a small yoke-clearance relief with0.7mm nominal lip. The complete0.5mm material ring is checked over3mm insert engagement. M2 bore 2.8 accepted from Jim coupon result.",
+  "old_volume_mm3": 833.5393775709522,
+  "new_volume_mm3": 946.108023642011,
+  "old_material_removed_mm3": 0.0,
+  "static_hits": [],
+  "pan_tilt_hits": [],
+  "added_material_mm3": 112.5686466974284,
+  "static_check_scope": "Only newly added material versus all old/new objects; old shape retained and prior verification reused.",
+  "min_clamp_z_over_51_tilt_poses_mm": 220.42337261222505,
+  "fixed_reference_max_z_mm": 174.10000000000002,
+  "pan_range_unchanged": [
+    -20,
+    180
+  ],
+  "tilt_samples": 51,
+  "full_insert_surround_ring_samples": 432,
+  "ring_failures": [],
+  "stronger_insets_v2_integrated": true,
+  "shield_boss_seating_offset_mm": 0.8,
+  "step_solid_count": 22,
+  "new_clamp_step_volume_error_mm3": 1.4975821613916196e-06,
+  "original_round5_native_sha256": "17a3652ca10468896dec3dec70a9df5543def1236d256e63927bc0e5cc9fef10",
+  "original_round5_native_unchanged": true,
+  "new_native_sha256": "3ad211af6069ffba8e4f5bee69836964b677894761519d153ee8a3d14cb1b3a4",
+  "new_clamp_stl_sha256": "04c05c4f364728921c9542c9ae7cc6f08c437f20f43ad085a104c908044ee556",
+  "passed": true
+}

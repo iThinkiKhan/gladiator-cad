@@ -1,0 +1,52 @@
+{
+  "exit_code": 0,
+  "seconds_to_slice": 2.3,
+  "gcode": "slice-check/05/plate_1.gcode",
+  "original_start_guard_passed": true,
+  "guard_output": "ENDER 3 SAFETY CHECK PASSED",
+  "header": [
+    "; filament used [g] = 3.52",
+    "; total filament used [g] = 3.52",
+    "; total filament cost = 0.07",
+    "; total layers count = 17",
+    "; estimated printing time (normal mode) = 32m 50s"
+  ],
+  "extrusion_bounds_xy_mm": [
+    10.0,
+    20.0,
+    144.285,
+    180.0
+  ],
+  "extrusions_fit_220_with_0_5mm_margin": true,
+  "path_length_by_role_mm": {
+    "Custom": 320.0,
+    "Brim": 2695.5,
+    "Inner wall": 13223.0,
+    "Outer wall": 6349.3,
+    "Bottom surface": 2691.3,
+    "Internal solid infill": 27942.7,
+    "Sparse infill": 983.7,
+    "Top surface": 3239.1
+  },
+  "layer_heights_mm": [
+    0.18,
+    0.3,
+    0.42,
+    0.54,
+    0.66,
+    0.78,
+    0.9,
+    1.02,
+    1.14,
+    1.26,
+    1.38,
+    1.5,
+    1.62,
+    1.74,
+    1.86,
+    1.98,
+    2.1
+  ],
+  "max_model_z_mm": 2.1,
+  "toolpath_segments": 21001
+}

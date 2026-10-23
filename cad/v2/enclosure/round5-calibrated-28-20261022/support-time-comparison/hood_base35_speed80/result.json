@@ -1,0 +1,84 @@
+{
+  "key": "07",
+  "name": "hood_base35_speed80",
+  "changes": {
+    "support_base_pattern_spacing": "3.5",
+    "support_speed": "80"
+  },
+  "exit_code": 0,
+  "warnings": [],
+  "source_meshes_and_blockers_unchanged": true,
+  "structural_settings_and_machine_filament_fields_unchanged": true,
+  "slice_seconds": 10.6,
+  "seconds": 33934,
+  "grams": 155.85,
+  "roles": {
+    "Custom": {
+      "length_mm": 320.0,
+      "extrusion_mm": 11.2,
+      "constant_speed_seconds": 21.333333333333332
+    },
+    "Brim": {
+      "length_mm": 1488.3911415138123,
+      "extrusion_mm": 60.08643999999994,
+      "constant_speed_seconds": 74.41955707569078
+    },
+    "Support": {
+      "length_mm": 209258.813743041,
+      "extrusion_mm": 8107.946939999841,
+      "constant_speed_seconds": 3004.5095748878634
+    },
+    "Support interface": {
+      "length_mm": 42541.993348593795,
+      "extrusion_mm": 1596.7538799998397,
+      "constant_speed_seconds": 1077.8742647492334
+    },
+    "Inner wall": {
+      "length_mm": 516896.762722596,
+      "extrusion_mm": 23524.892500002676,
+      "constant_speed_seconds": 6594.472927318305
+    },
+    "Outer wall": {
+      "length_mm": 246422.48112779958,
+      "extrusion_mm": 9563.52738000017,
+      "constant_speed_seconds": 4275.434701420425
+    },
+    "Bottom surface": {
+      "length_mm": 13354.298712872498,
+      "extrusion_mm": 539.6257400000009,
+      "constant_speed_seconds": 667.7149356436313
+    },
+    "Internal solid infill": {
+      "length_mm": 122492.01894740023,
+      "extrusion_mm": 4807.539659999856,
+      "constant_speed_seconds": 1765.982777539944
+    },
+    "Top surface": {
+      "length_mm": 25939.481188137972,
+      "extrusion_mm": 1010.0623499999954,
+      "constant_speed_seconds": 518.7896237627647
+    },
+    "Sparse infill": {
+      "length_mm": 38777.62687242639,
+      "extrusion_mm": 1724.8581299998193,
+      "constant_speed_seconds": 484.7203359053212
+    },
+    "Internal Bridge": {
+      "length_mm": 16098.142585225844,
+      "extrusion_mm": 783.0149299999966,
+      "constant_speed_seconds": 214.64190113634942
+    },
+    "Overhang wall": {
+      "length_mm": 4909.930653338859,
+      "extrusion_mm": 209.20494000000045,
+      "constant_speed_seconds": 490.99306533388705
+    },
+    "Bridge": {
+      "length_mm": 8538.843475815536,
+      "extrusion_mm": 314.56502,
+      "constant_speed_seconds": 542.9182390625068
+    }
+  },
+  "SAFE_guard_passed": true,
+  "saved_seconds": 1079
+}

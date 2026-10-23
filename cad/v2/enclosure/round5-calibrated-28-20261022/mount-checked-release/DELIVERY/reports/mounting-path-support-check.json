@@ -1,0 +1,244 @@
+{
+  "Tablet_L_-6": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      -11.8,
+      -6,
+      70
+    ],
+    "axis": 0,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Tablet_L_48": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      -11.8,
+      48,
+      70
+    ],
+    "axis": 0,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Tablet_R_-6": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      90.8,
+      -6,
+      70
+    ],
+    "axis": 0,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Tablet_R_48": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      90.8,
+      48,
+      70
+    ],
+    "axis": 0,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Aquila": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      26,
+      -34.8,
+      68.5
+    ],
+    "axis": 1,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Speaker_rear": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      64,
+      -16.25,
+      101.9
+    ],
+    "axis": 2,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Speaker_front": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      64,
+      20.25,
+      101.9
+    ],
+    "axis": 2,
+    "radius": 1.4,
+    "depth": 4
+  },
+  "Rail_L_22": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      -0.8396071789113844,
+      22,
+      40
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 16.32078564217723
+  },
+  "Rail_R_22": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      79.8396071789114,
+      22,
+      40
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 16.320785642177228
+  },
+  "Rail_L_35.5": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      -0.915446684152633,
+      35.5,
+      46
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 16.169106631694735
+  },
+  "Rail_R_35.5": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      79.91544668415264,
+      35.5,
+      46
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 16.16910663169473
+  },
+  "Rail_L_59": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      -1.0474636006836948,
+      59,
+      45
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 15.90507279863261
+  },
+  "Rail_R_59": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      80.0474636006837,
+      59,
+      45
+    ],
+    "axis": 0,
+    "radius": 1.8,
+    "depth": 15.905072798632602
+  },
+  "Roof_insert_22": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      22,
+      72,
+      99.35
+    ],
+    "axis": 2,
+    "radius": 2.3,
+    "depth": 7.5
+  },
+  "Roof_clearance_22": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      22,
+      72,
+      104.9
+    ],
+    "axis": 2,
+    "radius": 1.8,
+    "depth": 3.6000000000000085
+  },
+  "Roof_insert_33": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      33,
+      72,
+      99.35
+    ],
+    "axis": 2,
+    "radius": 2.3,
+    "depth": 7.5
+  },
+  "Roof_clearance_33": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      33,
+      72,
+      104.9
+    ],
+    "axis": 2,
+    "radius": 1.8,
+    "depth": 3.6000000000000085
+  },
+  "Roof_insert_50": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      50,
+      72,
+      99.35
+    ],
+    "axis": 2,
+    "radius": 2.3,
+    "depth": 7.5
+  },
+  "Roof_clearance_50": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      50,
+      72,
+      104.9
+    ],
+    "axis": 2,
+    "radius": 1.8,
+    "depth": 3.6000000000000085
+  },
+  "Roof_insert_66": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      66,
+      72,
+      99.35
+    ],
+    "axis": 2,
+    "radius": 2.3,
+    "depth": 7.5
+  },
+  "Roof_clearance_66": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      66,
+      72,
+      104.9
+    ],
+    "axis": 2,
+    "radius": 1.8,
+    "depth": 3.6000000000000085
+  },
+  "SMA": {
+    "support_segment_hits_with_0_2mm_bead_allowance": 0,
+    "centre": [
+      68,
+      -31,
+      84.5
+    ],
+    "axis": 1,
+    "radius": 3.5,
+    "depth": 2
+  }
+}

@@ -1,5 +1,35 @@
 # Current Handoff
 
+## CURRENT: print files re-sliced on Jim's own Orca presets - 2026-10-22 (Claude)
+
+Jim: "there is something wrong with the gcode, it keeps failing. Make sure you are using my settings." Root cause: all Round 5 G-code (GLAD_01..05) was sliced from hand-edited project settings, not Jim's presets: 0.20 first layer instead of his 0.25 "FIrst Layer Comp" on the small jobs, 0.12/0.16/0.28 layers, slower walls, normal/snug supports, post_process (SAFE guard) blank. **Do not print or reuse those settings.**
+
+Re-sliced all five jobs (same geometry, positions, support blockers, SD colour targets) with his flattened presets written into each 3MF: EnderNeo SAFE + `0.20mm Standard - FIrst Layer Comp` (silk: `0.20mm Silk Toys @ First Print - SAFE`) + `Generic PLA @System - First Print` (silk: `Generic PLA Silk @System - First Print`). Only deviation: supports on (his tree(auto) values) where needed. Flattening validated against Jim's own GUI export (`~/Desktop/3D-Printer-Outgoing/display2.gcode`): executed start/end code line-identical.
+
+Checks: SAFE guard pass x5; all moves inside 220 bed; 6 SD pauses replayed, state restored exactly, park 5 mm above print; fastener-path support check (Codex's 22 hood + 2 panel paths, control reproduces Codex's zero hits on the old files): all clear except tree branch through the 7 mm SMA antenna hole - clear by hand after printing. Times: emblems 47m, silk 20m, clamps 26m, hood 12h22 (pauses ~3h25/8h44/9h12), panels 6h22 (~2h22/4h23/4h40).
+
+Delivered: X:/3D Printer/GLAD_0*_JIMSET.gcode + GLAD_START_HERE.txt (old files moved to GLAD_OLD_not_Jim_settings_20261022; GLAD_OPTIONAL is old settings). cad-lab ~/3D-Printer/Incoming/Gladiator/GLAD_JIM_SETTINGS_20261022/ (CURRENT_PRINTS.txt updated). Repo: cad/v2/enclosure/round5-print-20261022/jim-settings-reslice/ (scripts jimflat.py, jimslice.py, audit2.py, supcheck.py, pausecheck.py; 3MFs; reports). Orca CLI notes: CLI refuses post_process (-19), user presets lack `type` (-5), and --load-settings with inherited user presets fails compatibility (-17) - write flattened settings into the 3MF instead. No print started.
+
+## CURRENT: mount-checked hood/CAD - 2026-10-22 (Codex)
+
+Hood corrected and delivered:two legacy speaker pilots now2.8mm M2 pockets;use M2x6,fit with hood OFF. Six local3.6mm reliefs follow actual rail splay;use6xM3x20 (25mm bottoms). Antenna nut/tool access passes;all22 checked fastener paths support-clear. New native/STEP22/STL and Neo SAFE/SD replay checks pass. Current source cad/v2/enclosure/round5-calibrated-28-20261022/mount-checked-release/DELIVERY;Incoming Round5_MOUNT_CHECKED_20261022;Windows mount-checked-release-20261022. Same main hood filename replaced in X:/3D Printer,old archived. Hood9h39m04;combined panels unchanged7h00m34,total16h39m38 plus handling. See agent note and release START_HERE. No printer started or physical fit newly claimed. Older hood/current-CAD entries below superseded.
+
+
+## CURRENT: combined panels, faster supports - 2026-10-22 (Codex)
+
+Jim keeps both panels on one plate; single-panel plan below is optional. Support-only optimization: combined panels **7h00m34s**, hood unchanged **9h43m33s**, total **16h44m07s**, saving **1h30m46s**. Actual printed shell centerlines/material, geometry,4walls,30%infill,roof layers,2.8mm bores,Neo SAFE retained; SAFE/bounds/support/pause checks pass and preview inspected. Current source/package: `cad/v2/enclosure/round5-calibrated-28-20261022/shell-time-optimized/`. Incoming `Round5_COMBINED_SHELLS_20261022/`; main G-code names unchanged in X:/3D Printer. Native CAD remains the calibrated release. Remaining accessories ~2h06; full shell day planned tomorrow. No printer started.
+
+
+## Five-hour print window: individual front panels - 2026-10-22 (Codex)
+
+Left front panel separated and verified at **4h11m13s**, right at **4h15m**. Both retain 2.8 mm bores/Neo SAFE/SD RED→GREY→RED→GREY. New G-code is in X:/3D Printer; combined plate moved to GLAD_OPTIONAL. Start left with the loaded red for today's five-hour window. Source/provenance: `cad/v2/enclosure/round5-calibrated-28-20261022/single-panels-5h/`; details in the calibrated-release agent note. Neither panel marked printed; no printer started.
+
+
+## Current: 2.8 mm M2 coupon accepted - 2026-10-22 (Codex)
+
+Jim accepted **2.8 mm** from his M2 heat-set coupon; the previous pending-bore entries below are superseded. Applying it in an isolated production derivative at `cad/v2/enclosure/round5-calibrated-28-20261022/`. CAD/slicing checks PASS; released shell SD pause states also PASS. Current Incoming is `Round5_CALIBRATED_M2_28_20261022/`; five G-code files delivered directly to `X:/3D Printer`, with new native/STEP/22STLs and 3MFs in the calibrated package. The insert-bore blocker is cleared. Stronger white inset v2 replaces plate 04 and needs reprinting; silk remains. Tablets/red shields/crest completed. LED window stays open. No LCD test required. See agents/codex-round5-calibrated-28-20261022.md.
+
+
 ## Stronger white shield emblems (plate 04B) - 2026-10-22 (Claude)
 
 Jim: both printed Round 5 white shield insets failed; need stronger, same fit in the printed red shields. `cad/v2/enclosure/round5-print-20261022/emblem-v2/`: 1.8 mm thick (was 1.0), recess-filling base (0.05/side) plus a wider top layer on the red surface (bolts 1.75, feathers 2.25), printed lying on the back with snug supports. Zero overlap with field/panel; boss rides 0.8 higher, M2 x 6 unchanged. Plate 04B 58 m / 4.2 g, SAFE guard passed; copied to Incoming Round5_SD_20261022/PRINT_FIRST and X: package, old 04 G-code renamed .superseded (SHA256SUMS in the package now out of date for that file).

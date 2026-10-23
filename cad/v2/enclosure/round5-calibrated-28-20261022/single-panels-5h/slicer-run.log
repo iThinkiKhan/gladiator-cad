@@ -1,0 +1,3 @@
+08R {"exit_code": 0, "header": ["; filament used [g] = 61.46", "; total filament used [g] = 61.46", "; total filament cost = 1.23", "; total layers count = 336", "; estimated printing time (normal mode) = 4h 15m 0s"], "extrusion_bounds_xy_mm": [10.0, 20.0, 197.486, 180.0], "extrusions_fit_220_with_0_5mm_margin": true}
+08L {"exit_code": 0, "header": ["; filament used [g] = 61.06", "; total filament used [g] = 61.06", "; total filament cost = 1.22", "; total layers count = 336", "; estimated printing time (normal mode) = 4h 11m 13s"], "extrusion_bounds_xy_mm": [10.0, 20.0, 109.27, 180.0], "extrusions_fit_220_with_0_5mm_margin": true}
+

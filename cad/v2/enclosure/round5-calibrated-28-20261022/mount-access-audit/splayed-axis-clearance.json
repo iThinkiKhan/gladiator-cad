@@ -1,0 +1,86 @@
+[
+  {
+    "side": "L",
+    "hole_yz": [
+      22,
+      40
+    ],
+    "axis_matched_start": [
+      -9.0,
+      21.763928169321137,
+      40.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.05920487487121732
+  },
+  {
+    "side": "L",
+    "hole_yz": [
+      35.5,
+      46
+    ],
+    "axis_matched_start": [
+      -9.0,
+      35.26478030755775,
+      46.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.055823516338564805
+  },
+  {
+    "side": "L",
+    "hole_yz": [
+      59,
+      45
+    ],
+    "axis_matched_start": [
+      -9.0,
+      58.76626365930297,
+      45.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.05019359597590126
+  },
+  {
+    "side": "R",
+    "hole_yz": [
+      22,
+      40
+    ],
+    "axis_matched_start": [
+      88.0,
+      21.763928169321144,
+      40.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.059202777981403165
+  },
+  {
+    "side": "R",
+    "hole_yz": [
+      35.5,
+      46
+    ],
+    "axis_matched_start": [
+      88.0,
+      35.26478030755776,
+      46.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.05583255679274678
+  },
+  {
+    "side": "R",
+    "hole_yz": [
+      59,
+      45
+    ],
+    "axis_matched_start": [
+      88.0,
+      58.76626365930298,
+      45.00000000000001
+    ],
+    "nominal_M3_shaft_intersection_mm3": 0.0,
+    "plus_0_1mm_radius_print_allowance_intersection_mm3": 0.05022920026004688
+  }
+]

@@ -1,0 +1,60 @@
+{
+  "support_inside_new_insert_bores": {
+    "Tablet_L_-6": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_L_48": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_R_-6": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Tablet_R_48": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 0,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Aquila": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 335607,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 111869
+    },
+    "Scutum_L": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 214041,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 71347
+    },
+    "Scutum_R": {
+      "centreline_samples_inside": 0,
+      "checked_samples": 214041,
+      "radius_mm": 1.4,
+      "axis": 1,
+      "segments_intersecting_bore_with_0_20mm_bead_allowance": 0,
+      "checked_segments": 71347
+    }
+  }
+}

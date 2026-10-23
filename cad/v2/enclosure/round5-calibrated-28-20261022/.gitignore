@@ -1,0 +1,8 @@
+# Regenerable bulk (toolpath dumps, archives, sliced G-code, backups). Rebuild with the scripts here.
+segments.json
+*.zip
+*.gcode
+*.gcode.*
+*.FCBak
+*.brep
+__pycache__/

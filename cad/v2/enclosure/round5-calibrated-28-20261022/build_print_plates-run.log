@@ -1,0 +1,11 @@
+00 R5_00_M2_Insert_Calibration.3mf {'M2_D3_L3_Mini': [40.0, 13.0, 6.0]}
+00H R5_00H_M2_Sideways_OPTIONAL.3mf {'M2_D3_L3_Sideways_Optional': [40.0, 6.0, 6.5]}
+01 R5_01_Fit_Seats.3mf {'FIT_Scutum_Seat': [32.0, 7.2, 46.0], 'FIT_Tablet_End': [8.2, 34.0, 22.0], 'FIT_Aquila_Seat': [48.0, 9.8, 23.0]}
+02 R5_02_Black_Clamps.3mf {'Crest_Clamp': [9.7, 17.4, 12.0], 'Neck_Clamp_0': [9.2, 14.4, 8.0], 'Neck_Clamp_1': [9.2, 14.4, 8.0], 'Crest_Clamp_Shoe': [4.4, 3.0, 1.0], 'Neck_Clamp_Shoe_21_5': [5.0, 3.0, 1.0], 'Neck_Clamp_Shoe_57_5': [5.0, 3.0, 1.0], 'SPARE_Crest_Shoe': [4.4, 3.0, 1.0], 'SPARE_Neck_Shoe_A': [5.0, 3.0, 1.0], 'SPARE_Neck_Shoe_B': [5.0, 3.0, 1.0]}
+03 R5_03_Red_Shields_and_Crest.3mf {'Scutum_Field_L': [27.3, 41.6, 5.0], 'Scutum_Field_R': [27.3, 41.6, 5.0], 'Galea_Crest': [29.8, 61.0, 4.8]}
+04 R5_04_White_Curved_Emblems.3mf {'Scutum_Emblem_L': [27.3, 4.6, 41.6], 'Scutum_Emblem_R': [27.3, 4.6, 41.6]}
+05 R5_05_Tablets_White_then_Red.3mf {'Tablet_L': [62.0, 16.0, 2.1], 'Tablet_R': [62.0, 16.0, 2.1]}
+06 R5_06_Silk_Aquila_and_Trim.3mf {'Aquila_Relief': [41.6, 17.6, 3.3], 'Scutum_Boss_L': [8.5, 8.5, 2.7], 'Scutum_Boss_R': [8.5, 8.5, 2.7], 'Crest_Holder_Trim': [9.6, 15.0, 2.9], 'Neck_Guard': [63.0, 14.9, 8.4]}
+07 R5_07_Rear_Hood.3mf {'Rear_Hood': [118.3, 115.8, 102.9]}
+08 R5_08_Front_Panels.3mf {'Front_Left': [80.2, 87.8, 94.0], 'Front_Right': [80.2, 87.8, 94.0]}
+09 R5_09_Lens_Natural.3mf {'Lens_Plate': [33.6, 19.6, 12.7]}

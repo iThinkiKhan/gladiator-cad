@@ -1,0 +1,10 @@
+GLAD_01_WHITE_EMBLEMS_V2_JIMSET.gcode | process 0.20mm Standard - FIrst Layer Comp | filament "Generic PLA @System - First Print" | layer 0.2 first 0.25
+   differences from Jim presets: ['enable_prime_tower: preset 1 -> gcode 0', 'enable_support: preset 0 -> gcode 1', 'machine_start_gcode DIFFERS'] (prime tower is switched off automatically for single-filament jobs)
+GLAD_02_SILK_DETAILS_JIMSET.gcode | process 0.20mm Silk Toys @ First Print - SAFE | filament "Generic PLA Silk @System - First Print" | layer 0.2 first 0.2
+   differences from Jim presets: ['enable_prime_tower: preset 1 -> gcode 0', 'enable_support: preset 0 -> gcode 1', 'machine_start_gcode DIFFERS'] (prime tower is switched off automatically for single-filament jobs)
+GLAD_03_BLACK_CLAMPS_JIMSET.gcode | process 0.20mm Standard - FIrst Layer Comp | filament "Generic PLA @System - First Print" | layer 0.2 first 0.25
+   differences from Jim presets: ['enable_prime_tower: preset 1 -> gcode 0', 'machine_start_gcode DIFFERS'] (prime tower is switched off automatically for single-filament jobs)
+GLAD_04_HOOD_SD_JIMSET.gcode | process 0.20mm Standard - FIrst Layer Comp | filament "Generic PLA @System - First Print" | layer 0.2 first 0.25
+   differences from Jim presets: ['enable_prime_tower: preset 1 -> gcode 0', 'enable_support: preset 0 -> gcode 1', 'machine_start_gcode DIFFERS'] (prime tower is switched off automatically for single-filament jobs)
+GLAD_05_PANELS_SD_JIMSET.gcode | process 0.20mm Standard - FIrst Layer Comp | filament "Generic PLA @System - First Print" | layer 0.2 first 0.25
+   differences from Jim presets: ['enable_prime_tower: preset 1 -> gcode 0', 'enable_support: preset 0 -> gcode 1', 'machine_start_gcode DIFFERS'] (prime tower is switched off automatically for single-filament jobs)
