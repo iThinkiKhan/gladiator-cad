@@ -1,5 +1,9 @@
 # Current Handoff
 
+## CURRENT: shell back to 0.28 mm layers - 2026-10-23 (Claude)
+
+Jim asked for a thicker layer to cut time. Hood 9h39, panels 7h24 at 0.28 (first layer 0.25), normal snug 45 deg supports, M600 x3 each (GREY 12.29, RED 56.25/52.33, GREY 62.13/58.21). 0 unsupported cells, 0 fastener-path hits, SAFE pass. Files: X:/3D Printer and Incoming GLAD_FINAL_20261022; 0.20 mm shell files superseded. Script: jim-settings-reslice/source/slice_028.py.
+
 ## CURRENT: final print set, M600, emblem cradle - 2026-10-22 evening (Claude)
 
 Supersedes the GLAD_*_JIMSET files below. Final set in X:/3D Printer (and cad-lab ~/3D-Printer/Incoming/Gladiator/GLAD_FINAL_20261022), each with a G-code-drawn .png:
