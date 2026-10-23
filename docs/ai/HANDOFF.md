@@ -1,5 +1,9 @@
 # Current Handoff
 
+## CURRENT: brims on all jobs - 2026-10-23 (Claude)
+
+Jim: brims on everything. Jobs 1,3,4,5 already had his 5 mm outer brim (hood brim is narrowed front/back by support pads; corners full). Silk job (his silk preset = no brim) re-sliced with outer_only 5 mm: 2_SILK_aquila_bosses_trim_neckguard_BRIM.gcode, 21m54. Replace the old silk file on the SD card.
+
 ## CURRENT: shell back to 0.28 mm layers - 2026-10-23 (Claude)
 
 Jim asked for a thicker layer to cut time. Hood 9h39, panels 7h24 at 0.28 (first layer 0.25), normal snug 45 deg supports, M600 x3 each (GREY 12.29, RED 56.25/52.33, GREY 62.13/58.21). 0 unsupported cells, 0 fastener-path hits, SAFE pass. Files: X:/3D Printer and Incoming GLAD_FINAL_20261022; 0.20 mm shell files superseded. Script: jim-settings-reslice/source/slice_028.py.
