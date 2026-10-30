@@ -9,7 +9,10 @@ RD = HERE / 'render'
 NAMES = {'Tilt_Yoke': 'yoke', 'Pan_Raised_Pedestal': 'grey', 'Head_Distro_PCB_Placeholder': 'pcb',
          'M2_Insert_A': 'brass', 'M2_Insert_B': 'brass', 'M2_Insert_C': 'brass', 'Tilt_Lead_Route': 'lead',
          'Yoke_Bolt_Head_M3': 'dark', 'Neck_Main': 'yoke', 'Mast_Tube_v2': 'tube', 'Pan_Lead_Route': 'lead',
-         'SG90_Pan_Reference': 'servo', 'Pan_Servo_Carriage': 'grey', 'Pan_Bearing_Lower': 'dark', 'Pan_Retainer': 'grey', 'SG90_Tilt_Reference': 'servo', 'Tilt_Pivot_Bolt': 'dark',
+         'SG90_Pan_Reference': 'servo', 'Pan_Servo_Carriage': 'grey', 'Pan_Bearing_Lower': 'dark',
+         'Rear_Display_Frame': 'head', 'GH44_Tilt_Receiver': 'head', 'GH44_Dual_Carrier': 'head', 'Camera_Tray': 'head',
+         'Camera_Cover': 'head', 'ToF_Sensor_Frame': 'head', 'ST7789_Board': 'head', 'ESP32_CAM_Reference': 'head',
+         'Tilt_Horn_Reference': 'head', 'Pan_Drive_Pulley': 'grey', 'Pan_Belt_Reference': 'dark', 'Pan_Retainer': 'grey', 'SG90_Tilt_Reference': 'servo', 'Tilt_Pivot_Bolt': 'dark',
          'PCB_Part_Height_Zone_1': 'zone', 'PCB_Part_Height_Zone_2': 'zone', 'PCB_Part_Height_Zone_3': 'zone',
          'PCB_Part_Height_Zone_4': 'zone'}
 
@@ -28,7 +31,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 COL = {'yoke': (0.96, 0.55, 0.18), 'grey': (0.72, 0.72, 0.72), 'pcb': (0.10, 0.55, 0.25), 'brass': (0.85, 0.68, 0.25),
-       'lead': (0.15, 0.35, 0.85), 'dark': (0.25, 0.25, 0.28), 'servo': (0.35, 0.48, 0.67), 'zone': (0.98, 0.85, 0.20), 'tube': (0.85, 0.45, 0.15)}
+       'lead': (0.15, 0.35, 0.85), 'dark': (0.25, 0.25, 0.28), 'servo': (0.35, 0.48, 0.67), 'zone': (0.98, 0.85, 0.20), 'tube': (0.85, 0.45, 0.15), 'head': (0.55, 0.60, 0.68)}
 
 
 def read_stl(p):
@@ -41,7 +44,7 @@ def read_stl(p):
     return a['v'].reshape(-1, 3, 3).astype(float)
 
 
-def draw(ax, names, view, up=(0, 0, 1), light=(-0.4, -0.5, 0.8), zone_alpha=0.35, clip=None):
+def draw(ax, names, view, up=(0, 0, 1), light=(-0.4, -0.5, 0.8), zone_alpha=0.35, clip=None, head_alpha=1.0):
     view = np.array(view, float); view /= np.linalg.norm(view)
     upv = np.array(up, float); right = np.cross(view, upv); right /= np.linalg.norm(right); upv = np.cross(right, view)
     L = np.array(light, float); L /= np.linalg.norm(L)
@@ -59,7 +62,7 @@ def draw(ax, names, view, up=(0, 0, 1), light=(-0.4, -0.5, 0.8), zone_alpha=0.35
         nrm[ok] /= ln[ok, None]
         shade = 0.45 + 0.55 * np.abs(nrm @ L)
         base = np.array(COL[NAMES[n]])
-        a = zone_alpha if NAMES[n] == 'zone' else 1.0
+        a = zone_alpha if NAMES[n] == 'zone' else (head_alpha if NAMES[n] == 'head' else 1.0)
         c = np.clip(base[None, :] * shade[:, None], 0, 1)
         c = np.concatenate([c, np.full((len(c), 1), a)], axis=1)
         P.append(np.stack([tri[ok] @ right, tri[ok] @ upv], axis=-1)); C.append(c[ok]); D.append((tri[ok] @ view).mean(axis=1))
@@ -111,4 +114,21 @@ axs[1].set_title('From below on the servo side (servo hidden): 8.4 mm slot under
 draw(axs[2], ['Mast_Tube_v2', 'Pan_Lead_Route'], (0.5, 0.5, -0.7), clip=lambda c: zwin(c, 128, 160))
 axs[2].set_title('Tube top alone: 8.4 x 5.2 notch on the servo side, opposite the key\nflat, so the notch always lines up with the tunnel', fontsize=11)
 fig.suptitle('Masthead v2 - pan servo lead enters the mast under the servo (DRAFT, CAD only)', fontsize=13)
-fig.tight_layout(rect=(0, 0, 1, 0.95)); fig.savefig(HERE / 'pan_lead_review.png', dpi=100); print('ok')
+fig.tight_layout(rect=(0, 0, 1, 0.95)); fig.savefig(HERE / 'pan_lead_review.png', dpi=100)
+
+HEAD = ['Rear_Display_Frame', 'GH44_Tilt_Receiver', 'GH44_Dual_Carrier', 'Camera_Tray', 'Camera_Cover', 'ToF_Sensor_Frame',
+        'ST7789_Board', 'ESP32_CAM_Reference', 'Tilt_Horn_Reference', 'SG90_Tilt_Reference', 'Tilt_Pivot_Bolt']
+BASEP = ['Pan_Raised_Pedestal', 'Tilt_Yoke', 'Yoke_Bolt_Head_M3', 'Tilt_Lead_Route', 'Head_Distro_PCB_Placeholder',
+         'M2_Insert_A', 'M2_Insert_B', 'M2_Insert_C', 'Pan_Drive_Pulley', 'Pan_Belt_Reference']
+ZON = ['PCB_Part_Height_Zone_1', 'PCB_Part_Height_Zone_2', 'PCB_Part_Height_Zone_3', 'PCB_Part_Height_Zone_4']
+jim = (0.15, -0.55, -0.82)          # about Jim's screenshot: from above on the screen side, camera case on the left
+top = lambda c: c[:, 2] > 176
+fig, axs = plt.subplots(1, 2, figsize=(20, 10))
+draw(axs[0], BASEP + HEAD, jim, clip=top, head_alpha=0.28)
+axs[0].set_title('Your view, head see-through: the green plate IS the placeholder board, flush in the yoke floor\n'
+                 'between the two yoke columns, right under the head', fontsize=11)
+draw(axs[1], BASEP + ZON + ['SG90_Tilt_Reference', 'Tilt_Pivot_Bolt'], jim, clip=top, zone_alpha=0.45)
+axs[1].set_title('Head hidden. Yellow = tallest parts that clear the head at every tilt angle:\n'
+                 +', '.join('%s %d mm' % (k.split(' ')[0].replace('_', ' '), v) for k, v in H.items()), fontsize=11)
+fig.suptitle('Where the distro PCB is and how much room it has (CAD, draft)', fontsize=13)
+fig.tight_layout(rect=(0, 0, 1, 0.95)); fig.savefig(HERE / 'pcb_space_from_jims_view.png', dpi=100); print('ok')
