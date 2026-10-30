@@ -1,8 +1,8 @@
-# Masthead v2 - yoke floor holds the head distro PCB (DRAFT, 2026-10-30, Claude)
+# Masthead v2 - head distro PCB on the yoke floor + pan servo lead into the mast (DRAFT, 2026-10-30, Claude)
 
 Jim: "I want a pocket for the board to sit in, with a channel under it for the servo wire."
 Base: Codex balanced derivative (`../balance-tensioner-20261030/Gladiator_Head_v2_Balanced.FCStd`, SHA256 in validation.json).
-Only `Tilt_Yoke` changes. Open **`Gladiator_Head_v2_PCB_Floor_REVIEW.FCStd`** (colored) in FreeCAD.
+Changes `Tilt_Yoke` (PCB floor), `Neck_Main` and `Mast_Tube_v2` (pan lead window). Open **`Gladiator_Head_v2_PCB_Floor_REVIEW.FCStd`** (colored) in FreeCAD.
 
 The board outline is a PLACEHOLDER until the PCB is designed; change `OUTLINE`/`INSERTS` in `build_pcb_floor.py` and rebuild.
 
@@ -36,10 +36,28 @@ The board outline is a PLACEHOLDER until the PCB is designed; change `OUTLINE`/`
   is not strength-checked. The screwed-down PCB stiffens it again.
 - Not printed. Insert fit in a 3 mm through-bore (insert length 3.0 nominal) is untested.
 - The real PCB outline, connector positions, trunk solder pads and lead lengths do not exist yet.
-- The pan servo lead window (carriage/neck) is NOT modelled yet.
+
+## Pan servo lead into the mast (Jim: "Yes, pan window")
+
+The SG90 lead leaves the servo end that faces the mast, low down (Jim's v1 photo). It now drops off that end, runs in an
+8.4 mm slot under the neck flange (open underneath, hidden below the servo), through a tunnel in the collar wall
+(Z 145..148.6) and an 8.4 x 5.2 notch in the top of the mast tube, then down the bore with the trunk.
+- Sized for the 3-pin Dupont plug pushed through flat (7.6 x 2.5): `plug_path_hits` empty.
+- A 5.6 mm groove in the neck housing wall gives the lead room at the tightest tensioner setting (C38, servo end only
+  1 mm from the wall). Lead envelope clear at C38, C44 and C48.
+- The tube notch is on the servo side, away from the key flat, so it always lines up with the tunnel.
+- Removed: 610 mm3 from the neck, 185 mm3 from the tube. Neck and tube still single valid solids; STLs closed.
+- New print files: `stl/Gladiator_Head_v2_Neck_Main_PanLead.stl` (collar on the bed, supports as before) and
+  `stl/Gladiator_Head_v2_Mast_Tube_v2_PanLead.stl` (upright, no support).
+- Pictures: `pan_lead_review.png` (true CAD sections, `section_pan_lead.py`).
+
+Watch: the plug still cannot pass the M3 head bolt lower in the tube (about 4.5 mm each side): feed the lead with the
+bolt out, or re-pin the plug after threading. The 1.4 mm roof over the slot under the flange is thin; not strength-checked.
+The pan lead stays separate from the PCB, as Jim wants (servos on their own circuit to the lower deck).
 
 ## Files
 
 `build_pcb_floor.py` (freecadcmd) -> `Gladiator_Head_v2_PCB_Floor.FCStd`, `stl/`, `validation.json`.
 `style_pcb_floor.py` (xvfb-run -a freecad) -> `Gladiator_Head_v2_PCB_Floor_REVIEW.FCStd`.
 `render_pcb_floor.py` (freecadcmd, then python3 ... draw) -> `pcb_floor_review.png`.
+`section_pan_lead.py` (freecadcmd, then python3 ... draw) -> `pan_lead_review.png`.

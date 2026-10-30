@@ -14,13 +14,13 @@ try:
         vo.LineColor = (.15, .17, .2)
         vo.DisplayMode = 'Flat Lines'
         n = o.Name
-        if n == 'Tilt_Yoke':
+        if n in ('Tilt_Yoke', 'Neck_Main', 'Mast_Tube_v2'):
             vo.ShapeColor = (.96, .55, .18)
         elif n == 'Head_Distro_PCB_Placeholder':
             vo.ShapeColor = (.10, .55, .25)
         elif n.startswith('M2_Insert_'):
             vo.ShapeColor = (.80, .65, .25)
-        elif n == 'Tilt_Lead_Route':
+        elif n in ('Tilt_Lead_Route', 'Pan_Lead_Route'):
             vo.ShapeColor = (.15, .35, .85)
         elif n == 'Yoke_Bolt_Head_M3':
             vo.ShapeColor = (.25, .25, .28)

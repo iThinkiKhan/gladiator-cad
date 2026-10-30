@@ -9,6 +9,25 @@
   "before": 489.6,
   "after": 208.5
  },
+ "pan_lead": {
+  "neck_removed_mm3": 610.1,
+  "tube_removed_mm3": 184.9,
+  "width": 8.4,
+  "tunnel_z": [
+   145.0,
+   148.6
+  ],
+  "tube_notch_z": [
+   144.8,
+   150.0
+  ],
+  "plug_path_hits": [],
+  "lead_hits_by_carriage": {
+   "C38": [],
+   "C44": [],
+   "C48": []
+  }
+ },
  "static_overlaps": {
   "pcb": [],
   "bolt_head": [],
@@ -37,6 +56,32 @@
   "non_manifold": false,
   "grams_solid_pla": 14.9
  },
+ "print_stl_more": [
+  {
+   "file": "stl/Gladiator_Head_v2_Neck_Main_PanLead.stl",
+   "orientation": "collar on the bed; supports under the C arm, riser and pad (as v2)",
+   "solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    81.4,
+    92.4,
+    64.1
+   ],
+   "grams_solid_pla": 32.2
+  },
+  {
+   "file": "stl/Gladiator_Head_v2_Mast_Tube_v2_PanLead.stl",
+   "orientation": "upright, base (pin) end on the bed; no support (as v2)",
+   "solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    20.0,
+    20.0,
+    144.0
+   ],
+   "grams_solid_pla": 30.3
+  }
+ ],
  "params": {
   "SEAT_D": 1.0,
   "SEAT_Z": 203.5,

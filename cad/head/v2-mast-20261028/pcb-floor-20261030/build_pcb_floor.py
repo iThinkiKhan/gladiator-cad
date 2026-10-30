@@ -101,6 +101,72 @@ R['yoke_volume_mm3'] = {'before': round(yoke0.Volume, 1), 'after': round(yoke.Vo
 mid = box(42.0, 56.0, 109.0, 120.0, FLOOR_BOT, FLOOR_TOP)
 R['cross_bar_left_between_columns_mm3'] = {'before': round(yoke0.common(mid).Volume, 1), 'after': round(yoke.common(mid).Volume, 1)}
 
+# ---------------------------------------------------------------- pan servo lead into the mast (Jim, 2026-10-30)
+# The SG90 lead leaves the servo's mast-end face low (Jim's v1 photo). It drops past the neck housing, runs in a slot
+# under the neck flange (Z 144..150), through the collar wall and a notch in the tube top into the bore, hidden under
+# the servo. Sized to pass the 3-pin Dupont plug (about 7.6 x 2.5). Frame: r from the mast axis toward the servo (225 deg).
+AX = V(39.5, 113.0, 0)
+C_NOM, C_MIN, C_MAX, SHAFT_NEAR = 44.0, 38.0, 48.0, 5.9
+UDIR = V(-math.sqrt(0.5), -math.sqrt(0.5), 0)
+LEAD_W = 8.4                       # tunnel / slot / notch width (plug 7.6 + clearance)
+TUN_Z0, TUN_Z1 = 145.0, 148.6      # closed tunnel through the collar wall (r 6..14.5); flange is Z 144..150
+SLOT_Z0 = 143.0                    # under the flange (r 14.5..27) the slot is open at the bottom
+GROOVE = (28.3, 32.0, 5.6, 143.0, 158.5)   # r0, r1, width, z0, z1: drop groove in the housing wall for C_MIN
+
+
+def rbox(r0, r1, w, z0, z1):
+    s = Part.makeBox(r1 - r0, w, z1 - z0, V(r0, -w / 2, z0))
+    s.rotate(V(), V(0, 0, 1), 225.0); s.translate(AX)
+    return s
+
+
+neck0 = d.getObject('Neck_Main').Shape.copy()
+tube0 = d.getObject('Mast_Tube_v2').Shape.copy()
+assert abs(tube0.BoundBox.ZMax - 150.0) < 0.01
+tunnel = rbox(3.0, 27.0, LEAD_W, TUN_Z0, TUN_Z1)
+slot = rbox(14.5, 27.0, LEAD_W, SLOT_Z0, TUN_Z1)
+groove = rbox(GROOVE[0], GROOVE[1], GROOVE[2], GROOVE[3], GROOVE[4])
+notch = rbox(3.0, 11.0, LEAD_W, TUN_Z0 - 0.2, 151.0)
+# the groove must stay in the housing wall, clear of the rotor cavity inside it
+assert neck0.common(rbox(GROOVE[0] - 1.5, GROOVE[0], GROOVE[2], 151, GROOVE[4])).Volume > 0.9 * 1.5 * GROOVE[2] * (GROOVE[4] - 151)
+neck = neck0.cut(tunnel).cut(slot).cut(groove).removeSplitter()
+tube = tube0.cut(notch).removeSplitter()
+assert neck.isValid() and len(neck.Solids) == len(neck0.Solids), (neck.isValid(), len(neck.Solids), len(neck0.Solids))
+assert tube.isValid() and len(tube.Solids) == 1
+R['pan_lead'] = {'neck_removed_mm3': round(neck0.Volume - neck.Volume, 1), 'tube_removed_mm3': round(tube0.Volume - tube.Volume, 1),
+                 'width': LEAD_W, 'tunnel_z': [TUN_Z0, TUN_Z1], 'tube_notch_z': [TUN_Z0 - 0.2, 150.0]}
+plug = rbox(4.0, 33.0, 7.8, TUN_Z0 + 0.3, TUN_Z0 + 0.3 + 2.7)          # the plug pushed through, flat
+R['pan_lead']['plug_path_hits'] = sorted(n for n, s in (('Neck_Main', neck), ('Mast_Tube_v2', tube)) if plug.common(s).Volume > 0.01)
+
+
+def lead_at(C):
+    re = C - SHAFT_NEAR                       # servo end face, r from the axis
+    return Part.makeCompound([rbox(re - 1.6, re - 0.3, 4.0, 145.4, 155.5),       # drops from the exit down the end face
+                              rbox(4.0, re - 0.3, 4.0, 145.4, 146.7),            # flat in the slot / tunnel
+                              rbox(2.0, 4.0, 4.0, 128.0, 146.7)])                # down the bore
+
+
+SERVO_SIDE = ('SG90_Pan_Reference', 'Pan_Servo_Carriage', 'Pan_Drive_Pulley', 'Pan_Horn_Reference')
+lead_hits = {}
+for C in (C_MIN, C_NOM, C_MAX):
+    L = lead_at(C)
+    hits = []
+    for n in groups['fixed'] + groups['pan'] + ['Tilt_Yoke']:
+        o = d.getObject(n)
+        if not o:
+            continue
+        s = {'Neck_Main': neck, 'Mast_Tube_v2': tube}.get(n, o.Shape).copy()
+        if n in SERVO_SIDE:
+            s.translate(UDIR * (C - C_NOM))
+        if L.common(s).Volume > 0.05:
+            hits.append(n)
+    lead_hits['C%d' % C] = hits
+R['pan_lead']['lead_hits_by_carriage'] = lead_hits
+pan_lead = lead_at(C_NOM)
+
+d.getObject('Neck_Main').Shape = neck
+d.getObject('Mast_Tube_v2').Shape = tube
+
 # ---------------------------------------------------------------- new objects
 pcb = prism(board2d, SEAT_Z, PCB_TOP)
 for h in holes2d:
@@ -177,6 +243,7 @@ add('Head_Distro_PCB_Placeholder', pcb)
 for k, s in zip(INSERTS, inserts):
     add('M2_Insert_' + k, s)
 add('Tilt_Lead_Route', lead)
+add('Pan_Lead_Route', pan_lead)
 add('Yoke_Bolt_Head_M3', bolt_head)
 for i, (zn, s) in enumerate(env_shapes.items()):
     add('PCB_Part_Height_Zone_%d' % (i + 1), s)
@@ -192,6 +259,14 @@ R['print_stl'] = {'file': 'stl/Gladiator_Head_v2_Tilt_Yoke_PCB.stl', 'orientatio
                   'size_mm': [round(mb.XLength, 1), round(mb.YLength, 1), round(mb.ZLength, 1)],
                   'solid': m.isSolid(), 'non_manifold': m.hasNonManifolds(),
                   'grams_solid_pla': round(yoke.Volume * 1.24e-3, 1)}
+R['print_stl_more'] = []
+for nm, shp, how in (('Neck_Main', neck, 'collar on the bed; supports under the C arm, riser and pad (as v2)'),
+                     ('Mast_Tube_v2', tube, 'upright, base (pin) end on the bed; no support (as v2)')):
+    pr = shp.copy(); pr.translate(V(-pr.BoundBox.XMin, -pr.BoundBox.YMin, -pr.BoundBox.ZMin))
+    m = Mesh.Mesh(pr.tessellate(0.02)); f = 'stl/Gladiator_Head_v2_%s_PanLead.stl' % nm; m.write(str(HERE / f))
+    R['print_stl_more'].append({'file': f, 'orientation': how, 'solid': m.isSolid(), 'non_manifold': m.hasNonManifolds(),
+                                'size_mm': [round(m.BoundBox.XLength, 1), round(m.BoundBox.YLength, 1), round(m.BoundBox.ZLength, 1)],
+                                'grams_solid_pla': round(shp.Volume * 1.24e-3, 1)})
 R['params'] = dict(SEAT_D=SEAT_D, SEAT_Z=SEAT_Z, PCB_T=PCB_T, RELIEF_D=RELIEF_D, RELIEF_INSET=RELIEF_INSET,
                    INSERT_BORE=INSERT_BORE, INSERT_LEN=INSERT_LEN, INSERTS=INSERTS, OUTLINE=OUTLINE, CHANNEL=CHANNEL)
 R['pcb_outline_bbox'] = [round(v, 2) for v in (pcb.BoundBox.XMin, pcb.BoundBox.XMax, pcb.BoundBox.YMin, pcb.BoundBox.YMax)]

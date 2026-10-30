@@ -19,7 +19,7 @@ circuit from the power board (leads to the lower deck, not via the PCB). DRAFT `
 (base: Codex balanced model; only Tilt_Yoke changes): 1.0 mm board pocket, 1.5 mm lead-relief well, 3 x M2 heat-set
 (2.8 through 3.0), tilt-servo lead channel under the board edge into the wire passage, placeholder board ~23 x 29.5.
 Clear at all tilt/pan poses; part-height limits 8/10/30/6 mm by zone. Cross bar between the columns loses ~57%: not
-strength-checked. Pan-servo lead window NOT modelled. Not sliced/printed.
+strength-checked. Pan-servo lead window added (same folder): slot under the neck flange + collar tunnel + tube-top notch, 8.4 wide for the plug, clear at C38/44/48; changes Neck_Main and Mast_Tube_v2. Not sliced/printed.
 
 ## Head power bus - 2026-10-30 (Claude)
 
