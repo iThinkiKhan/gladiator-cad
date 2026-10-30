@@ -1,0 +1,95 @@
+{
+  "reference": "/home/buralien/Desktop/3D-Printer-Outgoing/display2.gcode",
+  "criticalSettingsCompared": 22,
+  "differences": {},
+  "values": {
+    "layer_height": {
+      "gui": "0.2",
+      "camera": "0.2"
+    },
+    "initial_layer_print_height": {
+      "gui": "0.25",
+      "camera": "0.25"
+    },
+    "line_width": {
+      "gui": "0.4",
+      "camera": "0.4"
+    },
+    "outer_wall_line_width": {
+      "gui": "0.4",
+      "camera": "0.4"
+    },
+    "inner_wall_line_width": {
+      "gui": "0.45",
+      "camera": "0.45"
+    },
+    "sparse_infill_line_width": {
+      "gui": "0.45",
+      "camera": "0.45"
+    },
+    "top_surface_line_width": {
+      "gui": "0.4",
+      "camera": "0.4"
+    },
+    "initial_layer_line_width": {
+      "gui": "0.45",
+      "camera": "0.45"
+    },
+    "filament_flow_ratio": {
+      "gui": "0.98",
+      "camera": "0.98"
+    },
+    "hot_plate_temp": {
+      "gui": "60",
+      "camera": "60"
+    },
+    "hot_plate_temp_initial_layer": {
+      "gui": "60",
+      "camera": "60"
+    },
+    "nozzle_temperature": {
+      "gui": "200",
+      "camera": "200"
+    },
+    "nozzle_temperature_initial_layer": {
+      "gui": "200",
+      "camera": "200"
+    },
+    "default_acceleration": {
+      "gui": "1000",
+      "camera": "1000"
+    },
+    "outer_wall_acceleration": {
+      "gui": "1000",
+      "camera": "1000"
+    },
+    "inner_wall_acceleration": {
+      "gui": "1000",
+      "camera": "1000"
+    },
+    "outer_wall_speed": {
+      "gui": "60",
+      "camera": "60"
+    },
+    "inner_wall_speed": {
+      "gui": "80",
+      "camera": "80"
+    },
+    "initial_layer_speed": {
+      "gui": "20",
+      "camera": "20"
+    },
+    "sparse_infill_speed": {
+      "gui": "80",
+      "camera": "80"
+    },
+    "brim_type": {
+      "gui": "outer_only",
+      "camera": "outer_only"
+    },
+    "brim_width": {
+      "gui": "5",
+      "camera": "5"
+    }
+  }
+}

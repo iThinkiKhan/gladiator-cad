@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "actualExtrusionBoundsXYZ": [
+    10.0,
+    20.0,
+    0.25,
+    155.733,
+    180.0,
+    30.05
+  ],
+  "presetDifferences": {
+    "enable_support": {
+      "preset": "0",
+      "gcode": "1"
+    },
+    "support_type": {
+      "preset": "tree(auto)",
+      "gcode": "normal(auto)"
+    },
+    "support_threshold_angle": {
+      "preset": "30",
+      "gcode": "45"
+    },
+    "enable_prime_tower": {
+      "preset": "1",
+      "gcode": "0"
+    },
+    "support_style": {
+      "preset": "default",
+      "gcode": "snug"
+    }
+  },
+  "unintendedPresetDifferences": {},
+  "startAndEndMatchUserPresetIgnoringLineEndings": true,
+  "firstLayerMm": "0.25",
+  "layerMm": "0.2",
+  "bedTemperatureC": 60,
+  "flowRatio": "0.98",
+  "unsupportedModelCellLayers": 0,
+  "supportSegments": 5799,
+  "sourceGeometryChanged": false,
+  "gcodeSha256": "8012df27b7c62d563fe9f34865d957c7f81cc87ad912974ce72e1d43e3ec8685",
+  "printerStarted": false,
+  "physicalFitVerified": false,
+  "supportRemovalFromFastenerAndConnectorOpeningsStillRequired": true
+}
