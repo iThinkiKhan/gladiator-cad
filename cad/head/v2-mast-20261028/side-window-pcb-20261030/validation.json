@@ -1,0 +1,91 @@
+{
+ "source": "cad/head/v2-mast-20261028/pcb-floor-20261030/Gladiator_Head_v2_PCB_Floor.FCStd",
+ "source_sha256": "9ec863d4020c4626caacfe16d83b542a96eb0bc66e6f84c441b8968519a7dc6c",
+ "yoke_from": "cad/head/v2-mast-20261028/balance-tensioner-20261030/Gladiator_Head_v2_Balanced.FCStd",
+ "frame_change": "4 x M2 heat-set bores 2.8 x 4 deep in the outer faces of the side rails (drill into the printed v06 frame, or reprint)",
+ "insert_positions_YZ": [
+  [
+   97.0,
+   229.5
+  ],
+  [
+   141.0,
+   229.5
+  ],
+  [
+   97.0,
+   265.5
+  ],
+  [
+   141.0,
+   265.5
+  ]
+ ],
+ "static_overlaps": {
+  "board": [],
+  "bars": [],
+  "components_20mm": []
+ },
+ "horn_screw_driver_blockers": [],
+ "tilt_hits": [],
+ "pan_fixed_hits": [],
+ "board": {
+  "size_mm": [
+   55.0,
+   30.0,
+   1.6
+  ],
+  "world_Y": [
+   91.5,
+   146.5
+  ],
+  "world_Z": [
+   232.5,
+   262.5
+  ],
+  "overlap_on_each_rail_mm": 3.0,
+  "access_hole_d": 6.0,
+  "access_hole_from_front_and_bottom_edges_mm": [
+   21.5,
+   15.0
+  ],
+  "component_height_checked_mm": 20.0
+ },
+ "mass_estimate_g": {
+  "board": 4.8,
+  "bars": 4.3,
+  "parts_leads_guess": 6.0,
+  "centre_behind_tilt_axis_mm": 6.0,
+  "note": "behind the axis = screen side, so it slightly offsets the camera-heavy head"
+ },
+ "print_stl": [
+  {
+   "file": "stl/Side_PCB_Clamp_Bar_Bottom.stl",
+   "orientation": "outer face on the bed, rebate up; no support",
+   "solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    9.5,
+    55.0,
+    4.6
+   ]
+  },
+  {
+   "file": "stl/Side_PCB_Clamp_Bar_Top.stl",
+   "orientation": "outer face on the bed, rebate up; no support",
+   "solid": true,
+   "non_manifold": false,
+   "size_mm": [
+    9.5,
+    55.0,
+    4.6
+   ]
+  },
+  {
+   "file": "stl/Rear_Display_Frame_v06_with_side_PCB_inserts.stl",
+   "orientation": "only if reprinting the frame; same orientation as the v06 frame",
+   "solid": true,
+   "non_manifold": false
+  }
+ ]
+}

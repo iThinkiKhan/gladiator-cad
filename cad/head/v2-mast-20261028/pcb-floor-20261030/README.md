@@ -1,5 +1,7 @@
 # Masthead v2 - head distro PCB on the yoke floor + pan servo lead into the mast (DRAFT, 2026-10-30, Claude)
 
+> The yoke-floor board pocket is SUPERSEDED by `../side-window-pcb-20261030/` (Jim: a standard perfboard in the screen-frame side window). The pan servo lead window (neck + tube) here is still current.
+
 Jim: "I want a pocket for the board to sit in, with a channel under it for the servo wire."
 Base: Codex balanced derivative (`../balance-tensioner-20261030/Gladiator_Head_v2_Balanced.FCStd`, SHA256 in validation.json).
 Changes `Tilt_Yoke` (PCB floor), `Neck_Main` and `Mast_Tube_v2` (pan lead window). Open **`Gladiator_Head_v2_PCB_Floor_REVIEW.FCStd`** (colored) in FreeCAD.

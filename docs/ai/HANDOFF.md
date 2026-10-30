@@ -12,7 +12,16 @@ Jim: "Lets keep the slotted tube for now." Keep the original v2 slotted tube as 
 
 Jim selected wires INSIDE a stiff closed tube, threaded with a pull cord; abandon the long lay-in slit for this proposal. Isolated candidate: `cad/head/v2-mast-20261028/closed-tube-review-20261030/`. Plain and optional bolt-guard variants supplied; original v2 CAD/generator preserved. Keep OD20/ID12, top Z150, both pins/key. Rounded/flared lower inlet; +4.24 g plain / +4.86 g protected, solid PLA estimate. Optional sleeve isolates the M3 head bolt but constricts the bore to two crescents (3.2 mm nominal round gauges; actual harness unmeasured). Valid native/STEP/manifold meshes, home interference and saved upper passage checks pass. Review README/agent note explains service sequence and limitations. NOT sliced/printed; guard bridging and physical harness fit remain open. Do not treat the optional guard as accepted or add either variant to the print queue yet.
 
-## Head distro PCB floor - 2026-10-30 (Claude)
+## Head distro perfboard in the screen-frame side window - 2026-10-30 (Claude) - CURRENT choice
+
+Jim dropped the yoke-floor pocket (too custom a board shape). His own perfboard (30 x 70 cut to 55) goes on the OUTSIDE
+of the screen frame's side window (side away from the camera), lapping 3 mm onto each rail, held by two printed clamp
+bars on 4 M2 heat-set inserts drilled into the printed v06 frame rails. 6 mm hole in the board on the tilt axis keeps the
+tilt-horn screwdriver path. Board rides with the head; trunk 5V/GND/SDA/SCL crosses the tilt joint (service loop, not
+modelled). Clear at all tilt/pan; 20 mm parts envelope outward. Yoke back to the balanced yoke; pan-lead window (neck +
+tube, pcb-floor-20261030) kept. `cad/head/v2-mast-20261028/side-window-pcb-20261030/`. Not printed.
+
+## Head distro PCB floor - 2026-10-30 (Claude) - SUPERSEDED for the board (pan-lead window still current)
 
 Jim: custom through-hole distro PCB held by the yoke floor; trunk 5V/GND/SDA/SCL soldered to it; servos stay on their own
 circuit from the power board (leads to the lower deck, not via the PCB). DRAFT `cad/head/v2-mast-20261028/pcb-floor-20261030/`
