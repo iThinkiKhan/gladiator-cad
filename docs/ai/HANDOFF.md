@@ -12,6 +12,15 @@ Jim: "Lets keep the slotted tube for now." Keep the original v2 slotted tube as 
 
 Jim selected wires INSIDE a stiff closed tube, threaded with a pull cord; abandon the long lay-in slit for this proposal. Isolated candidate: `cad/head/v2-mast-20261028/closed-tube-review-20261030/`. Plain and optional bolt-guard variants supplied; original v2 CAD/generator preserved. Keep OD20/ID12, top Z150, both pins/key. Rounded/flared lower inlet; +4.24 g plain / +4.86 g protected, solid PLA estimate. Optional sleeve isolates the M3 head bolt but constricts the bore to two crescents (3.2 mm nominal round gauges; actual harness unmeasured). Valid native/STEP/manifold meshes, home interference and saved upper passage checks pass. Review README/agent note explains service sequence and limitations. NOT sliced/printed; guard bridging and physical harness fit remain open. Do not treat the optional guard as accepted or add either variant to the print queue yet.
 
+## Head distro PCB floor - 2026-10-30 (Claude)
+
+Jim: custom through-hole distro PCB held by the yoke floor; trunk 5V/GND/SDA/SCL soldered to it; servos stay on their own
+circuit from the power board (leads to the lower deck, not via the PCB). DRAFT `cad/head/v2-mast-20261028/pcb-floor-20261030/`
+(base: Codex balanced model; only Tilt_Yoke changes): 1.0 mm board pocket, 1.5 mm lead-relief well, 3 x M2 heat-set
+(2.8 through 3.0), tilt-servo lead channel under the board edge into the wire passage, placeholder board ~23 x 29.5.
+Clear at all tilt/pan poses; part-height limits 8/10/30/6 mm by zone. Cross bar between the columns loses ~57%: not
+strength-checked. Pan-servo lead window NOT modelled. Not sliced/printed.
+
 ## Head power bus - 2026-10-30 (Claude)
 
 Jim wants a 5V + GND bus at the top of the mast so fewer wires go up the tube. Chosen near term: a cut-down breadboard

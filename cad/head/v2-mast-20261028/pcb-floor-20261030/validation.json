@@ -1,0 +1,117 @@
+{
+ "source": "cad/head/v2-mast-20261028/balance-tensioner-20261030/Gladiator_Head_v2_Balanced.FCStd",
+ "source_sha256": "a6e1a9421af5f2c41f40a690be28ce6fb08146744e320bda51fd2913f4c95e78",
+ "yoke_volume_mm3": {
+  "before": 12580.7,
+  "after": 11986.6
+ },
+ "cross_bar_left_between_columns_mm3": {
+  "before": 489.6,
+  "after": 208.5
+ },
+ "static_overlaps": {
+  "pcb": [],
+  "bolt_head": [],
+  "lead": [],
+  "pcb_vs_bolt_head": 0.0,
+  "pcb_vs_new_yoke": 0.0
+ },
+ "pcb_tilt_hits": [],
+ "lead_tilt_hits": [],
+ "max_part_height_above_board_mm": {
+  "front_left (X 40.6-49, Y 93.5-109.5)": 8,
+  "front_right (X 49-63.5, Y 97-108.5)": 10,
+  "connector_band (Y 109.5-118.5, X 40.6-56.3)": 30,
+  "rear (Y 118.5-123)": 6
+ },
+ "pan_fixed_hits": [],
+ "print_stl": {
+  "file": "stl/Gladiator_Head_v2_Tilt_Yoke_PCB.stl",
+  "orientation": "floor on the bed, no support",
+  "size_mm": [
+   60.0,
+   35.0,
+   70.0
+  ],
+  "solid": true,
+  "non_manifold": false,
+  "grams_solid_pla": 14.9
+ },
+ "params": {
+  "SEAT_D": 1.0,
+  "SEAT_Z": 203.5,
+  "PCB_T": 1.6,
+  "RELIEF_D": 1.5,
+  "RELIEF_INSET": 1.8,
+  "INSERT_BORE": 2.8,
+  "INSERT_LEN": 3.0,
+  "INSERTS": {
+   "A": [
+    44.0,
+    96.2
+   ],
+   "B": [
+    61.0,
+    102.5
+   ],
+   "C": [
+    61.0,
+    120.3
+   ]
+  },
+  "OUTLINE": [
+   [
+    40.6,
+    93.5
+   ],
+   [
+    49.0,
+    93.5
+   ],
+   [
+    49.0,
+    97.0
+   ],
+   [
+    63.5,
+    97.0
+   ],
+   [
+    63.5,
+    108.5
+   ],
+   [
+    56.3,
+    108.5
+   ],
+   [
+    56.3,
+    118.5
+   ],
+   [
+    63.5,
+    118.5
+   ],
+   [
+    63.5,
+    123.0
+   ],
+   [
+    40.6,
+    123.0
+   ]
+  ],
+  "CHANNEL": [
+   30.0,
+   44.5,
+   105.8,
+   109.8
+  ]
+ },
+ "pcb_outline_bbox": [
+  40.6,
+  63.5,
+  93.5,
+  123.0
+ ]
+}
