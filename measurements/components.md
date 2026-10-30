@@ -372,11 +372,15 @@ Holder: `cad/power-switch/v1b/`. It mounts on the robot-LEFT rail, which is the 
 
 ## Breadboard power rails x2 (buses)
 
+Jim re-measured one strip on 2026-10-30 (two rows of contacts):
+
 | Feature | Value | Notes |
 | --- | ---: | --- |
-| Length | 84 | |
-| Width | 9.5 | |
-| Depth | 9.3 | |
+| Length | 82 | was 84 |
+| Width | 9.3 | across the two rows; was 9.5 |
+| Depth | 9.2 | height off the surface; was 9.3 |
+
+Head power bus plan (2026-10-30): cut a piece of 2 rows x 3 groups of 5, estimated 46-49 mm long (not measured).
 
 ## Chassis observations (from reference photo, 2026-09-15)
 

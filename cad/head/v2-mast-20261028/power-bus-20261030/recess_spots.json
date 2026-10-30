@@ -1,0 +1,21 @@
+{
+ "S1_screen_side_window": {
+  "home_overlap": [],
+  "motion_hits": [],
+  "n_hit_poses": 0
+ },
+ "S2_screen_top_brim": {
+  "home_overlap": [],
+  "motion_hits": [],
+  "n_hit_poses": 0
+ },
+ "S3_collar_side": {
+  "home_overlap": [
+   "Pan_Rotor"
+  ],
+  "motion_hits": [
+   "Pan_Rotor"
+  ],
+  "n_hit_poses": 407
+ }
+}
