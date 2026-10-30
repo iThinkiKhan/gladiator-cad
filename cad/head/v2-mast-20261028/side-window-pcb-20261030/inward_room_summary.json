@@ -1,0 +1,7 @@
+{
+ "min_room_whole_window": 11.5,
+ "min_room_bottom_strip_v4_8": 16.5,
+ "min_room_top_strip_v22_26": 16.5,
+ "min_room_bottom_strip_excl_yoke_band": 26.5,
+ "min_room_top_strip_excl_yoke_band": 27.2
+}

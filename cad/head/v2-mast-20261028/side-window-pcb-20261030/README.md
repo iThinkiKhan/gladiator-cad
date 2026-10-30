@@ -50,3 +50,20 @@ Open **`Gladiator_Head_v2_Side_PCB_REVIEW.FCStd`** (colored; desktop icon "Gladi
 `build_side_pcb.py` (freecadcmd) -> `Gladiator_Head_v2_Side_PCB.FCStd`, `stl/`, `validation.json`.
 `style_side_pcb.py` (xvfb-run -a freecad) -> `Gladiator_Head_v2_Side_PCB_REVIEW.FCStd`.
 `render_side_pcb.py` (freecadcmd, then python3 ... draw) -> `side_pcb_review.png`.
+
+## Update 2026-10-30 (Jim): parts face INTO the head - cut-and-drill picture `board_cut_drill_inward.png`
+
+Jim wants headers/pigtails on the inner face (wires go straight into the head, no loops round the outside). The solder
+side faces out against the rails; the clamp bars are unchanged.
+
+- Room inward from the board's inner face, through the window (`probe_inward.py` -> `inward_depth.json`, ray-cast on a
+  1 mm grid against every head part, and the yoke and tilt servo swept over tilt -38..34): at least 11.5 mm everywhere;
+  26 mm or more in the top and bottom usable rows (except a 15-17 mm band where the yoke ear swings past, about 17-26 mm
+  from the camera end). The middle of the camera-end half faces the tilt receiver (12-14 mm).
+- Board: 30 x 55 (Jim's 30 x 70 with 15 mm cut off the far end; keep a factory edge at the camera end). On the usual
+  10 x 24 hole board, the outer hole rows lie under the clamp-bar strips and the last two columns over solid frame,
+  leaving 8 rows x 17 columns, less the 6 mm screwdriver hole (21.5 from the camera end, 15 up).
+- Plugs/pigtails in the top and bottom usable rows; trunk solder points just screen-side of the hole; passives in the middle.
+- JST ZH (1.5 mm pitch) headers do NOT sit in a 2.54 mm grid; use pre-crimped ZH pigtails soldered into the board,
+  or XH (2.5 mm pitch, fits the grid, larger).
+- Not verified: grid alignment depends on Jim's board; no inward parts modelled in the FCStd (the depth map is the check).
