@@ -1,0 +1,18 @@
+{
+  "README.md": "4d7a5694ada33143e27c5bd6d461fb7c759b23601bc57c1153f128af90a34327",
+  "validation.json": "56bbeb0c0c33044e2b5665bd93fae86b2472873e5c357f54064d5224386a0497",
+  "Gladiator_Head_v2_Balanced.FCStd": "a6e1a9421af5f2c41f40a690be28ce6fb08146744e320bda51fd2913f4c95e78",
+  "Gladiator_Head_v2_Balanced_REVIEW.FCStd": "a6df37113b1a741775f1f1733d9fe70d9ee1ac67434a9719ba55999763610628",
+  "Gladiator_Head_v2_Balanced_assembly.step": "af4177a8c1ba1039ad99e08bbcf38bf66cfba440515153b1e4f0e8a552ee5c40",
+  "GH44_Tilt_Receiver_Balanced.step": "f45d5b1ef90f63d3309750c8f8f261ed0064e0dda499833ce20f5804ad9f08ae",
+  "stl/GH44_Tilt_Receiver_Balanced.stl": "00b5c4fa325b434760d4e9095e455dc2d4c56e01e16fc5894fec30a077ea47a2",
+  "balance_tensioner_review.png": "8b9346586f77f2a8b26023fa9cc9629eeddad725355d83d773ba16cb2d7fb549",
+  "freecad_review.png": "5fb6a774c15282112a0e43cdd9dd07b0147b6aa0f439046c078d8cc10ada7201",
+  "build_balance_tensioner.py": "b8a682ab90c64744aea4a9a7ab3b97e933624bd7dba623baa8d2d211bb7d60bf",
+  "verify_saved.py": "5b3051b69e2e6d1807539e913c2699347fc8e902c236490c7de2457ed7195be2",
+  "style_review.py": "055b82427e9b0df9d7be6dec92aca85e5da6032d3764d39612f516900d402cf7",
+  "render_balance.py": "b8425b28724b599885e8501477b154826893b7f8baeb60a8ea245f764fe2dfb3",
+  "finalize_docs.py": "4274a7404ea758cc3943128d7f11cd0be26eef3fbd75f81c6d62217d8d55867c",
+  "inputs/Baseline_v2.FCStd": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
+  "inputs/baseline_validation.json": "22af1cb23d3784c83a5d3e6d0ae006ced7a4dde8bdbf58b57b250359d5077ea7"
+}

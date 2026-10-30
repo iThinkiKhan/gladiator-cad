@@ -112,3 +112,15 @@ Jim accepted the coupon 2.8 mm M2 heat-set bore and requested all affected CAD/p
 ## 2026-10-22 - Keep both front panels together; preserve structure
 
 Jim: print both front panels at once, save time without compromising structure, with all day tomorrow available for shells. Single-panel variant is optional. Implemented only a panel support-layout change; all model geometry and structural extrusion settings retained. Current combined shell package is in the calibrated derivative shell-time-optimized/.
+
+## 2026-10-30 - Mast wiring inside a closed tube
+
+Jim selected: "Keep wires inside a stiff tube; feed leads through with a pull cord." Develop the closed-tube alternative to the full-length lay-in slot. Isolated CAD review at cad/head/v2-mast-20261028/closed-tube-review-20261030/. This decision does not accept the optional internal bolt guard, a connector clearance, physical strength, or a print release.
+
+## 2026-10-30 - Retain the slotted mast tube for now (supersedes earlier closed-tube choice)
+
+Jim: "Lets keep the slotted tube for now." The original v2 slotted tube remains current. The closed-tube candidate is only a retained alternative. Continue reviewing other head improvements; no new head geometry or print release accepted by this instruction.
+
+## 2026-10-30 - Head review scope: tilt balance and tensioner only
+
+Jim: "Lets do 1 and 2, leave the rest currently." Implement the compact tilt-balance revision and correct tensioner screw reach. Retain the slotted tube and leave yoke passage, pan indexing, stop/reinforcement proposals and firmware currently unchanged. Implementation and verification are recorded in cad/head/v2-mast-20261028/balance-tensioner-20261030/. No physical result or print release is implied.

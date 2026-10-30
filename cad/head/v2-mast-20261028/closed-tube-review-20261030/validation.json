@@ -1,0 +1,66 @@
+{
+  "status": "CAD REVIEW ONLY; not sliced or physically tested",
+  "source_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
+  "world_z": [
+    6,
+    150
+  ],
+  "od_mm": 20,
+  "bore_mm": 12,
+  "lower_inlet_throat_mm": [
+    10,
+    12
+  ],
+  "lower_inlet_max_world_z": [
+    23.2,
+    36.8
+  ],
+  "bolt_axis_world_z": 123,
+  "guard_min_wall_mm": 1.0,
+  "guard_wire_round_gauge_each_side_mm": 3.2,
+  "variants": {
+    "Closed_Tube": {
+      "valid_solid": true,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "solid_pla_g": 34.73,
+      "added_solid_pla_g": 4.24,
+      "home_collisions": [],
+      "2p84_square_gauge_overlap_mm3": [
+        0.0,
+        0.0
+      ]
+    },
+    "Closed_Tube_Bolt_Guard": {
+      "valid_solid": true,
+      "mesh_solid": true,
+      "mesh_non_manifold": false,
+      "solid_pla_g": 35.34,
+      "added_solid_pla_g": 4.86,
+      "home_collisions": [],
+      "2p84_square_gauge_overlap_mm3": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "limitations": [
+    "Guard is optional and divides the bore locally into two crescents; multiway connectors may not pass.",
+    "Actual harness count, connector clearance, abrasion, bridging and stiffness are untested.",
+    "No stiffness multiplier claimed and no load analysis performed.",
+    "Only saved home-pose assembly interference checked here; old head travel checks not rerun."
+  ],
+  "original_cad_unchanged": true,
+  "independent_saved_checks": {
+    "saved_native_single_valid_solid": true,
+    "source_hash_preserved": true,
+    "saved_height_144": true,
+    "full_upper_wire_path_-1": true,
+    "round_wire_path_-1": true,
+    "full_upper_wire_path_1": true,
+    "round_wire_path_1": true,
+    "rear_wall_restored": true,
+    "Closed_Tube_step_valid_solid": true,
+    "Closed_Tube_Bolt_Guard_step_valid_solid": true
+  }
+}

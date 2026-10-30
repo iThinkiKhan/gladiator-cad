@@ -1,0 +1,195 @@
+{
+  "status": "CAD revision; not sliced or physically tested",
+  "scope": [
+    "Tilt balance",
+    "Tensioner screw reach"
+  ],
+  "source_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
+  "payload_shift_rearward_mm": 2.5,
+  "receiver_relief_allowance_mm": 0.4,
+  "receiver_relief_removed_mm3": 273.5872,
+  "checks": {
+    "all_other_parts_geometry_preserved": true,
+    "GH44_four_holes_and_seats": [
+      {
+        "xz": [
+          -16,
+          -16
+        ],
+        "hole_overlap_mm3": 0.0,
+        "front_bearing_fraction": 1.0
+      },
+      {
+        "xz": [
+          -16,
+          16
+        ],
+        "hole_overlap_mm3": 0.0,
+        "front_bearing_fraction": 1.0
+      },
+      {
+        "xz": [
+          16,
+          -16
+        ],
+        "hole_overlap_mm3": 0.0,
+        "front_bearing_fraction": 1.0
+      },
+      {
+        "xz": [
+          16,
+          16
+        ],
+        "hole_overlap_mm3": 0.0,
+        "front_bearing_fraction": 1.0
+      }
+    ],
+    "tensioner_full_travel": [
+      {
+        "C_mm": 38,
+        "underhead_to_pad_mm": 7.5,
+        "head_gap_to_lug_mm": 12.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 39,
+        "underhead_to_pad_mm": 8.5,
+        "head_gap_to_lug_mm": 11.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 40,
+        "underhead_to_pad_mm": 9.5,
+        "head_gap_to_lug_mm": 10.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 41,
+        "underhead_to_pad_mm": 10.5,
+        "head_gap_to_lug_mm": 9.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 42,
+        "underhead_to_pad_mm": 11.5,
+        "head_gap_to_lug_mm": 8.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 43,
+        "underhead_to_pad_mm": 12.5,
+        "head_gap_to_lug_mm": 7.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 44,
+        "underhead_to_pad_mm": 13.5,
+        "head_gap_to_lug_mm": 6.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 45,
+        "underhead_to_pad_mm": 14.5,
+        "head_gap_to_lug_mm": 5.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 46,
+        "underhead_to_pad_mm": 15.5,
+        "head_gap_to_lug_mm": 4.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 47,
+        "underhead_to_pad_mm": 16.5,
+        "head_gap_to_lug_mm": 3.5,
+        "collisions": []
+      },
+      {
+        "C_mm": 48,
+        "underhead_to_pad_mm": 17.5,
+        "head_gap_to_lug_mm": 2.5,
+        "collisions": []
+      }
+    ],
+    "tensioner_driver_blockers": [],
+    "home_collisions": [],
+    "motion_collisions": [],
+    "motion_grid": {
+      "pan_deg": [
+        -20,
+        180,
+        20
+      ],
+      "tilt_deg": [
+        -38,
+        34,
+        2
+      ]
+    },
+    "fixed_obstacles_in_tilt_height_band": [
+      "Pan_Drive_Pulley",
+      "Pan_Belt_Reference"
+    ],
+    "carrier_to_yoke_min_sampled_mm": 0.6428,
+    "pan_vs_new_hardware_collisions": [],
+    "receiver_mesh": {
+      "solid": true,
+      "non_manifold": false,
+      "size_mm": [
+        54.0,
+        44.0,
+        43.65
+      ]
+    },
+    "baseline_file_unchanged": true
+  },
+  "limitations": [
+    "Mass and gravity moments are estimates using the previous CAD assumptions, not weighed payloads.",
+    "Harness flexibility, fastener fit, servo calibration, strength and print support still require physical checks.",
+    "Screw head envelope is conservative 6 mm diameter x3 mm; nut envelope 5.8 AF x2.4 mm. Verify actual stock.",
+    "No firmware limits, pan indexing, yoke passage, stop features, slotted tube or other printed geometry changed."
+  ],
+  "balance": {
+    "before": {
+      "tilting_mass_g": 104.921,
+      "tilting_com_ahead_of_pivot_mm": 21.594,
+      "level_holding_kgcm": 0.22656,
+      "head_mass_g": 164.204,
+      "head_com_ahead_of_mast_mm": 14.069
+    },
+    "after": {
+      "tilting_mass_g": 104.359,
+      "tilting_com_ahead_of_pivot_mm": 19.209,
+      "level_holding_kgcm": 0.20046,
+      "head_mass_g": 163.642,
+      "head_com_ahead_of_mast_mm": 12.522
+    },
+    "holding_moment_reduction_percent": 11.52
+  },
+  "reprint_parts": [
+    "GH44_Tilt_Receiver_Balanced"
+  ],
+  "hardware_change": "Replace M3x16 tensioner with M3x20; retain the current nut and carriage.",
+  "build_source_sha256": "b8a682ab90c64744aea4a9a7ab3b97e933624bd7dba623baa8d2d211bb7d60bf",
+  "independent_saved_checks": {
+    "baseline_hash_preserved": true,
+    "saved_receiver_single_valid_solid": true,
+    "Mast_Tube_v2_preserved": true,
+    "Neck_Main_preserved": true,
+    "Pan_Servo_Carriage_preserved": true,
+    "Pan_Drive_Pulley_preserved": true,
+    "Pan_Raised_Pedestal_preserved": true,
+    "Tilt_Yoke_preserved": true,
+    "GH44_Dual_Carrier_only_moved_2p5": true,
+    "ToF_Sensor_Frame_only_moved_2p5": true,
+    "Rear_Display_Frame_only_moved_2p5": true,
+    "Camera_Tray_only_moved_2p5": true,
+    "Camera_Cover_only_moved_2p5": true,
+    "tested_horn_interface_preserved": true,
+    "receiver_STEP_valid_single_solid": true,
+    "receiver_STEP_volume_matches": true,
+    "receiver_mesh_closed_manifold": true,
+    "mesh_volume_close_to_CAD": true
+  }
+}

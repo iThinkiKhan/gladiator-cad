@@ -1,0 +1,40 @@
+Receiver constructed; starting checks
+Static/hardware checks passed; checking motion
+Tilt checked -38
+Tilt checked -36
+Tilt checked -34
+Tilt checked -32
+Tilt checked -30
+Tilt checked -28
+Tilt checked -26
+Tilt checked -24
+Tilt checked -22
+Tilt checked -20
+Tilt checked -18
+Tilt checked -16
+Tilt checked -14
+Tilt checked -12
+Tilt checked -10
+Tilt checked -8
+Tilt checked -6
+Tilt checked -4
+Tilt checked -2
+Tilt checked 0
+Tilt checked 2
+Tilt checked 4
+Tilt checked 6
+Tilt checked 8
+Tilt checked 10
+Tilt checked 12
+Tilt checked 14
+Tilt checked 16
+Tilt checked 18
+Tilt checked 20
+Tilt checked 22
+Tilt checked 24
+Tilt checked 26
+Tilt checked 28
+Tilt checked 30
+Tilt checked 32
+Tilt checked 34
+BUILD PASSED {"before": {"tilting_mass_g": 104.921, "tilting_com_ahead_of_pivot_mm": 21.594, "level_holding_kgcm": 0.22656, "head_mass_g": 164.204, "head_com_ahead_of_mast_mm": 14.069}, "after": {"tilting_mass_g": 104.359, "tilting_com_ahead_of_pivot_mm": 19.209, "level_holding_kgcm": 0.20046, "head_mass_g": 163.642, "head_com_ahead_of_mast_mm": 12.522}, "holding_moment_reduction_percent": 11.52}

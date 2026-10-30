@@ -1,0 +1,518 @@
+{
+ "v2": [
+  {
+   "name": "Neck_Main",
+   "file": "v2__Neck_Main.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Servo_Carriage",
+   "file": "v2__Pan_Servo_Carriage.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Bearing_Lower",
+   "file": "v2__Pan_Bearing_Lower.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Bearing_Upper",
+   "file": "v2__Pan_Bearing_Upper.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Inner_Spacer",
+   "file": "v2__Pan_Inner_Spacer.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Circlip_Envelope",
+   "file": "v2__Pan_Circlip_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Rotor",
+   "file": "v2__Pan_Rotor.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Retainer",
+   "file": "v2__Pan_Retainer.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Raised_Pedestal",
+   "file": "v2__Pan_Raised_Pedestal.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Drive_Pulley",
+   "file": "v2__Pan_Drive_Pulley.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "SG90_Pan_Reference",
+   "file": "v2__SG90_Pan_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Horn_Reference",
+   "file": "v2__Pan_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Belt_Reference",
+   "file": "v2__Pan_Belt_Reference.stl",
+   "kind": "belt"
+  },
+  {
+   "name": "SG90_Tilt_Reference",
+   "file": "v2__SG90_Tilt_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Horn_Reference",
+   "file": "v2__Tilt_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Yoke",
+   "file": "v2__Tilt_Yoke.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Tilt_Pivot_Bolt",
+   "file": "v2__Tilt_Pivot_Bolt.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "GH44_Tilt_Receiver",
+   "file": "v2__GH44_Tilt_Receiver.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "GH44_Dual_Carrier",
+   "file": "v2__GH44_Dual_Carrier.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ToF_Sensor_Frame",
+   "file": "v2__ToF_Sensor_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Dual_ToF_Envelope",
+   "file": "v2__Dual_ToF_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Rear_Display_Frame",
+   "file": "v2__Rear_Display_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ST7789_Board",
+   "file": "v2__ST7789_Board.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Camera_Tray",
+   "file": "v2__Camera_Tray.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Camera_Cover",
+   "file": "v2__Camera_Cover.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ESP32_CAM_Reference",
+   "file": "v2__ESP32_CAM_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Rear_Hood",
+   "file": "v2__Rear_Hood.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Front_Left",
+   "file": "v2__Front_Left.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Front_Right",
+   "file": "v2__Front_Right.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Lens_Plate",
+   "file": "v2__Lens_Plate.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Fins_L",
+   "file": "v2__Ref_DrvV5_Fins_L.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Fins_R",
+   "file": "v2__Ref_DrvV5_Fins_R.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Board_L",
+   "file": "v2__Ref_DrvV5_Board_L.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Board_R",
+   "file": "v2__Ref_DrvV5_Board_R.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_UpperDeck",
+   "file": "v2__Ref_UpperDeck.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_MastBase",
+   "file": "v2__Ref_MastBase.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Mast_Tube_v2",
+   "file": "v2__Mast_Tube_v2.stl",
+   "kind": "changed"
+  }
+ ],
+ "v2_tilt": [
+  {
+   "name": "Neck_Main",
+   "file": "v2_tilt__Neck_Main.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Servo_Carriage",
+   "file": "v2_tilt__Pan_Servo_Carriage.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Bearing_Lower",
+   "file": "v2_tilt__Pan_Bearing_Lower.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Bearing_Upper",
+   "file": "v2_tilt__Pan_Bearing_Upper.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Inner_Spacer",
+   "file": "v2_tilt__Pan_Inner_Spacer.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Circlip_Envelope",
+   "file": "v2_tilt__Pan_Circlip_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Rotor",
+   "file": "v2_tilt__Pan_Rotor.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Retainer",
+   "file": "v2_tilt__Pan_Retainer.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Raised_Pedestal",
+   "file": "v2_tilt__Pan_Raised_Pedestal.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Pan_Drive_Pulley",
+   "file": "v2_tilt__Pan_Drive_Pulley.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "SG90_Pan_Reference",
+   "file": "v2_tilt__SG90_Pan_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Horn_Reference",
+   "file": "v2_tilt__Pan_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Belt_Reference",
+   "file": "v2_tilt__Pan_Belt_Reference.stl",
+   "kind": "belt"
+  },
+  {
+   "name": "SG90_Tilt_Reference",
+   "file": "v2_tilt__SG90_Tilt_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Horn_Reference",
+   "file": "v2_tilt__Tilt_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Yoke",
+   "file": "v2_tilt__Tilt_Yoke.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "Tilt_Pivot_Bolt",
+   "file": "v2_tilt__Tilt_Pivot_Bolt.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "GH44_Tilt_Receiver",
+   "file": "v2_tilt__GH44_Tilt_Receiver.stl",
+   "kind": "changed"
+  },
+  {
+   "name": "GH44_Dual_Carrier",
+   "file": "v2_tilt__GH44_Dual_Carrier.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ToF_Sensor_Frame",
+   "file": "v2_tilt__ToF_Sensor_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Dual_ToF_Envelope",
+   "file": "v2_tilt__Dual_ToF_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Rear_Display_Frame",
+   "file": "v2_tilt__Rear_Display_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ST7789_Board",
+   "file": "v2_tilt__ST7789_Board.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Camera_Tray",
+   "file": "v2_tilt__Camera_Tray.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Camera_Cover",
+   "file": "v2_tilt__Camera_Cover.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ESP32_CAM_Reference",
+   "file": "v2_tilt__ESP32_CAM_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Rear_Hood",
+   "file": "v2_tilt__Rear_Hood.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Front_Left",
+   "file": "v2_tilt__Front_Left.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Front_Right",
+   "file": "v2_tilt__Front_Right.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Lens_Plate",
+   "file": "v2_tilt__Lens_Plate.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Fins_L",
+   "file": "v2_tilt__Ref_DrvV5_Fins_L.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Fins_R",
+   "file": "v2_tilt__Ref_DrvV5_Fins_R.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Board_L",
+   "file": "v2_tilt__Ref_DrvV5_Board_L.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_DrvV5_Board_R",
+   "file": "v2_tilt__Ref_DrvV5_Board_R.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_UpperDeck",
+   "file": "v2_tilt__Ref_UpperDeck.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Ref_MastBase",
+   "file": "v2_tilt__Ref_MastBase.stl",
+   "kind": "context"
+  },
+  {
+   "name": "Mast_Tube_v2",
+   "file": "v2_tilt__Mast_Tube_v2.stl",
+   "kind": "changed"
+  }
+ ],
+ "v1": [
+  {
+   "name": "Neck_Main",
+   "file": "v1__Neck_Main.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Neck_Clamp_Cap",
+   "file": "v1__Neck_Clamp_Cap.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Servo_Carriage",
+   "file": "v1__Pan_Servo_Carriage.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Bearing_Lower",
+   "file": "v1__Pan_Bearing_Lower.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Bearing_Upper",
+   "file": "v1__Pan_Bearing_Upper.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Inner_Spacer",
+   "file": "v1__Pan_Inner_Spacer.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Circlip_Envelope",
+   "file": "v1__Pan_Circlip_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Rotor",
+   "file": "v1__Pan_Rotor.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Retainer",
+   "file": "v1__Pan_Retainer.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Raised_Pedestal",
+   "file": "v1__Pan_Raised_Pedestal.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Pan_Drive_Pulley",
+   "file": "v1__Pan_Drive_Pulley.stl",
+   "kind": "same"
+  },
+  {
+   "name": "SG90_Pan_Reference",
+   "file": "v1__SG90_Pan_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Horn_Reference",
+   "file": "v1__Pan_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Pan_Belt_Reference",
+   "file": "v1__Pan_Belt_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "SG90_Tilt_Reference",
+   "file": "v1__SG90_Tilt_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Horn_Reference",
+   "file": "v1__Tilt_Horn_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Tilt_Yoke",
+   "file": "v1__Tilt_Yoke.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Tilt_Pivot_Bolt",
+   "file": "v1__Tilt_Pivot_Bolt.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "GH44_Tilt_Receiver",
+   "file": "v1__GH44_Tilt_Receiver.stl",
+   "kind": "same"
+  },
+  {
+   "name": "GH44_Dual_Carrier",
+   "file": "v1__GH44_Dual_Carrier.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ToF_Sensor_Frame",
+   "file": "v1__ToF_Sensor_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Dual_ToF_Envelope",
+   "file": "v1__Dual_ToF_Envelope.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "ST7789_Board",
+   "file": "v1__ST7789_Board.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "Rear_Display_Frame",
+   "file": "v1__Rear_Display_Frame.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Camera_Tray",
+   "file": "v1__Camera_Tray.stl",
+   "kind": "same"
+  },
+  {
+   "name": "Camera_Cover",
+   "file": "v1__Camera_Cover.stl",
+   "kind": "same"
+  },
+  {
+   "name": "ESP32_CAM_Reference",
+   "file": "v1__ESP32_CAM_Reference.stl",
+   "kind": "hardware"
+  },
+  {
+   "name": "MastTube",
+   "file": "v1__MastTube.stl",
+   "kind": "same"
+  }
+ ]
+}

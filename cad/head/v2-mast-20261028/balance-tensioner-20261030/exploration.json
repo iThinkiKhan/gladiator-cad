@@ -1,0 +1,255 @@
+[
+  {
+    "shift": 2,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          11.85
+        ]
+      ],
+      "34": []
+    }
+  },
+  {
+    "shift": 4,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          0.06
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          36.68
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          0.9
+        ]
+      ],
+      "34": [
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          1.9
+        ]
+      ]
+    }
+  },
+  {
+    "shift": 6,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          12.86
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          59.1
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          23.54
+        ]
+      ],
+      "34": [
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          58.55
+        ]
+      ]
+    }
+  },
+  {
+    "shift": 8,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          96.65
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          72.29
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "SG90_Tilt_Reference",
+          0.06
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          71.89
+        ]
+      ],
+      "34": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          1.93
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          187.74
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          1.9
+        ],
+        [
+          "Rear_Display_Frame",
+          "Tilt_Yoke",
+          2.95
+        ]
+      ]
+    }
+  },
+  {
+    "shift": 10,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          12.0
+        ]
+      ],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          263.1
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          79.96
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "SG90_Tilt_Reference",
+          19.56
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          136.44
+        ]
+      ],
+      "34": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          7.58
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          336.18
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          54.63
+        ],
+        [
+          "Rear_Display_Frame",
+          "Tilt_Yoke",
+          22.18
+        ]
+      ]
+    }
+  },
+  {
+    "shift": 12,
+    "valid": true,
+    "solids": 1,
+    "hits": {
+      "0": [
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          24.0
+        ]
+      ],
+      "-38": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          472.01
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          85.72
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "SG90_Tilt_Reference",
+          145.01
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          180.12
+        ],
+        [
+          "ToF_Sensor_Frame",
+          "Tilt_Yoke",
+          11.83
+        ]
+      ],
+      "34": [
+        [
+          "GH44_Tilt_Receiver",
+          "SG90_Tilt_Reference",
+          55.1
+        ],
+        [
+          "GH44_Tilt_Receiver",
+          "Tilt_Yoke",
+          460.96
+        ],
+        [
+          "GH44_Dual_Carrier",
+          "Tilt_Yoke",
+          172.71
+        ],
+        [
+          "Rear_Display_Frame",
+          "Tilt_Yoke",
+          54.86
+        ]
+      ]
+    }
+  }
+]
