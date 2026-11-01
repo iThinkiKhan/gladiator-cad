@@ -1,0 +1,170 @@
+{
+ "base": "cad/head/v2-mast-20261028/Gladiator_Head_v2_Mast.FCStd",
+ "base_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
+ "script_sha256": "55d3a9f2b320f421950d624e8690264dbec43614dc4851f2998ad5606f1b80e2",
+ "steps": {
+  "1_balance_tensioner": {
+   "matches_balance_folder_xor_mm3_max": 0.0,
+   "parts_compared": 29
+  },
+  "2_pan_lead": {
+   "neck_xor_vs_pcb_floor_mm3": 0.0,
+   "tube_xor_vs_pcb_floor_mm3": 0.0,
+   "plug_path_hits": []
+  },
+  "3_solid_tube": {
+   "xor_vs_solid_tube_folder_mm3": 0.0,
+   "rear_wall_open_mm3": 0.0
+  },
+  "4_yoke_taper": {
+   "xor_vs_yoke_taper_folder_mm3": 0.0,
+   "added_mm3": 327.0
+  }
+ },
+ "checks": {
+  "home_collisions": [],
+  "tensioner_full_travel_collisions": [],
+  "motion_grid": {
+   "tilt_deg": [
+    -38,
+    34,
+    2
+   ],
+   "pan_deg": [
+    -20,
+    180,
+    20
+   ]
+  },
+  "motion_collisions": [],
+  "end_stops_mm3": {
+   "receiver_vs_yoke_at_-40": 0.702,
+   "camera_tray_vs_yoke_at_+36": 0.838
+  }
+ },
+ "print_parts": [
+  {
+   "file": "01_Neck_Main_PanLead.stl",
+   "part": "Neck_Main",
+   "orientation": "collar on the bed; supports ON (painted) under the servo-pad frame, flange and arm",
+   "size_mm": [
+    81.44,
+    92.44,
+    64.1
+   ],
+   "grams_solid_pla": 32.2,
+   "bed_chamfers": 0,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "d653de97bf9afeff5404eac18240bdd1308d0047df004487f2a0a6dbe40e2a87"
+  },
+  {
+   "file": "02_Mast_Tube_v2_Solid.stl",
+   "part": "Mast_Tube_v2",
+   "orientation": "upright, pin end on the bed; no support",
+   "size_mm": [
+    20.0,
+    20.0,
+    144.0
+   ],
+   "grams_solid_pla": 33.91,
+   "bed_chamfers": 2,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "1522b0e4903184323c83c7a4de0955e234aac8fdd252896be226b4f44f5ca706"
+  },
+  {
+   "file": "03_Pan_Raised_Pedestal.stl",
+   "part": "Pan_Raised_Pedestal",
+   "orientation": "base plate on the bed; supports ON under the top plate, none within 17 mm of the hub",
+   "size_mm": [
+    54.0,
+    43.0,
+    23.5
+   ],
+   "grams_solid_pla": 20.38,
+   "bed_chamfers": 6,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "6fead9472365d8bc5046e976795a4a5722805e5210e82dd6de7286637db80dcd",
+   "vs_v2_stl": {
+    "volume_diff_mm3": 0.0,
+    "bed_chamfers_v2": 6,
+    "bed_chamfers_now": 6,
+    "same_size": true
+   }
+  },
+  {
+   "file": "04_Tilt_Yoke_Tapered.stl",
+   "part": "Tilt_Yoke",
+   "orientation": "floor on the bed; no support",
+   "size_mm": [
+    60.0,
+    35.0,
+    70.0
+   ],
+   "grams_solid_pla": 16.0,
+   "bed_chamfers": 2,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "7ba3ee13b840e980cab45c9c758ee6bdd1d86e3c5ef2ae1562574e91f909e0e4"
+  },
+  {
+   "file": "05_GH44_Tilt_Receiver_Balanced.stl",
+   "part": "GH44_Tilt_Receiver",
+   "orientation": "GH44 face down, arms up; no support",
+   "size_mm": [
+    54.0,
+    44.0,
+    43.65
+   ],
+   "grams_solid_pla": 11.94,
+   "bed_chamfers": 4,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "e7eee198a1d03d1c533070cc524c4cb2857c0fddc87a7bfcedbac55375ee789a"
+  },
+  {
+   "file": "06_Pan_Drive_Pulley.stl",
+   "part": "Pan_Drive_Pulley",
+   "orientation": "horn plate on the bed; no support",
+   "size_mm": [
+    40.69,
+    40.69,
+    14.1
+   ],
+   "grams_solid_pla": 11.05,
+   "bed_chamfers": 2,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "5f24c6473b8865ff9195f55933e48b35afa9e7bd6ad1fac6187d2ef40f241a80",
+   "vs_v2_stl": {
+    "volume_diff_mm3": -12.22,
+    "bed_chamfers_v2": 1,
+    "bed_chamfers_now": 2,
+    "same_size": true
+   }
+  },
+  {
+   "file": "07_Pan_Servo_Carriage.stl",
+   "part": "Pan_Servo_Carriage",
+   "orientation": "top face on the bed, tensioner lug up; no support",
+   "size_mm": [
+    29.0,
+    59.96,
+    10.36
+   ],
+   "grams_solid_pla": 5.47,
+   "bed_chamfers": 2,
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "bfe8e0a643979cc0d20dbe2eb30a34995ac14e1ade1c09dfec3dba89529dc49c",
+   "vs_v2_stl": {
+    "volume_diff_mm3": 0.0,
+    "bed_chamfers_v2": 2,
+    "bed_chamfers_now": 2,
+    "same_size": true
+   }
+  }
+ ]
+}

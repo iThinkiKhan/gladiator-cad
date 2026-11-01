@@ -1,3 +1,5 @@
+> **CURRENT HEAD (2026-11-01): `release/`, built by `scripts/build_head_v2_release.py`.** The patch folders (balance-tensioner, pcb-floor, solid-tube, yoke-taper) are superseded; see `release/README.md`.
+
 > Current balance/tensioner revision (2026-10-30): see `balance-tensioner-20261030/README.md` and `Gladiator_Head_v2_Balanced_REVIEW.FCStd` there. This folder retains the preceding baseline.
 
 # Gladiator masthead v2 — DRAFT, 2026-10-28
