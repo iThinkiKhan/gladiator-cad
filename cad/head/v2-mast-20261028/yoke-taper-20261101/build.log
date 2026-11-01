@@ -1,0 +1,60 @@
+{
+ "source": "cad/head/v2-mast-20261028/balance-tensioner-20261030/Gladiator_Head_v2_Balanced.FCStd",
+ "tilt_parts": [
+  "Tilt_Horn_Reference",
+  "GH44_Tilt_Receiver",
+  "GH44_Dual_Carrier",
+  "ToF_Sensor_Frame",
+  "Dual_ToF_Envelope",
+  "Rear_Display_Frame",
+  "ST7789_Board",
+  "Camera_Tray",
+  "Camera_Cover",
+  "ESP32_CAM_Reference"
+ ],
+ "staged_stl_vs_cad": {
+  "stl_size": [
+   60.0,
+   35.0,
+   70.0
+  ],
+  "cad_size": [
+   60.0,
+   35.0,
+   70.0
+  ],
+  "stl_vol": 12576.4,
+  "cad_vol": 12580.7
+ },
+ "sanity_known_contacts": {
+  "receiver_at_-40_mm3": 0.7,
+  "camera_tray_at_+36_mm3": 0.84
+ },
+ "added_mm3": 327.0,
+ "new_contacts_from_tapers": [],
+ "closest_tilt_part_to_tapers_mm": {
+  "GH44_Tilt_Receiver": 0.5,
+  "Rear_Display_Frame": 1.0,
+  "GH44_Dual_Carrier": 7.1,
+  "Camera_Tray": 16.3
+ },
+ "new_overlap_with_other_parts": [],
+ "section_mm2": {
+  "pivot_tower": {
+   "old_at_junction": 30.1,
+   "new_at_junction": 88.6,
+   "new_3mm_lower": 58.6
+  },
+  "ear_plate": {
+   "old_at_junction": 18.1,
+   "new_at_junction": 59.2,
+   "new_3mm_lower": 41.2
+  }
+ },
+ "stl_closed": true,
+ "stl_sha256": "94ccec1b0cb3d3d8e1d3a5b710763983cfe6336b472ff6772f51ee2a8eb7cd47",
+ "mass_g_pla_solid_est": [
+  15.6,
+  16.01
+ ]
+}
