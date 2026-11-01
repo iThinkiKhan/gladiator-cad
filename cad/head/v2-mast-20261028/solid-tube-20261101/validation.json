@@ -1,0 +1,26 @@
+{
+ "source": "cad/head/v2-mast-20261028/pcb-floor-20261030/Gladiator_Head_v2_PCB_Floor.FCStd",
+ "volume_before_mm3": 24399.9,
+ "volume_after_mm3": 27361.5,
+ "slot_filled_mm3": 3485.0,
+ "top_window_removed_mm3": 523.4,
+ "top_window_world_z": [
+  90.0,
+  102.0
+ ],
+ "bottom_window_world_z": [
+  24,
+  36
+ ],
+ "rear_wall_open_mm3": 0.0,
+ "bottom_window_open_mm3": 402.9,
+ "top_window_open_mm3": 402.9,
+ "changes_outside_slot_and_window_mm3": 0.0,
+ "overlap_before_after_mm3": {},
+ "mass_g_pla_solid_est": [
+  30.26,
+  33.93
+ ],
+ "stl_closed": true,
+ "stl_sha256": "c115e84d26f7b539ecb93174c0943c1d0dc005ba35ede46a2d05755951e35763"
+}
