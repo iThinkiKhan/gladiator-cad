@@ -6,7 +6,9 @@ and applies every later change, in order, as numbered steps:
   2. Pan-servo lead path, neck + tube  (was pcb-floor-20261030; its rejected yoke PCB pocket is NOT applied)
   3. Solid tube, slot filled, top window (was solid-tube-20261101)
   4. Yoke 45-degree tapers            (was yoke-taper-20261101)
-  5. Screen frame v07: v06 + 2 standoff posts, 4 M2 inserts, for the 30 x 70 side board (replaces side-window-pcb-20261030)
+  5. Screen frame v07: v06 + 2 standoff posts, 4 M2 inserts, for the 30 x 70 side board (replaces side-window-pcb-20261030;
+     superseded by step 6, kept as the record)
+  6. Screen frame v08: v06 + camera-end post + screen-end pad, 4 M2 inserts, side board CUT to 30 x 61, flat on the rails
 Every print STL gets the bed chamfer (0.5 mm on hole edges on the bed, Jim 2026-10-15); the patch folders had
 dropped it for the neck, tube, yoke and receiver.
 
@@ -266,6 +268,77 @@ R['steps']['5_frame_v07_side_board'] = {
 assert not drv, drv
 print('step 5 ok', flush=True)
 
+# ============================================================ STEP 6: screen frame v08 = v06 + end posts, board CUT to 61 mm, flat on the rails
+# Jim 2026-11-02: cut the 30 x 70 board to the frame length rather than stand it off past the camera end (v07).
+# The board lies straight on the -X rail face, flush with the bezel face, and stops 0.2 mm short of the camera end of
+# the frame (nothing over the carrier or ToF, no standoff). v06 has a solid end post only at the screen end, 1.5 mm
+# below the rail face, and the camera end of the window is open: v08 adds a post filling the camera end of the window
+# and a pad bringing the screen-end post up to the rail face, 4 M2 inserts. Replaces the step 5 v07 frame and board.
+F06 = F0                                       # the v06 frame step 5 started from
+assert F06.Volume < S['Rear_Display_Frame'].Volume
+for n in ('Side_Board_30x70_Placeholder', 'Side_Board_Outer_Envelope'):
+    S.pop(n); GROUP.pop(n); tilt.remove(n)
+SB6_L = 61.0
+SB6_Y1 = fb.YMax; SB6_Y0 = SB6_Y1 - SB6_L      # factory edge at the screen end, cut edge at the camera end
+SB6_X1 = RX; SB6_X0 = SB6_X1 - SB_T            # inner face on the rail face
+# grid as on the uncut board (screen end is the factory edge, so the columns are where they were in step 5)
+gy = lambda k: SB_Y0 + MY + PITCH * (k - 1)    # column k, 1-based, counted on the uncut board from the camera end
+gz = lambda j: SB_Z0 + MZ + PITCH * (j - 1)    # row j, 1-based, from the bottom edge
+H6_COLS, H6_ROWS = (4, 24), (2, 9)             # rows 2 and 9 keep the screen-end holes clear of the factory corner holes
+holes6 = [(gy(k), gz(j)) for k in H6_COLS for j in H6_ROWS]
+for k in (6, 22):                              # the window is open at the first and last free column
+    assert not F06.isInside(V(RX + 2, gy(k), T.z), 0.01, True), k
+INS6_DEPTH, POST6_DEEP = 4.5, 5.5              # M2 insert 4 + 0.5 for the screw tip; 1.0 mm floor
+P6_X1 = RX + POST6_DEEP
+y6c, y6s = gy(H6_COLS[0]), gy(H6_COLS[1])
+cam6 = Part.makeBox(POST6_DEEP, y6c + POST_HALF - fb.YMin, RAIL_Z1 - RAIL_Z0, V(RX, fb.YMin, RAIL_Z0))
+scr6 = Part.makeBox(POST6_DEEP, fb.YMax - (y6s - POST_HALF), RAIL_Z1 - RAIL_Z0, V(RX, y6s - POST_HALF, RAIL_Z0))
+F6 = F06.fuse([cam6, scr6])
+for y, z in holes6:
+    F6 = F6.cut(Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)))
+F6 = F6.removeSplitter()
+assert F6.isValid() and len(F6.Solids) == 1
+assert abs(F6.BoundBox.XMin - RX) < 0.01 and abs(F6.BoundBox.YMin - fb.YMin) < 0.01 and abs(F6.BoundBox.YMax - fb.YMax) < 0.01
+for y, z in holes6:
+    ring = Part.makeCylinder(INS_D / 2 + 1.5, INS6_DEPTH + 1.0, V(RX, y, z), V(1, 0, 0)).cut(
+        Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)))
+    assert abs(F6.common(ring).Volume - ring.Volume) < 0.05, (y, z)    # 1.5 mm wall round and 1.0 mm floor behind
+# only the insert bores may remove v06 material (the screen-end bores go into the v06 end post)
+bores6 = Part.makeCompound([Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)) for y, z in holes6])
+removed6 = F06.cut(F6).Volume
+assert abs(removed6 - F06.common(bores6).Volume) < 0.01, removed6
+# the board must bear on frame all along both rails and on both posts (no gap like the v06 recessed end post)
+for y in (fb.YMin + 1, 113, fb.YMax - 1):
+    for z in (SB_Z0 + 1.5, SB_Z1 - 1.5):
+        assert F6.isInside(V(RX + 0.2, y, z), 0.01, True), (y, z)
+S['Rear_Display_Frame'] = F6
+sb6 = Part.makeBox(SB_T, SB6_L, SB_W, V(SB6_X0, SB6_Y0, SB_Z0))
+sb6 = sb6.cut(Part.makeCylinder(ACCESS_D / 2, 10, V(SB6_X0 - 5, T.y, T.z), V(1, 0, 0)))
+for y, z in holes6:
+    sb6 = sb6.cut(Part.makeCylinder(1.1, 10, V(SB6_X0 - 5, y, z), V(1, 0, 0)))
+S['Side_Board_30x61_Placeholder'] = sb6
+S['Side_Board_Outer_Envelope'] = Part.makeBox(6.0, SB6_L, SB_W, V(SB6_X0 - 6.0, SB6_Y0, SB_Z0))
+for n in ('Side_Board_30x61_Placeholder', 'Side_Board_Outer_Envelope'):
+    GROUP[n] = 'Hardware'; tilt.append(n)
+drv6 = sorted(n for n in S if n not in ('Tilt_Horn_Reference', 'Side_Board_Outer_Envelope') and ov(driver, S[n]) > .05)
+R['steps']['5_frame_v07_side_board']['superseded_by'] = '6_frame_v08_cut_board'
+R['steps']['6_frame_v08_cut_board'] = {
+    'board_mm': [SB6_L, SB_W, SB_T], 'board_world_Y': [round(SB6_Y0, 2), round(SB6_Y1, 2)], 'board_world_Z': [SB_Z0, SB_Z1],
+    'standoff_mm': 0.0, 'cut_mm_off_camera_end_of_70_board': round(70 - SB6_L, 2),
+    'board_gap_to_camera_end_of_frame_mm': round(SB6_Y0 - fb.YMin, 2),
+    'grid_assumed': R['steps']['5_frame_v07_side_board']['grid_assumed'],
+    'screw_holes_from_cut_end_and_bottom_edge_mm': [[round(y - SB6_Y0, 2), round(z - SB_Z0, 2)] for y, z in holes6],
+    'screw_holes_from_factory_end_mm': sorted({round(SB6_Y1 - y, 2) for y, _ in holes6}),
+    'screw_holes_grid_col_row_1based_uncut_count': [[k, j] for k in H6_COLS for j in H6_ROWS],
+    'free_columns_over_window_1based_uncut_count': [k for k in range(1, COLS + 1)
+                                                    if y6c + POST_HALF + 1.0 <= gy(k) <= y6s - POST_HALF - 1.0],
+    'access_hole_d_and_from_cut_end_bottom_mm': [ACCESS_D, round(T.y - SB6_Y0, 2), round(T.z - SB_Z0, 2)],
+    'inserts': '4 x M2 heat-set, bore %.1f x %.1f deep, from the board side; screws M2 x 6' % (INS_D, INS6_DEPTH),
+    'posts_added_mm3': round(F6.Volume - F06.Volume, 1), 'posts_added_g_pla': round((F6.Volume - F06.Volume) * 1.24e-3, 2),
+    'horn_screw_driver_blockers': drv6}
+assert not drv6, drv6
+print('step 6 ok', flush=True)
+
 # ============================================================ CHECKS on the finished assembly
 intent = {frozenset(('Pan_Bearing_Lower', 'Neck_Main')), frozenset(('Pan_Bearing_Upper', 'Neck_Main'))}
 movers = set(tilt + pan + fixed)
@@ -395,7 +468,7 @@ PRINT = [('01_Neck_Main_PanLead', 'Neck_Main', 'collar on the bed; supports ON (
          ('05_GH44_Tilt_Receiver_Balanced', 'GH44_Tilt_Receiver', 'GH44 face down, arms up; no support'),
          ('06_Pan_Drive_Pulley', 'Pan_Drive_Pulley', 'horn plate on the bed; no support'),
          ('07_Pan_Servo_Carriage', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
-         ('08_Screen_Frame_v07_SideBoard', 'Rear_Display_Frame', 'bezel face down, as the v06 frame')]
+         ('08_Screen_Frame_v08_CutBoard', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
 BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley', 'Pan_Servo_Carriage'}   # unchanged since v2: must match the v2 STLs
 man = []
 for fname, n, how in PRINT:

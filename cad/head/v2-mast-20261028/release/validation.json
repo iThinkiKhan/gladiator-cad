@@ -1,7 +1,7 @@
 {
  "base": "cad/head/v2-mast-20261028/Gladiator_Head_v2_Mast.FCStd",
  "base_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
- "script_sha256": "e03ac4621a5185a7ff0a8ca72f82646640e9d4c88ff3218b5033f88b696c7118",
+ "script_sha256": "f163d52918923bf617da858f89f2d10457823af46db5fbf9c63c90cea28ae246",
  "steps": {
   "1_balance_tensioner": {
    "matches_balance_folder_xor_mm3_max": 0.0,
@@ -81,6 +81,94 @@
    "inserts": "4 x M2 heat-set, bore 2.8 x 4.6 deep, from the board side; screws M2 x 6",
    "posts_added_mm3": 4165.2,
    "posts_added_g_pla": 5.16,
+   "horn_screw_driver_blockers": [],
+   "superseded_by": "6_frame_v08_cut_board"
+  },
+  "6_frame_v08_cut_board": {
+   "board_mm": [
+    61.0,
+    30.0,
+    1.6
+   ],
+   "board_world_Y": [
+    86.7,
+    147.7
+   ],
+   "board_world_Z": [
+    232.5,
+    262.5
+   ],
+   "standoff_mm": 0.0,
+   "cut_mm_off_camera_end_of_70_board": 9.0,
+   "board_gap_to_camera_end_of_frame_mm": 0.2,
+   "grid_assumed": "10 x 24 holes at 2.54, centred: first column 5.79 from each end, first row 3.57 from each long edge",
+   "screw_holes_from_cut_end_and_bottom_edge_mm": [
+    [
+     4.41,
+     6.11
+    ],
+    [
+     4.41,
+     23.89
+    ],
+    [
+     55.21,
+     6.11
+    ],
+    [
+     55.21,
+     23.89
+    ]
+   ],
+   "screw_holes_from_factory_end_mm": [
+    5.79,
+    56.59
+   ],
+   "screw_holes_grid_col_row_1based_uncut_count": [
+    [
+     4,
+     2
+    ],
+    [
+     4,
+     9
+    ],
+    [
+     24,
+     2
+    ],
+    [
+     24,
+     9
+    ]
+   ],
+   "free_columns_over_window_1based_uncut_count": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+   ],
+   "access_hole_d_and_from_cut_end_bottom_mm": [
+    6.0,
+    26.3,
+    15.0
+   ],
+   "inserts": "4 x M2 heat-set, bore 2.8 x 4.5 deep, from the board side; screws M2 x 6",
+   "posts_added_mm3": 1633.7,
+   "posts_added_g_pla": 2.03,
    "horn_screw_driver_blockers": []
   }
  },
@@ -230,19 +318,19 @@
    }
   },
   {
-   "file": "08_Screen_Frame_v07_SideBoard.stl",
+   "file": "08_Screen_Frame_v08_CutBoard.stl",
    "part": "Rear_Display_Frame",
-   "orientation": "bezel face down, as the v06 frame",
+   "orientation": "bezel face down, as the v06 frame; no support",
    "size_mm": [
-    82.0,
+    77.0,
     44.0,
     61.2
    ],
-   "grams_solid_pla": 31.91,
+   "grams_solid_pla": 28.77,
    "bed_chamfers": "v06 own",
    "mesh_closed": true,
    "fits_220x220x250": true,
-   "sha256": "eea1921edfdf1f9ff8a58f39cf03f33a9e0870d1a11f8b91e4434cf17927570f"
+   "sha256": "49f5641dc77f02c54cfd9a1620207ab7021d091648541996c9161c76510d5def"
   }
  ]
 }
