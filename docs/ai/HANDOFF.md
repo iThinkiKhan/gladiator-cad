@@ -1,4 +1,33 @@
+## Camera case v4 plug-clip test coupon - 2026-11-01 (Claude)
+
+Jim unsure about the v4 Dupont plug clips; asked for a coupon. cad/head/camera-service-v4-20261031/clip-coupon-20261101: 3 clips (pocket 2.56/2.66/2.76, 1/2/3 notches; 02 = v4 clip) + bottom-of-tray coupon (pads, 4 board seats, wire exits). STLs + START_HERE + preview staged in ~/3D-Printer/Incoming/Gladiator_CameraClipCoupon_20261101 for Jim to slice; no G-code. Not printed; awaiting his fit result. Also (31 Oct): camera firmware for the flash-LED spotlight written on the PC (C:/PlatformIO/Gladiator, CAM masthead-1.3.0 / C6 gateway-2.4.10), built, not flashed.
+
 # Current Handoff
+
+## Masthead v2 print set staged for Jim to slice - 2026-10-31 (Claude)
+
+Jim: print the new mast and head, camera case left off. 7 grey STLs (print orientation) + plate_preview.png + START_HERE.txt
+in cad-lab ~/3D-Printer/Incoming/Gladiator_Masthead_v2_20261031/: Neck_Main + Mast_Tube_v2 with the pan-lead window
+(pcb-floor-20261030), Pan_Raised_Pedestal, plain v2 Tilt_Yoke, GH44_Tilt_Receiver_Balanced, Pan_Drive_Pulley,
+Pan_Servo_Carriage. Tensioner M3x20. Jim slices himself; no G-code made. Nothing of v2 printed yet.
+
+## Camera case v4: flash-LED window + Dupont plug clips - 2026-10-31 (Claude)
+
+Jim: use the ESP32-CAM flash LED as an aimable spotlight; plugs on the back of the board keep coming off. DRAFT
+`cad/head/camera-service-v4-20261031/` (v3 + v4 patches on the v2 generator; v3 folder untouched). Cover gets a 6.3 x 6.6
+window over the GPIO4 LED with a light tube to 0.33 mm above it (beam cut-off ~42 deg, centre-weighted). Two identical
+printed plug clips bind each 8-pin row of single Duponts into a block, rear comb lanes 1.74 mm route wires outward; 5 floor
+pads 0.4 mm behind the clips stop the plugs backing off. All v3 checks + LED/clip checks pass; head fit same as v3. NOT
+printed or sliced. LED needs firmware: cam main.cpp holds GPIO4 low (no PWM yet). Plug stack height (2.66 + 14.0) unmeasured.
+
+## Camera case v3: cover on M2 heat-set inserts - 2026-10-30 (Claude)
+
+Jim: secure the camera cover with M2 heat-sets, improve what else we can (wiring access already better in v2). DRAFT
+`cad/head/camera-service-v3-20261030/` (patches the v2 generator). 2 x M2x6 into inserts in the tray lug tops (2.8 x 4.0
+upright + 2.2 tip relief, M2x8 fits) replace M3 screws + side nuts; lugs R4.4->3.6 (about 0.9 g lighter); snap bumps hold the
+board with the cover off; bed chamfers on cover holes and lens hole. All v2 checks pass; also swapped into the Codex
+balanced head: clear over tilt -38..34 / pan -20..180, first contact 36 down tray/yoke as v2. NOT printed or sliced; v2
+mast print set still lists the v2 STLs. Launcher: Gladiator Camera v3 - Review.
 
 ## CURRENT head v2: balance and tensioner - 2026-10-30 (Codex)
 
@@ -545,3 +574,5 @@ coupon or print initiated. Preserve backups and concurrent agents' work.
 User requested an outer body to conceal wiring and finish Gladiator, retaining exposed masthead/heatsinks and allowing exterior antenna relocation. Isolated review model: cad/enclosure/concept-20261013/README.md. Three angular panels, roof Z108, main width97, shoulders153, Y-32..148. Includes current chassis geometry, current oriented v05 head, tray v5, INA cassette v2, switch v1b. Existing CAD sources untouched. Valid native and STEP shell reopen, three single solids, zero detected static volume intersections against selected modeled hardware. Not a print release; no manufacturing meshes or print job.
 
 Next: user style feedback and whether wire loops can be rerouted. Actual harness/connector clearance, panel fasteners/registers/removal sweeps, dynamic tracks/head, SMA mounting-land thickness/pigtail reach, ventilation/temperature and print orientation remain open. Source hashes and explicit limits in validation.json. Do not silently treat the proposed dimensions as measurements. Files also copied to Storage/Projects/Gladiator/enclosure-concept-20261013.
+
+- 2026-11-01 (Jim): mast tube made SOLID - rear lay-in slot removed, bottom wire window (Z24-36, +Y) kept, matching top window added (Z90-102, +Y, inside the body under the top panel). cad/head/v2-mast-20261028/solid-tube-20261101/ (build_solid_tube.py, validation.json). Staged as 02_Mast_Tube_v2_Solid.stl in ~/3D-Printer/Incoming/Gladiator_Masthead_v2_20261031; slotted STL moved to superseded_20261101/. Not committed.
