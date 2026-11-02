@@ -121,5 +121,20 @@
    "bed_chamfers_now": 2,
    "same_size": true
   }
+ },
+ {
+  "file": "08_Screen_Frame_v07_SideBoard.stl",
+  "part": "Rear_Display_Frame",
+  "orientation": "bezel face down, as the v06 frame",
+  "size_mm": [
+   82.0,
+   44.0,
+   61.2
+  ],
+  "grams_solid_pla": 31.91,
+  "bed_chamfers": "v06 own",
+  "mesh_closed": true,
+  "fits_220x220x250": true,
+  "sha256": "eea1921edfdf1f9ff8a58f39cf03f33a9e0870d1a11f8b91e4434cf17927570f"
  }
 ]

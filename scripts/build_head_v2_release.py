@@ -6,13 +6,14 @@ and applies every later change, in order, as numbered steps:
   2. Pan-servo lead path, neck + tube  (was pcb-floor-20261030; its rejected yoke PCB pocket is NOT applied)
   3. Solid tube, slot filled, top window (was solid-tube-20261101)
   4. Yoke 45-degree tapers            (was yoke-taper-20261101)
+  5. Screen frame v07: v06 + 2 standoff posts, 4 M2 inserts, for the 30 x 70 side board (replaces side-window-pcb-20261030)
 Every print STL gets the bed chamfer (0.5 mm on hole edges on the bed, Jim 2026-10-15); the patch folders had
 dropped it for the neck, tube, yoke and receiver.
 
 FUTURE CHANGES GO HERE AS A NEW STEP, NOT A NEW FOLDER.
 
 Run on cad-lab:  python3 scripts/build_head_v2_release.py [--quick]   (--quick skips the long motion sweep)
-Output: cad/head/v2-mast-20261028/release/ (assembly FCStd + STEP, 7 print STLs, validation.json, MANIFEST.json)
+Output: cad/head/v2-mast-20261028/release/ (assembly FCStd + STEP, 8 print STLs, validation.json, MANIFEST.json)
 """
 import sys, os, json, math, hashlib
 sys.path.append('/usr/lib/freecad/lib')
@@ -199,6 +200,72 @@ R['steps']['4_yoke_taper'] = {'xor_vs_yoke_taper_folder_mm3': round(xor(Y1, ref)
 assert R['steps']['4_yoke_taper']['xor_vs_yoke_taper_folder_mm3'] < 0.01
 print('step 4 ok', flush=True)
 
+# ============================================================ STEP 5: screen frame v07 = v06 + standoff posts for the side board
+# Jim 2026-11-02: screw his 30 x 70 perfboard straight onto the screen frame, uncut, no clamp bars.
+# Two solid posts on the -X rail face (one at each end of the side window) stand the board 5 mm off the frame;
+# 2 M2 heat-set inserts in each. The board ends level with the bezel face and overhangs the camera end.
+F0 = S['Rear_Display_Frame']; fb = F0.BoundBox
+RX = fb.XMin                                   # outer face of the -X rail
+assert abs(RX - 1.0) < 0.01 and abs(fb.YMin - 86.5) < 0.01 and abs(fb.YMax - 147.7) < 0.01, fb
+RAIL_Z0, RAIL_Z1 = T.z - 21.5, T.z + 21.5      # rails 226..235.5 and 259.5..269 (v06 RAIL_DZ0/1 = 12/21.5)
+for z in (T.z - 17, T.z + 17):                 # rails are solid where the posts join them
+    assert F0.isInside(V(RX + 2, 100, z), 0.01, True) and F0.isInside(V(RX + 2, 140, z), 0.01, True)
+assert not F0.isInside(V(RX + 2, 110, T.z), 0.01, True)   # the side window is open
+SB_L, SB_W, SB_T, STAND = 70.0, 30.0, 1.6, 5.0
+PITCH, COLS, ROWS = 2.54, 24, 10               # usual 30 x 70 perfboard grid, assumed centred on the board
+MY, MZ = (SB_L - (COLS - 1) * PITCH) / 2, (SB_W - (ROWS - 1) * PITCH) / 2
+SB_Y1 = fb.YMax; SB_Y0 = SB_Y1 - SB_L          # level with the bezel face; overhangs the camera end
+SB_Z0, SB_Z1 = T.z - SB_W / 2, T.z + SB_W / 2
+SB_X1 = RX - STAND; SB_X0 = SB_X1 - SB_T
+HOLE_COLS, HOLE_ROWS = (3, 23), (0, ROWS - 1)  # 4th and last column from the camera end, outer rows
+holes = [(SB_Y0 + MY + PITCH * k, SB_Z0 + MZ + PITCH * j) for k in HOLE_COLS for j in HOLE_ROWS]
+INS_D, INS_DEPTH = 2.8, 4.6                    # M2 insert 4 long + 0.6 for the M2 x 6 screw tip; 0.4 floor left
+y_cam, y_scr = holes[0][0], holes[2][0]
+POST_HALF = 3.5
+cam_post = Part.makeBox(STAND, y_cam + POST_HALF - fb.YMin, RAIL_Z1 - RAIL_Z0, V(SB_X1, fb.YMin, RAIL_Z0))
+# 45 deg taper on the bezel side of the camera post: it faces the bed when the frame prints bezel-down
+tri = Part.Face(Part.makePolygon([V(SB_X1, y_cam + POST_HALF, RAIL_Z0), V(RX, y_cam + POST_HALF, RAIL_Z0),
+                                  V(RX, y_cam + POST_HALF + STAND, RAIL_Z0), V(SB_X1, y_cam + POST_HALF, RAIL_Z0)]))
+cam_post = cam_post.fuse(tri.extrude(V(0, 0, RAIL_Z1 - RAIL_Z0)))
+scr_post = Part.makeBox(STAND, fb.YMax - (y_scr - POST_HALF), RAIL_Z1 - RAIL_Z0, V(SB_X1, y_scr - POST_HALF, RAIL_Z0))
+F1 = F0.fuse([cam_post, scr_post])
+for y, z in holes:
+    F1 = F1.cut(Part.makeCylinder(INS_D / 2, INS_DEPTH, V(SB_X1, y, z), V(1, 0, 0)))
+F1 = F1.removeSplitter()
+assert F1.isValid() and len(F1.Solids) == 1
+for y, z in holes:                             # every insert sits in solid post with at least 1.5 mm of wall
+    ring = Part.makeCylinder(INS_D / 2 + 1.5, INS_DEPTH, V(SB_X1, y, z), V(1, 0, 0)).cut(
+        Part.makeCylinder(INS_D / 2, INS_DEPTH, V(SB_X1, y, z), V(1, 0, 0)))
+    assert abs(F1.common(ring).Volume - ring.Volume) < 0.05, (y, z)
+removed = F0.cut(F1).Volume                   # nothing of the v06 frame is cut away (bores stay inside the posts)
+assert removed < 0.01, removed
+S['Rear_Display_Frame'] = F1
+ACCESS_D = 6.0                                 # screwdriver to the tilt horn screw, on the tilt axis
+sb = Part.makeBox(SB_T, SB_L, SB_W, V(SB_X0, SB_Y0, SB_Z0))
+sb = sb.cut(Part.makeCylinder(ACCESS_D / 2, 10, V(SB_X0 - 5, T.y, T.z), V(1, 0, 0)))
+for y, z in holes:
+    sb = sb.cut(Part.makeCylinder(1.1, 10, V(SB_X0 - 5, y, z), V(1, 0, 0)))
+S['Side_Board_30x70_Placeholder'] = sb
+# outside face: solder joints, M2 pan heads (3.8 x 1.6) and a margin, 6 mm deep
+S['Side_Board_Outer_Envelope'] = Part.makeBox(6.0, SB_L, SB_W, V(SB_X0 - 6.0, SB_Y0, SB_Z0))
+for n in ('Side_Board_30x70_Placeholder', 'Side_Board_Outer_Envelope'):
+    GROUP[n] = 'Hardware'; tilt.append(n)
+driver = Part.makeCylinder(1.6, 60, V(-40, T.y, T.z), V(1, 0, 0))
+drv = sorted(n for n in S if n not in ('Tilt_Horn_Reference', 'Side_Board_Outer_Envelope') and ov(driver, S[n]) > .05)
+R['steps']['5_frame_v07_side_board'] = {
+    'board_mm': [SB_L, SB_W, SB_T], 'board_world_Y': [round(SB_Y0, 2), round(SB_Y1, 2)], 'board_world_Z': [SB_Z0, SB_Z1],
+    'standoff_mm': STAND, 'board_overhang_past_camera_end_of_frame_mm': round(fb.YMin - SB_Y0, 2),
+    'grid_assumed': '%d x %d holes at %.2f, centred: first column %.2f from each end, first row %.2f from each long edge'
+                    % (ROWS, COLS, PITCH, MY, MZ),
+    'screw_holes_from_camera_end_and_bottom_edge_mm': [[round(y - SB_Y0, 2), round(z - SB_Z0, 2)] for y, z in holes],
+    'screw_holes_grid_col_row_1based': [[k + 1, j + 1] for k in HOLE_COLS for j in HOLE_ROWS],
+    'access_hole_d_and_from_camera_end_bottom_mm': [ACCESS_D, round(T.y - SB_Y0, 2), round(T.z - SB_Z0, 2)],
+    'inserts': '4 x M2 heat-set, bore %.1f x %.1f deep, from the board side; screws M2 x 6' % (INS_D, INS_DEPTH),
+    'posts_added_mm3': round(F1.Volume - F0.Volume, 1), 'posts_added_g_pla': round((F1.Volume - F0.Volume) * 1.24e-3, 2),
+    'horn_screw_driver_blockers': drv}
+assert not drv, drv
+print('step 5 ok', flush=True)
+
 # ============================================================ CHECKS on the finished assembly
 intent = {frozenset(('Pan_Bearing_Lower', 'Neck_Main')), frozenset(('Pan_Bearing_Upper', 'Neck_Main'))}
 movers = set(tilt + pan + fixed)
@@ -316,6 +383,8 @@ def pose(n, s):
         s.rotate(V(), V(0, 0, 1), 45); s.rotate(V(), V(1, 0, 0), 180)
     elif n == 'Pan_Drive_Pulley':
         s.rotate(V(), V(1, 0, 0), 180)
+    elif n == 'Rear_Display_Frame':
+        s.rotate(V(), V(1, 0, 0), -90)          # bezel face (+Y) down, as the v06 frame
     b_ = s.BoundBox; s.translate(V(-b_.XMin, -b_.YMin, -b_.ZMin)); return s
 
 
@@ -325,11 +394,13 @@ PRINT = [('01_Neck_Main_PanLead', 'Neck_Main', 'collar on the bed; supports ON (
          ('04_Tilt_Yoke_Tapered', 'Tilt_Yoke', 'floor on the bed; no support'),
          ('05_GH44_Tilt_Receiver_Balanced', 'GH44_Tilt_Receiver', 'GH44 face down, arms up; no support'),
          ('06_Pan_Drive_Pulley', 'Pan_Drive_Pulley', 'horn plate on the bed; no support'),
-         ('07_Pan_Servo_Carriage', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support')]
+         ('07_Pan_Servo_Carriage', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
+         ('08_Screen_Frame_v07_SideBoard', 'Rear_Display_Frame', 'bezel face down, as the v06 frame')]
 BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley', 'Pan_Servo_Carriage'}   # unchanged since v2: must match the v2 STLs
 man = []
 for fname, n, how in PRINT:
-    s, nch = bed_chamfer(pose(n, S[n]))
+    # the v06 frame already has its own bed chamfers on the 4 screen pilots: leave its geometry as it is
+    s, nch = (pose(n, S[n]), 'v06 own') if n == 'Rear_Display_Frame' else bed_chamfer(pose(n, S[n]))
     assert s.isValid() and len(s.Solids) == 1, n
     path = OUT / 'stl' / (fname + '.stl')
     MeshPart.meshFromShape(Shape=s, LinearDeflection=LIN, AngularDeflection=ANG, Relative=False).write(str(path))

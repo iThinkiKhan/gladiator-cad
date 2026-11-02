@@ -1,7 +1,7 @@
 {
  "base": "cad/head/v2-mast-20261028/Gladiator_Head_v2_Mast.FCStd",
  "base_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
- "script_sha256": "55d3a9f2b320f421950d624e8690264dbec43614dc4851f2998ad5606f1b80e2",
+ "script_sha256": "e03ac4621a5185a7ff0a8ca72f82646640e9d4c88ff3218b5033f88b696c7118",
  "steps": {
   "1_balance_tensioner": {
    "matches_balance_folder_xor_mm3_max": 0.0,
@@ -19,6 +19,69 @@
   "4_yoke_taper": {
    "xor_vs_yoke_taper_folder_mm3": 0.0,
    "added_mm3": 327.0
+  },
+  "5_frame_v07_side_board": {
+   "board_mm": [
+    70.0,
+    30.0,
+    1.6
+   ],
+   "board_world_Y": [
+    77.7,
+    147.7
+   ],
+   "board_world_Z": [
+    232.5,
+    262.5
+   ],
+   "standoff_mm": 5.0,
+   "board_overhang_past_camera_end_of_frame_mm": 8.8,
+   "grid_assumed": "10 x 24 holes at 2.54, centred: first column 5.79 from each end, first row 3.57 from each long edge",
+   "screw_holes_from_camera_end_and_bottom_edge_mm": [
+    [
+     13.41,
+     3.57
+    ],
+    [
+     13.41,
+     26.43
+    ],
+    [
+     64.21,
+     3.57
+    ],
+    [
+     64.21,
+     26.43
+    ]
+   ],
+   "screw_holes_grid_col_row_1based": [
+    [
+     4,
+     1
+    ],
+    [
+     4,
+     10
+    ],
+    [
+     24,
+     1
+    ],
+    [
+     24,
+     10
+    ]
+   ],
+   "access_hole_d_and_from_camera_end_bottom_mm": [
+    6.0,
+    35.3,
+    15.0
+   ],
+   "inserts": "4 x M2 heat-set, bore 2.8 x 4.6 deep, from the board side; screws M2 x 6",
+   "posts_added_mm3": 4165.2,
+   "posts_added_g_pla": 5.16,
+   "horn_screw_driver_blockers": []
   }
  },
  "checks": {
@@ -165,6 +228,21 @@
     "bed_chamfers_now": 2,
     "same_size": true
    }
+  },
+  {
+   "file": "08_Screen_Frame_v07_SideBoard.stl",
+   "part": "Rear_Display_Frame",
+   "orientation": "bezel face down, as the v06 frame",
+   "size_mm": [
+    82.0,
+    44.0,
+    61.2
+   ],
+   "grams_solid_pla": 31.91,
+   "bed_chamfers": "v06 own",
+   "mesh_closed": true,
+   "fits_220x220x250": true,
+   "sha256": "eea1921edfdf1f9ff8a58f39cf03f33a9e0870d1a11f8b91e4434cf17927570f"
   }
  ]
 }
