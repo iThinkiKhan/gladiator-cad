@@ -8,7 +8,8 @@ and applies every later change, in order, as numbered steps:
   4. Yoke 45-degree tapers            (was yoke-taper-20261101)
   5. Screen frame v07: v06 + 2 standoff posts, 4 M2 inserts, for the 30 x 70 side board (replaces side-window-pcb-20261030;
      superseded by step 6, kept as the record)
-  6. Screen frame v08: v06 + camera-end post + screen-end pad, 4 M2 inserts, side board CUT to 30 x 61, flat on the rails
+  6. Screen frame v08: v06 + camera-end post + screen-end pad, 4 M2 inserts, side board CUT to 30 x 61, flat on the rails (superseded by step 7)
+  7. Screen frame = v06 + 4 M2 insert pockets for Jim's 40 x 60 side board (centred, holes 2 mm in from the edges)
 Every print STL gets the bed chamfer (0.5 mm on hole edges on the bed, Jim 2026-10-15); the patch folders had
 dropped it for the neck, tube, yoke and receiver.
 
@@ -339,6 +340,56 @@ R['steps']['6_frame_v08_cut_board'] = {
 assert not drv6, drv6
 print('step 6 ok', flush=True)
 
+# ============================================================ STEP 7: v06 frame + 4 insert pockets for Jim's 40 x 60 board
+# Jim 2026-11-02: a 40 x 60 perfboard fits the v06 frame as it is, centred on the frame, flat on the -X rail face.
+# Its factory corner holes are 2.0 mm in from each edge. Pressing inserts into the printed frame without pockets
+# filled them with plastic, so this reprints v06 with 4 M2 heat-set pockets under those holes. Nothing else changes.
+for n in ('Side_Board_30x61_Placeholder', 'Side_Board_Outer_Envelope'):
+    S.pop(n); GROUP.pop(n); tilt.remove(n)
+B7_L, B7_W, B7_HOLE_IN = 60.0, 40.0, 2.0
+B7_Y0 = (fb.YMin + fb.YMax) / 2 - B7_L / 2; B7_Y1 = B7_Y0 + B7_L      # centred on the frame
+B7_Z0, B7_Z1 = T.z - B7_W / 2, T.z + B7_W / 2                          # centred on the frame (= tilt axis)
+assert abs((fb.ZMin + fb.ZMax) / 2 - T.z) < 0.01
+B7_X1 = RX; B7_X0 = RX - SB_T
+holes7 = [(y, z) for y in (B7_Y0 + B7_HOLE_IN, B7_Y1 - B7_HOLE_IN) for z in (B7_Z0 + B7_HOLE_IN, B7_Z1 - B7_HOLE_IN)]
+B7_BORE = 4.5                                  # M2 insert 4 long + 0.5 for the plastic it pushes ahead
+bores7 = [Part.makeCylinder(INS_D / 2, B7_BORE, V(RX, y, z), V(1, 0, 0)) for y, z in holes7]
+for b_ in bores7:
+    assert abs(F06.common(b_).Volume - b_.Volume) < 0.05      # every pocket fully in v06 material
+F7 = F06
+for b_ in bores7:
+    F7 = F7.cut(b_)
+F7 = F7.removeSplitter()
+assert F7.isValid() and len(F7.Solids) == 1
+walls7 = []
+for (y, z), b_ in zip(holes7, bores7):
+    wall = 0.0
+    for w in (2.0, 1.5, 1.2, 1.0, 0.8):
+        ring = Part.makeCylinder(INS_D / 2 + w, B7_BORE, V(RX, y, z), V(1, 0, 0)).cut(b_)
+        if abs(F06.common(ring).Volume - ring.Volume) < 0.05:
+            wall = w; break
+    walls7.append(wall)
+S['Rear_Display_Frame'] = F7
+sb7 = Part.makeBox(SB_T, B7_L, B7_W, V(B7_X0, B7_Y0, B7_Z0))
+for y, z in holes7:
+    sb7 = sb7.cut(Part.makeCylinder(1.0, 10, V(B7_X0 - 5, y, z), V(1, 0, 0)))
+S['Side_Board_40x60_Placeholder'] = sb7
+S['Side_Board_Outer_Envelope'] = Part.makeBox(6.0, B7_L, B7_W, V(B7_X0 - 6.0, B7_Y0, B7_Z0))
+for n in ('Side_Board_40x60_Placeholder', 'Side_Board_Outer_Envelope'):
+    GROUP[n] = 'Hardware'; tilt.append(n)
+R['steps']['6_frame_v08_cut_board']['superseded_by'] = '7_v06_pockets_40x60_board'
+R['steps']['7_v06_pockets_40x60_board'] = {
+    'frame': 'v06 + 4 M2 heat-set pockets (Jim reprints it)',
+    'board_mm': [B7_L, B7_W, SB_T], 'board_world_Y': [round(B7_Y0, 2), round(B7_Y1, 2)], 'board_world_Z': [B7_Z0, B7_Z1],
+    'board_holes_in_from_each_edge_mm': B7_HOLE_IN,
+    'pockets_world_YZ': [[round(y, 2), round(z, 2)] for y, z in holes7],
+    'pockets_from_camera_end_of_frame_mm': sorted({round(y - fb.YMin, 2) for y, _ in holes7}),
+    'pockets_from_bottom_of_frame_mm': sorted({round(z - fb.ZMin, 2) for _, z in holes7}),
+    'pocket': 'dia %.1f x %.1f deep, from the board side' % (INS_D, B7_BORE),
+    'pocket_min_wall_mm': walls7, 'removed_mm3': round(F06.Volume - F7.Volume, 2),
+    'hardware': '4 x M2 heat-set inserts (4 long) + 4 x M2 x 5 (or M2 x 6)'}
+print('step 7 ok', flush=True)
+
 # ============================================================ CHECKS on the finished assembly
 intent = {frozenset(('Pan_Bearing_Lower', 'Neck_Main')), frozenset(('Pan_Bearing_Upper', 'Neck_Main'))}
 movers = set(tilt + pan + fixed)
@@ -468,7 +519,7 @@ PRINT = [('01_Neck_Main_PanLead', 'Neck_Main', 'collar on the bed; supports ON (
          ('05_GH44_Tilt_Receiver_Balanced', 'GH44_Tilt_Receiver', 'GH44 face down, arms up; no support'),
          ('06_Pan_Drive_Pulley', 'Pan_Drive_Pulley', 'horn plate on the bed; no support'),
          ('07_Pan_Servo_Carriage', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
-         ('08_Screen_Frame_v08_CutBoard', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
+         ('08_Screen_Frame_v06_Pockets_40x60', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
 BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley', 'Pan_Servo_Carriage'}   # unchanged since v2: must match the v2 STLs
 man = []
 for fname, n, how in PRINT:

@@ -6,3 +6,4 @@ Kept for history only. Do not print the clamp bars or the frame from here.
 
 Update 2026-11-02 (later): step 5 is itself superseded by step 6 (screen frame v08, board cut to 30 x 61,
 flat on the rails). See `../release/README.md`.
+Update 2026-11-02 (latest): step 7 replaces both: v06 frame + 4 heat-set pockets for a 40 x 60 board.

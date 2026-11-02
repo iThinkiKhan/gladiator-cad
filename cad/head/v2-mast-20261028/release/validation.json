@@ -1,7 +1,7 @@
 {
  "base": "cad/head/v2-mast-20261028/Gladiator_Head_v2_Mast.FCStd",
  "base_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
- "script_sha256": "f163d52918923bf617da858f89f2d10457823af46db5fbf9c63c90cea28ae246",
+ "script_sha256": "05623004e7b3202652392997a2fa42ab3d16820cd91e45c8c7882f11174ebc11",
  "steps": {
   "1_balance_tensioner": {
    "matches_balance_folder_xor_mm3_max": 0.0,
@@ -169,29 +169,65 @@
    "inserts": "4 x M2 heat-set, bore 2.8 x 4.5 deep, from the board side; screws M2 x 6",
    "posts_added_mm3": 1633.7,
    "posts_added_g_pla": 2.03,
-   "horn_screw_driver_blockers": []
+   "horn_screw_driver_blockers": [],
+   "superseded_by": "7_v06_pockets_40x60_board"
+  },
+  "7_v06_pockets_40x60_board": {
+   "frame": "v06 + 4 M2 heat-set pockets (Jim reprints it)",
+   "board_mm": [
+    60.0,
+    40.0,
+    1.6
+   ],
+   "board_world_Y": [
+    87.1,
+    147.1
+   ],
+   "board_world_Z": [
+    227.5,
+    267.5
+   ],
+   "board_holes_in_from_each_edge_mm": 2.0,
+   "pockets_world_YZ": [
+    [
+     89.1,
+     229.5
+    ],
+    [
+     89.1,
+     265.5
+    ],
+    [
+     145.1,
+     229.5
+    ],
+    [
+     145.1,
+     265.5
+    ]
+   ],
+   "pockets_from_camera_end_of_frame_mm": [
+    2.6,
+    58.6
+   ],
+   "pockets_from_bottom_of_frame_mm": [
+    4.0,
+    40.0
+   ],
+   "pocket": "dia 2.8 x 4.5 deep, from the board side",
+   "pocket_min_wall_mm": [
+    1.2,
+    1.2,
+    1.2,
+    1.2
+   ],
+   "removed_mm3": 110.84,
+   "hardware": "4 x M2 heat-set inserts (4 long) + 4 x M2 x 5 (or M2 x 6)"
   }
  },
  "checks": {
   "home_collisions": [],
-  "tensioner_full_travel_collisions": [],
-  "motion_grid": {
-   "tilt_deg": [
-    -38,
-    34,
-    2
-   ],
-   "pan_deg": [
-    -20,
-    180,
-    20
-   ]
-  },
-  "motion_collisions": [],
-  "end_stops_mm3": {
-   "receiver_vs_yoke_at_-40": 0.702,
-   "camera_tray_vs_yoke_at_+36": 0.838
-  }
+  "tensioner_full_travel_collisions": []
  },
  "print_parts": [
   {
@@ -318,7 +354,7 @@
    }
   },
   {
-   "file": "08_Screen_Frame_v08_CutBoard.stl",
+   "file": "08_Screen_Frame_v06_Pockets_40x60.stl",
    "part": "Rear_Display_Frame",
    "orientation": "bezel face down, as the v06 frame; no support",
    "size_mm": [
@@ -326,11 +362,11 @@
     44.0,
     61.2
    ],
-   "grams_solid_pla": 28.77,
+   "grams_solid_pla": 26.61,
    "bed_chamfers": "v06 own",
    "mesh_closed": true,
    "fits_220x220x250": true,
-   "sha256": "49f5641dc77f02c54cfd9a1620207ab7021d091648541996c9161c76510d5def"
+   "sha256": "3d23fe4415176c47d1893f7a0d2fb4dad5e7923761295e45e64ff5339238232b"
   }
  ]
 }

@@ -123,7 +123,7 @@
   }
  },
  {
-  "file": "08_Screen_Frame_v08_CutBoard.stl",
+  "file": "08_Screen_Frame_v06_Pockets_40x60.stl",
   "part": "Rear_Display_Frame",
   "orientation": "bezel face down, as the v06 frame; no support",
   "size_mm": [
@@ -131,10 +131,10 @@
    44.0,
    61.2
   ],
-  "grams_solid_pla": 28.77,
+  "grams_solid_pla": 26.61,
   "bed_chamfers": "v06 own",
   "mesh_closed": true,
   "fits_220x220x250": true,
-  "sha256": "49f5641dc77f02c54cfd9a1620207ab7021d091648541996c9161c76510d5def"
+  "sha256": "3d23fe4415176c47d1893f7a0d2fb4dad5e7923761295e45e64ff5339238232b"
  }
 ]

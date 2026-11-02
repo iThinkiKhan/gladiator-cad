@@ -16,9 +16,10 @@ Steps applied in order (each one is proven identical to the folder it replaces, 
 | 3 | solid tube: rear slot filled, 10 x 12 window at Z 90-102 (bottom window Z 24-36 kept) | `solid-tube-20261101/` |
 | 4 | yoke: 45 deg tapers under the plate ledges (joint 30 -> 89 / 18 -> 59 mm2) | `yoke-taper-20261101/` |
 | 5 | screen frame v07: the v06 frame + 2 posts on the side-window face, 4 M2 heat-set inserts; Jim's 30 x 70 perfboard screws straight on, uncut, 5 mm off the frame (Jim 2026-11-02). Superseded by step 6; still runs as the record | `side-window-pcb-20261030/` (clamp bars, 30 x 55 board) |
-| 6 | screen frame v08: the v06 frame + a post filling the camera end of the side window + a pad bringing the screen-end post up to the rail face, 4 M2 heat-set inserts; the board is CUT to 30 x 61 and lies flat on the rails (Jim 2026-11-02) | step 5 (v07) |
+| 6 | screen frame v08: the v06 frame + a post filling the camera end of the side window + a pad bringing the screen-end post up to the rail face, 4 M2 heat-set inserts; the board is CUT to 30 x 61 and lies flat on the rails (Jim 2026-11-02) | step 5 (v07). Superseded by step 7 |
+| 7 | screen frame = v06 + 4 M2 heat-set pockets (2.8 x 4.5) for Jim's 40 x 60 board, centred on the frame, corner holes 2 mm in from each edge; nothing else changes (Jim 2026-11-02) | step 6 (v08) |
 
-**Future changes: add a step 7, 8 ... to the script. Do not start a new patch folder.**
+**Future changes: add a step 8, 9 ... to the script. Do not start a new patch folder.**
 
 Outputs:
 - `Gladiator_Head_v2_RELEASE.FCStd` / `_assembly.step`: the whole head at its world position.
@@ -32,7 +33,24 @@ export's chamfer loop had skipped one (-12 mm3).
 
 Not included: camera case (left off this print, drafts in `cad/head/camera-service-v3/v4`). Nothing here has been printed.
 
-## Side board (step 6, 2026-11-02) - current
+## Side board (step 7, 2026-11-02) - current
+
+- Jim found a 40 x 60 perfboard that fits the v06 frame as it is: centred on the frame, flat on the -X rail face, solder side
+  out. Its factory corner holes are 2.0 mm in from each edge (Jim's measurement). Pressing inserts into the printed frame
+  without pockets filled them with plastic, so `08_Screen_Frame_v06_Pockets_40x60.stl` is the v06 frame reprinted with 4 M2 heat-set pockets under those holes.
+- Pockets: dia 2.8 x 4.5 deep (insert 4 + 0.5 for the plastic it pushes ahead), 2.6 and
+  58.6 mm from the camera end of the frame, 4.0 mm in from its top
+  and bottom. Thinnest wall 1.2 mm (camera end). Print bezel face down, no support. Test slice on Jim's presets: 2 h 07 m,
+  22.6 g, safety check passed. Picture: `screen_frame_v06_pockets.png`.
+- Hardware: 4 x M2 heat-set inserts + 4 x M2 x 5 (or M2 x 6).
+- The board covers the side window, so reaching the tilt horn screw needs the board off (4 screws) or a 6 mm hole in the board
+  on the tilt axis (halfway up the board, 25.9 mm from its camera end).
+- validation.json for this build came from `--quick` (Jim: no extra checks; he has the board on the frame). The motion sweep
+  was not rerun; the 40 x 60 board was checked clear of tilt -38..34 x pan -20..180 by `probe_4060.py` in cad-lab scratch.
+- Steps 5 (v07) and 6 (v08) still run in the script as the record; their STLs and pictures are in `superseded_step5_v07/` and
+  `superseded_step6_v08/`.
+
+## Side board (step 6, 2026-11-02) - superseded by step 7
 
 - `08_Screen_Frame_v08_CutBoard.stl` replaces the fitted v06 frame (v06 + 2.03 g: a post filling the camera end of
   the side window, and a pad bringing the screen-end post up to the rail face; v06 had it 1.5 mm below). Print bezel face down,
