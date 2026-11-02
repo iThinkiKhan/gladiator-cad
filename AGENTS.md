@@ -13,7 +13,7 @@ Before substantial work, read:
 - docs/ai/STATUS.md
 - docs/ai/SHARED.md
 - docs/ai/DECISIONS.md
-- docs/ai/HANDOFF.md
+
 
 Then read the engineering documents relevant to the task, especially:
 
@@ -38,7 +38,9 @@ measurements, CAD, scripts, or design documentation.
 - Read notes written by the other agents when relevant.
 - Do not overwrite another agent's agent-specific note file.
 - Record durable observations in your own file under docs/ai/agents/.
-- Update docs/ai/HANDOFF.md when leaving meaningful unfinished work.
+- Update docs/ai/STATUS.md after meaningful work.
+- Append dated progress to docs/ai/HISTORY.md when useful.
+- Read HISTORY.md only when historical context is needed.
 - Add to docs/ai/DECISIONS.md only for actual project decisions, not speculation.
 - Keep docs/ai/SHARED.md concise and current.
 - Preserve provenance for measurements and configuration values.
