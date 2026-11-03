@@ -1,17 +1,8 @@
 # Gladiator CAD Agent Instructions
 
-## PRINTER HARD LIMITS (2026-10-31)
-A 34 mm end-of-print retract (`G1 Z... E-34.0`, inherited from Orca's "MyMarlin 0.4 nozzle" end G-code)
-destroyed the Ender-3 Neo's direct-drive hotend. For any G-code from any agent:
-- **No retract over 2.0 mm anywhere** (start, print or end G-code, including back-to-back retracts).
-  No XY move outside 0-220 mm, no bed shape larger than 220 x 220, and no Z over 250.
-- Every G-code must pass `python3 ~/bin/check-ender3-start.py <file>` (guard v2, whole-file scan).
-  Never weaken, bypass or edit it, or raise its limits, without Jim's explicit OK.
-- **Every G-code made before 31 Oct 2026 contains the 34 mm retract: never print, copy or upload one.**
-  That includes everything in this repo's SD_PACKAGE / DELIVERY / print folders. Re-slice instead.
-- The `EnderNeo SAFE` preset was fixed on 31 Oct (end G-code without the long retract, 220 bed). Jim now
-  slices his own G-code; deliver models unless he asks for G-code.
-- Full record: `~/Desktop/3D-Printer-Library/PRINTER_BASELINE.txt`.
+## Mandatory printer safety
+
+Read `docs/safety/PRINTER.md` before creating or modifying printer-related files. Existing automated guards must remain enabled.
 
 This repository is shared by human work and multiple AI assistants.
 
@@ -19,9 +10,10 @@ This repository is shared by human work and multiple AI assistants.
 
 Before substantial work, read:
 
+- docs/ai/STATUS.md
 - docs/ai/SHARED.md
 - docs/ai/DECISIONS.md
-- docs/ai/HANDOFF.md
+
 
 Then read the engineering documents relevant to the task, especially:
 
@@ -46,7 +38,9 @@ measurements, CAD, scripts, or design documentation.
 - Read notes written by the other agents when relevant.
 - Do not overwrite another agent's agent-specific note file.
 - Record durable observations in your own file under docs/ai/agents/.
-- Update docs/ai/HANDOFF.md when leaving meaningful unfinished work.
+- Update docs/ai/STATUS.md after meaningful work.
+- Append dated progress to docs/ai/HISTORY.md when useful.
+- Read HISTORY.md only when historical context is needed.
 - Add to docs/ai/DECISIONS.md only for actual project decisions, not speculation.
 - Keep docs/ai/SHARED.md concise and current.
 - Preserve provenance for measurements and configuration values.
