@@ -96,3 +96,13 @@ declined for now. Plate ORCA-D v4 (1 h 40 m, 18.9 g, no supports) in ~/3D-Printe
   cut the aperture as the outline swept along -n for the whole pull (build_enclosure_v2.py `sweep`). Moving the boards 5 mm out (20 mm standoffs) exposed this; the sweep found it at 2 mm.
 - Parts that print top-up with their underside on the glass cannot carry pegs underneath: put the pegs on the mating part and give the plate through slots with chamfered underside openings.
 - The deck v3 is a Boolean edit of the master deck BREP (fill, slot, chamfer): no PartDesign recompute needed, the master is untouched.
+
+## Masthead v2 checks worth repeating (2026-11-03)
+
+- Print hand-offs now go in one folder per batch, `~/3D-Printer/Incoming/<Project>_<Batch>_<date>/`. The
+  `Incoming/Gladiator/` folder named in the 2026-09-30 note above no longer exists.
+- The release build's equivalence check (`vs_v2_stl`) compares bounding-box size and volume only; a 180 degree flip passes it.
+  When checking print orientation, compare up- and down-facing flat z levels against the stated orientation
+  (that is how the upside-down 06_Pan_Drive_Pulley was found).
+- Pan stack, unchanged v04 -> v2: rotor (Z 121-144) -> Pan_Retainer (144-147) -> pedestal base (147-150); spindle post top
+  147.1 with the circlip at 144.2-145.4; pedestal underside pocket r13 x 2.0. There is no separate spindle part in any version.

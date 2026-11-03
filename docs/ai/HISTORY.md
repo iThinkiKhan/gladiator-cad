@@ -1,3 +1,20 @@
+## Masthead v2 assembly: retainer found, v1 spindle broken, rotor hole damaged - 2026-11-03 (Claude)
+
+Jim: the separate "spindle" is the v1 neck's post, broken clean off (not re-used; the v2 neck has its own). The Pan_Retainer
+was stuck to the old pedestal and was the missing piece ("you were correct"). The Pan_Rotor is damaged: one of its four M2
+holes is compromised; Jim believes it is still usable. Rotor pilots are 2.35 at r 18.8 with about 1.45 / 1.5 mm walls, too
+thin for a 2.8 heat-set bore. STATUS and SHARED updated. No CAD or STL changed.
+
+## Masthead v2 assembly findings and shared-doc refresh - 2026-11-03 (Claude)
+
+Jim (assembling v2): the v1 head is disassembled; on hand: rotor, "spindle", c clip, GH44 carrier board, ToF holder, and
+"the new v2 cam case". The new pedestal does not sit level on the rotor; the v1 pocket was "much, much deeper". CAD check:
+the pedestal underside pocket is identical in v04/v05/v2 (r 6.5-13, 2.0 deep); the stack needs the re-used Pan_Retainer
+(3 mm) between rotor and pedestal because the spindle post top is 3.1 mm over the rotor top. The retainer was not in Jim's
+list. Also found: 06_Pan_Drive_Pulley in release/ and Incoming Plate B is exported upside down (pose() rotates it 180 deg
+about X; checks compare size/volume only). Not fixed. STATUS, SHARED and DECISIONS brought up to date (solid tube, single
+release build, yoke taper, 40 x 60 side board). No CAD or STL changed.
+
 ## Camera case v4 staged for printing - 2026-11-02 (Claude)
 
 Jim (after the clip explainer): print the entire v4 case and the three test clips; the tray-bottom coupon is dropped. Staged in ~/3D-Printer/Incoming/Gladiator_CameraCase_v4_20261102: 01 tray, 02 cover (moved down 0.01 mm to sit on the bed), 03-05 clips (pocket 2.56/2.66/2.76, 1/2/3 notches), plate_preview.png, START_HERE.txt, SHA256SUMS.json. STL only, model import, Jim slices; brim on the clips; cover in an opaque colour. All STLs watertight; no part needs support (bridges: SD window 17 mm, tie passages 2.4 mm, a crescent over the M3 head holes; snap bumps 0.6 mm overhang). The 1 Nov coupon folder is moved to superseded_20261102/ inside it. Incoming/START_HERE_MANUAL_SLICING.txt no longer exists (someone removed it); not recreated. Not printed yet.

@@ -129,3 +129,28 @@ Jim: "Lets do 1 and 2, leave the rest currently." Implement the compact tilt-bal
 Decision (Jim): no G-code may contain a retract over 2.0 mm anywhere, move off the 220 x 220 bed, or use
 a bed shape over 220. Enforced by `~/bin/check-ender3-start.py` v2. Cause: the inherited 34 mm end
 retract destroyed the direct-drive hotend. `EnderNeo SAFE` end G-code + bed fixed the same day.
+
+## 2026-11-01 - Mast tube solid (supersedes 2026-10-30 "retain the slotted tube")
+
+Jim: remove the rear lay-in slot and make the v2 tube solid; keep the bottom wire window (Z 24-36, +Y) and add a matching
+top window (Z 90-102, +Y, inside the body under the top panel). Wires feed through the bore. Applied as release step 3
+(`cad/head/v2-mast-20261028/release/`, 02_Mast_Tube_v2_Solid.stl). The slotted tube is superseded. Not physically validated.
+
+## 2026-11-01 - Masthead v2 has a single release build
+
+Jim asked for one source: `scripts/build_head_v2_release.py` builds the current head in `cad/head/v2-mast-20261028/release/`
+by applying, in order, balance/tensioner, pan-lead path, solid tube, yoke taper (and later the screen-frame steps). The patch
+folders are superseded. Future changes go in as new numbered steps in that script, never a new folder. All print STLs get
+0.5 mm bed chamfers.
+
+## 2026-11-01 - Tilt yoke tapers
+
+Jim: the yoke plates sat on 5 x 6 / 3 x 6 mm of their columns with flat ledges that needed support. 45 degree tapers under
+every ledge (joints 30 -> 89 mm2 and 18 -> 59 mm2), no supports. Tilt range unchanged in CAD (-40..+36). Release step 4.
+
+## 2026-11-02 - Side board: 40 x 60 perfboard on the v06 screen frame
+
+Jim found a 40 x 60 perfboard that fits the v06 frame unchanged (centred, flat on the -X rail face, solder side out, factory
+corner holes 2.0 mm in). Inserts pressed into the frame without pockets filled with plastic, so the frame is reprinted with
+4 M2 heat-set pockets (2.8 x 4.5): 08_Screen_Frame_v06_Pockets_40x60.stl, release step 7. Supersedes the v07 posts (step 5)
+and the v08 cut 30 x 61 board (step 6). Reaching the tilt horn screw needs the board off or a 6 mm hole on the tilt axis.

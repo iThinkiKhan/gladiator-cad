@@ -33,8 +33,6 @@ Firmware swaps logical tracks and reverses both polarities; native CAD carries
 the same frame. Head master faces +Y at legacy pan180 (a travel endpoint, not
 a centered servo home). Historical aliases and print plates stay unchanged.
 
-No cross-agent state has been formally summarized here yet.
-
 Agents should add concise, verified current state as work proceeds.
 
 ## Current measured head prototype — 2026-10-05
@@ -49,4 +47,4 @@ measurements/mast-head.md; remaining physical/harness work in HANDOFF.md.
 
 2026-10-22 — Current shell/CAD release:mount-checked-release/DELIVERY under calibrated derivative. Hood9h39m04,combined panels7h00m34;two speaker M2 pockets corrected (15 current M2 total),rail clearance follows saved splay;6xM3x20, speakerM2x6 with hood off. Antenna access and22 support-free fastener paths pass. Neo SAFE/SD colour rules retained. See HANDOFF/agent note.
 
-2026-10-30 - Current head v2 CAD derivative: `cad/head/v2-mast-20261028/balance-tensioner-20261030/` (compact receiver balance change and M3x20 tensioner). Slotted tube retained. See current HANDOFF; not sliced/physically validated.
+2026-11-03 - **Current head: `cad/head/v2-mast-20261028/release/`**, one script `scripts/build_head_v2_release.py` (steps 1-7: balance/tensioner, pan-lead path, SOLID tube, yoke taper, screen-frame side board; step 7 = v06 frame + 4 M2 pockets for a 40 x 60 board). Patch folders (balance-tensioner, pcb-floor, solid-tube, yoke-taper, side-window-pcb) are superseded; the slotted tube is superseded. v1 head disassembled; v2 assembly and fit test in progress. Pan stack is rotor -> Pan_Retainer -> pedestal (the retainer is required: the spindle post stands 3.1 mm over the rotor). Pedestal seat resolved 2026-11-03 (retainer found). The v1 neck spindle post is broken; one rotor M2 hole is damaged. The pulley STL is exported upside down. See STATUS.md.
