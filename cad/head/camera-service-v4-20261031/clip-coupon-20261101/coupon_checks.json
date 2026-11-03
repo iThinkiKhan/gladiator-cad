@@ -1,0 +1,90 @@
+{
+ "request": "plug clip test coupon",
+ "v4_rebuilt_from": "/home/buralien/projects/gladiator-cad/cad/head/camera-service-v4-20261031/generated-build.py",
+ "checks": {
+  "nominal_clip_matches_v4_clip_mm3": 0.0,
+  "gap_coupon_loose_bits_mm3": 0,
+  "pads_kept_mm3_missing": -0.0,
+  "board_vs_coupon_mm3": 0.0,
+  "clips_vs_coupon_mm3": 0.0,
+  "plugs_vs_coupon_mm3": 0.0,
+  "wires_vs_coupon_mm3": 0.0,
+  "clip_rear_to_pads_mm": 0.4,
+  "board_seat_faces": 4,
+  "board_seat_area_mm2": 27.9,
+  "seat_to_floor_mm": 19.66,
+  "seat_lip_mm": 0.6,
+  "floor_mm": 1.2
+ },
+ "clips": [
+  {
+   "file": "01_Clip_tight_pocket_2.56_1_notch.stl",
+   "notches": 1,
+   "pocket_width_mm": 2.56,
+   "pocket_length_mm": 20.48,
+   "volume_mm3": 465.1,
+   "print_size_mm": [
+    4.0,
+    21.98,
+    13.0
+   ],
+   "outer_wall_mm": [
+    0.37,
+    0.67
+   ],
+   "inner_plate_mm": 0.77
+  },
+  {
+   "file": "02_Clip_as_designed_pocket_2.66_2_notches.stl",
+   "notches": 2,
+   "pocket_width_mm": 2.66,
+   "pocket_length_mm": 20.48,
+   "volume_mm3": 468.0,
+   "print_size_mm": [
+    4.1,
+    21.98,
+    13.0
+   ],
+   "outer_wall_mm": [
+    0.37,
+    0.67
+   ],
+   "inner_plate_mm": 0.77
+  },
+  {
+   "file": "03_Clip_loose_pocket_2.76_3_notches.stl",
+   "notches": 3,
+   "pocket_width_mm": 2.76,
+   "pocket_length_mm": 20.48,
+   "volume_mm3": 470.9,
+   "print_size_mm": [
+    4.2,
+    21.98,
+    13.0
+   ],
+   "outer_wall_mm": [
+    0.37,
+    0.67
+   ],
+   "inner_plate_mm": 0.77
+  }
+ ],
+ "gap_coupon": {
+  "file": "04_Plug_Gap_Tray_Coupon.stl",
+  "volume_mm3": 5878.2,
+  "v4_tray_volume_mm3": 10905.6,
+  "print_size_mm": [
+   31.95,
+   45.85,
+   21.46
+  ]
+ },
+ "stl_sha256": {
+  "01_Clip_tight_pocket_2.56_1_notch.stl": "5260213326bba18bb836ac646d6f9a06c773d10f41ae2c015ca61600d6382b9b",
+  "02_Clip_as_designed_pocket_2.66_2_notches.stl": "92b8be80606555ae6997b2c9a2d4d8cc864fb3d44afbb7718ec46c82b2ddc46e",
+  "03_Clip_loose_pocket_2.76_3_notches.stl": "c3c23063390a753b3b7f14ed04bd4863b8fb9d65672a3f9295c951fea2a93e2a",
+  "04_Plug_Gap_Tray_Coupon.stl": "f38e0d57690299e67d3d0b93ad79306f653e8cba69295f639e785156f7d9b682"
+ },
+ "total_volume_mm3": 7282.2,
+ "pla_grams_solid": 9.0
+}

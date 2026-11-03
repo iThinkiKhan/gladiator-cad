@@ -1,0 +1,21 @@
+{
+  "Gladiator_Camera_Service_v3.step": "ae74fee2db463024e6ea5ed36619f4728113be4d211111f5bcbad29402c60a97",
+  "Gladiator_Camera_Service_v3_EXPLODED.FCStd": "2cff4201740c1cec880b978e5179bdcdd29bf78bb23210798d1b955e4c5a876b",
+  "Gladiator_Camera_Service_v3_REVIEW.FCStd": "94028ce58d19d7cefcd8c91bcf3ec4ecf331d6fe5f513010331432227a678bfb",
+  "assembled.png": "f51c93dca6ce557f423d1356ed3372a82cd4fcd097271099d797f8426cd0c532",
+  "build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "build_camera_service_v3.py": "232816eae945ddb49ac645ac7dea43d435632a38056cc58065612148b3f6671d",
+  "exploded.png": "1c65daeef2a067517e7e9822062a0c05e9f8fc44bd42604331c96da1d1605b81",
+  "generated-build.py": "1744cf5dd9d63736ebccb567f48958cee4ac1e1875635d248f6ae40d75276d40",
+  "open_tray.png": "33c74735d2a3850292983a41d9b7632902306851ac396801c3a52265c02402db",
+  "preview/assembled_board_local.stl": "1594b87fc36e82e34c5d7c4225aa5fdb55ac403e398ace0e672ac537cd8aa28e",
+  "preview/assembled_lid_local.stl": "5b4956ed8800ac0bb9131c3eda3d40dcaf3a2abced4cd6f4e16fc3a3aa70100d",
+  "preview/assembled_tray_local.stl": "61044484a89cc076c570595bdfa44b152fa4d127084f7d72ab07c25af16e6cdb",
+  "preview/ctx_GH44_Dual_Carrier_local.stl": "bebf56ed006b8e28362c9cb9502a29ca7d378616a46732d927b798803e921c31",
+  "preview/ctx_ToF_Sensor_Frame_local.stl": "2fe07a7a1c1cc281ac3c261e720814e0c1837d0e35e9954cf9813a8fa1649ed6",
+  "section_lug.png": "34f163e464edc253f9db40041135c515557037256c7672ff4d8833fcb02d371d",
+  "stl/Camera_Service_v3_Lid.stl": "862e9f1b0bd1b7f18ed1d9e1ebbe8c7e47cc52d3e5b152b0faab1e3185b48504",
+  "stl/Camera_Service_v3_Tray.stl": "656c653d1df8c7e69e918cff95b5471abc445e3d2c885382e5b999b257b9e84c",
+  "validation-prelim.json": "f60b4f034795b0cceee2d5328ed0610ed01d41ab50ed0f828f4e74e7ebc693ba",
+  "validation.json": "27e8e346c0ee3b30bd447b07c9a136ae82fe68c5e6cd9321cfdb14869dd667dd"
+}

@@ -1,0 +1,30 @@
+{
+ "placement_translation_from_v2_step": [
+  0.0,
+  28.5,
+  31.0
+ ],
+ "v2_mapping_fit": [
+  1.0,
+  1.0
+ ],
+ "v3_home_overlaps_mm3": {},
+ "v3_vs_ESP32_ref_mm3": 0.0,
+ "v2_motion_hits_tilt-38..34": [],
+ "v2_first_contact_vs_pan_side": {
+  "positive_tilt": [
+   36,
+   "Camera_Tray",
+   "Tilt_Yoke"
+  ]
+ },
+ "v3_motion_hits_tilt-38..34": [],
+ "v3_first_contact_vs_pan_side": {
+  "positive_tilt": [
+   36,
+   "Camera_Tray",
+   "Tilt_Yoke"
+  ]
+ },
+ "v3_motion_clear": true
+}

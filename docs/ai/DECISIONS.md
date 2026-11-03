@@ -124,3 +124,8 @@ Jim: "Lets keep the slotted tube for now." The original v2 slotted tube remains 
 ## 2026-10-30 - Head review scope: tilt balance and tensioner only
 
 Jim: "Lets do 1 and 2, leave the rest currently." Implement the compact tilt-balance revision and correct tensioner screw reach. Retain the slotted tube and leave yoke passage, pan indexing, stop/reinforcement proposals and firmware currently unchanged. Implementation and verification are recorded in cad/head/v2-mast-20261028/balance-tensioner-20261030/. No physical result or print release is implied.
+
+## 2026-10-31 - PRINTER HARD LIMITS (2026-10-31)
+Decision (Jim): no G-code may contain a retract over 2.0 mm anywhere, move off the 220 x 220 bed, or use
+a bed shape over 220. Enforced by `~/bin/check-ender3-start.py` v2. Cause: the inherited 34 mm end
+retract destroyed the direct-drive hotend. `EnderNeo SAFE` end G-code + bed fixed the same day.

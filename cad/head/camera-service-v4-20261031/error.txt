@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/buralien/projects/gladiator-cad/cad/head/camera-service-v4-20261031/build_camera_service_v4.py", line 237, in <module>
+    exec(compile(source, str(OUT / 'generated-build.py'), 'exec'), ns)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/buralien/projects/gladiator-cad/cad/head/camera-service-v4-20261031/generated-build.py", line 601, in <module>
+    assert (max(v) if isinstance(v,list) else v)<1e-4,(k,v)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('clip_vs_tray_with_play_mm3', 0.14999999999999927)
