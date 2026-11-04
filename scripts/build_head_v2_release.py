@@ -13,6 +13,7 @@ and applies every later change, in order, as numbered steps:
   8. Pan servo carriage: servo body opening 12.0 x 22.8 -> 12.75 x 23.8 (Jim 2026-11-04)
   9. Tilt yoke: the same 12.75 x 23.8 servo body opening in the ear plate (Jim 2026-11-04)
  10. Tilt yoke: ear plate 3 -> 8 mm thick on the servo-body side, trimmed where the receiver swings (Jim 2026-11-04)
+ 11. Screen frame: the 4 side-board pockets 0.75 mm closer together each along the 60 mm board length, 56 -> 54.5 (Jim 2026-11-04)
 Every print STL gets the bed chamfer (0.5 mm on hole edges on the bed, Jim 2026-10-15); the patch folders had
 dropped it for the neck, tube, yoke and receiver.
 
@@ -515,6 +516,52 @@ R['steps']['10_yoke_strong_ear_plate'] = {
     'plate_thickness_through_bars_mm': bars, 'underside': '45 deg, no support'}
 print('step 10 ok', bars, flush=True)
 
+# ============================================================ STEP 11: side board pockets 1.5 mm closer along the board length
+# Jim 2026-11-04, on the printed step 7 frame: "the heat set holes are about 1.5mm too far apart. Bring each in by .75"
+# ("on the screen carriage, the heat sets to hold the new mast power distro board"). Asked which spacing; Jim: "Along
+# the 60 mm length". So the pocket pairs move 0.75 mm each toward the middle of the board: 56.0 -> 54.5 apart along the
+# frame (world Y). The 36 mm spacing across (Z), pocket size and depth, and the rest of the frame do not change.
+B11_IN = 0.75
+B7_YC = (B7_Y0 + B7_Y1) / 2
+holes11 = [(y + B11_IN if y < B7_YC else y - B11_IN, z) for y, z in holes7]
+bores11 = [Part.makeCylinder(INS_D / 2, B7_BORE, V(RX, y, z), V(1, 0, 0)) for y, z in holes11]
+for b_ in bores11:
+    assert abs(F06.common(b_).Volume - b_.Volume) < 0.05      # every pocket still fully in v06 material
+F11 = F06
+for b_ in bores11:
+    F11 = F11.cut(b_)
+F11 = F11.removeSplitter()
+assert F11.isValid() and len(F11.Solids) == 1
+assert abs((F06.Volume - F11.Volume) - (F06.Volume - F7.Volume)) < 0.05   # same 4 pockets, only moved
+assert F11.cut(F7).Volume > 1.0                                            # the old pockets are filled again
+walls11 = []
+for (y, z), b_ in zip(holes11, bores11):
+    wall = 0.0
+    for w in (2.0, 1.5, 1.2, 1.0, 0.8):
+        ring = Part.makeCylinder(INS_D / 2 + w, B7_BORE, V(RX, y, z), V(1, 0, 0)).cut(b_)
+        if abs(F06.common(ring).Volume - ring.Volume) < 0.05:
+            wall = w; break
+    walls11.append(wall)
+S['Rear_Display_Frame'] = F11
+sb11 = Part.makeBox(SB_T, B7_L, B7_W, V(B7_X0, B7_Y0, B7_Z0))
+for y, z in holes11:
+    sb11 = sb11.cut(Part.makeCylinder(1.0, 10, V(B7_X0 - 5, y, z), V(1, 0, 0)))
+S['Side_Board_40x60_Placeholder'] = sb11
+ys11 = sorted({round(y, 3) for y, _ in holes11}); zs11 = sorted({round(z, 3) for _, z in holes11})
+R['steps']['7_v06_pockets_40x60_board']['superseded_by'] = '11_side_board_pockets_spacing_54.5'
+R['steps']['11_side_board_pockets_spacing_54.5'] = {
+    'jim': 'the heat set holes are about 1.5mm too far apart. Bring each in by .75 (along the 60 mm length)',
+    'spacing_along_board_mm_before': round(max(y for y, _ in holes7) - min(y for y, _ in holes7), 3),
+    'spacing_along_board_mm_now': round(ys11[1] - ys11[0], 3),
+    'spacing_across_board_mm_unchanged': round(zs11[1] - zs11[0], 3),
+    'pockets_world_YZ': [[round(y, 2), round(z, 2)] for y, z in holes11],
+    'pockets_from_camera_end_of_frame_mm': sorted({round(y - fb.YMin, 2) for y, _ in holes11}),
+    'pockets_from_bottom_of_frame_mm': sorted({round(z - fb.ZMin, 2) for _, z in holes11}),
+    'board_holes_in_from_short_edges_mm_implied': round(B7_HOLE_IN + B11_IN, 2),
+    'pocket': 'dia %.1f x %.1f deep, from the board side (unchanged)' % (INS_D, B7_BORE),
+    'pocket_min_wall_mm': walls11}
+print('step 11 ok', R['steps']['11_side_board_pockets_spacing_54.5'], flush=True)
+
 # ============================================================ CHECKS on the finished assembly
 intent = {frozenset(('Pan_Bearing_Lower', 'Neck_Main')), frozenset(('Pan_Bearing_Upper', 'Neck_Main'))}
 movers = set(tilt + pan + fixed)
@@ -644,7 +691,7 @@ PRINT = [('01_Neck_Main_PanLead', 'Neck_Main', 'collar on the bed; supports ON (
          ('05_GH44_Tilt_Receiver_Balanced', 'GH44_Tilt_Receiver', 'GH44 face down, arms up; no support'),
          ('06_Pan_Drive_Pulley', 'Pan_Drive_Pulley', 'horn plate on the bed; no support'),
          ('07_Pan_Servo_Carriage_WideBody', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
-         ('08_Screen_Frame_v06_Pockets_40x60', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
+         ('08_Screen_Frame_v06_Pockets_54.5x36', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
 BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley'}   # unchanged since v2: must match the v2 STLs (carriage: step 8)
 man = []
 for fname, n, how in PRINT:

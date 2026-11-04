@@ -106,3 +106,11 @@ declined for now. Plate ORCA-D v4 (1 h 40 m, 18.9 g, no supports) in ~/3D-Printe
   (that is how the upside-down 06_Pan_Drive_Pulley was found).
 - Pan stack, unchanged v04 -> v2: rotor (Z 121-144) -> Pan_Retainer (144-147) -> pedestal base (147-150); spindle post top
   147.1 with the circlip at 144.2-145.4; pedestal underside pocket r13 x 2.0. There is no separate spindle part in any version.
+
+## Screen frame side-board pockets, release step 11 (2026-11-04)
+
+- Jim's note "the heat set holes are about 1.5mm too far apart. Bring each in by .75" first read as the camera case v4 inserts; he corrected it to the screen
+  frame pockets for the side (power distro) board, then chose "Along the 60 mm length". Step 11 rebuilds the frame
+  from F06 with the pockets moved; asserts the pockets are fully in v06 plastic and the old ones are filled.
+- Full release build passed (motion sweep included). Old STL moved to release/superseded_step7_pockets_56/ and, in
+  Incoming, to Gladiator_Masthead_v2_20261031/superseded_20261104_pockets56/. Not printed yet.

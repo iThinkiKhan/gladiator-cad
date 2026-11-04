@@ -21,6 +21,9 @@ camera, and printed structural components.
 - Head lock: one M3 x 35 bolt + wingnut through collar and mast. Tensioner: M3 x 20.
 - Side board: Jim's 40 x 60 perfboard on the screen frame; 08_Screen_Frame_v06_Pockets_40x60 is the
   v06 frame reprinted with 4 M2 heat-set pockets (release step 7).
+- Side board pockets (Jim 2026-11-04, on the printed step 7 frame): "the heat set holes are about 1.5mm too far apart. Bring each in by .75", along the 60 mm length.
+  Release step 11: 56.0 -> 54.5 mm apart along the board, 36.0 across unchanged. Print file
+  `08_Screen_Frame_v06_Pockets_54.5x36.stl` in `~/3D-Printer/Incoming/Gladiator_ScreenFrame_Pockets54.5_20261104/`.
 - Camera case is not part of the masthead v2 print set; drafts in `cad/head/camera-service-v3/v4`.
 - Servo body openings (Jim 2026-11-04): pan servo carriage (step 8) and tilt yoke ear plate (step 9) are
   12.75 x 23.8 (were 12.0 x 22.8). Tilt yoke ear plate 8 mm thick (step 10, was 3 mm). Print set:

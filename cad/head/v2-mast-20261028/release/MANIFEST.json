@@ -117,7 +117,7 @@
   "sha256": "6be3d55bd52e30234be5557f1d3c8993e0d957ed0fe03ecbbf931e8ed688c6e4"
  },
  {
-  "file": "08_Screen_Frame_v06_Pockets_40x60.stl",
+  "file": "08_Screen_Frame_v06_Pockets_54.5x36.stl",
   "part": "Rear_Display_Frame",
   "orientation": "bezel face down, as the v06 frame; no support",
   "size_mm": [
@@ -129,6 +129,6 @@
   "bed_chamfers": "v06 own",
   "mesh_closed": true,
   "fits_220x220x250": true,
-  "sha256": "3d23fe4415176c47d1893f7a0d2fb4dad5e7923761295e45e64ff5339238232b"
+  "sha256": "92d10b18111287a1cfd3a4c8adb09c1df6fa86d6b2d5df9e09fec8dead8c796f"
  }
 ]

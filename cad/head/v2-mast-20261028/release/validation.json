@@ -1,7 +1,7 @@
 {
  "base": "cad/head/v2-mast-20261028/Gladiator_Head_v2_Mast.FCStd",
  "base_sha256": "36f3f52e8e4d4324a097d45638e80f47f8c3f27467cdf7da35e7922503c626a3",
- "script_sha256": "1b603fdf5c9512550fba2ae68d5443409fb7b14c5191fb44cb2ceb8f8c8ec112",
+ "script_sha256": "32000e0feb127b6215ccdf34f99c7f1dd4b5ce6ad00f2a2dcb29f4870acbba9c",
  "steps": {
   "1_balance_tensioner": {
    "matches_balance_folder_xor_mm3_max": 0.0,
@@ -222,7 +222,8 @@
     1.2
    ],
    "removed_mm3": 110.84,
-   "hardware": "4 x M2 heat-set inserts (4 long) + 4 x M2 x 5 (or M2 x 6)"
+   "hardware": "4 x M2 heat-set inserts (4 long) + 4 x M2 x 5 (or M2 x 6)",
+   "superseded_by": "11_side_board_pockets_spacing_54.5"
   },
   "8_carriage_body_opening": {
    "opening_mm_before": [
@@ -275,6 +276,46 @@
     "rear_top_corner_+y": 8.0
    },
    "underside": "45 deg, no support"
+  },
+  "11_side_board_pockets_spacing_54.5": {
+   "jim": "the heat set holes are about 1.5mm too far apart. Bring each in by .75 (along the 60 mm length)",
+   "spacing_along_board_mm_before": 56.0,
+   "spacing_along_board_mm_now": 54.5,
+   "spacing_across_board_mm_unchanged": 36.0,
+   "pockets_world_YZ": [
+    [
+     89.85,
+     229.5
+    ],
+    [
+     89.85,
+     265.5
+    ],
+    [
+     144.35,
+     229.5
+    ],
+    [
+     144.35,
+     265.5
+    ]
+   ],
+   "pockets_from_camera_end_of_frame_mm": [
+    3.35,
+    57.85
+   ],
+   "pockets_from_bottom_of_frame_mm": [
+    4.0,
+    40.0
+   ],
+   "board_holes_in_from_short_edges_mm_implied": 2.75,
+   "pocket": "dia 2.8 x 4.5 deep, from the board side (unchanged)",
+   "pocket_min_wall_mm": [
+    1.5,
+    1.5,
+    1.5,
+    1.5
+   ]
   }
  },
  "checks": {
@@ -417,7 +458,7 @@
    "sha256": "6be3d55bd52e30234be5557f1d3c8993e0d957ed0fe03ecbbf931e8ed688c6e4"
   },
   {
-   "file": "08_Screen_Frame_v06_Pockets_40x60.stl",
+   "file": "08_Screen_Frame_v06_Pockets_54.5x36.stl",
    "part": "Rear_Display_Frame",
    "orientation": "bezel face down, as the v06 frame; no support",
    "size_mm": [
@@ -429,7 +470,7 @@
    "bed_chamfers": "v06 own",
    "mesh_closed": true,
    "fits_220x220x250": true,
-   "sha256": "3d23fe4415176c47d1893f7a0d2fb4dad5e7923761295e45e64ff5339238232b"
+   "sha256": "92d10b18111287a1cfd3a4c8adb09c1df6fa86d6b2d5df9e09fec8dead8c796f"
   }
  ]
 }

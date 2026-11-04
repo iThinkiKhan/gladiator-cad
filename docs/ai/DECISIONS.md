@@ -186,3 +186,10 @@ Jim: the pan servo "only just" went into the carriage ("3/4mm wider and at least
 putting the tilt servo in ("Only one of the arms for the servo holding enclosure survived"). SG90 body openings in printed
 parts are now 12.75 x 23.8 (was 12.0 x 22.8, the old "tested opening"). A servo-holding plate printed upright is at least
 8 mm thick where room allows; 3 mm bars round a servo opening are not enough. Applied as release steps 8-10.
+
+## 2026-11-04 - Side board pockets 54.5 mm apart along the board
+
+Jim, on the printed step 7 frame ("the heat sets to hold the new mast power distro board"): "the heat set holes are about 1.5mm too far apart. Bring each in by .75".
+Asked which spacing; Jim: "Along the 60 mm length". Each pocket moves 0.75 mm toward the middle of the board:
+56.0 -> 54.5 mm apart along the frame, 36.0 across unchanged, pockets still 2.8 x 4.5. Release step 11,
+08_Screen_Frame_v06_Pockets_54.5x36.stl (replaces ..._40x60). Implies the board holes are about 2.75 mm in from its short edges.

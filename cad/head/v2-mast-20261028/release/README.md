@@ -18,6 +18,7 @@ Steps applied in order (each one is proven identical to the folder it replaces, 
 | 5 | screen frame v07: the v06 frame + 2 posts on the side-window face, 4 M2 heat-set inserts; Jim's 30 x 70 perfboard screws straight on, uncut, 5 mm off the frame (Jim 2026-11-02). Superseded by step 6; still runs as the record | `side-window-pcb-20261030/` (clamp bars, 30 x 55 board) |
 | 6 | screen frame v08: the v06 frame + a post filling the camera end of the side window + a pad bringing the screen-end post up to the rail face, 4 M2 heat-set inserts; the board is CUT to 30 x 61 and lies flat on the rails (Jim 2026-11-02) | step 5 (v07). Superseded by step 7 |
 | 7 | screen frame = v06 + 4 M2 heat-set pockets (2.8 x 4.5) for Jim's 40 x 60 board, centred on the frame, corner holes 2 mm in from each edge; nothing else changes (Jim 2026-11-02) | step 6 (v08) |
+| 11 | screen frame side-board pockets 0.75 mm in each along the 60 mm board length: 56.0 -> 54.5 apart, 36.0 across unchanged (Jim 2026-11-04: "the heat set holes are about 1.5mm too far apart. Bring each in by .75") | step 7 pockets |
 
 | 8 | pan servo carriage: servo body opening 12.0 x 22.8 -> 12.75 x 23.8, centred on the body; ear pilots unchanged (0.5 mm wall); no bed chamfer on those pilots (Jim 2026-11-04) | - |
 | 9 | tilt yoke: the same 12.75 x 23.8 opening in the ear plate (Jim 2026-11-04) | - |
@@ -38,7 +39,14 @@ export's chamfer loop had skipped one (-12 mm3).
 
 Not included: camera case (left off this print, drafts in `cad/head/camera-service-v3/v4`). Nothing here has been printed.
 
-## Side board (step 7, 2026-11-02) - current
+## Side board pockets (step 11, 2026-11-04) - current
+
+- Jim: "the heat set holes are about 1.5mm too far apart. Bring each in by .75" (the spacing along the 60 mm board length).
+- `08_Screen_Frame_v06_Pockets_54.5x36.stl`: the step 7 frame with the 4 pockets 54.5 mm apart along the board
+  (3.35 / 57.85 from the camera end, were 2.6 / 58.6), 36.0 across, 2.8 x 4.5 as before; wall 1.5 mm.
+  Picture: `screen_frame_pockets_54.5x36.png`. The step 7 STL is in `superseded_step7_pockets_56/`.
+
+## Side board (step 7, 2026-11-02) - pocket spacing superseded by step 11
 
 - Jim found a 40 x 60 perfboard that fits the v06 frame as it is: centred on the frame, flat on the -X rail face, solder side
   out. Its factory corner holes are 2.0 mm in from each edge (Jim's measurement). Pressing inserts into the printed frame
