@@ -19,7 +19,11 @@ Steps applied in order (each one is proven identical to the folder it replaces, 
 | 6 | screen frame v08: the v06 frame + a post filling the camera end of the side window + a pad bringing the screen-end post up to the rail face, 4 M2 heat-set inserts; the board is CUT to 30 x 61 and lies flat on the rails (Jim 2026-11-02) | step 5 (v07). Superseded by step 7 |
 | 7 | screen frame = v06 + 4 M2 heat-set pockets (2.8 x 4.5) for Jim's 40 x 60 board, centred on the frame, corner holes 2 mm in from each edge; nothing else changes (Jim 2026-11-02) | step 6 (v08) |
 
-**Future changes: add a step 8, 9 ... to the script. Do not start a new patch folder.**
+| 8 | pan servo carriage: servo body opening 12.0 x 22.8 -> 12.75 x 23.8, centred on the body; ear pilots unchanged (0.5 mm wall); no bed chamfer on those pilots (Jim 2026-11-04) | - |
+| 9 | tilt yoke: the same 12.75 x 23.8 opening in the ear plate (Jim 2026-11-04) | - |
+| 10 | tilt yoke: ear plate 3 -> 8 mm (5 mm on the servo-body side, ear face unchanged, 45 deg underside, pilots through), trimmed by the receiver/carrier sweep so the printed receiver still fits (Jim 2026-11-04, after the yoke snapped) | - |
+
+**Future changes: add a step 11, 12 ... to the script. Do not start a new patch folder.**
 
 Outputs:
 - `Gladiator_Head_v2_RELEASE.FCStd` / `_assembly.step`: the whole head at its world position.
@@ -27,7 +31,8 @@ Outputs:
 - `validation.json`: step equivalence, home clashes, tensioner travel (C 38-48), tilt -38..34 x pan -20..180 sweep,
   and the two known end stops (receiver at -40, camera tray at +36).
 
-Bed chamfers (0.5 mm on hole edges that print on the bed, Jim 2026-10-15) are applied to all 7 parts. The patch
+Bed chamfers (0.5 mm on hole edges that print on the bed, Jim 2026-10-15) are applied to every part except the
+carriage's two ear pilots since step 8 (0.5 mm from the opening, a chamfer would break through). The patch
 folders had dropped them on the tube, yoke and receiver. The pulley now gets both bed circles chamfered; the v2
 export's chamfer loop had skipped one (-12 mm3).
 

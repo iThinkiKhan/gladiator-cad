@@ -51,7 +51,7 @@
   }
  },
  {
-  "file": "04_Tilt_Yoke_Tapered.stl",
+  "file": "04_Tilt_Yoke_Strong_WideBody.stl",
   "part": "Tilt_Yoke",
   "orientation": "floor on the bed; no support",
   "size_mm": [
@@ -59,11 +59,11 @@
    35.0,
    70.0
   ],
-  "grams_solid_pla": 16.0,
+  "grams_solid_pla": 17.86,
   "bed_chamfers": 2,
   "mesh_closed": true,
   "fits_220x220x250": true,
-  "sha256": "7ba3ee13b840e980cab45c9c758ee6bdd1d86e3c5ef2ae1562574e91f909e0e4"
+  "sha256": "84309aa7facc219d97373423217c7e30d217ceb1eaafd8c5c290b26f9cc7448d"
  },
  {
   "file": "05_GH44_Tilt_Receiver_Balanced.stl",
@@ -102,7 +102,7 @@
   }
  },
  {
-  "file": "07_Pan_Servo_Carriage.stl",
+  "file": "07_Pan_Servo_Carriage_WideBody.stl",
   "part": "Pan_Servo_Carriage",
   "orientation": "top face on the bed, tensioner lug up; no support",
   "size_mm": [
@@ -110,17 +110,11 @@
    59.96,
    10.36
   ],
-  "grams_solid_pla": 5.47,
-  "bed_chamfers": 2,
+  "grams_solid_pla": 5.36,
+  "bed_chamfers": 0,
   "mesh_closed": true,
   "fits_220x220x250": true,
-  "sha256": "bfe8e0a643979cc0d20dbe2eb30a34995ac14e1ade1c09dfec3dba89529dc49c",
-  "vs_v2_stl": {
-   "volume_diff_mm3": 0.0,
-   "bed_chamfers_v2": 2,
-   "bed_chamfers_now": 2,
-   "same_size": true
-  }
+  "sha256": "6be3d55bd52e30234be5557f1d3c8993e0d957ed0fe03ecbbf931e8ed688c6e4"
  },
  {
   "file": "08_Screen_Frame_v06_Pockets_40x60.stl",

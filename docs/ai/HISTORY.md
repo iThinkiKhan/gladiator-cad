@@ -1,3 +1,13 @@
+## Masthead v2 release steps 8-10: servo openings, stronger tilt yoke - 2026-11-04 (Claude)
+
+Jim: the pan servo only just went into the carriage ("lets go 3/4mm wider and at least 1mm longer"); then the tilt yoke broke
+while fitting the tilt servo, with only one of the bars round the servo opening surviving, and he asked for the yoke to be made
+bigger and stronger. Step 8: carriage opening 12.0 x 22.8 -> 12.75 x 23.8. Step 9: same for the yoke ear plate. Step 10: yoke
+ear plate 3 -> 8 mm on the servo-body side, trimmed by the receiver/carrier sweep (pieces padded 0.8, -40..+36 every 1 deg).
+Full release build + motion sweep passed; other six STLs byte-identical. Plate E (carriage + yoke, model-only 3MF on Jim's
+presets) passed fix_diff_lists --check; its stripped test slice (2 h 01 m, 21.3 g) passed check-ender3-start.py. Delivered to
+Incoming/Gladiator_Masthead_v2_ServoOpenings_20261104. Also: Part.makeCompound now segfaults on cad-lab; step 6 uses Part.Compound.
+
 ## Masthead v2 fit notes: horn pockets, tilt servo nut - 2026-11-03 (Claude)
 
 Jim: the servo horn pockets are much better this time but the horn still is not fully accepted: the round hub tapers down into

@@ -1,7 +1,7 @@
 # Gladiator — Current Status
 
-Last reviewed: 2026-11-03 (Claude)
-Status: Masthead V2 pan stack fitted; collar sits about 1 mm high on the mast; assembly continuing
+Last reviewed: 2026-11-04 (Claude)
+Status: Masthead V2 pan stack fitted; tilt yoke broke on servo insertion, stronger yoke + carriage (plate E) ready to print
 Authority: Project engineering files and Jim's confirmations
 
 ## Project
@@ -14,7 +14,7 @@ camera, and printed structural components.
 
 - Mast is FRONT (+Y); +X is right, +Z is up.
 - Current masthead: `cad/head/v2-mast-20261028/release/`, built by ONE script,
-  `scripts/build_head_v2_release.py` (steps 1-7). The patch folders are superseded.
+  `scripts/build_head_v2_release.py` (steps 1-10). The patch folders are superseded.
   Future head changes are new steps in that script, not new folders.
 - Mast tube is SOLID (Jim 2026-11-01): rear lay-in slot removed, wire windows at Z 24-36 and Z 90-102.
   The slotted tube is superseded.
@@ -22,6 +22,9 @@ camera, and printed structural components.
 - Side board: Jim's 40 x 60 perfboard on the screen frame; 08_Screen_Frame_v06_Pockets_40x60 is the
   v06 frame reprinted with 4 M2 heat-set pockets (release step 7).
 - Camera case is not part of the masthead v2 print set; drafts in `cad/head/camera-service-v3/v4`.
+- Servo body openings (Jim 2026-11-04): pan servo carriage (step 8) and tilt yoke ear plate (step 9) are
+  12.75 x 23.8 (were 12.0 x 22.8). Tilt yoke ear plate 8 mm thick (step 10, was 3 mm). Print set:
+  `~/3D-Printer/Incoming/Gladiator_Masthead_v2_ServoOpenings_20261104/PLATE_E_Carriage_Yoke_Strong.3mf`.
 
 ## Masthead V2 as built (Jim, 2026-11-03)
 
@@ -74,6 +77,18 @@ camera, and printed structural components.
 - **Servo ear screws get M2 heat-set inserts eventually** (Jim 2026-11-03): Tilt_Yoke ear plate and
   Pan_Servo_Carriage, both now M2 self-tap pilots (2.35). At their next revision, under the fastener rule.
 
+- **Pan servo carriage: the SG90 body only just went in** (Jim 2026-11-04: "I can get this one in. lets go 3/4mm
+  wider and at least 1mm longer"). Release step 8: opening 12.0 x 22.8 -> 12.75 x 23.8, centred on the body.
+  Read as 0.75 mm (three quarters). The ear pilots keep their place: 0.5 mm wall to the opening (was 1.0).
+- **Tilt yoke broke putting the tilt servo in** (Jim 2026-11-04: "The yoke needs to be made bigger too, i just broke
+  the yoke trying to get the tilt servo in" ... "Only one of the arms for the servo holding enclosure survived, the
+  rest snapped off"). The servo hangs on the 3 mm ear plate alone; the four bars round its opening (sides 3.6 x 3)
+  print upright and bend across the layers. Step 9: same 12.75 x 23.8 opening. Step 10: ear plate 8 mm thick (5 mm
+  added on the servo-body side; ear face unchanged), 45 deg underside, pilots through; the new material is trimmed
+  where the receiver and carrier swing (front edge, tilt -28..-40), so the printed receiver still fits. Front
+  edge keeps two small 3 mm notches; everywhere else round the opening is 8 mm. Full build + motion sweep pass.
+  Not printed yet.
+
 ## Open issues (2026-11-03)
 
 - **RESOLVED 2026-11-03: pedestal did not sit level on the rotor.** Cause: the Pan_Retainer was missing
@@ -88,7 +103,11 @@ camera, and printed structural components.
   manifest says "horn plate on the bed"); the release checks compare size and volume only. Jim: the printed
   pulley is fine, no change wanted. Fix the pose only if the script is touched for another step.
 - `~/3D-Printer/Incoming/Gladiator_Masthead_v2_20261031/START_HERE.txt` still lists the v06 screen frame
-  as re-used; step 7 replaced it with the 08 pocket frame.
+  as re-used; step 7 replaced it with the 08 pocket frame. (Its 04 and 07 are now flagged as replaced by plate E.)
+- `Part.makeCompound` segfaults on cad-lab as of 2026-11-04 (even 4 plain cylinders; cause not found, no package
+  changed). Step 6 now uses `Part.Compound` (same result). Use `Part.Compound` in new scripts.
+- The committed release validation (before 2026-11-04) came from a `--quick` build (no motion sweep); the
+  2026-11-04 build is a full one.
 
 ## Waiting on Jim
 
@@ -97,8 +116,10 @@ camera, and printed structural components.
 - After drilling the head-lock hole: report how the collar clamps and whether the head sits square.
 - Reprint the rotor (with M2 heat-set pockets) when convenient.
 - Optional, for the CAD: how far the hub recess had to be sanded out along the arms.
-- Next head revision (release step 8 or later, not started): hub recess tapered out along the arms (roof and
-  screw hole unchanged), M2 heat-sets for the servo ears, collar bore-ceiling relief / eased key, heat-set rotor.
+- Print plate E (carriage + stronger yoke) and report the servo fit in both and whether the yoke holds.
+- Next head revision (release step 11 or later, not started): hub recess tapered out along the arms (roof and
+  screw hole unchanged), M2 heat-sets for the servo ears (no room now: 0.5 mm wall to the wider openings, so
+  that needs a different ear fixing or a measured servo), collar bore-ceiling relief / eased key, heat-set rotor.
 - Print and evaluate camera case v4 and its three clip variants when ready.
 - Camera flash LED firmware (CAM masthead-1.3.0 / C6 gateway-2.4.10) built on the PC, not flashed.
 

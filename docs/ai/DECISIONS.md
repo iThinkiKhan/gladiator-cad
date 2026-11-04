@@ -179,3 +179,10 @@ taper out the edges of the circular hub recess on the interior, servo-facing sid
 arms. "We need to retain the ability to clamp with the servo horn screw": the roof and the centre hole are not changed, and
 the recess is NOT opened into a through hole. Jim sands the printed Pan_Drive_Pulley and GH44_Tilt_Receiver this way; the CAD
 follows at the next revision (both use the same horn plate drive).
+
+## 2026-11-04 - Servo body openings 12.75 x 23.8; tilt yoke ear plate 8 mm
+
+Jim: the pan servo "only just" went into the carriage ("3/4mm wider and at least 1mm longer"), and the tilt yoke snapped
+putting the tilt servo in ("Only one of the arms for the servo holding enclosure survived"). SG90 body openings in printed
+parts are now 12.75 x 23.8 (was 12.0 x 22.8, the old "tested opening"). A servo-holding plate printed upright is at least
+8 mm thick where room allows; 3 mm bars round a servo opening are not enough. Applied as release steps 8-10.

@@ -10,6 +10,9 @@ and applies every later change, in order, as numbered steps:
      superseded by step 6, kept as the record)
   6. Screen frame v08: v06 + camera-end post + screen-end pad, 4 M2 inserts, side board CUT to 30 x 61, flat on the rails (superseded by step 7)
   7. Screen frame = v06 + 4 M2 insert pockets for Jim's 40 x 60 side board (centred, holes 2 mm in from the edges)
+  8. Pan servo carriage: servo body opening 12.0 x 22.8 -> 12.75 x 23.8 (Jim 2026-11-04)
+  9. Tilt yoke: the same 12.75 x 23.8 servo body opening in the ear plate (Jim 2026-11-04)
+ 10. Tilt yoke: ear plate 3 -> 8 mm thick on the servo-body side, trimmed where the receiver swings (Jim 2026-11-04)
 Every print STL gets the bed chamfer (0.5 mm on hole edges on the bed, Jim 2026-10-15); the patch folders had
 dropped it for the neck, tube, yoke and receiver.
 
@@ -305,7 +308,7 @@ for y, z in holes6:
         Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)))
     assert abs(F6.common(ring).Volume - ring.Volume) < 0.05, (y, z)    # 1.5 mm wall round and 1.0 mm floor behind
 # only the insert bores may remove v06 material (the screen-end bores go into the v06 end post)
-bores6 = Part.makeCompound([Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)) for y, z in holes6])
+bores6 = Part.Compound([Part.makeCylinder(INS_D / 2, INS6_DEPTH, V(RX, y, z), V(1, 0, 0)) for y, z in holes6])
 removed6 = F06.cut(F6).Volume
 assert abs(removed6 - F06.common(bores6).Volume) < 0.01, removed6
 # the board must bear on frame all along both rails and on both posts (no gap like the v06 recessed end post)
@@ -389,6 +392,128 @@ R['steps']['7_v06_pockets_40x60_board'] = {
     'pocket_min_wall_mm': walls7, 'removed_mm3': round(F06.Volume - F7.Volume, 2),
     'hardware': '4 x M2 heat-set inserts (4 long) + 4 x M2 x 5 (or M2 x 6)'}
 print('step 7 ok', flush=True)
+
+# ============================================================ STEP 8: pan servo carriage, larger servo body opening
+# Jim 2026-11-04: the SG90 body only just goes into the printed carriage ("I can get this one in"); make the
+# opening "3/4mm wider and at least 1mm longer". 12.0 x 22.8 -> 12.75 x 23.8, still centred on the servo body.
+# Nothing else on the carriage moves. The ear pilots stay where the servo's ears are, so the plastic between
+# each pilot and the opening drops from 1.0 to 0.5 mm.
+CAR0 = S['Pan_Servo_Carriage']
+
+
+def to_F(shape):                                   # inverse of frame(): world -> servo frame F
+    s = shape.copy(); s.translate(V(-39.5, -113, -p['LIFT'])); s.rotate(V(), V(0, 0, 1), 45); return s
+
+
+CAR_T8, PILOT8, PITCH8 = 3.0, 2.35, 27.2            # carriage plate, M2 ear pilot, SG90 ear pitch (base script)
+OLD8, NEW8 = (12.0, 22.8), (12.75, 23.8)            # (width, length) of the body opening
+YB8 = -p['C_NOM'] - 5.5                             # servo body centre in frame F at the nominal belt setting
+cF = to_F(CAR0)
+TOP8 = cF.BoundBox.ZMax                             # carriage top face (ears sit here); the lug hangs below
+
+
+def opening8(w, l):
+    return Part.makeBox(w, l, CAR_T8 + 2, V(-w / 2, YB8 - l / 2, TOP8 - CAR_T8 - 1))
+
+
+# the old opening is exactly where the base script cut it: empty inside, plastic just outside it
+assert ov(cF, opening8(OLD8[0] - 0.02, OLD8[1] - 0.02)) < 1e-6
+assert ov(cF, opening8(OLD8[0] + 0.1, OLD8[1])) > 0.1 and ov(cF, opening8(OLD8[0], OLD8[1] + 0.1)) > 0.1
+c8 = cF.cut(opening8(*NEW8)).removeSplitter()
+removed8 = cF.Volume - c8.Volume
+expect8 = (NEW8[0] * NEW8[1] - OLD8[0] * OLD8[1]) * CAR_T8
+assert abs(removed8 - expect8) < 0.01, (removed8, expect8)       # only plate plastic removed: no pilot or slot touched
+assert c8.isValid() and len(c8.Solids) == 1
+S['Pan_Servo_Carriage'] = frame(c8)
+R['steps']['8_carriage_body_opening'] = {
+    'opening_mm_before': list(OLD8), 'opening_mm_now': list(NEW8),
+    'wider_mm': round(NEW8[0] - OLD8[0], 2), 'longer_mm': round(NEW8[1] - OLD8[1], 2), 'centred_on_servo_body': True,
+    'ear_pilot_wall_to_opening_mm': round(PITCH8 / 2 - PILOT8 / 2 - NEW8[1] / 2, 3),
+    'ear_pilot_wall_before_mm': round(PITCH8 / 2 - PILOT8 / 2 - OLD8[1] / 2, 3),
+    'removed_mm3': round(removed8, 2),
+    'bed_chamfer': 'none on the ear pilots: a 0.5 chamfer would break through the 0.5 mm wall into the opening'}
+print('step 8 ok', flush=True)
+
+# ============================================================ STEP 9: tilt yoke, same larger servo body opening
+# Jim 2026-11-04: "The yoke needs to be made bigger too, i just broke the yoke trying to get the tilt servo in."
+# The SG90 body goes through the 3 mm ear plate (x -2.8..0.2 from the tilt axis) in a 12.0 x 22.8 opening, the
+# same size as the carriage's; it gets the step 8 size, 12.75 x 23.8, centred on the servo body. The ear pilots
+# stay where the ears are (0.5 mm wall to the opening, was 1.0); the plate keeps 3.6 mm each side of it.
+Y0 = S['Tilt_Yoke']
+EP_X, BODY_Z8 = -2.8, 5.5                          # ear plate inner face, servo body centre above the tilt axis
+
+
+def opening9(w, l):                                # the base script's cut: 5 deep from 0.7 outside the plate
+    return Part.makeBox(5, w, l, T + V(EP_X - 0.7, -w / 2, BODY_Z8 - l / 2))
+
+
+assert ov(Y0, opening9(OLD8[0] - 0.02, OLD8[1] - 0.02)) < 1e-6
+assert ov(Y0, opening9(OLD8[0] + 0.1, OLD8[1])) > 0.1 and ov(Y0, opening9(OLD8[0], OLD8[1] + 0.1)) > 0.1
+Y9 = Y0.cut(opening9(*NEW8)).removeSplitter()
+removed9 = Y0.Volume - Y9.Volume
+expect9 = (NEW8[0] * NEW8[1] - OLD8[0] * OLD8[1]) * 3.0
+assert abs(removed9 - expect9) < 0.01, (removed9, expect9)     # only ear plate plastic: no pilot touched
+assert Y9.isValid() and len(Y9.Solids) == 1
+S['Tilt_Yoke'] = Y9
+R['steps']['9_yoke_body_opening'] = {
+    'opening_mm_before': list(OLD8), 'opening_mm_now': list(NEW8), 'centred_on_servo_body': True,
+    'ear_pilot_wall_to_opening_mm': round(PITCH8 / 2 - PILOT8 / 2 - NEW8[1] / 2, 3),
+    'ear_plate_side_wall_mm': round((20.0 - NEW8[0]) / 2, 3), 'removed_mm3': round(removed9, 2)}
+print('step 9 ok', flush=True)
+
+# ============================================================ STEP 10: stronger tilt servo ear plate
+# Jim 2026-11-04: "Strengthen the tilt servo holder as well, i dont want it snapping apart like that. Only one of the
+# arms for the servo holding enclosure survived, the rest snapped off." The servo hangs on the 3 mm ear plate alone;
+# round the opening it leaves four bars (sides 3.6 x 3), printed upright, so pushing the servo in bends them across
+# the layers. The plate gets 5 mm more on the servo-body side (+x, x 0.2..5.2): 8 mm in all. The ear face (x -2.8)
+# does not move. 45 deg underside so it prints without support. Opening and ear pilots run through the new depth.
+# Where the receiver and carrier swing past (front top corner, tilt -28..-40) the new material is trimmed by their
+# pieces in that slab, each padded 0.8 mm, swept every 1 deg over -40..+36, so the printed receiver still fits and
+# the -40 end stop is still the old plate.
+YS = S['Tilt_Yoke']
+X10 = 5.2
+prof = [T + V(x, -10, z) for x, z in ((0.15, -12.0), (0.15, 23.0), (X10, 23.0), (X10, -12.0 + (X10 - 0.2)))]
+ext = Part.Face(Part.makePolygon(prof + [prof[0]])).extrude(V(0, 20, 0))
+ext = ext.cut(opening9(NEW8[0], NEW8[1]).fuse(Part.makeBox(X10 + 1.5, NEW8[0], NEW8[1], T + V(0, -NEW8[0] / 2, BODY_Z8 - NEW8[1] / 2))))
+slab = Part.makeBox(X10 + 1.0, 90, 90, T + V(-0.2, -45, -45))
+pads = []
+for n in tilt:
+    if not S[n].BoundBox.intersect(slab.BoundBox):
+        continue
+    for s_ in S[n].common(slab).Solids:
+        b_ = s_.BoundBox
+        pads.append((n, Part.makeBox(b_.XLength + 1.6, b_.YLength + 1.6, b_.ZLength + 1.6, V(b_.XMin - 0.8, b_.YMin - 0.8, b_.ZMin - 0.8))))
+ext0 = ext.Volume
+trim_hits = set()
+for t in range(-40, 37):
+    for n, b_ in pads:
+        q = b_.copy(); q.rotate(T, V(1, 0, 0), t)
+        if ov(ext, q) > 1e-4:
+            ext = ext.cut(q); trim_hits.add(n)
+ext = ext.removeSplitter()
+Y10 = YS.fuse(ext).removeSplitter()
+for s_ in (-1, 1):                                  # ear pilots through the full 8 mm
+    Y10 = Y10.cut(Part.makeCylinder(PILOT8 / 2, X10 + 5.0, T + V(EP_X - 1.2, 0, BODY_Z8 + s_ * PITCH8 / 2), V(1, 0, 0)))
+Y10 = Y10.removeSplitter()
+assert Y10.isValid() and len(Y10.Solids) == 1
+
+
+def bar_x(y, z):                                    # plate thickness along x through (y, z), from the ear face
+    ln = Part.makeLine(T + V(EP_X - 0.01, y, z), T + V(X10 + 1, y, z))
+    c = Y10.common(ln)
+    return round(sum(e.Length for e in c.Edges), 2)
+
+
+bars = {'side_rear_+y': bar_x(8.2, BODY_Z8), 'side_front_-y': bar_x(-8.2, BODY_Z8),
+        'top_mid': bar_x(0, 20.5), 'bottom_mid': bar_x(0, -9.5),
+        'front_top_corner_-y': bar_x(-8.2, 16.0), 'rear_top_corner_+y': bar_x(8.2, 16.0)}
+S['Tilt_Yoke'] = Y10
+R['steps']['10_yoke_strong_ear_plate'] = {
+    'ear_plate_mm_before': 3.0, 'ear_plate_mm_now': round(X10 - EP_X, 2), 'ear_face_x_unchanged': EP_X,
+    'added_mm3': round(Y10.Volume - YS.Volume, 1), 'added_before_trim_mm3': round(ext0, 1),
+    'trimmed_for': sorted(trim_hits), 'trim': 'tilt-side pieces in the slab, padded 0.8, swept -40..+36 every 1 deg',
+    'plate_thickness_through_bars_mm': bars, 'underside': '45 deg, no support'}
+print('step 10 ok', bars, flush=True)
 
 # ============================================================ CHECKS on the finished assembly
 intent = {frozenset(('Pan_Bearing_Lower', 'Neck_Main')), frozenset(('Pan_Bearing_Upper', 'Neck_Main'))}
@@ -515,16 +640,21 @@ def pose(n, s):
 PRINT = [('01_Neck_Main_PanLead', 'Neck_Main', 'collar on the bed; supports ON (painted) under the servo-pad frame, flange and arm'),
          ('02_Mast_Tube_v2_Solid', 'Mast_Tube_v2', 'upright, pin end on the bed; no support'),
          ('03_Pan_Raised_Pedestal', 'Pan_Raised_Pedestal', 'base plate on the bed; supports ON under the top plate, none within 17 mm of the hub'),
-         ('04_Tilt_Yoke_Tapered', 'Tilt_Yoke', 'floor on the bed; no support'),
+         ('04_Tilt_Yoke_Strong_WideBody', 'Tilt_Yoke', 'floor on the bed; no support'),
          ('05_GH44_Tilt_Receiver_Balanced', 'GH44_Tilt_Receiver', 'GH44 face down, arms up; no support'),
          ('06_Pan_Drive_Pulley', 'Pan_Drive_Pulley', 'horn plate on the bed; no support'),
-         ('07_Pan_Servo_Carriage', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
+         ('07_Pan_Servo_Carriage_WideBody', 'Pan_Servo_Carriage', 'top face on the bed, tensioner lug up; no support'),
          ('08_Screen_Frame_v06_Pockets_40x60', 'Rear_Display_Frame', 'bezel face down, as the v06 frame; no support')]
-BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley', 'Pan_Servo_Carriage'}   # unchanged since v2: must match the v2 STLs
+BASE_STL = {'Pan_Raised_Pedestal', 'Pan_Drive_Pulley'}   # unchanged since v2: must match the v2 STLs (carriage: step 8)
 man = []
 for fname, n, how in PRINT:
     # the v06 frame already has its own bed chamfers on the 4 screen pilots: leave its geometry as it is
-    s, nch = (pose(n, S[n]), 'v06 own') if n == 'Rear_Display_Frame' else bed_chamfer(pose(n, S[n]))
+    if n == 'Rear_Display_Frame':
+        s, nch = pose(n, S[n]), 'v06 own'
+    elif n == 'Pan_Servo_Carriage':                # step 8: ear pilots are 0.5 mm from the opening, no chamfer
+        s, nch = pose(n, S[n]), 0
+    else:
+        s, nch = bed_chamfer(pose(n, S[n]))
     assert s.isValid() and len(s.Solids) == 1, n
     path = OUT / 'stl' / (fname + '.stl')
     MeshPart.meshFromShape(Shape=s, LinearDeflection=LIN, AngularDeflection=ANG, Relative=False).write(str(path))
