@@ -154,3 +154,28 @@ Jim found a 40 x 60 perfboard that fits the v06 frame unchanged (centred, flat o
 corner holes 2.0 mm in). Inserts pressed into the frame without pockets filled with plastic, so the frame is reprinted with
 4 M2 heat-set pockets (2.8 x 4.5): 08_Screen_Frame_v06_Pockets_40x60.stl, release step 7. Supersedes the v07 posts (step 5)
 and the v08 cut 30 x 61 board (step 6). Reaching the tilt horn screw needs the board off or a 6 mm hole on the tilt axis.
+
+## 2026-11-03 - Fasteners in final parts: heat-set inserts and captured nuts, so parts can be taken apart
+
+Jim (after the v1 rotor's M2 self-tap hole was damaged on disassembly): "I want to make these and pretty much everywhere
+else able to take heat sets, in the future. Even if the hole is deeper. The point is to be able to assemble and disassemble
+the final pieces." And: "I also particularly like the inset nut capture we have been using, that is a great way to use metal
+on metal clamping force on these prints."
+Rule for new and reprinted final parts:
+- Every screw that is undone for service goes into a metal thread: an M2 heat-set insert (2.8 bore, depth insert + 0.5,
+  4.5 for the current inserts, pocketed in CAD, never pressed into plain plastic) or a captured hex nut in an inset pocket
+  (M3: 6.0 AF, 2.6 deep, the tested pocket). No self-tap pilots in printed plastic for service joints.
+- Make room for them: add a boss, thicken the wall, move the screw circle or deepen the hole rather than drop the insert.
+- Prefer captured-nut pockets where a clamp or through-bolt takes load (metal on metal clamping).
+First known part to change: Pan_Rotor (current pilots 2.35 at r 18.8 have about 1.5 mm walls, too thin for a 2.8 bore).
+Existing printed parts stay as they are until reprinted.
+Same day, Jim: the servo ear screws (Tilt_Yoke ear plate and Pan_Servo_Carriage, now M2 self-tap pilots) get M2 heat-set
+inserts at their next revision.
+
+## 2026-11-03 - Horn hub recess: taper it out along the arms, keep the clamping roof
+
+Jim: the horn's round hub tapers down into the arms like a flat pyramid, so the horn does not go fully into the pocket. Fix:
+taper out the edges of the circular hub recess on the interior, servo-facing side, extending the circular pocket along the
+arms. "We need to retain the ability to clamp with the servo horn screw": the roof and the centre hole are not changed, and
+the recess is NOT opened into a through hole. Jim sands the printed Pan_Drive_Pulley and GH44_Tilt_Receiver this way; the CAD
+follows at the next revision (both use the same horn plate drive).

@@ -1,3 +1,19 @@
+## Masthead v2 fit notes: horn pockets, tilt servo nut - 2026-11-03 (Claude)
+
+Jim: the servo horn pockets are much better this time but the horn still is not fully accepted: the round hub tapers down into
+the arms like a flat pyramid. Fix (Jim, corrected the same day after Claude misread it as a through hole): taper out the hub
+recess edges on the servo-facing side along the arms; keep the roof and screw hole so the horn screw still clamps. Jim sands
+the printed parts. Servo ears get M2 heat-sets eventually. Jim asked about the hole facing the rear of the tilt servo: it is
+the tilt pivot (M3 x 12 through the yoke tower's captive nut, shank = receiver axle), not a servo screw. No CAD changed.
+
+## Masthead v2 pan stack fitted; collar 1 mm high; fastener rule - 2026-11-03 (Claude)
+
+Jim: new rotor assembly fitted, circlip fits, pedestal turns freely and is secure; pulley fine. Damaged v1 rotor kept on 3 good
+screws, to be reprinted later. The neck collar stops about 1 mm short on the mast, an indent shows from the alignment
+flat/key, and the M3 head-lock bolt does not quite pass; Jim will drill rather than force it. STL check: tube flat Z 111-150,
+key Z 115-147 (no key bottoming); suspected bore-ceiling sag (unsupported 4 mm overhang ring inside the collar) or the long key
+rubbing. New rule (DECISIONS 2026-11-03): heat-set inserts or captured nuts for every service joint in final parts.
+
 ## Masthead v2 assembly: retainer found, v1 spindle broken, rotor hole damaged - 2026-11-03 (Claude)
 
 Jim: the separate "spindle" is the v1 neck's post, broken clean off (not re-used; the v2 neck has its own). The Pan_Retainer

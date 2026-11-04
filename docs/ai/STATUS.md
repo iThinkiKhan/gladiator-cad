@@ -1,7 +1,7 @@
 # Gladiator — Current Status
 
 Last reviewed: 2026-11-03 (Claude)
-Status: Masthead V2 printed in part; physical assembly and fit test in progress
+Status: Masthead V2 pan stack fitted; collar sits about 1 mm high on the mast; assembly continuing
 Authority: Project engineering files and Jim's confirmations
 
 ## Project
@@ -40,6 +40,40 @@ camera, and printed structural components.
   and 1.5 mm to the outside, so a heat-set insert (2.8 bore) does not fit there. Options: run on three
   screws, CA-glue and re-drive the stripped hole, or reprint the unchanged v05 Pan_Rotor STL.
 
+## Masthead V2 fit results (Jim, 2026-11-03)
+
+- New rotor assembly fitted on the v2 neck: circlip fits; the pedestal turns freely and is secure.
+- Rotor: the damaged v1 Pan_Rotor stays in for now on 3 good screws + the damaged one (Jim: "pretty secure").
+  Jim will reprint the rotor later; the reprint should take M2 heat-set inserts (see DECISIONS 2026-11-03).
+  The current rotor has no room for them (2.35 pilots at r 18.8, about 1.45 mm wall to the bearing seat,
+  1.5 mm to the outside), so the screw circle or rotor diameter must change.
+- Pulley: Jim, "The pulley is fine." No change wanted.
+- **Collar on the mast stops about 1 mm short of home.** Jim sees an indent from the mast alignment
+  flat/key, and the M3 head-lock bolt does not quite pass (collar and tube holes offset by about 1 mm).
+  Jim will drill the hole rather than force the collar ("short of taking a hammer to the mast").
+  CAD check (Claude): the printed STLs match the CAD. The tube flat runs world Z 111-150 and the collar
+  key Z 115-147, so the key cannot bottom out on the end of the flat. The tube top seats against the
+  neck's bore ceiling (the spindle base, Z 150), which prints as an unsupported 4 mm overhang ring inside
+  the collar (collar on the bed, no support in the bore), so a sagged ceiling or the long 0.10 mm-gap key
+  (34 mm long vs 16 mm in v1) rubbing the flat are the likely causes. Not measured. Next print of
+  Neck_Main or the tube: give the bore ceiling a 45 deg chamfer or a 1 mm relief, and/or ease the key.
+- **Servo horn pockets (pan pulley and tilt receiver): better than v1 but the horn still does not go fully home.**
+  Jim: the round hub on top of the horn tapers down into the arms "into a type of a flat pyramid", so it meets
+  the pocket before the arms bottom out. Fix (Jim 2026-11-03): taper out the edge of the circular hub recess
+  on the interior, servo-facing side, extending the circular pocket along the arms. The roof and the centre
+  hole stay exactly as they are: the horn screw must still clamp the part through the roof. Jim is sanding the
+  printed pulley and receiver this way. CAD (horn_solid() and the hub recess: a straight 7.1 hub 1.0 above
+  flat 2.0 arms, 7.65 x 1.6 recess under a 1.2 roof) gets the same taper at the next revision; the taper
+  size is not measured.
+- **The hole facing the rear of the tilt servo is the tilt pivot, not a servo screw.** Jim asked whether the
+  arm with a hole facing the rear of the installed tilt servo was meant for a screw to hold the servo. CAD:
+  behind the servo body (rear at x 14.7) are the GH44_Tilt_Receiver pivot arm (x 24-27, 3.6 hole) and the
+  Tilt_Yoke pivot tower (x 28-33). An M3 x 12 bolt goes in from outside the tower, through an M3 nut captive in
+  the hex pocket on the tower's inner face; its shank is the axle the receiver turns on, and its tip stops
+  about 7 mm short of the servo. The servo is held only by its two ear screws.
+- **Servo ear screws get M2 heat-set inserts eventually** (Jim 2026-11-03): Tilt_Yoke ear plate and
+  Pan_Servo_Carriage, both now M2 self-tap pilots (2.35). At their next revision, under the fastener rule.
+
 ## Open issues (2026-11-03)
 
 - **RESOLVED 2026-11-03: pedestal did not sit level on the rotor.** Cause: the Pan_Retainer was missing
@@ -48,12 +82,11 @@ camera, and printed structural components.
   pedestal, on the same 4 M2 screws; the spindle post top is 3.1 mm above the rotor top, so the retainer
   is required (1.9 mm clearance with it, about 1.1 mm interference without). Jim confirmed the retainer
   was the missing piece; full stack seat and pan rotation not yet reported.
-- **Pan_Rotor: one of four M2 holes damaged** (see above). Decide 3 screws / repair / reprint.
-- **06_Pan_Drive_Pulley STL is exported upside down.** `build_head_v2_release.py` pose() rotates the
-  pulley 180 deg about X, so the release STL and Plate B have the horn plate on top (manifest says
-  "horn plate on the bed"). The pre-release v2 STL is correct. The release checks compare size and
-  volume only, so they miss a flip. Geometry is unchanged (cup 9.1 deep, horn pocket 2.2, plate 5.0):
-  fit the printed part horn-pocket side down on the servo horn. Not fixed; Jim to decide.
+- **Pan_Rotor: one of four M2 holes damaged.** Jim's choice: keep it on 3 good screws for now, reprint later.
+- **Collar about 1 mm high on the mast; head-lock bolt hole being drilled by Jim** (see fit results).
+- 06_Pan_Drive_Pulley STL is exported upside down by `build_head_v2_release.py` pose() (horn plate up,
+  manifest says "horn plate on the bed"); the release checks compare size and volume only. Jim: the printed
+  pulley is fine, no change wanted. Fix the pose only if the script is touched for another step.
 - `~/3D-Printer/Incoming/Gladiator_Masthead_v2_20261031/START_HERE.txt` still lists the v06 screen frame
   as re-used; step 7 replaced it with the 08 pocket frame.
 
@@ -61,8 +94,11 @@ camera, and printed structural components.
 
 - Finish assembling and fit-testing Masthead V2; record physical results (pedestal seat, collar on tube,
   belt tension at C 38-48, wingnut clamp, wire feed through the solid tube).
-- Report how the pan stack seats and turns with the retainer fitted and the damaged rotor hole.
-- Decide whether to fix the pulley export orientation.
+- After drilling the head-lock hole: report how the collar clamps and whether the head sits square.
+- Reprint the rotor (with M2 heat-set pockets) when convenient.
+- Optional, for the CAD: how far the hub recess had to be sanded out along the arms.
+- Next head revision (release step 8 or later, not started): hub recess tapered out along the arms (roof and
+  screw hole unchanged), M2 heat-sets for the servo ears, collar bore-ceiling relief / eased key, heat-set rotor.
 - Print and evaluate camera case v4 and its three clip variants when ready.
 - Camera flash LED firmware (CAM masthead-1.3.0 / C6 gateway-2.4.10) built on the PC, not flashed.
 
