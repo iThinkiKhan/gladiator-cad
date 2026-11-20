@@ -2,6 +2,13 @@
 
 **November 19, 2026** — Initial angular profile applied and verified on S3 from C6 revision 14. Camera-forward zero is pan 850 µs and tilt 1500 µs. Enforced limits are 9° left / 7° right and 1.5° down / 2° up. Both outputs were off. Physical camera aiming verification is pending. [Current mast setup](V2_MAST_CONTROL_SCHEMA.md).
 
+**November 20, 2026 — Jim's status (supersedes older notes below):**
+- C6 connectivity: intermittent. Jim's theory is antenna issues.
+- C6 cold boot does not answer USB. Jim is working on this himself. In this morning's test, a cold-booted C6 received the USB commands (`receivedCommands` 3) but sent nothing back (0 bytes on all three). After a ROM reset back into the normal app, it replied normally. Evidence: diagnostics/connection-recovery-20261120.
+- IMU orientation loss: Jim believes it was an I2C issue, which has since been resolved.
+- Radar: never installed. Its OFFLINE status is expected, not a fault.
+- Mast calibration revision 14 was re-verified on C6 and S3 after reboots on November 20.
+
 The October 24 event is complete. Standard development is active; event launchers and Halloween display instructions are historical.
 
 ## Current state
