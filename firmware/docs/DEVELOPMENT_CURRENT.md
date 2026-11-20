@@ -11,6 +11,15 @@
 
 The October 24 event is complete. Standard development is active; event launchers and Halloween display instructions are historical.
 
+## Onboard autonomy
+
+1. **Identify and center one target.** The CAM 1.4.1 candidate detects the [two-color marker](TARGET_MARKER.html) from its own frames. For the first bench check, leave the chassis and mast stationary. Move the card left, right, up and down in the live view, then cover it and show a second copy. Check the offset signs, update rate, and whether the coordinates disappear on loss or ambiguity. Compare video and target update rates while sharing the camera. Once those checks pass, add mast-only feedback on the S3. As each new image arrives, apply a small bounded correction within revision 14 limits and stop on stale or ambiguous input, a limit, or disarm. Check convergence from either side, settling without oscillation, and repeatability after returning to the target.
+2. **Measure distance and build a local map.** Register the camera to the LiDAR grid using a stationary target at known positions, starting with the 24-inch setup. Use time-aligned valid cells from the target's footprint, and keep nearby obstacle returns separate. Build the first map in robot coordinates while stationary. Qualify pose feedback before integrating scans taken while moving.
+3. **Calibrate chassis motion.** Inventory the actual motion feedback, including track encoders if installed. Measure straight travel, turning, and stopping on the intended surface. Use that feedback to correct motion and measure drift between updates.
+4. **Make a short approach.** Keep the target centered while closing on a range setpoint. Stop at the standoff distance or when target tracking, clear range, or usable pose is lost. Keep the S3's existing arm and stop authority in the loop.
+
+The observation endpoint is `GET /api/target` on CAM. Start a passive session with `POST /api/target`, the existing CAM admin header, and `{"leaseMs":30000}`. Use `{"leaseMs":0}` to stop. Only `found` has `x` and `y` offsets in fractions of the image half-width and half-height, positive right and down in the published camera image. The client should use each `bootId` and `sample` pair once, account for transport delay in `ageMs`, and discard coordinates when status changes. CAM expires observations after 700 ms. This build has no actuator integration and requires stationary hardware validation.
+
 ## Current state
 
 - Canonical source: C:/PlatformIO/Gladiator. Preserve credentials, display orientation, camera flip/mirror and saved servo measurements.
@@ -41,6 +50,8 @@ The October 24 event is complete. Standard development is active; event launcher
 - Battery-powered repeat on C6 2.4.13 completed60.266s/60samples: UART4959frames/1439758bytes,0new UART/frame/detail/drop errors, all core telemetry fresh, IMU pose valid60/60, no C6/S3 resets, all track/servo outputsOFF, V2 record12 unchanged; battery15.826–15.887V. Initial attempt stopped after39saved samples on a power-validity guard; readback recovered~15.90V with no proven voltage collapse, one intact-guard retry completed. Retain this separate sensor-validity transient. No movement/firmware/calibration commands. Evidence: diagnostics/battery-link-test-20261109/REPORT.md.
 
 - 2026-11-19: CAM masthead-1.4.0 (screen style upgrade) INSTALLED by authenticated OTA after Jim approved it. It runs from app0, and app1 keeps 1.3.6 for rollback. New eyes/HUD and a changed-tile push: 11.5 fps measured, against about 5 before. Display wiring and SPI settings are unchanged. The CAM address is now 192.168.8.3 (role verified); this PC took .2. Verify the role before reusing a DHCP address. The look on the physical panel is still to be eyeballed by Jim. See diagnostics/face-style-20261119/REPORT.md.
+
+- 2026-11-20: C6 gateway-2.4.20 INSTALLED (ota_0; 2.4.19 kept in ota_1). It is 2.4.19 fixed addressing (CAM 1.4.2 at 192.168.8.2) plus the new desktop control page at /: keyboard hold-to-run, Space/Esc disarm. The shared FieldPage.h is now at /field and in the /dev embed. Mast calibration r14 was verified identical to docs/v2-mast-control.json before the install, after it, and after a robot power cycle. Live page and video were checked in Chrome; driving with the new page is still to be tried by Jim. See diagnostics/control-page-20261120/REPORT.md.
 
 ## Remaining development checks
 

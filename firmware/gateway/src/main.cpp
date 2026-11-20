@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <cerrno>
 #include "lwip/sockets.h"
+#include "dhcpserver/dhcpserver.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
@@ -43,6 +44,7 @@
 #include "DetailCodec.h"
 #include "DetailJson.h"
 #include "FieldPage.h"
+#include "ControlPage.h"
 #include "InterfaceVocabulary.h"
 #include "GatewayConfig.h"
 #include "GatewayPage.h"
@@ -129,8 +131,17 @@ void startWifi(){
   station=esp_netif_create_default_wifi_sta();auto ap=esp_netif_create_default_wifi_ap();
   esp_netif_set_hostname(station,config::HOSTNAME);
   esp_netif_dhcps_stop(ap);
-  esp_netif_ip_info_t ip={};ip.ip.addr=ESP_IP4TOADDR(192,168,8,1);ip.gw=ip.ip;ip.netmask.addr=ESP_IP4TOADDR(255,255,255,0);
-  ESP_ERROR_CHECK(esp_netif_set_ip_info(ap,&ip));ESP_ERROR_CHECK(esp_netif_dhcps_start(ap));
+  esp_netif_ip_info_t ip={};
+  ip.ip.addr=ESP_IP4TOADDR(fieldnet::PREFIX_A,fieldnet::PREFIX_B,fieldnet::PREFIX_C,fieldnet::GATEWAY);
+  ip.gw=ip.ip;
+  ip.netmask.addr=ESP_IP4TOADDR(255,255,255,0);
+  ESP_ERROR_CHECK(esp_netif_set_ip_info(ap,&ip));
+  dhcps_lease_t leases={};
+  leases.enable=true;
+  leases.start_ip.addr=ESP_IP4TOADDR(fieldnet::PREFIX_A,fieldnet::PREFIX_B,fieldnet::PREFIX_C,fieldnet::DHCP_FIRST);
+  leases.end_ip.addr=ESP_IP4TOADDR(fieldnet::PREFIX_A,fieldnet::PREFIX_B,fieldnet::PREFIX_C,fieldnet::DHCP_LAST);
+  ESP_ERROR_CHECK(esp_netif_dhcps_option(ap,ESP_NETIF_OP_SET,ESP_NETIF_REQUESTED_IP_ADDRESS,&leases,sizeof(leases)));
+  ESP_ERROR_CHECK(esp_netif_dhcps_start(ap));
   wifi_init_config_t init=WIFI_INIT_CONFIG_DEFAULT();ESP_ERROR_CHECK(esp_wifi_init(&init));
   ESP_ERROR_CHECK(esp_wifi_set_storage(WIFI_STORAGE_RAM));
   ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT,ESP_EVENT_ANY_ID,onWifi,nullptr));
@@ -197,7 +208,9 @@ bool authorize(httpd_req_t *req){
   uint8_t diff=0;for(unsigned i=0;i<32;++i)diff|=supplied[i]^adminKey[i];
   if(diff){httpd_resp_send_err(req,HTTPD_401_UNAUTHORIZED,"Invalid maintenance key");return false;}return true;
 }
-esp_err_t rootHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,FIELD_PAGE,HTTPD_RESP_USE_STRLEN);}
+// "/" is the desktop control page; the shared field page stays at /field (and in /dev).
+esp_err_t rootHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,CONTROL_PAGE,HTTPD_RESP_USE_STRLEN);}
+esp_err_t fieldPageHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,FIELD_PAGE,HTTPD_RESP_USE_STRLEN);}
 esp_err_t devHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,GATEWAY_PAGE,HTTPD_RESP_USE_STRLEN);}
 esp_err_t statusHandler(httpd_req_t *req){return replyJson(req,serialize(gatewayState()));}
 esp_err_t robotHandler(httpd_req_t *req){
@@ -357,7 +370,7 @@ void startHttp(){
   cfg.lru_purge_enable=true;cfg.recv_wait_timeout=5;cfg.send_wait_timeout=5;cfg.open_fn=openHttpSession;
   ESP_ERROR_CHECK(httpd_start(&server,&cfg));
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
-  const Route routes[]={{"/",HTTP_GET,rootHandler},{"/api/status",HTTP_GET,statusHandler},
+  const Route routes[]={{"/",HTTP_GET,rootHandler},{"/field",HTTP_GET,fieldPageHandler},{"/api/status",HTTP_GET,statusHandler},
     {"/hardware-test",HTTP_GET,hardwarePageHandler},{"/hardware-test/",HTTP_GET,hardwarePageHandler},{"/hardware-test/app.js",HTTP_GET,hardwareScriptHandler},{"/hardware-test/styles.css",HTTP_GET,hardwareStyleHandler},
     {"/booth",HTTP_GET,boothPageHandler},{"/booth/",HTTP_GET,boothPageHandler},{"/booth/app.js",HTTP_GET,boothScriptHandler},{"/booth/mast-settings.js",HTTP_GET,mastSettingsScriptHandler},{"/booth/mast-workbench.js",HTTP_GET,mastWorkbenchScriptHandler},
     {"/help",HTTP_GET,helpHandler},{"/help/",HTTP_GET,helpHandler},{"/api/camera/status",HTTP_GET,cameraProxyHandler},{"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},{"/api/mast/config",HTTP_POST,mastConfigHandler},{"/api/camera",HTTP_GET,cameraProxyHandler},{"/api/camera",HTTP_POST,cameraProxyHandler},{"/api/camera/light",HTTP_GET,cameraProxyHandler},{"/api/camera/light",HTTP_POST,cameraProxyHandler},

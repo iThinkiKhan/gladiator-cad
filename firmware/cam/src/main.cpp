@@ -6,6 +6,7 @@
 #include <Adafruit_ST7789.h>
 #include <ArduinoJson.h>
 #include <esp_camera.h>
+#include <esp_jpg_decode.h>
 #include <esp_http_server.h>
 #include <esp_heap_caps.h>
 #include <esp_ota_ops.h>
@@ -15,7 +16,9 @@
 #include <mbedtls/sha256.h>
 #include <atomic>
 #include <cmath>
+#include <new>
 #include "Config.h"
+#include "FieldNetwork.h"
 #include "VisualState.h"
 #include "OperatorStatus.h"
 #include "OperatorRender.h"
@@ -25,6 +28,7 @@
 #include "CamOtaPolicy.h"
 #include "MaintenancePage.h"
 #include "IndicatorPolicy.h"
+#include "TargetObservation.h"
 
 namespace {
 SPIClass displaySpi(HSPI);
@@ -77,6 +81,7 @@ bool initCamera() {
 }
 #include "Maintenance.h"
 #include "CameraControl.h"
+#include "TargetApplication.h"
 #include "Spotlight.h"
 #include "StatusIndicator.h"
 #include "DisplayDiagnostics.h"
@@ -141,7 +146,7 @@ bool startServers() {
   httpd_uri_t status={};status.uri="/api/status";status.method=HTTP_GET;status.handler=statusHandler;
   if(httpd_register_uri_handler(api,&root)!=ESP_OK||httpd_register_uri_handler(api,&status)!=ESP_OK)return false;
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
-  const Route routes[]={{"/maintenance",HTTP_GET,maintenanceHandler},{"/api/ota",HTTP_POST,camOtaHandler},{"/api/confirm",HTTP_POST,confirmHandler},{"/api/config",HTTP_POST,camConfigHandler},{"/api/camera",HTTP_GET,cameraSettingsHandler},{"/api/camera",HTTP_POST,cameraSettingsHandler},{"/api/light",HTTP_GET,lightHandler},{"/api/light",HTTP_POST,lightHandler},{"/api/display",HTTP_GET,displayHandler},{"/api/display",HTTP_POST,displayHandler}};
+  const Route routes[]={{"/maintenance",HTTP_GET,maintenanceHandler},{"/api/ota",HTTP_POST,camOtaHandler},{"/api/confirm",HTTP_POST,confirmHandler},{"/api/config",HTTP_POST,camConfigHandler},{"/api/camera",HTTP_GET,cameraSettingsHandler},{"/api/camera",HTTP_POST,cameraSettingsHandler},{"/api/light",HTTP_GET,lightHandler},{"/api/light",HTTP_POST,lightHandler},{"/api/display",HTTP_GET,displayHandler},{"/api/display",HTTP_POST,displayHandler},{"/api/target",HTTP_GET,targetHandler},{"/api/target",HTTP_POST,targetHandler}};
   for(const auto &r:routes){httpd_uri_t route={};route.uri=r.uri;route.method=r.method;route.handler=r.handler;if(httpd_register_uri_handler(api,&route)!=ESP_OK)return false;}
   cfg.server_port=81;cfg.ctrl_port+=1;cfg.max_open_sockets=1;cfg.max_uri_handlers=1;
   // The infinite stream has its own HTTP task. Status stays responsive.
@@ -180,6 +185,21 @@ bool pollGateway() {
   }
   http.end();return ok;
 }
+void connectStation(const NetworkSettings &settings) {
+  if(!validNetwork(settings))return;
+  const bool directField=strcmp(settings.ssid,fieldnet::SSID)==0&&
+                         strcmp(settings.gateway,fieldnet::GATEWAY_URL)==0;
+  const IPAddress camera(fieldnet::PREFIX_A,fieldnet::PREFIX_B,fieldnet::PREFIX_C,fieldnet::CAMERA);
+  const IPAddress gateway(fieldnet::PREFIX_A,fieldnet::PREFIX_B,fieldnet::PREFIX_C,fieldnet::GATEWAY);
+  const IPAddress mask(255,255,255,0);
+  const IPAddress dhcp(0,0,0,0);
+  // The gateway reserves the fixed camera address outside its DHCP pool.
+  if(!(directField?WiFi.config(camera,gateway,mask):WiFi.config(dhcp,dhcp,dhcp))){
+    Serial.println("CAM station IP setup failed; retrying");
+    return;
+  }
+  WiFi.begin(settings.ssid,settings.password);
+}
 void networkTask(void *) {
   uint32_t retry=millis()-10000;bool wasConnected=false;
   for(;;) {
@@ -188,7 +208,10 @@ void networkTask(void *) {
     if(networkChanged.exchange(false)){startRecovery();WiFi.disconnect();retry=millis()-10000;disconnectedSince=millis();}
     if(WiFi.status()!=WL_CONNECTED) {
       // Keep recovery clients on a stable channel while they administer the CAM.
-      if(!(recoveryActive&&WiFi.softAPgetStationNum()>0)&&millis()-retry>=(recoveryActive?60000u:10000u)){retry=millis();auto settings=networkSnapshot();if(validNetwork(settings))WiFi.begin(settings.ssid,settings.password);}
+      if(!(recoveryActive&&WiFi.softAPgetStationNum()>0)&&millis()-retry>=(recoveryActive?60000u:10000u)){
+        retry=millis();
+        connectStation(networkSnapshot());
+      }
       if(millis()-disconnectedSince>=config::RECOVERY_MS)startRecovery();
       wasConnected=false;
     } else {

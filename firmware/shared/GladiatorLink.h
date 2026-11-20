@@ -1,5 +1,6 @@
 #pragma once
 #include "RobotProtocol.h"
+#include "FieldNetwork.h"
 #if __has_include("secrets.h")
 #include "secrets.h"
 #else
@@ -11,7 +12,8 @@ enum class Transport:uint8_t { NONE=0, UART=1, WIFI=2 };
 inline const char *name(Transport t){return t==Transport::UART?"uart":t==Transport::WIFI?"wifi":"none";}
 constexpr uint32_t HEARTBEAT_MS=250, LOSS_MS=2500, STABLE_MS=5000, COMMAND_MS=350;
 constexpr uint16_t WIFI_PORT=8765;
-constexpr char FIELD_SSID[]="Gladiator-Gateway", FIELD_PASSWORD[]=GLADIATOR_FIELD_PASSWORD, FIELD_IP[]="192.168.8.1";
+constexpr auto &FIELD_SSID=fieldnet::SSID;
+constexpr char FIELD_PASSWORD[]=GLADIATOR_FIELD_PASSWORD, FIELD_IP[]="192.168.8.1";
 
 // Explicit codecs: no compiler packing, native struct layout or ABI on the wire.
 struct Writer {

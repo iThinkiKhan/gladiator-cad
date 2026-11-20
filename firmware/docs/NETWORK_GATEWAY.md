@@ -28,6 +28,10 @@ fresh arm action. Telemetry and requested detail never move motor policy to C6.
 - Normal phone field interface: `http://192.168.8.1/`.
 - C6 development site: `http://192.168.8.1/dev`.
 - C6 field AP: `Gladiator-Gateway`, password `GLADIATOR_FIELD_PASSWORD` (`shared/secrets.h`).
+- Masthead camera on the field AP: `192.168.8.2`. The direct video endpoint is
+  `http://192.168.8.2:81/stream`. Gateway 2.4.19 leases addresses from
+  `192.168.8.10` through `192.168.8.109`, leaving the camera's fixed address
+  available regardless of client join order.
 - Homelab: same pages at the DHCP address reported by C6 `/api/status` or USB
   `status`; hostname `gladiator-gateway` (no mDNS service).
 - Independent S3 recovery: `Gladiator-Setup`, password `GLADIATOR_MAINTENANCE_AP_PASSWORD` (`shared/secrets.h`), phone
@@ -58,6 +62,24 @@ Evidence: `diagnostics/connection-recovery-20261120/usb-cold-warm-summary.json`.
 The installed C6 application flushes the transmit FIFO before it starts the buffered USB driver and again before the first command reply. Each console reply also drains the standard-output buffer. Two real USB power cycles reported power-on reset and returned all three read-only console replies with zero recovery resets. Revision 14 read back on each cold boot. OTA preserved 2.4.15 in the rollback slot. All eight deployed operator-page assets matched their previous content.
 
 Evidence: `diagnostics/connection-recovery-20261120/usb-cold-fix-verified.json`. The pinned release and its exact source are in the adjacent `c6-usb-candidate` directory.
+
+### Fixed field camera address
+
+Masthead 1.4.2 uses `192.168.8.2/24` when its saved network is
+`Gladiator-Gateway` and its gateway URL is `http://192.168.8.1`. It uses DHCP
+for other saved networks. The gateway's saved camera address is `192.168.8.2`
+on the direct AP. Petey gets it from `/api/visual`, and the Android native
+camera viewer already uses the same fixed endpoint.
+
+When migrating an older installation, update the gateway before the camera.
+If the old camera fails to rejoin after the gateway update, a full robot
+power cycle lets it take a temporary address from the new DHCP pool. Verify
+its `masthead-camera` role before sending the camera update to that address.
+The camera returns at `192.168.8.2` after the new firmware starts.
+
+November 20 installation evidence is in
+`diagnostics/visual-calibration-20261120/`. The gateway build used the 2.4.17
+release's operator-page assets and applied the addressing change to that base.
 
 ## Build, provision, update
 

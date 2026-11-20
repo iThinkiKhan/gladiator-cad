@@ -40,7 +40,7 @@ async function refreshCameraStatus(){
 refreshCameraStatus();
 function stopTest(){const f=$('testControls');if(f.src)f.contentWindow.postMessage({type:'interface-stop'},location.origin);}
 function sendKey(){const f=$('testControls');if(f.src)f.contentWindow.postMessage({type:'interface-key',key:$('key').value.trim()},location.origin);}
-$('openControls').onclick=()=>{const f=$('testControls');f.hidden=false;if(!f.getAttribute('src'))f.src='/?embedded=1';$('openControls').hidden=true;};
+$('openControls').onclick=()=>{const f=$('testControls');f.hidden=false;if(!f.getAttribute('src'))f.src='/field?embedded=1';$('openControls').hidden=true;};
 window.addEventListener('message',e=>{if(e.origin===location.origin&&e.source===$('testControls').contentWindow&&e.data?.type==='interface-ready')sendKey();});
 $('key').oninput=sendKey;window.addEventListener('blur',()=>{if(document.activeElement!==$('testControls'))stopTest();});document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTest();});
 let rawLog='';function renderLogs(){const needle=$('logFilter').value.toLowerCase();$('logText').textContent=rawLog.split('\n').filter(line=>(!$('hideSensors').checked||!/^\[\d+\] (Sensors \||VBUS:)/.test(line))&&line.toLowerCase().includes(needle)).join('\n');}

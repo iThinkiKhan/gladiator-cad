@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gladiator target marker</title>
+<style>
+  body { margin: 2rem auto; max-width: 36rem; padding: 0 1.25rem; font: 1rem/1.55 system-ui, sans-serif; color: #111; }
+  .marker { width: min(48vw, 82mm); display: grid; gap: min(9.6vw, 16.4mm); margin: 2rem auto; }
+  .patch { display: block; width: 100%; aspect-ratio: 1; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .magenta { background: #f000a8; }
+  .cyan { background: #00d5ef; }
+  @media print {
+    header { display: none; }
+    .marker { width: 70mm; gap: 14mm; }
+  }
+</style>
+<header>
+  <h1>Gladiator target marker</h1>
+  <p>Display this upright on a screen or print it in color. Keep both squares and some white border visible in the camera feed. For the bucket test, put the gap between the squares at the height you want the camera to center on.</p>
+</header>
+<div class="marker" role="img" aria-label="Magenta square above a cyan square">
+  <span class="patch magenta"></span>
+  <span class="patch cyan"></span>
+</div>
+</html>
