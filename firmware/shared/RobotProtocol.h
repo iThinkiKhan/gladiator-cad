@@ -13,7 +13,8 @@ constexpr size_t MAX_RAW=HEADER_SIZE+MAX_PAYLOAD+4;
 constexpr size_t MAX_FRAME=MAX_RAW+MAX_RAW/254+2;
 enum class Type:uint8_t { HELLO=1, HEARTBEAT=2, TELEMETRY=3, PING=4, PONG=5, GET_STATE=6,
   CONTROLLER=16, POWER=17, ORIENTATION=18, RANGE=19, PRESENCE=20,
-  DETAIL=21, SUBSCRIBE=22, CONTROL=32, CONTROL_RESULT=33, WIFI_LEASE=40, SYSTEM=41, LOG=42 };
+  DETAIL=21, SUBSCRIBE=22, CONTROL=32, CONTROL_RESULT=33, MAST_CONTROL=34, MAST_STATE=35, MAST_CONFIG=36,
+  WIFI_LEASE=40, SYSTEM=41, LOG=42 };
 inline uint32_t read32(const uint8_t *p) { return uint32_t(p[0])|uint32_t(p[1])<<8|uint32_t(p[2])<<16|uint32_t(p[3])<<24; }
 inline void write32(uint8_t *p,uint32_t v) { for(unsigned i=0;i<4;++i)p[i]=uint8_t(v>>(8*i)); }
 inline uint32_t crc32(const uint8_t *p,size_t n) {

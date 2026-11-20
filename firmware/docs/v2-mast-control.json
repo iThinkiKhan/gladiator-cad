@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "hardwareGeneration": "v2",
+  "designStatus": "locked-by-Jim",
+  "lockedDate": "2026-11-19",
+  "source": "Jim's November 19 installed-mast manual tests and selected pulse points; revision 14 angular profile applied to S3 at 2026-11-19T21:49Z; C6 and S3 readback re-verified 2026-11-20 after a C6 reboot",
+  "motionPermission": "explicit-user-permission-required",
+  "autoEnableOnLoad": false,
+  "applyAngularCalibration": true,
+  "pan": {
+    "gpio": 10,
+    "rightLimitUs": 500,
+    "neutralUs": 850,
+    "leftLimitUs": 1500,
+    "lowerPulseDirection": "right",
+    "higherPulseDirection": "left",
+    "directionReference": "camera looks forward at pan neutral; screen faces the opposite direction",
+    "selectedControlLimitsArePhysicalStops": false,
+    "mechanicalFullTurnFreedom": true,
+    "continuousRotationAllowed": false,
+    "cableSoftwareStopsRequired": true,
+    "accumulatedRotationTrackingRequired": true,
+    "moduloWraparoundAllowed": false,
+    "assumeNeutralAfterReset": false,
+    "measuredHeadAngleLimitsDeg": {
+      "right": -9.0,
+      "left": 7.0
+    },
+    "measuredCableSafeEnvelopeDeg": null,
+    "angularMappingStatus": "initial-angular-profile-applied-revision-14; physical camera aiming verification pending",
+    "positionFeedback": "no-verified-mast-position-feedback"
+  },
+  "tilt": {
+    "gpio": 13,
+    "downLimitUs": 950,
+    "neutralUs": 1500,
+    "upLimitUs": 2000,
+    "lowerPulseDirection": "down",
+    "neutralAtUpLimit": false,
+    "liftAboveUpLimit": "unverified beyond selected pulse; physical lift above level is limited",
+    "currentLimitedRangeAcceptedByJim": true,
+    "measuredHeadAngleLimitsDeg": {
+      "down": -1.5,
+      "up": 2.0
+    }
+  },
+  "mechanicalReadiness": {
+    "panBelt": "engagement-much-improved-by-new-rotor-per-Jim",
+    "rotorRingPedestalRetention": "assembly-secure-per-Jim",
+    "rotorAndRetainingRingReprint": "new-rotor-installed-per-Jim",
+    "angularCalibrationSignedOff": false,
+    "fieldReadinessSignedOff": false
+  },
+  "commissioningRecordFields": {
+    "tiltPin": "13",
+    "panPin": "10",
+    "panLow": "500",
+    "panReverse": true,
+    "panNeutral": "850",
+    "panHigh": "1500",
+    "tiltLow": "950",
+    "tiltNeutral": "1500",
+    "tiltHigh": "2000",
+    "tiltReverse": false,
+    "hz": "50"
+  },
+  "previousSetupRevision": 13,
+  "liveSetupRevision": 14,
+  "angularProfileRevision14": {
+    "appliedUtc": "2026-11-19T21:49:38Z",
+    "verifiedUtc": "2026-11-20 (C6 /api/mast/setup revision 14; S3 /api/mast calibrated=true, controlMode=angles, outputs off)",
+    "c6SetupFields": {
+      "tiltPin": "13",
+      "panPin": "10",
+      "panReverse": true,
+      "panNeutral": "850",
+      "tiltNeutral": "1500",
+      "tiltReverse": false,
+      "hz": "50",
+      "panLow": "650",
+      "panHigh": "1050",
+      "panShaftMin": "-6.3",
+      "panShaftMax": "5.1",
+      "panMin": "-9",
+      "panMax": "7",
+      "tiltLow": "1300",
+      "tiltHigh": "1550",
+      "tiltShaftMin": "-1.8",
+      "tiltShaftMax": "2.4",
+      "tiltMin": "-1.5",
+      "tiltMax": "2",
+      "speed": "2"
+    },
+    "s3Profile": {
+      "action": "calibrate",
+      "panModel": "SG90",
+      "tiltModel": "SG90",
+      "positionalVerified": true,
+      "clearanceVerified": true,
+      "frequencyHz": 50,
+      "speedDeciDegPerSec": 20,
+      "pan": {
+        "pin": 10,
+        "lowUs": 650,
+        "neutralUs": 850,
+        "highUs": 1050,
+        "shaftMinDeciDeg": -63,
+        "shaftMaxDeciDeg": 51,
+        "minDeciDeg": -90,
+        "maxDeciDeg": 70,
+        "reversed": true
+      },
+      "tilt": {
+        "pin": 13,
+        "lowUs": 1300,
+        "neutralUs": 1500,
+        "highUs": 1550,
+        "shaftMinDeciDeg": -18,
+        "shaftMaxDeciDeg": 24,
+        "minDeciDeg": -15,
+        "maxDeciDeg": 20,
+        "reversed": false
+      }
+    },
+    "panGearRatioInFirmware": 1.5,
+    "physicalAimingVerified": false
+  },
+  "commissioningRecordFields_note": "commissioningRecordFields is the revision 13 pulse baseline; revision 14 values are in angularProfileRevision14"
+}

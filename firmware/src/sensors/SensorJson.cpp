@@ -65,6 +65,8 @@ String sensorJson(const RobotSensors &data) {
   auto bus=doc["bus"].to<JsonObject>();
   bus["started"]=data.busStarted; bus["sda"]=board::I2C_SDA; bus["scl"]=board::I2C_SCL;
   bus["clockHz"]=board::I2C_HZ; bus["timeoutMs"]=board::I2C_TIMEOUT_MS;
+  bus["stuck"]=data.busStuck; bus["recoveries"]=data.busRecoveries;
+  bus["hangResets"]=data.hangResets; bus["watchdog"]=data.busWatchdog;
   doc["workerMaxUs"]=data.workerMaxUs;
   auto power=doc["power"].to<JsonObject>();
   metaJson(power["meta"].to<JsonObject>(),data.power.meta,"POWER_MAIN","INA226");
@@ -82,10 +84,11 @@ String sensorJson(const RobotSensors &data) {
     derived["currentAmps"]=p.currentAmps; derived["watts"]=p.watts;
     if (p.hasMinimum) derived["minimumVolts"]=p.minimumVolts; else derived["minimumVolts"]=nullptr;
     derived["peakAbsAmps"]=p.peakAbsAmps;
+    derived["recentPeakAmps"]=p.recentPeakAmps; derived["peak1sAmps"]=p.peak1sAmps; derived["min1sVolts"]=p.min1sVolts;
   } else { power["raw"]=nullptr; power["derived"]=nullptr; }
   auto imu=doc["imu"].to<JsonObject>();
   metaJson(imu["meta"].to<JsonObject>(),data.imu.meta,"IMU_BODY","BNO085");
-  imu["resetCount"]=data.imu.resetCount; imu["configurationErrors"]=data.imu.configurationErrors;
+  imu["resetCount"]=data.imu.resetCount; imu["recoveryCount"]=data.imu.recoveryCount; imu["configurationErrors"]=data.imu.configurationErrors;
   imu["decodeErrors"]=data.imu.decodeErrors;
   auto products=imu["productIds"].to<JsonArray>();
   for (uint8_t i=0; i<data.imu.product.numEntries; ++i) {
@@ -111,9 +114,7 @@ String sensorJson(const RobotSensors &data) {
   mounting["rollDeg"]=board::IMU_MOUNT_ROLL_DEG;
   mounting["pitchDeg"]=board::IMU_MOUNT_PITCH_DEG;
   mounting["yawDeg"]=nullptr;
-  mounting["chassisOrientation"]="MAST_FRONT";
-  mounting["chassisFrameYawRebaseDeg"]=180;
-  mounting["note"]="Both derived blocks use the mast-front chassis frame: historical mount tilt is removed, then body frame rebased 180 degrees. Native quaternions are unmodified; unknown sensor yaw offset remains uncalibrated.";
+  mounting["note"]="Both derived blocks are in chassis frame: the mount tilt is removed from a copy. Native quaternions are unmodified. Yaw offset is not observable from gravity and is not corrected.";
   imu["derived"]["valid"]=data.imu.derived.valid;
   imu["derived"]["headingValid"]=headingValid(data.imu,millis());
   if (data.imu.derived.valid) {

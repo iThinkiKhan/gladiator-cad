@@ -7,24 +7,52 @@
 uint32_t fakeMillis=0;
 TwoWire Wire;
 using namespace sensors;
+// Exercise real 4 ms acquisition ticks between the 50 ms published windows.
+static void powerUntil(INA226Sensor &sensor, uint32_t until) {
+  while(fakeMillis < until) { fakeMillis += 2; sensor.update(); }
+}
 static void powerTests() {
   Wire=TwoWire{}; fakeMillis=0;
   auto &regs=Wire.registers16[0x40]; regs[0xFE]=0x5449; regs[0xFF]=0x2260;
   regs[2]=13096; regs[1]=uint16_t(-3);
   I2CBus bus; PowerData data; INA226Sensor sensor(bus,data);
-  sensor.update(); fakeMillis=50; sensor.update();
+  sensor.update(); powerUntil(sensor,50);
   assert(data.meta.health==SensorHealth::OK && data.raw.busCounts==13096 && data.raw.shuntCounts==-3);
   assert(fabs(data.derived.busVolts-16.37F)<0.00001F);
   assert(fabs(data.derived.currentAmps+0.00375F)<0.000001F);
   assert(data.derived.watts<0 && data.derived.hasMinimum);
-  regs[2]=12000; regs[1]=100; fakeMillis=100; sensor.update();
+  regs[2]=12000; regs[1]=100; powerUntil(sensor,100);
   assert(data.derived.minimumVolts==15.0F && fabs(data.derived.peakAbsAmps-0.125F)<0.000001F);
-  Wire.shortRead=true; fakeMillis=150; sensor.update(); fakeMillis=200; sensor.update(); fakeMillis=250; sensor.update();
+  Wire.shortRead=true; powerUntil(sensor,250);
   assert(!data.meta.online && data.raw.busCounts==12000);
-  Wire.shortRead=false; fakeMillis=5000; sensor.update(); fakeMillis=5050; sensor.update();
+  Wire.shortRead=false; fakeMillis=5000; sensor.update(); powerUntil(sensor,5050);
   assert(data.meta.online && data.meta.health==SensorHealth::OK);
   assert(data.meta.errorCount==3 && data.meta.updateCount==3);
   puts("PASS power: native resolution, negative current, extrema, short reads, recovery");
+}
+static void powerWindowTests() {
+  Wire=TwoWire{}; fakeMillis=0;
+  auto &regs=Wire.registers16[0x40]; regs[0xFE]=0x5449; regs[0xFF]=0x2260;
+  regs[2]=12000; regs[1]=100;
+  I2CBus bus; PowerData data; INA226Sensor sensor(bus,data);
+  sensor.update(); powerUntil(sensor,50);
+  // A brief load peak and voltage sag must survive window averaging.
+  powerUntil(sensor,62); regs[1]=1000; regs[2]=11200; powerUntil(sensor,64);
+  regs[1]=100; regs[2]=12000; powerUntil(sensor,100);
+  assert(data.derived.currentAmps>0.125F && data.derived.currentAmps<1.25F);
+  assert(fabs(data.derived.peakAbsAmps-1.25F)<0.000001F);
+  assert(fabs(data.derived.recentPeakAmps-1.25F)<0.000001F);
+  assert(fabs(data.derived.min1sVolts-14.0F)<0.000001F);
+  assert(data.derived.busVolts>14.0F && data.derived.busVolts<15.0F);
+  // A single failed sample must not discard an otherwise usable window.
+  Wire.shortRead=true; powerUntil(sensor,104); Wire.shortRead=false; powerUntil(sensor,150);
+  assert(data.meta.health==SensorHealth::OK && data.meta.errorCount==0);
+  powerUntil(sensor,1200);
+  assert(fabs(data.derived.recentPeakAmps-0.125F)<0.000001F);
+  assert(fabs(data.derived.peak1sAmps-0.125F)<0.000001F);
+  assert(fabs(data.derived.min1sVolts-15.0F)<0.000001F);
+  assert(fabs(data.derived.peakAbsAmps-1.25F)<0.000001F);
+  puts("PASS power windows: averaging, brief current peaks/voltage sags, transient read failure, peak expiry");
 }
 static void healthTests() {
   SensorMeta m; m.initialized=true; m.good(0xFFFFFFF0);
@@ -95,4 +123,4 @@ static void headingTests() {
   imu.derived.valid=true;r.lastUpdateMs=0xfffffff0;assert(headingValid(imu,20));
   puts("PASS heading: S3 accuracy, report freshness, health, validity and clock wrap");
 }
-int main() { healthTests(); powerTests(); matrixTests(); presenceTests(); headingTests(); }
+int main() { healthTests(); powerTests(); powerWindowTests(); matrixTests(); presenceTests(); headingTests(); }

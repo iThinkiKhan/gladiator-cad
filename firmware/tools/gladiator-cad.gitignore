@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.FCBak
+cad/head/*/build-log.txt
+cad/head/*/style-log.txt

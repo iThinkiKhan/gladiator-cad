@@ -1,4 +1,5 @@
 #include "BNO085Sensor.h"
+#include "SensorProgress.h"
 #include "../Orientation.h"
 #include <esp_timer.h>
 #include <math.h>
@@ -73,6 +74,7 @@ bool BNO085Sensor::begin() {
   for (uint8_t address : {uint8_t(0x4A), uint8_t(0x4B)}) {
     if (!bus_.present(address)) continue;
     m.address = address;
+    sensorProgress(SensorStep::IMU_OPEN,address);
     if (!device_.begin_I2C(address, &bus_.wire())) continue;
     data_.product = device_.prodIds;
     // SH2 can deliver MULTIPLE reports in a single packet. A last-event getter
@@ -81,22 +83,28 @@ bool BNO085Sensor::begin() {
     device_.wasReset();
     m.initialized = m.online = true;
     m.hasSample = false;
-    configureReports();
+    if(!configureReports()){configurationFailed(millis());return false;}
+    lastFusionMs_=millis();
     m.lastAttemptMs = millis();
     return true;
   }
   m.error(millis()); m.health = SensorHealth::OFFLINE; m.online = false;
   return false;
 }
-void BNO085Sensor::configureReports() {
-  data_.derived.valid = false;
+bool BNO085Sensor::configureReports() {
+  data_.derived.valid = data_.gameDerived.valid = false;
+  for(auto &report:data_.reports){report.enabled=false;report.sequenceKnown=false;report.hasSample=false;}
   for (auto &report : data_.reports) {
-    report.sequenceKnown = false;
-    report.hasSample = false;
+    sensorProgress(SensorStep::IMU_REPORT,unsigned(report.id));
     report.enabled = device_.enableReport(report.id, report.intervalUs);
-    if (!report.enabled) { ++data_.configurationErrors; ++data_.meta.errorCount; }
+    if (!report.enabled) {
+      ++data_.configurationErrors;
+      log_e("IMU report %u configuration failed; retry after discovery interval",unsigned(report.id));
+      return false;
+    }
   }
   configureCalibration();
+  return true;
 }
 void BNO085Sensor::configureCalibration() {
   // Neither the Adafruit wrapper nor the SH2 default turns on dynamic gyro and
@@ -105,8 +113,10 @@ void BNO085Sensor::configureCalibration() {
   // the write took: the answer is the only evidence that it is really running.
   constexpr uint8_t WANTED = SH2_CAL_ACCEL | SH2_CAL_GYRO | SH2_CAL_MAG;
   data_.calibration.requested = WANTED;
+  sensorProgress(SensorStep::IMU_CAL_SET);
   if (sh2_setCalConfig(WANTED) != SH2_OK) ++data_.calibration.configErrors;
   uint8_t active = 0;
+  sensorProgress(SensorStep::IMU_CAL_GET);
   data_.calibration.known = sh2_getCalConfig(&active) == SH2_OK;
   data_.calibration.active = data_.calibration.known ? active : 0;
   savedAccuracy_ = 0;
@@ -130,6 +140,7 @@ void BNO085Sensor::maybeSaveCalibration(uint32_t now) {
     if (reported > accuracy) accuracy = reported;
   }
   if (!fresh || accuracy < 2 || accuracy <= savedAccuracy_) return;
+  sensorProgress(SensorStep::IMU_SAVE);
   if (sh2_saveDcdNow() == SH2_OK) {
     savedAccuracy_ = accuracy;
     data_.calibration.savedAccuracy = accuracy;
@@ -166,6 +177,13 @@ void BNO085Sensor::receive(sh2_SensorEvent_t *event) {
     return;
   }
 }
+void BNO085Sensor::configurationFailed(uint32_t now){
+  auto &m=data_.meta;m.error(now);m.online=false;m.health=SensorHealth::OFFLINE;
+  data_.derived.valid=data_.gameDerived.valid=false;
+  for(auto &report:data_.reports){report.enabled=false;report.hasSample=false;report.sequenceKnown=false;}
+  data_.calibration.known=false;data_.calibration.active=0;
+  tried_=true;lastDiscoveryMs_=now;
+}
 void BNO085Sensor::update() {
   uint32_t now = millis();
   auto &m = data_.meta;
@@ -178,9 +196,11 @@ void BNO085Sensor::update() {
   }
   if (device_.wasReset()) {
     ++data_.resetCount; m.health = SensorHealth::INITIALIZING;
-    configureReports(); m.lastAttemptMs = millis();
+    if(!configureReports()){configurationFailed(millis());return;}
+    lastFusionMs_=millis();m.lastAttemptMs=millis();
   }
   const uint64_t start = esp_timer_get_time();
+  sensorProgress(SensorStep::IMU_SERVICE);
   for (int i=0; i<4 && esp_timer_get_time()-start < 2500; ++i) sh2_service();
   now = millis();
   m.age(now, 300, 2000);
@@ -201,6 +221,14 @@ void BNO085Sensor::update() {
   const auto &game = data_.reports[IMU_GAME_INDEX];
   if (!rotation.hasSample || now-rotation.lastUpdateMs > 300) data_.derived.valid=false;
   if (!game.hasSample || now-game.lastUpdateMs > 300) data_.gameDerived.valid=false;
+  // Raw ADC reports alone must not keep a fusion-less boot alive forever.
+  // Give cold startup time to settle, then rediscover only this peripheral.
+  if(game.hasSample && data_.gameDerived.valid && uint32_t(now-game.lastUpdateMs)<=300)lastFusionMs_=now;
+  if(uint32_t(now-lastFusionMs_)>=board::SENSOR_RETRY_MS){
+    ++data_.recoveryCount;
+    log_e("IMU orientation reports missing; retrying the IMU, not the controller");
+    configurationFailed(now);return;
+  }
   maybeSaveCalibration(now);
 }
 }

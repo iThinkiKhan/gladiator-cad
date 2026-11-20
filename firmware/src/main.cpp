@@ -5,14 +5,19 @@
 #include <BLEDevice.h>
 #include <BLEServer.h>
 #include <Update.h>
+#include <Preferences.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <rom/rtc.h>
 #include <esp_ota_ops.h>
 #include "BoardConfig.h"
 #include "Orientation.h"
+#include "DrivePower.h"
+#include "mast/MastHardware.h"
 #include "sensors/SensorManager.h"
 #include "status/StatusLed.h"
+#include "blackbox/BlackBox.h"
+#include "drive/StraightTrim.h"
 #include "gateway/RobotLink.h"
 #include "gateway/ControlJson.h"
 #include "../shared/FieldPage.h"
@@ -40,8 +45,9 @@ constexpr uint32_t PWM_FREQUENCY_HZ = 18000;
 constexpr uint8_t PWM_RESOLUTION_BITS = 8;
 constexpr uint16_t PWM_MAX_DUTY = (1U << PWM_RESOLUTION_BITS) - 1U;
 
-// Both tracks reverse relative to the former mast-rear frame. Together with
-// the L/R swap above this preserves robot-relative turn directions.
+// Confirmed by the first powered test: both BTS7960 boards need the same
+// logical polarity. The earlier right-side inversion swapped translation and
+// rotation (Right drove forward, Left drove backward).
 constexpr bool LEFT_MOTOR_INVERTED = orientation::MOTOR_INVERTED;
 constexpr bool RIGHT_MOTOR_INVERTED = orientation::MOTOR_INVERTED;
 
@@ -50,11 +56,48 @@ constexpr uint32_t STATUS_INTERVAL_MS = 250;
 constexpr uint32_t RAMP_INTERVAL_MS = 20;
 constexpr int8_t RAMP_STEP_PERCENT = 5;
 constexpr uint32_t POWER_LOG_INTERVAL_MS = 1000;
-// Historical carpet calibration (2026-09-08, mast-rear frame): forward
-// favored old right by 22% (39/61 at 50%), reverse by 14% (43/57).
-// Orientation.h preserves these physical corrections after the frame flip:
-// new forward L/R=57/43; new reverse=-61/-39. Equal commands only; no trim
-// for turns or Overdrive. Other speeds/surfaces still need physical validation.
+// Measured 2026-09-08 on carpet with the BNO085 game rotation vector: eight
+// forward runs at left+right=100 with the trim bypassed (unequal pairs skip
+// applyForwardTrim) gave veer_rate = 0.580*d + 13.08 deg/s, where d = left-right.
+// Straight running needs d = -22.5, bracketed by measurements at d=-18 (+2.44
+// deg/s) and d=-24 (-1.12 deg/s). At left=50 this yields an 11 point shift, so
+// 39/61. The direction was always correct; the previous value of 5 was simply
+// about a quarter of the required magnitude.
+//
+// Caveats: measured only at left+right=100 and on one carpet, so the assumed
+// proportionality to commanded power is untested at other speeds. Above roughly
+// 78% the opposite track saturates at 100 and the correction stops growing. A
+// 22% imbalance is large enough to be worth investigating mechanically rather
+// than only compensating in software.
+// Applies only to normal straight-ahead commands; turns, reverse and Overdrive
+// retain their direct requested values.
+//
+// Re-measured 2026-10-09 after the new body (tools/tune_straight.py, BNO085 game
+// rotation vector, 50% power): the old 22% over-corrected and the robot pulled
+// right. Balance is now about d = -11.5 (noise-limited, +/-3 deg/s per run), so
+// 12%. The chassis asymmetry is roughly half what it was in the old body.
+//
+// Trim is now a table by commanded power (25/50/75/100%), signed percent, positive holds the
+// left track back (see drive/StraightTrim.h; the correction keeps its ratio when a track
+// reaches 100). INTERIM values, 2026-10-10: the single 12% above was measured at 50% power
+// and over-corrects at full power. On the field run it veered about 20 deg/s at 100% and,
+// after the thrown track was repaired, about 30 deg/s forward. Refill these from on-ground
+// sweeps at each power level (tools/tune_ratio.py).
+constexpr drive::TrimTable FORWARD_TRIM = {{12, 12, 6, 0}};
+// Reverse was never trimmed at all before this, so it still curved once forward
+// was straight. Measured the same way (reverse always bypassed the trim, so a
+// true d=0 point was available): veer_rate = 0.645*d - 9.30 deg/s, balancing at
+// d = +14.4. The sign is opposite to forward only because both tracks invert;
+// in magnitudes forward wants 39/61 and reverse 43/57, so the same track is
+// held back either way, just by different amounts.
+//
+// Re-measured 2026-10-09 in the new body, alternating forward/reverse runs at
+// 50% power: balance d = +20.4 (coarse fit 21.7, earlier sweep about 20), so 20%.
+// Reverse now needs more correction than forward, the opposite of the old body.
+// Above roughly 83% the right track saturates at -100 and the correction stops
+// growing.
+// INTERIM, as above.
+constexpr drive::TrimTable REVERSE_TRIM = {{20, 20, 10, 0}};
 
 constexpr uint8_t FRAME_MAGIC_COMMAND = 0x47; // 'G'
 constexpr uint8_t FRAME_MAGIC_STATUS = 0x53;  // 'S'
@@ -173,6 +216,8 @@ uint32_t bootCount = 0;
 // is still PENDING_VERIFY makes esp_ota_set_boot_partition refuse the next
 // image, which surfaces only as a generic activation failure at the far end of
 // a completed upload. Record it so the cause is visible without a cable.
+esp_ota_handle_t webOtaHandle=0;const esp_partition_t *webOtaPartition=nullptr;
+esp_err_t webOtaError=ESP_FAIL;bool webOtaComplete=false;
 char otaPartition[8] = "?";
 const char *otaStateName = "UNKNOWN";
 bool otaMarkedValid = false;
@@ -195,8 +240,9 @@ bool benchPowerViaPin = false;
 bool benchPowerViaUsb = false;
 uint32_t benchPowerCandidateSinceMs = 0;
 
+bool mastCalibrationInhibitsDrive();
 bool batteryInhibitsMotion() {
-  return !benchPowerActive && (batteryLockout || batteryRadiosShed);
+  return mast::drivePowerInhibited(benchPowerActive,batteryLockout,batteryRadiosShed,mastCalibrationInhibitsDrive());
 }
 
 const char *benchPowerSourceName() {
@@ -220,6 +266,12 @@ void appendLog(const String &message) {
   ControlGuard guard;
   const String line = String('[') + millis() + "] " + message + '\n';
   Serial.print(line);
+  {
+    // Flight recorder: every log line becomes one CSV row, newlines flattened.
+    String row = String("E,") + millis() + ',' + message;
+    row.replace('\n', ' ');
+    blackbox::line(row.c_str());
+  }
   webLog += line;
   if (webLog.length() > WEB_LOG_MAX_CHARS) {
     const int newline = webLog.indexOf('\n', webLog.length() - WEB_LOG_MAX_CHARS);
@@ -272,6 +324,23 @@ void updateSensors() {
   powerMilliwatts = lroundf(p.derived.watts * 1000);
   minimumBusMillivolts = p.derived.hasMinimum ? lroundf(p.derived.minimumVolts * 1000) : UINT16_MAX;
   peakCurrentMilliamps = static_cast<uint16_t>(constrain(lroundf(p.derived.peakAbsAmps * 1000), 0L, long(UINT16_MAX)));
+
+  // Warning only. Without the power monitor there is no low-battery protection, but motion is
+  // deliberately left exactly as it was: the operator decides what to do. The phone, the
+  // status LED and the recorder all show it.
+  static uint32_t powerBadSinceMs = 0;
+  static bool powerWarned = false;
+  const uint32_t nowMs = millis();
+  if (ina226SampleValid) {
+    if (powerWarned) appendLog("Power monitor back online; low-battery protection active again");
+    powerWarned = false;
+    powerBadSinceMs = 0;
+  } else if (!powerBadSinceMs) {
+    powerBadSinceMs = nowMs ? nowMs : 1;
+  } else if (!powerWarned && nowMs > 5000 && nowMs - powerBadSinceMs >= 2000) {
+    powerWarned = true;
+    appendLog("WARNING: power monitor offline; low-battery protection is NOT active (motion unchanged)");
+  }
 }
 
 String sensorStatusJson() {
@@ -298,21 +367,31 @@ String sensorStatusJson() {
   return json;
 }
 
-// USB commands are deliberately read-only. No command here can arm or move.
+// USB commands cannot arm or move. The only write is 'bbclear', which erases the
+// flight-recorder log (refused while armed).
+#include "mast/MastApplication.h"
 void updateSerialConsole() {
   static String command;
+  static bool overflow=false;
   for (uint8_t budget=0; budget<64 && Serial.available(); ++budget) {
     char c=Serial.read();
     if (c=='\r') continue;
     if (c=='\n') {
+      if(overflow){command="";overflow=false;Serial.println("USB command too long; discarded.");continue;}
       command.trim();
-      if (command == "sensors" || command == "status") {
+      if(mastSerial(command)){}
+      else if (command == "sensors" || command == "status") {
         if (commandArmed) Serial.println("BUSY: disarm before USB snapshot.");
         else Serial.println(sensorStatusJson());
-      } else if (command.length()) Serial.println("Read-only commands: sensors | status");
+      } else if (command == "blackbox") {
+        blackbox::manifest(Serial);
+      } else if (command == "bbclear") {
+        if (commandArmed) Serial.println("BUSY: disarm before clearing the blackbox.");
+        else Serial.println(blackbox::clearAll() ? "blackbox cleared" : "blackbox not ready");
+      } else if (command.length()) Serial.println("Commands: sensors | status | blackbox | bbclear");
       command="";
-    } else if (command.length()<64) command += c;
-    else command="";
+    } else if (!overflow&&command.length()<768) command += c;
+    else {command="";overflow=true;}
   }
 }
 
@@ -515,6 +594,7 @@ void coastAll() {
 
 void forceSafeForUpdate() {
   ControlGuard guard;
+  mastController.stop(mast::Reason::SAFETY);mastTest.stop();mastHardware.stop();
   remoteSession.invalidate();
   activeControlSource = ControlSource::NONE;
   commandArmed = false;
@@ -590,24 +670,48 @@ String fieldStateJson(){
 }
 // Radio policy stays on the S3. Recovery AP is independent of association to C6.
 void updateLinkRadios(uint32_t now){
-  static uint32_t checked=0,lastAttempt=0;static bool stationMode=false;
+  static uint32_t checked=0,lastAttempt=0,radioChangedMs=0,wantedSince=0;static bool stationMode=false;
+  // Starting the station interface begins an asynchronous scan. Tearing Wi-Fi down while
+  // it runs corrupts the driver (panics 2026-10-09: wifi task in scan_parse_beacon after
+  // WIFI_OFF, 0.6 s after bring-up). A bring-up must therefore dwell before teardown, and
+  // a teardown must settle before the next bring-up.
+  constexpr uint32_t RADIO_MIN_UP_MS=15000,RADIO_MIN_DOWN_MS=1000;
   if(batteryRadiosShed||now-checked<500)return;checked=now;
-  const bool wanted=gatewayLink.needsWifi();
-  if(wanted&&!stationMode&&now>robotlink::LOSS_MS){
-    // BLE stays active during fallback; the S3 radio requires modem sleep.
+  const bool wantedNow=gatewayLink.needsWifi();
+  // A real UART loss already lasts LOSS_MS, so insisting on 1 s of continuous demand only
+  // filters transients; it never delays a genuine failover noticeably.
+  if(!wantedNow)wantedSince=0;else if(!wantedSince)wantedSince=now?now:1;
+  const bool wanted=wantedNow&&wantedSince&&now-wantedSince>=1000;
+  if(wanted&&!stationMode&&now>robotlink::LOSS_MS&&now-radioChangedMs>=RADIO_MIN_DOWN_MS){
+    radioChangedMs=now;
+    // The core re-applies its stored sleep mode on STA_START. WIFI_PS_NONE with BLE
+    // up (software coexistence) aborts in the Wi-Fi task (panic 2026-10-09, pm_set_sleep_type),
+    // so the stored mode must already be modem sleep before the station interface starts.
     WiFi.setSleep(true);WiFi.mode(WIFI_AP_STA);
     if(!maintenanceApActive){maintenanceApActive=WiFi.softAP(MAINTENANCE_AP_NAME,MAINTENANCE_AP_PASSWORD);maintenanceServer.begin();ArduinoOTA.begin();}
     stationMode=true;lastAttempt=now;WiFi.begin(robotlink::FIELD_SSID,robotlink::FIELD_PASSWORD);
     appendLog("Gladiator Link: seeking C6 field network; S3 recovery AP available");
   }else if(wanted&&stationMode&&WiFi.status()!=WL_CONNECTED&&now-lastAttempt>=10000){lastAttempt=now;WiFi.begin(robotlink::FIELD_SSID,robotlink::FIELD_PASSWORD);}
-  if(!wanted&&now>15000&&apStationCount==0&&activeControlSource!=ControlSource::WEB&&activeControlSource!=ControlSource::FIELD){
-    if(maintenanceApActive||stationMode){maintenanceServer.stop();WiFi.disconnect();WiFi.softAPdisconnect(false);WiFi.mode(WIFI_OFF);maintenanceApActive=false;stationMode=false;appendLog("Stable UART: S3 Wi-Fi off; BLE service remains available");}
+  if(!wantedNow&&now>15000&&now-radioChangedMs>=RADIO_MIN_UP_MS&&apStationCount==0&&activeControlSource!=ControlSource::WEB&&activeControlSource!=ControlSource::FIELD){
+    if(maintenanceApActive||stationMode){
+      maintenanceServer.stop();
+      // Stop the station (and any scan) first, then the AP, letting each settle before OFF.
+      // softAPdisconnect(true)/disconnect(true) would also switch the radio off, making
+      // the WIFI_OFF below a second deinit that logs driver errors on every shed.
+      if(stationMode){WiFi.disconnect();delay(50);}
+      WiFi.softAPdisconnect(false);delay(50);
+      WiFi.mode(WIFI_OFF);
+      maintenanceApActive=false;stationMode=false;radioChangedMs=now;
+      appendLog("Stable UART: S3 Wi-Fi off; BLE service remains available");
+    }
   }
 }
 
 void setupMaintenanceWifi() {
   WiFi.mode(WIFI_AP);
-  WiFi.setSleep(true); // Keep STA fallback compatible with the BLE controller.
+  // Sleep mode only matters to the station interface, but the core stores it and
+  // applies it whenever STA starts later (see updateLinkRadios), so never store NONE.
+  WiFi.setSleep(true);
   if (!WiFi.softAP(MAINTENANCE_AP_NAME, MAINTENANCE_AP_PASSWORD)) {
     maintenanceApActive = false;
     appendLog("Maintenance Wi-Fi AP failed to start");
@@ -684,13 +788,6 @@ void setupMaintenanceWifi() {
     json += ",\"batteryCells\":" + String(board::BATTERY_CELLS);
     json += ",\"voltsPerCell\":" + String(ina226SampleValid ? busMillivolts / 1000.0F / board::BATTERY_CELLS : 0.0F, 3);
     json += ",\"lockoutVolts\":" + String(board::BATTERY_LOCKOUT_V, 2);
-    json += ",\"orientation\":\"" + String(orientation::NAME) + "\"";
-    json += ",\"motorPins\":{\"left\":{\"rEn\":" + String(board::LEFT_R_EN);
-    json += ",\"lEn\":" + String(board::LEFT_L_EN) + ",\"rPwm\":" + String(board::LEFT_RPWM);
-    json += ",\"lPwm\":" + String(board::LEFT_LPWM) + ",\"inverted\":true}";
-    json += ",\"right\":{\"rEn\":" + String(board::RIGHT_R_EN) + ",\"lEn\":" + String(board::RIGHT_L_EN);
-    json += ",\"rPwm\":" + String(board::RIGHT_RPWM) + ",\"lPwm\":" + String(board::RIGHT_LPWM);
-    json += ",\"inverted\":true}}";
     json += '}';
     maintenanceServer.send(200, "application/json", json);
   });
@@ -918,36 +1015,31 @@ void setupMaintenanceWifi() {
         200, "text/plain",
         "Motion accepted for one 350 ms watchdog-limited pulse.");
   });
-  maintenanceServer.on(
-      "/update", HTTP_POST,
-      []() {
-        const bool okay = !Update.hasError();
-        maintenanceServer.send(okay ? 200 : 500, "text/plain",
-                               okay ? "Update complete. Gladiator is rebooting."
-                                    : "Update failed; current firmware retained.");
-        if (okay) {
-          delay(250);
-          ESP.restart();
-        }
+  // Native sequential OTA gives exact validation/activation errors and retains
+  // the running slot on every failure. No image validation is bypassed.
+  maintenanceServer.on("/update", HTTP_POST,
+      [](){
+        maintenanceServer.send(webOtaComplete?200:500,"text/plain",webOtaComplete?"Update complete. Gladiator is rebooting.":String("Update failed: ")+esp_err_to_name(webOtaError)+"; current firmware retained.");
+        if(webOtaComplete){delay(250);ESP.restart();}
       },
-      []() {
-        HTTPUpload &upload = maintenanceServer.upload();
-        if (upload.status == UPLOAD_FILE_START) {
-          forceSafeForUpdate();
-          appendLogf("Web OTA starting: %s", upload.filename.c_str());
-          Update.begin(UPDATE_SIZE_UNKNOWN);
-        } else if (upload.status == UPLOAD_FILE_WRITE) {
-          Update.write(upload.buf, upload.currentSize);
-          feedLoopWDT(); // HTTP upload runs inside one handleClient() call.
-        } else if (upload.status == UPLOAD_FILE_END) {
-          if (Update.end(true)) {
-            appendLogf("Web OTA complete: %u bytes", upload.totalSize);
-          } else {
-            appendLogf("Web OTA failed: error %u", Update.getError());
-          }
-        } else if (upload.status == UPLOAD_FILE_ABORTED) {
-          Update.abort();
-          appendLog("Web OTA upload aborted");
+      [](){
+        HTTPUpload &upload=maintenanceServer.upload();
+        if(upload.status==UPLOAD_FILE_START){
+          forceSafeForUpdate();webOtaComplete=false;webOtaHandle=0;webOtaPartition=esp_ota_get_next_update_partition(nullptr);
+          webOtaError=webOtaPartition?esp_ota_begin(webOtaPartition,OTA_WITH_SEQUENTIAL_WRITES,&webOtaHandle):ESP_ERR_NOT_FOUND;
+          appendLogf("Native web OTA begin: %s",esp_err_to_name(webOtaError));
+        }else if(upload.status==UPLOAD_FILE_WRITE){
+          if(webOtaError==ESP_OK)webOtaError=esp_ota_write(webOtaHandle,upload.buf,upload.currentSize);
+          feedLoopWDT();
+        }else if(upload.status==UPLOAD_FILE_END){
+          if(webOtaError==ESP_OK){webOtaError=esp_ota_end(webOtaHandle);webOtaHandle=0;}
+          if(webOtaError==ESP_OK)webOtaError=esp_ota_set_boot_partition(webOtaPartition);
+          if(webOtaHandle){esp_ota_abort(webOtaHandle);webOtaHandle=0;}
+          webOtaComplete=webOtaError==ESP_OK;
+          appendLogf("Native web OTA %u bytes: %s",upload.totalSize,esp_err_to_name(webOtaError));
+        }else if(upload.status==UPLOAD_FILE_ABORTED){
+          if(webOtaHandle)esp_ota_abort(webOtaHandle);webOtaHandle=0;webOtaError=ESP_FAIL;webOtaComplete=false;
+          appendLog("Native web OTA aborted; running slot retained");
         }
       });
   maintenanceServer.begin();
@@ -990,6 +1082,8 @@ int8_t rampToward(int8_t current, int8_t target) {
 // straight-ahead; turns carry their own differential and Overdrive is untrimmed
 // by design.
 void applyStraightTrim(int8_t &left, int8_t &right) {
+  // Keep the installed mast-front trim until the actual event floor is rehearsed.
+  // The rear-frame tables above are retained as measurement provenance.
   orientation::straightTrim(left, right, commandOverdrive);
 }
 
@@ -1011,6 +1105,7 @@ void updateMotorOutputs() {
   int8_t outputLeft = targetLeftPercent;
   int8_t outputRight = targetRightPercent;
   applyStraightTrim(outputLeft, outputRight);
+  drivepower::cap(outputLeft,outputRight,selectedPowerMode,commandOverdrive);
 
   // Overdrive intentionally bypasses soft start and commands full-duty values
   // immediately. Direction and magnitude still come from the signed frame.
@@ -1027,8 +1122,9 @@ void updateMotorOutputs() {
   }
   lastRampMs = now;
 
-  const int8_t nextLeft = rampToward(leftMotor.currentPercent, outputLeft);
-  const int8_t nextRight = rampToward(rightMotor.currentPercent, outputRight);
+  int8_t nextLeft = rampToward(leftMotor.currentPercent, outputLeft);
+  int8_t nextRight = rampToward(rightMotor.currentPercent, outputRight);
+  drivepower::cap(nextLeft,nextRight,selectedPowerMode,commandOverdrive);
   applyMotor(leftMotor, nextLeft);
   applyMotor(rightMotor, nextRight);
 }
@@ -1124,6 +1220,12 @@ class CommandCallbacks final : public BLECharacteristicCallbacks {
     if (left < -100 || left > 100 || right < -100 || right > 100) {
       rejectInput();
       return;
+    }
+
+    const bool overdrive=(frame[3]&FLAG_OVERDRIVE)!=0;
+    if((frame[3]&~uint8_t(FLAG_ARMED|FLAG_DEADMAN|FLAG_OVERDRIVE)) ||
+       (overdrive?frame[6]!=0xff:frame[6]>100)){
+      rejectInput();return;
     }
 
     if (activeControlSource != ControlSource::BLE && activeControlSource != ControlSource::NONE && commandArmed &&
@@ -1284,6 +1386,8 @@ void setup() {
   benchPowerCandidate = benchPowerActive = benchPowerViaPin;
   benchPowerCandidateSinceMs = millis();
   setupMotors();
+  mastHardware.begin(); // GPIO10/13 remain detached at boot.
+  loadMastProfile(); // Never restores enabled state or current position.
 
   // Read why the controller restarted before anything else can overwrite it.
   bootReason = esp_reset_reason();
@@ -1317,6 +1421,7 @@ void setup() {
   Serial.begin(115200);
   delay(500);
   Serial.println();
+  blackbox::begin();
   appendLog("Gladiator tracked robot controller starting");
   appendLogf("Boot #%u since power-on | reset=%s (esp %d, raw 0x%02X) | blink code %u",
              bootCount, status::resetReasonName(bootReason), int(bootReason),
@@ -1338,12 +1443,91 @@ void setup() {
   appendLog("BLE advertising as Gladiator");
 }
 
+// Flight recorder rows (column names are written to the log at boot). Fast rows run at
+// 5 Hz while the tracks move; system rows at 1 Hz, or every 5 s once idle for a minute,
+// so a long outing fits in the flash partition. Link maxima cover the interval since the
+// previous system row, which is what locates a dropout.
+void recordBlackBox(uint32_t now) {
+  static uint32_t lastFast = 0, lastSlow = 0, lastActiveMs = 0;
+  static bool headerWritten = false;
+  static BatteryState lastBattery = BatteryState::UNKNOWN;
+  if (!headerWritten) {
+    headerWritten = true;
+    blackbox::line("#,cols,F,ms,left,right,targetLeft,targetRight,yawDeg,rollDeg,pitchDeg,volts,amps,peak250msAmps");
+    blackbox::line("#,cols,S,ms,boot,volts,amps,minVolts,peakAmps,state,armed,deadman,owner,left,right,yawDeg,rollDeg,pitchDeg,imuOk,loopMaxUs,heap,minHeap,psram,tempC,battery,apUp,apStations,ble,linkOnline,transport,wantsWifi,uartAlive,uartStable,rx,tx,linkErr,rejected,drops,switches,goodAgeMaxMs,taskGapMaxMs,bbPending,bbDropped,bbWriteMaxMs,bbFileKB,bbUsedKB,bbFsErr,hbTotal,hbNoEcho,echoLag,powerOk,peak1sAmps,min1sVolts");
+  }
+  const bool moving = leftMotor.currentPercent != 0 || rightMotor.currentPercent != 0;
+  if (moving || commandArmed) lastActiveMs = now;
+  const auto &imu = sensorData.imu.gameDerived;
+  const auto &power = sensorData.power.derived;
+  // A dead monitor keeps its last numbers; log them as NaN rather than as live readings.
+  const bool powerOk = ina226SampleValid;
+  const float volts = powerOk ? power.busVolts : NAN, amps = powerOk ? power.currentAmps : NAN;
+  const float minVolts = powerOk ? power.minimumVolts : NAN, peakAmps = powerOk ? power.peakAbsAmps : NAN;
+  const float yaw = imu.valid ? imu.yawDeg : NAN, roll = imu.valid ? imu.rollDeg : NAN,
+              pitch = imu.valid ? imu.pitchDeg : NAN;
+
+  if (moving && now - lastFast >= 200) {
+    lastFast = now;
+    char row[160];
+    snprintf(row, sizeof row, "F,%lu,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f", (unsigned long)now,
+             leftMotor.currentPercent, rightMotor.currentPercent, targetLeftPercent, targetRightPercent,
+             yaw, roll, pitch, volts, amps,
+             powerOk ? power.recentPeakAmps : NAN);
+    blackbox::line(row);
+  }
+
+  const uint32_t slowInterval = (now - lastActiveMs > 60000) ? 5000 : 1000;
+  if (now - lastSlow >= slowInterval) {
+    lastSlow = now;
+    const auto link = gatewayLink.takeDiagnostics();
+    const auto stats = blackbox::takeStats();
+    // Flush every second when the battery is low or unmonitored, so an abrupt loss of power
+    // costs at most a second of data.
+    blackbox::setUrgent(!powerOk || volts < board::BATTERY_WARN_V);
+    char row[420];
+    snprintf(row, sizeof row,
+             "S,%lu,%u,%.3f,%.3f,%.3f,%.3f,%s,%d,%d,%u,%d,%d,%.2f,%.2f,%.2f,%d,%lu,%lu,%lu,%lu,%.1f,%s,%d,%u,%d,%d,%s,%d,%d,%d,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%lu,%d,%.3f,%.3f",
+             (unsigned long)now, (unsigned)bootCount, volts, amps, minVolts,
+             peakAmps, interfacev1::name(currentInterfaceState()), commandArmed, commandDeadman,
+             (unsigned)activeControlSource, leftMotor.currentPercent, rightMotor.currentPercent, yaw, roll,
+             pitch, imu.valid, (unsigned long)loopMaxUs, (unsigned long)ESP.getFreeHeap(),
+             (unsigned long)ESP.getMinFreeHeap(), (unsigned long)ESP.getFreePsram(), temperatureRead(),
+             batteryStateName(batteryState), maintenanceApActive, (unsigned)apStationCount, bleConnected,
+             link.online, robotlink::name(link.status.active), link.wantsWifi, link.status.uartAlive,
+             link.status.uartStable, (unsigned long)link.status.rxFrames, (unsigned long)link.status.txFrames,
+             (unsigned long)link.status.errors, (unsigned long)link.status.rejected,
+             (unsigned long)link.status.drops, (unsigned long)link.status.switches,
+             (unsigned long)link.goodAgeMaxMs, (unsigned long)link.taskGapMaxMs,
+             (unsigned long)stats.pendingBytes, (unsigned long)stats.dropped, (unsigned long)stats.writeMaxMs,
+             (unsigned long)(stats.fileBytes / 1024), (unsigned long)(stats.usedBytes / 1024),
+             (unsigned long)stats.fsErrors, (unsigned long)link.status.hbTotal,
+             (unsigned long)link.status.hbNoEcho, (unsigned long)link.status.echoLag, powerOk ? 1 : 0,
+             powerOk ? power.peak1sAmps : NAN, powerOk ? power.min1sVolts : NAN);
+    blackbox::line(row);
+  }
+
+  if (batteryState != lastBattery) {
+    if (lastBattery != BatteryState::UNKNOWN) {
+      blackbox::linef("E,%lu,battery state %s -> %s at %.2f V", (unsigned long)now,
+                      batteryStateName(lastBattery), batteryStateName(batteryState), power.busVolts);
+      blackbox::flushSoon();
+    }
+    lastBattery = batteryState;
+  }
+}
+
 void loop() {
   const uint32_t loopStartedUs = micros();
   const uint32_t now = millis();
   if (commandArmed && now - lastCommandMs > COMMAND_TIMEOUT_MS) {
     ControlGuard guard;
-    webMustRelease=true;bleMustRelease=true;remoteSession.invalidate();
+    // The release latch stops a held button resuming motion after a link lapse. An armed but
+    // idle link has nothing to resume. The phone app arms with ONE frame and only streams
+    // while a direction is held, so latching on an idle trip made every later armed frame
+    // be dropped until a disarm that the app never sends (drive keys did nothing).
+    const bool wasMoving = commandDeadman && (targetLeftPercent != 0 || targetRightPercent != 0);
+    webMustRelease=true;if(wasMoving)bleMustRelease=true;remoteSession.invalidate();
     activeControlSource = ControlSource::NONE;
     commandArmed = false;
     commandDeadman = false;
@@ -1359,6 +1543,7 @@ void loop() {
   updateBatteryGuard(now);
   serviceFieldControl(now);
   updateMotorOutputs();
+  serviceMast();
   updateSerialConsole();
   logIna226();
   publishPowerTelemetry();
@@ -1367,6 +1552,7 @@ void loop() {
   ArduinoOTA.handle();
   updateLinkRadios(now);
   updateStatusLed(now);
+  recordBlackBox(now);
   gateway::ControllerState linkController;
   linkController.armed=commandArmed;
   linkController.state=currentInterfaceState();linkController.battery=batteryState;
@@ -1382,8 +1568,7 @@ void loop() {
   gatewayLink.setController(linkController);
   static uint32_t lastSystem=0;
   if(now-lastSystem>=1000){ControlGuard guard;lastSystem=now;JsonDocument system;
-    system["firmware"]="Gladiator S3 Interface v1 / Link v2";system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
-    system["orientation"]=orientation::NAME;
+    system["firmware"]="Gladiator S3 Interface v1 / Link v2 / Mast operator v15 / saved-position mast";system["orientation"]=orientation::NAME;system["build"]=__DATE__ " " __TIME__;system["freeHeap"]=ESP.getFreeHeap();
     system["resetReason"]=status::resetReasonName(bootReason);system["bootCount"]=bootCount;system["otaSlot"]=otaPartition;
     system["batteryState"]=batteryStateName(batteryState);system["powerSource"]=benchPowerActive?"BENCH":"LIPO";
     system["benchPower"]=benchPowerActive;system["benchPowerSource"]=benchPowerSourceName();

@@ -1,0 +1,33 @@
+# October 24 event: fixed mast, camera and expressions
+
+Jim confirms shell printed, bot on charged pack, 3–4 hour departure window; current camera repeatedly loses power/ground and is hard to service. Pack is four18650 cells in series; actual cell capacity unknown. Chosen scope: fixed mast for now, camera reliability first. No servo or motor commands; no calibration writes or firmware updates.
+
+Live: gateway2.4.9 on192.168.8.1 (PC direct AP), C6boot3929027395, S3boot2169884548, CAM1.2.1 boot3888217550 on Opal172.23.44.242. 60s/30samples: zero HTTP errors, unchanged boots, outputsOFF, no added frame/detail/drop errors. Power median3.210W/.1987A,16.124–16.166V. CAM detected, no resets, streamingfalse and frame985 unchanged during idle. IMU/LiDAR/power healthy; radarOFFLINE known. C6 router RSSI-84to-87, CAM-56to-63. PC sees onlyGladiator-Gateway; do not call unreachableOpalLAN a robot outage from that subnet. PlaceOpal nearbot; actualvideo needs route toCAM's OpalIP. No router/profile changes.
+
+Prepared/checked unchanged camera-service-v2 tray/lid: Gcode X:/3D Printer/GLAD_CAMERA_SERVICE_V2.gcode, PLA18.92g/1h58m42 plus handling, source3MF/preview/checks in siblingGLAD_CAMERA_SERVICE_V2_20261024 folder. Jim's SAFE/PLA/first-layer-comp preset,5mmbrims, normal/snug45support. No unintended preset differences,22criticalGUIreference settings equal,SAFE/bounds/support-grid checks pass. Actual G-code preview shown before delivery. Physical fit unproven; replace loose contacts and use case tie points for strain relief. Case does not repair worn sockets. Printer not started by agent. CAD source/own note on verified SSH192.168.0.21; original meshes unchanged. CAD-lab hostname SSH trust failed, connecting by its resolved already-trusted IP verified the existing host key and authenticated normally; no trust settings changed.
+
+run_fixed_display.py added to canonical tools/booth: hard request allowlist of healthGETs and fixed visual messages only; all servo/motor/config paths rejected. Requires healthy fresh power, all outputsOFF, cameraReady. Greeting5seachminute, autootherwise; fieldreads2s, boot/camerahealth15s. Stops on fault/restart, no autoresume; CtrlC/restoresauto,5slease expires if process closes. Max7200sissoftwareduration, notbattery guarantee. Eleven offline fault/unauthorized-request checks pass. Live6s smoke passed,3samples,1greeting; outputsOFF, restoredauto, completed. Separate live visual greeting confirmed at both gateway and camera then restoredauto. No show left running.
+
+Shared Run fixed-mast eyes.cmd uses thisPC's canonicalPython, no browserautomation needed. Phone option GLADIATOR_ECO_EYES_NO_MOTION.json validated:5facecards31s; choose repeatuntilSTOP/30sgap locally, no motioncheckboxes. Browserhelper still crashes; no browserimport claimed. Suggested power-off during2hprint/rewire saves~6.4Whatobservedidle; cameraondemand/servosOFF retained. No radio sleep/CPU/Tx/watchdog tuning for unmeasured savings. User's no-motion constraint persists. Savedsetuprev8pulseanchors intact, angularprofileunapplied; notneededfortodayfixedmast.
+
+Next physical steps: user prints/fits case, repairs/retains power/ground connections, supports head, reboots; then verify uninterrupted actual video while normal insulated harness is handled and a mounted-device rehearsal. Runtime1–2h remains unverified; cell capacity/condition unknown. Runbook X:/Projects/Gladiator/EVENT_TODAY.md, receipts in shared event-operator-20261023. Do not reintroduce mast-motion commissioning as an event blocker after the fixed-mast scope choice.
+
+## Current request: Halloween display only — prepared, NOT INSTALLED
+
+Jim's current scope supersedes the camera/streaming and PC routine instructions below: a stationary, autonomous 24-second display loop: Happy Halloween (6 s), orange blinking eyes (10 s), Suburban Office IT (8 s). Badge is broken; no video stream is needed. No servo or motor commands have been sent.
+
+CAM firmware masthead-1.2.2-halloween is built in C:/PlatformIO/Gladiator/cam. Camera capture, video server and gateway polling are disabled in this mode; maintenance and recovery Wi-Fi remain available. Build and renderer tests pass: 4,801 sampled frames, scene boundaries, blink, orange-only palette and 320x170 bounds. Physical screen and deployed power draw are not verified.
+
+NOT INSTALLED: Jim reports Opal is off and the display board is not steadily powered. Do not upload while its power connection is unstable. Opal is optional; once power is steady, connect the existing Gladiator-CAM-3268FC recovery Wi-Fi profile and identify CAM at 192.168.9.1 before authenticated OTA. Verify all three scenes and confirm the OTA slot after reboot. Do not flash the unidentified COM11 device.
+
+Prepared image: C:/PlatformIO/Gladiator/cam/.pio/build/gladiator_cam/firmware.bin, 900416 bytes, SHA256 56cd15ac16ea3cceb399ce7738748ac78ec4efadd8d6cea5fb31f41ebb060d7d. Prior CAM 1.2.1 recovery and source are kept locally in diagnostics/halloween-20261024; never copy credential-bearing binaries to the share. No S3/C6 changes for this request.
+
+# Halloween display — installed and confirmed October 24
+
+Current event scope: stationary display only. CAM masthead-1.2.2-halloween is installed in app1, OTA confirmed, bootId 2883728783. The 24-second offline loop shows Happy Halloween (6 seconds), orange blinking eyes (10 seconds), and Suburban Office IT (8 seconds). It starts automatically on power-up; no badge, PC, Opal or internet required.
+
+Live verification passed: 25 status samples over 25.9 seconds, all three scenes observed, unchanged boot, no pending OTA, camera capture disabled, streaming false, zero frames, gateway polling disabled. Display is buffered. Physical appearance/orientation awaits Jim's confirmation. No motor or servo commands were sent; S3/C6 firmware and calibration were not changed. Power draw/runtime after this change is unmeasured.
+
+Firmware SHA256 56cd15ac16ea3cceb399ce7738748ac78ec4efadd8d6cea5fb31f41ebb060d7d, 900416 bytes. Canonical source: C:/PlatformIO/Gladiator/cam. Local receipts/recovery: C:/PlatformIO/Gladiator/diagnostics/halloween-20261024 (installed.json and cycle-verified.json). Credentials and binaries remain local. Maintenance recovery uses the saved Gladiator-CAM-3268FC profile at 192.168.9.1 after about 30 seconds without its configured Wi-Fi; this wait is only for maintenance, not the display loop.
+
+The earlier camera streaming, mount and PC routine notes below are historical and superseded for today's display-only request. Secure board power/ground before use. Switch off until needed to conserve battery.

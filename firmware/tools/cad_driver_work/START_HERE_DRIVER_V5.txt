@@ -1,0 +1,19 @@
+GLADIATOR DRIVER MOUNTS v5 -- MORNING PRINT ORDER
+
+1. Open Gladiator_DriverV5_INTERLOCK-FIT-COUPON.3mf in OrcaSlicer.
+   Use EnderNeo, PLA, 0.20 mm layers. Keep its saved orientation.
+   Supports OFF; add a 5 mm brim for the tall wedge section.
+   Print and test the full-length tongue/groove and locator fit first.
+   Clear brim/elephant foot before judging the fit. If it binds or is loose,
+   stop before printing the full mounts and record the result.
+
+2. If the coupon fits, open Gladiator_PlateI_DRIVER-V5-INTERLOCK.3mf.
+   It contains both bases and both wedges, already arranged for a 220 x 220 bed.
+   Do not auto-orient or rearrange them.
+   Use EnderNeo + PLA, 0.20 mm layers, 4 walls, 30% infill, 5 mm brim.
+   Enable normal automatic supports from the build plate only. Preview the
+   supports under the wedges before starting. Slice in OrcaSlicer in the morning.
+
+These 3MF files contain geometry and placement. The printer/process settings
+must be selected in OrcaSlicer. The CAD and mesh checks passed; the actual
+printed joint fit remains untested.

@@ -1,0 +1,34 @@
+#include "../cam/src/IndicatorPolicy.h"
+using indicator::Code;
+static_assert(indicator::select(false,false,true,true,true,true)==Code::Ready,"ready");
+static_assert(indicator::select(false,false,true,false,false,false)==Code::Camera,"camera fault takes precedence");
+static_assert(indicator::select(false,false,true,true,false,false)==Code::Wifi,"wifi fault");
+static_assert(indicator::select(false,false,true,true,true,false)==Code::Gateway,"gateway fault");
+static_assert(indicator::select(false,false,false,true,true,true)==Code::Service,"service fault");
+static_assert(indicator::select(true,false,false,false,false,false)==Code::Starting,"startup");
+static_assert(indicator::select(true,true,false,false,false,false)==Code::Updating,"OTA priority");
+static_assert(indicator::pulse(Code::Camera,0)&&indicator::pulse(Code::Camera,59),"pulse width");
+static_assert(!indicator::pulse(Code::Camera,60)&&!indicator::pulse(Code::Camera,239),"pulse gap");
+static_assert(indicator::pulse(Code::Camera,240)&&indicator::pulse(Code::Camera,480),"three pulses");
+static_assert(!indicator::pulse(Code::Camera,720)&&!indicator::pulse(Code::Camera,4999),"long gap");
+static_assert(indicator::pulse(Code::Camera,5000)&&!indicator::pulse(Code::Camera,5060),"period wraps independently");
+static_assert(!indicator::pulse(Code::Ready,0)&&!indicator::pulse(Code::Ready,240)&&!indicator::pulse(Code::Ready,5000),"healthy is silent");
+static_assert(!indicator::pulse(Code::Starting,0)&&!indicator::pulse(Code::Starting,500),"no startup heartbeat");
+static_assert(!indicator::pulse(Code::Updating,0)&&!indicator::pulse(Code::Updating,300),"no update status flashes");
+static_assert(indicator::pulse(Code::BootHealthy,0)&&indicator::pulse(Code::BootHealthy,59),"first boot flash");
+static_assert(!indicator::pulse(Code::BootHealthy,60)&&!indicator::pulse(Code::BootHealthy,239),"boot gap");
+static_assert(indicator::pulse(Code::BootHealthy,240)&&indicator::pulse(Code::BootHealthy,299),"second boot flash");
+static_assert(!indicator::pulse(Code::BootHealthy,300)&&!indicator::pulse(Code::BootHealthy,480)&&!indicator::pulse(Code::BootHealthy,5000),"boot flashes never repeat");
+static_assert(indicator::outputCode(Code::Wifi,true,1000)==Code::BootHealthy,"local boot confirmation independent of network");
+static_assert(indicator::outputCode(Code::Wifi,false,29999)==Code::Starting,"network startup grace");
+static_assert(indicator::outputCode(Code::Wifi,false,30000)==Code::Wifi,"network fault after grace");
+static_assert(indicator::outputCode(Code::Camera,true,1000)==Code::Camera,"camera error prevents healthy signal");
+static_assert(indicator::outputCode(Code::Service,true,1000)==Code::Service,"service error prevents healthy signal");
+static_assert(indicator::outputCode(Code::Ready,false,60000)==Code::Ready,"no healthy flashes on reconnect");
+static_assert(indicator::pulse(Code::Wifi,720)&&!indicator::pulse(Code::Wifi,960),"four flashes for wifi");
+static_assert(indicator::flashDuty(true,false,false,0,128)==6,"dim status");
+static_assert(indicator::flashDuty(true,false,true,0,128)==0,"no white flashes in video");
+static_assert(indicator::flashDuty(true,false,false,50,128)==64,"spotlight has priority");
+static_assert(indicator::flashDuty(true,false,true,100,128)==128,"manual spotlight available during video");
+static_assert(indicator::flashDuty(true,true,true,100,128)==0,"OTA forces light off");
+int main(){return 0;}

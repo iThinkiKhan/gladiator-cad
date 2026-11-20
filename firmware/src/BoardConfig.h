@@ -3,22 +3,25 @@
 
 namespace board {
 // Installed N16R8 ESP32-S3. GPIO19/20 are reserved for native USB.
-// Physical wiring unchanged. Mast-front frame adopted 2026-10-09:
-// J3 / native-USB side is now LEFT; R_EN and L_EN are tied on GPIO2.
-constexpr uint8_t LEFT_R_EN = 2, LEFT_L_EN = 2;
-constexpr uint8_t LEFT_RPWM = 42, LEFT_LPWM = 41;
-constexpr bool LEFT_SEPARATE_ENABLES = false;
-// J1 / USB-to-UART side is now RIGHT, with separately driven enables.
-constexpr uint8_t RIGHT_R_EN = 16, RIGHT_L_EN = 11;
-constexpr uint8_t RIGHT_RPWM = 17, RIGHT_LPWM = 12;
-constexpr bool RIGHT_SEPARATE_ENABLES = true;
+constexpr uint8_t RIGHT_R_EN = 16, RIGHT_RPWM = 17;
+constexpr uint8_t RIGHT_L_EN = 11, RIGHT_LPWM = 12;
+constexpr uint8_t LEFT_ENABLE = 2, LEFT_RPWM = 42, LEFT_LPWM = 41;
+// Installed mast-front wiring; aliases preserve older bench source compatibility.
+constexpr uint8_t LEFT_R_EN=LEFT_ENABLE,LEFT_L_EN=LEFT_ENABLE;
+constexpr bool LEFT_SEPARATE_ENABLES=false,RIGHT_SEPARATE_ENABLES=true;
+constexpr uint8_t MAST_PAN=10,MAST_TILT=13;
 constexpr uint8_t I2C_SDA = 8, I2C_SCL = 9;
 constexpr uint32_t I2C_HZ = 400000;
 constexpr uint16_t I2C_TIMEOUT_MS = 10;
 constexpr float SHUNT_OHMS = 0.002F;
 constexpr uint32_t POWER_INTERVAL_MS = 50;
-// Preserve the installed monitor's proven conversion/averaging settings.
-constexpr uint16_t INA226_CONFIG = 0x0527;
+// 0x010F: no hardware averaging, bus 1.1 ms, shunt 204 us, continuous shunt+bus (about a 1.3 ms
+// cycle). The old setting (0x0527) averaged 16 readings inside the chip, which flattened short
+// current spikes before the firmware could see them. Averaging is now done in software over the
+// POWER_INTERVAL_MS window, and every individual reading feeds the peak trackers.
+constexpr uint16_t INA226_CONFIG = 0x010F;
+// How often the shunt register is read for peak tracking (the bus voltage every 4th read).
+constexpr uint32_t POWER_FAST_US = 4000;
 constexpr uint32_t SENSOR_RETRY_MS = 5000;
 // Crossed UART: S3 TX4 -> C6 RX17, C6 TX16 -> S3 RX5, common ground.
 constexpr uint8_t GATEWAY_TX=4, GATEWAY_RX=5;
@@ -49,9 +52,7 @@ constexpr uint32_t STATUS_LED_MIN_WRITE_MS = 20;
 // floor slope, so this is the body-fixed component and stays valid on the
 // uneven carpet it was measured on. Yaw has no equivalent: gravity gives no
 // heading reference, so a yaw mounting offset is not observable this way and
-// is deliberately left at zero. These are the historical mount-tilt constants;
-// Orientation.h then rebases the corrected chassis by the known 180-degree
-// frame change. This is not a measured sensor yaw calibration.
+// is deliberately left at zero.
 constexpr float IMU_MOUNT_ROLL_DEG = -10.65F;
 constexpr float IMU_MOUNT_PITCH_DEG = 4.96F;
 

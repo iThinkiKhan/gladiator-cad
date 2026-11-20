@@ -1,9 +1,6 @@
-# Gladiator
+> CURRENT STATE — October 31, 2026: The event is complete. See [standard development state](docs/DEVELOPMENT_CURRENT.md) for the restored source baseline and live CAM restoration status.
 
-**2026-10-09: mast is FRONT.** Logical LEFT is the native-USB-side driver;
-RIGHT is the USB-to-UART-side driver. Wiring is unchanged; both track polarities
-are reversed in software. See [orientation](docs/ORIENTATION.md). Do not invert
-the phone/C6 controls a second time. `/api/status` reports `MAST_FRONT` and pins.
+# Gladiator
 
 **Next milestone: [Interface v1](docs/INTERFACE_V1.md).** Field controls on the
 phone, one C6 development interface, independent S3 recovery service. S3 remains
@@ -24,7 +21,7 @@ external-antenna Wi-Fi, one phone field interface, a tabbed development site,
 saved network settings, and authenticated C6 OTA. **The S3 is the authoritative
 brain** for motors, safety, sensors, ownership and future autonomy. Gladiator
 Link v2 carries typed, rate-controlled messages over preferred UART
-(S3 TX4/RX5 ↔ C6 RX17/TX16) or authenticated Wi-Fi, with sustained-loss failover,
+(S3 TX4/RX5 â†” C6 RX17/TX16) or authenticated Wi-Fi, with sustained-loss failover,
 stable UART recovery, and optional Wi-Fi bandwidth leases. Native sensor detail
 and retained logs are requested explicitly. See [Gladiator Link architecture
 and validation guide](docs/GLADIATOR_LINK.md) and [gateway setup](docs/NETWORK_GATEWAY.md).
@@ -44,13 +41,13 @@ The PlatformIO target is configured for the installed N16R8 module: 16 MB flash,
 
 | Track | Signal | ESP32-S3 GPIO |
 | --- | --- | ---: |
-| Left | R_EN + L_EN (tied) | 2 |
-| Left | RPWM | 42 |
-| Left | LPWM | 41 |
 | Right | R_EN | 16 |
 | Right | RPWM | 17 |
 | Right | L_EN | 11 |
 | Right | LPWM | 12 |
+| Left | R_EN + L_EN (tied) | 2 |
+| Left | RPWM | 42 |
+| Left | LPWM | 41 |
 
 R_IS and L_IS are unused. The S3 ground, both BTS7960 logic grounds, and battery
 ground must be common. Motor power comes from VBATT at the drivers, not USB.
@@ -61,9 +58,9 @@ ground must be common. Motor power comes from VBATT at the drivers, not USB.
 2. Build and upload the `gladiator_s3` PlatformIO environment on COM25.
 3. Open the phone app, choose **Drive**, connect to **Gladiator**, then arm.
 4. Select 25% and briefly hold each direction.
-5. Forward must now move toward the mast. Both drivers are software-inverted
-   relative to the historical powered test, with logical tracks exchanged.
-   Confirm forward, reverse, and both turns with tracks clear before driving.
+5. The first powered test confirmed that both drivers use the same logical
+   polarity, so Forward/Reverse command both tracks together and Left/Right
+   command opposite track directions.
 
 ## INA power monitor wiring
 
@@ -154,7 +151,12 @@ Normal 25/50/75/100 modes use a soft-start ramp. Overdrive immediately applies
 normal 100% ramp completes, its steady-state electrical output is also full
 duty.
 
-Straight-line drive is trimmed in both directions, measured on 2026-09-08 with
+The table below is from the original body. After the body change both trims
+were re-measured on 2026-10-09 (`tools/tune_straight.py`, 50% power, BNO085 game
+rotation vector, forward and reverse runs alternated): forward balance
+d = -12.4, so 12% (was 22%); reverse balance d = +20.4, so 20% (was 14%). Run-to-run
+noise is about +/-5 deg/s. Straight-line drive is trimmed in
+both directions, measured on 2026-09-08 with
 the BNO085 game rotation vector rather than estimated by eye. Commanding unequal
 tracks bypasses the trim, so the raw asymmetry could be swept directly:
 
@@ -176,3 +178,30 @@ mechanically rather than only compensating for in firmware.
 
 The outputs coast and disable on button release, DISARM, BLE disconnect, invalid
 command, or 350 ms without a fresh command frame.
+
+## Flight recorder
+
+The S3 logs to flash on its own, with no cable, phone or Wi-Fi, and keeps logging across
+resets and a dying battery. It uses the otherwise unused `spiffs` partition as a ring of
+4 KB sectors, so the newest ~3.4 MB survive (hours of driving). Rows are CSV: `S` a
+system snapshot every second (every 5 s once idle for a minute), `F` a fast row at 5 Hz
+while the tracks move, `L` every link state change, `E` every log line. `#,cols,...` rows
+name the columns. `S` carries battery volts/amps/minimum/peak, state and owner, motor
+outputs, IMU yaw/roll/pitch, loop and heap figures, chip temperature, AP and BLE state,
+the Gladiator Link counters (including the worst heartbeat gap and link-task stall in the
+interval) and recorder health. Rows are buffered in RAM and flushed every 10 s, every 1 s
+below the battery warning voltage, and at once on a battery state change.
+
+Read it back with the S3 on USB (this resets the S3, which is fine after a run):
+
+```powershell
+python tools/bb_read.py COM3 run.csv
+```
+
+`blackbox` over USB serial shows the ring status; `bbclear` erases it (refused while
+armed). An in-firmware serial dump was removed because it returned scrambled blocks.
+Flash writes stall the chip for about 25 ms every 9 s; the recorder logs the worst write.
+
+Pack protection is unchanged: below 3.30 V per cell the motors lock out, below 3.05 V
+the radios shed. A run "to the end of the battery" ends at that lockout. The recorder
+keeps running, but disconnect the pack then, since going below 3.0 V per cell damages it.

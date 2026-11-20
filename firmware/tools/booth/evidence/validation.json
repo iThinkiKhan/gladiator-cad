@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-22",
+  "scope": "Gladiator and Petey Badge; tablet excluded by Jim",
+  "installed": {
+    "c6": {
+      "version": "gateway-2.3.1",
+      "sha256": "d37c3c92acc8a9ea167ea7ac8dd951ee809cdf7f005cc9e6f2b475c247c130c6",
+      "bootId": 2436774436,
+      "slot": "ota_1",
+      "previousSlotRetained": "ota_0",
+      "opalIp": "172.23.44.190",
+      "s3FirmwareUnchanged": true
+    },
+    "petey": {
+      "build": "petey-event",
+      "sha256": "e6e78005e8c508be9be86fe050459c158b5e6d955c2e5bc744a8222a955306c5",
+      "opalIp": "172.23.44.123",
+      "robotDestinationSaved": "172.23.44.190",
+      "usbHashVerified": true
+    }
+  },
+  "checks": {
+    "normalHost": {
+      "pass": 491,
+      "fail": 0
+    },
+    "eventHost": {
+      "pass": 19,
+      "fail": 0
+    },
+    "routineUnit": 16,
+    "routineBrowser": 4,
+    "productionCrowdGridHost": "pass",
+    "c6Build": "pass",
+    "peteyEventBuild": "pass",
+    "eventPrivateStringsOmitted": 8,
+    "actualLidar": "healthy at 15 Hz after Jim swapped SDA/SCL",
+    "actualPeteyDisplay": "Jim confirms changing colored cells and distance with a slight delay",
+    "actualTrackCommandBench": {
+      "motors": "disconnected by Jim",
+      "complete": true,
+      "outputsOffAfter": true,
+      "mastNeverEnabled": true
+    },
+    "peteyRadioOffRecovery": "rejoined SOIT-Field and received a fresh grid; private services remained blocked",
+    "shortGridSoak": {
+      "samples": 30,
+      "errors": 0,
+      "freshController": 30,
+      "freshGrid": 29,
+      "frameErrorsFirst": 2,
+      "frameErrorsLast": 2,
+      "jsonErrorsFirst": 0,
+      "jsonErrorsLast": 0
+    }
+  },
+  "motionReadiness": {
+    "tracks": "logic verified with motors disconnected; actual van-floor travel rehearsal pending",
+    "mast": "off, uncalibrated; Jim confirms both servos still need manual work"
+  },
+  "limitations": [
+    "No full event-length power rehearsal performed",
+    "Brief Petey radio-off recovery is not a full router power-loss test",
+    "Timed track steps are not measured displacement",
+    "Grid is sensor-native order; full grid refresh about 1 Hz",
+    "C6 DHCP reservation is not configured by this task; current address is .190",
+    "LiDAR electrical-level translator confirmation remains unrecorded"
+  ],
+  "recovery": {
+    "peteyFullFlashBackupLocal": "C:\\PlatformIO\\Petey\\new-project\\evidence\\device-20261022\\rollback\\petey-before-booth-v5.bin",
+    "bytes": 16777216,
+    "sha256": "2bedfb332fa8064cef36e07997fa288d4c1e54e2736b653de1fba69bd3941798",
+    "complete": true
+  }
+}

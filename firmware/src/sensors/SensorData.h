@@ -9,6 +9,9 @@ struct PowerData {
   struct {
     float busVolts = 0, shuntVolts = 0, currentAmps = 0, watts = 0;
     float minimumVolts = 0, peakAbsAmps = 0;
+    // True peak of any single reading (not the 50 ms average) over sliding windows, and the
+    // lowest single bus reading over the last second: the sag under load.
+    float recentPeakAmps = 0, peak1sAmps = 0, min1sVolts = 0;
     bool hasMinimum = false;
   } derived;
 };
@@ -29,7 +32,7 @@ struct ImuReport {
 struct ImuData {
   SensorMeta meta;
   ImuReport reports[IMU_REPORT_COUNT];
-  uint32_t resetCount = 0, configurationErrors = 0, decodeErrors = 0;
+  uint32_t resetCount = 0, configurationErrors = 0, decodeErrors = 0,recoveryCount=0;
   sh2_ProductIds_t product = {};
   struct { bool valid = false; float rollDeg = 0, pitchDeg = 0, yawDeg = 0; } derived;
   // Game rotation vector: gyro + accelerometer only. Absolute roll and pitch,
@@ -84,6 +87,9 @@ struct RobotSensors {
   ToFData tofFront;
   PresenceData presence;
   bool busStarted = false;
+  // I2C bus clears (stuck SDA/SCL), and sensor-task hangs that reset the S3 in a row.
+  uint32_t busStuck = 0, busRecoveries = 0, hangResets = 0;
+  bool busWatchdog = true;
   uint64_t snapshotUs = 0;
   uint32_t workerMaxUs = 0;
 };

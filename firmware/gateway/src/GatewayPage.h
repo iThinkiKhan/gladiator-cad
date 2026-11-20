@@ -16,6 +16,28 @@ static const char GATEWAY_PAGE[]=R"HTML(<!doctype html><html lang="en"><meta cha
 <script>
 const $=id=>document.getElementById(id),show=(id,v)=>$(id).textContent=JSON.stringify(v,null,2);let latest=null,streaming=false,lastEvent='',events=[];
 const sensors={power:'Power · INA226',imu:'Orientation · BNO085',tofFront:'Range · SEN0628',presence:'Presence · C4001'};
+const cameraPanel=document.createElement('section');cameraPanel.innerHTML='<div class="row"><h2>Camera</h2><span id="cameraStatus" class="badge" role="status" aria-live="polite">Checking…</span></div><p id="cameraSummary">Checking the saved camera address.</p><p id="cameraStats"></p><details><summary>Native camera diagnostics</summary><pre id="cameraJson">Waiting</pre></details>';$('overview').firstElementChild.after(cameraPanel);
+let cameraStatusAt=0,cameraAddress='';
+function cameraStatus(text,health='unknown'){const e=$('cameraStatus');e.textContent=text;e.dataset.health=health;e.style.color={ok:'#8cdbac',warn:'#ffce7b',bad:'#ff949b',unknown:'#a6b8c4'}[health];}
+function clearCamera(text,health,summary){cameraStatus(text,health);$('cameraSummary').textContent=summary;$('cameraStats').textContent='';show('cameraJson',null);}
+async function refreshCameraStatus(){
+ try{
+  if(document.hidden)return;
+  const vResponse=await fetch('/api/visual',{cache:'no-store',signal:AbortSignal.timeout(1800)});if(!vResponse.ok)throw Error();const v=await vResponse.json();if(v.schema!==1)throw Error();
+  const address=v.cameraIp||'';if(address!==cameraAddress){cameraAddress=address;cameraStatusAt=0;clearCamera('Checking…','unknown',address);}
+  if(!address){clearCamera('Not configured','unknown','Set the camera address on the field page.');return;}
+  try{
+   const r=await fetch('/api/camera/status',{cache:'no-store',signal:AbortSignal.timeout(1800)});
+   if(r.status===503){if(!cameraStatusAt)clearCamera('Checking…','warn',address+' · camera request busy');else if(performance.now()-cameraStatusAt>12000)clearCamera('Status stale','warn',address+' · camera request busy');return;}
+   if(!r.ok)throw Error();const c=await r.json();if(typeof c.cameraReady!=='boolean'||typeof c.streaming!=='boolean')throw Error();cameraStatusAt=performance.now();
+   cameraStatus(c.otaUpdating?'Updating firmware':c.cameraReady?'Ready · '+(c.streaming?'streaming':'idle'):c.cameraError?'Camera not detected':'Not ready',c.otaUpdating?'warn':c.cameraReady?'ok':'bad');
+   $('cameraSummary').textContent=address+(Number.isFinite(c.rssi)?' · Wi-Fi '+c.rssi+' dBm':'')+(typeof c.firmware==='string'?' · '+c.firmware:'');
+   $('cameraStats').textContent=[['Frames',c.frames],['Stream errors',c.streamErrors],['Gateway poll errors',c.pollErrors]].filter(([,value])=>Number.isFinite(value)).map(([label,value])=>label+': '+value).join(' · ');show('cameraJson',c);
+  }catch(e){cameraStatusAt=0;clearCamera('Not reachable','bad',address+' · check power, Wi-Fi and saved address');}
+ }catch(e){cameraStatusAt=0;clearCamera('Unknown','warn','Gateway unavailable.');}
+ finally{setTimeout(refreshCameraStatus,5000);}
+}
+refreshCameraStatus();
 function stopTest(){const f=$('testControls');if(f.src)f.contentWindow.postMessage({type:'interface-stop'},location.origin);}
 function sendKey(){const f=$('testControls');if(f.src)f.contentWindow.postMessage({type:'interface-key',key:$('key').value.trim()},location.origin);}
 $('openControls').onclick=()=>{const f=$('testControls');f.hidden=false;if(!f.getAttribute('src'))f.src='/?embedded=1';$('openControls').hidden=true;};

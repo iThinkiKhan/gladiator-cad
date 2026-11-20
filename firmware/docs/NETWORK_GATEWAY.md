@@ -45,6 +45,14 @@ Network responses never expose credentials. Pages keep entered keys in memory.
 The shared Wi-Fi Link pairing key is a separate compile-time setting; replace
 the development default identically in both builds for a specific robot.
 
+## C6 USB console after a cold start
+
+On November 20, gateway 2.4.15 consistently processed USB console commands after a true USB power cycle but returned zero bytes on the same Windows WinUSB interface. The receive counter was verified over the AP. Resetting the host's USB receive pipe did not help. Espressif ROM chip identification responded through the same cable and driver.
+
+A normal USB-triggered C6 core reset while the cable stays connected restored USB replies. The Windows client may need to rejoin Gladiator-Gateway after the C6 restarts. The separate S3 stayed up and saved mast revision 14 and the outputs-off state were verified. A USB power cycle reproduced the fault. The reset is a recovery procedure for the current firmware. No flash writes were needed. Exact cold-start initialization cause remains unconfirmed.
+
+Evidence: `diagnostics/connection-recovery-20261120/usb-cold-warm-summary.json`.
+
 ## Build, provision, update
 
 S3 remains Arduino 2.x; C6 uses ESP-IDF 6.0.1. Both use PlatformIO espressif32

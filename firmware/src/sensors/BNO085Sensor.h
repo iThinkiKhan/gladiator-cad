@@ -10,7 +10,8 @@ public:
   void update();
 private:
   bool begin();
-  void configureReports();
+  bool configureReports();
+  void configurationFailed(uint32_t now);
   void configureCalibration();
   void maybeSaveCalibration(uint32_t now);
   static void onReport(void *cookie, sh2_SensorEvent_t *event);
@@ -18,7 +19,7 @@ private:
   I2CBus &bus_;
   ImuData &data_;
   Adafruit_BNO08x device_;
-  uint32_t lastDiscoveryMs_ = 0;
+  uint32_t lastDiscoveryMs_ = 0,lastFusionMs_=0;
   bool tried_ = false;
   uint8_t savedAccuracy_ = 0;
 };

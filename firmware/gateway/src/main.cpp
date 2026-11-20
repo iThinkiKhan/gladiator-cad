@@ -1,11 +1,15 @@
 #include <atomic>
 #include <string>
+#include <string_view>
+#include <memory>
 #include <cstring>
 #include <cstdio>
 #include <algorithm>
 #include <cmath>
 #include <unistd.h>
 #include <fcntl.h>
+#include <cerrno>
+#include "lwip/sockets.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
@@ -17,11 +21,15 @@
 #include "esp_event.h"
 #include "esp_netif.h"
 #include "esp_http_server.h"
+#include "esp_http_client.h"
+#include <new>
 #include "esp_ota_ops.h"
 #include "esp_app_desc.h"
 #include "esp_app_format.h"
 #include "esp_random.h"
 #include "esp_system.h"
+#include "esp_heap_caps.h"
+#include "../../shared/JsonEscape.h"
 #include "esp_timer.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
@@ -29,12 +37,17 @@
 #include "cJSON.h"
 #include "RobotProtocol.h"
 #include "GladiatorLink.h"
+#include "RangeGrid.h"
 #include "WifiLink.h"
 #include "DetailCodec.h"
+#include "DetailJson.h"
 #include "FieldPage.h"
 #include "InterfaceVocabulary.h"
 #include "GatewayConfig.h"
 #include "GatewayPage.h"
+#include "FieldHelpPage.h"
+#include "VisualState.h"
+#include "MastPolicy.h"
 
 namespace {
 constexpr char TAG[]="gateway";
@@ -42,6 +55,10 @@ SemaphoreHandle_t stateMutex;
 httpd_handle_t server=nullptr;
 esp_netif_t *station=nullptr;
 uint32_t bootId=0;
+RTC_NOINIT_ATTR uint32_t failedAllocationCookie,failedAllocationBytes;
+uint32_t previousFailedAllocation=0;
+void allocationFailed(size_t bytes,uint32_t,const char *){failedAllocationBytes=bytes;failedAllocationCookie=0x474C4144;}
+
 char adminKey[33]={},wifiSsid[33]={},wifiPassword[65]={};
 struct State {
   robotlink::Transport active=robotlink::Transport::NONE;
@@ -51,6 +68,10 @@ struct State {
   bool wifiConnected=false,configured=false;
   char ip[16]={};
   uint32_t rxFrames=0,txFrames=0,frameErrors=0,jsonErrors=0,sequenceGaps=0,peerBootId=0,lastSequence=0,pongs=0;
+  uint32_t uartRxBytes=0,uartDecodedFrames=0,uartFrameErrors=0,uartOversizeErrors=0,uartFrameTimeouts=0;
+  uint32_t wifiRxBytes=0,wifiDecodedFrames=0,wifiFrameErrors=0,wifiOversizeErrors=0,wifiFrameTimeouts=0,wifiChannelErrors=0;
+  uint8_t uartRxLevel=1;
+  uint32_t mainLoopMs=0,consoleRxBytes=0,consoleCommands=0;
   bool sequenceKnown=false;
   uint64_t receivedUs=0,uartAliveUs=0;
   int disconnectReason=0;
@@ -128,7 +149,9 @@ cJSON *gatewayState(const State *snapshot=nullptr){
   cJSON_AddStringToObject(doc,"firmware",config::VERSION);cJSON_AddStringToObject(doc,"role","network-gateway");
   cJSON_AddStringToObject(doc,"board","Seeed XIAO ESP32C6");cJSON_AddStringToObject(doc,"antenna","external");
   cJSON_AddNumberToObject(doc,"uptimeMs",nowMs());cJSON_AddNumberToObject(doc,"bootId",bootId);
-  cJSON_AddNumberToObject(doc,"freeHeap",esp_get_free_heap_size());cJSON_AddNumberToObject(doc,"minimumFreeHeap",esp_get_minimum_free_heap_size());
+  number(doc,"resetReasonCode",esp_reset_reason());number(doc,"previousFailedAllocationBytes",previousFailedAllocation);number(doc,"httpStackFreeBytes",uxTaskGetStackHighWaterMark(nullptr));
+  cJSON_AddNumberToObject(doc,"freeHeap",esp_get_free_heap_size());
+  cJSON_AddNumberToObject(doc,"largestFreeBlock",heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));cJSON_AddNumberToObject(doc,"minimumFreeHeap",esp_get_minimum_free_heap_size());
   cJSON_AddStringToObject(doc,"apSsid",config::AP_SSID);cJSON_AddStringToObject(doc,"apIp","192.168.8.1");
   cJSON_AddBoolToObject(doc,"wifiConfigured",s.configured);cJSON_AddBoolToObject(doc,"wifiConnected",s.wifiConnected);
   cJSON_AddStringToObject(doc,"wifiSsid",ssid);cJSON_AddStringToObject(doc,"ip",s.ip);
@@ -138,6 +161,11 @@ cJSON *gatewayState(const State *snapshot=nullptr){
   if(s.receivedUs)cJSON_AddNumberToObject(doc,"telemetryAgeMs",double((now-s.receivedUs)/1000));else cJSON_AddNullToObject(doc,"telemetryAgeMs");
   cJSON_AddNumberToObject(doc,"rxFrames",s.rxFrames);cJSON_AddNumberToObject(doc,"txFrames",s.txFrames);
   cJSON_AddNumberToObject(doc,"frameErrors",s.frameErrors);cJSON_AddNumberToObject(doc,"jsonErrors",s.jsonErrors);
+  auto diagnostics=cJSON_AddObjectToObject(doc,"rxDiagnostics");
+  auto uart=cJSON_AddObjectToObject(diagnostics,"uart");number(uart,"bytes",s.uartRxBytes);number(uart,"decodedFrames",s.uartDecodedFrames);
+  number(uart,"frameErrors",s.uartFrameErrors);number(uart,"oversizeErrors",s.uartOversizeErrors);number(uart,"timeouts",s.uartFrameTimeouts);number(uart,"rxPinLevel",s.uartRxLevel);
+  auto wifi=cJSON_AddObjectToObject(diagnostics,"wifi");number(wifi,"bytes",s.wifiRxBytes);number(wifi,"decodedFrames",s.wifiDecodedFrames);
+  number(wifi,"frameErrors",s.wifiFrameErrors);number(wifi,"oversizeErrors",s.wifiOversizeErrors);number(wifi,"timeouts",s.wifiFrameTimeouts);number(wifi,"channelErrors",s.wifiChannelErrors);
   cJSON_AddNumberToObject(doc,"sequenceGaps",s.sequenceGaps);cJSON_AddNumberToObject(doc,"pongs",s.pongs);
   cJSON_AddNumberToObject(doc,"peerBootId",s.peerBootId);cJSON_AddNumberToObject(doc,"txPin",config::TX);
   cJSON_AddNumberToObject(doc,"rxPin",config::RX);cJSON_AddNumberToObject(doc,"baud",config::BAUD);
@@ -150,6 +178,10 @@ cJSON *gatewayState(const State *snapshot=nullptr){
   cJSON_AddBoolToObject(doc,"uartAlive",s.uartAlive);cJSON_AddBoolToObject(doc,"uartStable",s.uartStable);cJSON_AddBoolToObject(doc,"wifiLinkAlive",s.wifiLinkAlive);
   cJSON_AddBoolToObject(doc,"fieldRecovery",!s.uartAlive);number(doc,"wifiLeaseMs",s.wifiLeaseMs);number(doc,"drops",s.drops);number(doc,"detailErrors",s.detailErrors);
   cJSON_AddStringToObject(doc,"otaSlot",esp_ota_get_running_partition()->label);
+  esp_ota_img_states_t otaState;const bool knownOtaState=esp_ota_get_state_partition(esp_ota_get_running_partition(),&otaState)==ESP_OK;
+  cJSON_AddBoolToObject(doc,"otaPendingVerification",knownOtaState&&otaState==ESP_OTA_IMG_PENDING_VERIFY);
+  if(s.mainLoopMs)number(doc,"mainLoopAgeMs",uint32_t(nowMs()-s.mainLoopMs));else cJSON_AddNullToObject(doc,"mainLoopAgeMs");
+  number(doc,"consoleRxBytes",s.consoleRxBytes);number(doc,"consoleCommands",s.consoleCommands);
   cJSON_AddStringToObject(doc,"capabilities","typed-telemetry,detail-subscriptions,control-relay,wifi-failover,wifi-lease");
   cJSON_AddStringToObject(doc,"futureCapabilities","BLE interface,802.15.4 experiments; not enabled in this firmware");return doc;
 }
@@ -168,15 +200,43 @@ esp_err_t rootHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");ret
 esp_err_t devHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html");return httpd_resp_send(req,GATEWAY_PAGE,HTTPD_RESP_USE_STRLEN);}
 esp_err_t statusHandler(httpd_req_t *req){return replyJson(req,serialize(gatewayState()));}
 esp_err_t robotHandler(httpd_req_t *req){
-  State snapshot;lock();snapshot=state;cJSON *robot=copyRobot();std::string detail=nativeJson,system=systemJson,logs=logCache;uint32_t detailMs=detailReceived,systemMs=systemReceived,logMs=logReceived;unlock();
-  cJSON *doc=cJSON_CreateObject();cJSON_AddItemToObject(doc,"gateway",gatewayState(&snapshot));
-  if(robot)cJSON_AddItemToObject(doc,"robot",robot);else cJSON_AddNullToObject(doc,"robot");
-  cJSON *native=detail.empty()?nullptr:cJSON_Parse(detail.c_str());cJSON_AddItemToObject(doc,"native",native?native:cJSON_CreateNull());
-  cJSON *sys=system.empty()?nullptr:cJSON_Parse(system.c_str());cJSON_AddItemToObject(doc,"system",sys?sys:cJSON_CreateNull());
-  if(detailMs)number(doc,"nativeAgeMs",uint32_t(nowMs()-detailMs));else cJSON_AddNullToObject(doc,"nativeAgeMs");
-  if(systemMs)number(doc,"systemAgeMs",uint32_t(nowMs()-systemMs));else cJSON_AddNullToObject(doc,"systemAgeMs");
-  cJSON_AddStringToObject(doc,"logs",logs.c_str());if(logMs)number(doc,"logAgeMs",uint32_t(nowMs()-logMs));else cJSON_AddNullToObject(doc,"logAgeMs");
-  number(doc,"schemaVersion",2);return replyJson(req,serialize(doc));
+  // HTTP handlers run on one server task; its bounded wire copy is never shared.
+  static uint8_t nativeSnapshot[robotlink::MAX_PAYLOAD];size_t nativeSize=0;
+  State snapshot;lock();snapshot=state;cJSON *robot=copyRobot();nativeSize=nativeWireSize;memcpy(nativeSnapshot,nativeWire,nativeSize);auto system=systemJson,logs=logCache;uint32_t detailMs=detailReceived,systemMs=systemReceived,logMs=logReceived;unlock();
+  // Keep small field replies prompt, but allow TCP to coalesce this bulk stream.
+  // NODELAY on every tiny HTTP chunk/header can exhaust Wi-Fi TX packet buffers.
+  struct BulkTcp {int fd;explicit BulkTcp(int socket):fd(socket){int zero=0;setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&zero,sizeof(zero));}
+    ~BulkTcp(){int one=1;setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&one,sizeof(one));}} bulk(httpd_req_to_sockfd(req));
+  // Hold shared system/log snapshots; native diagnostics retain bounded wire
+  // bytes and stream through a 512-byte buffer. Neither update nor HTTP allocates
+  // a full native JSON string. Views avoid implicit copies of retained strings.
+  // Full native telemetry plus logs can exceed the largest free heap block even
+  // while total heap is healthy. Stream the validated snapshot by component;
+  // never parse/duplicate the native tree or grow a complete print buffer.
+  const auto gateway=serialize(gatewayState(&snapshot)),telemetry=serialize(robot);
+  httpd_resp_set_type(req,"application/json");httpd_resp_set_hdr(req,"Cache-Control","no-store");
+  auto send=[&](const char *data,size_t size){return httpd_resp_send_chunk(req,data,size)==ESP_OK;};
+  auto text=[&](std::string_view value){return send(value.data(),value.size());};
+  auto native=[&](){
+    if(!nativeSize)return text("null");
+    char buffer[512];size_t used=0;
+    auto append=[&](const char *data,size_t size){
+      while(size){const size_t n=std::min(size,sizeof(buffer)-used);memcpy(buffer+used,data,n);used+=n;data+=n;size-=n;
+        if(used==sizeof(buffer)){if(!send(buffer,used))return false;used=0;}}
+      return true;
+    };
+    DetailReader reader{nativeSnapshot,nativeSize};
+    return DetailJsonStream(reader,append).decodeObject()&&(!used||send(buffer,used));
+  };
+  const uint32_t current=nowMs();
+  if(!text("{\"gateway\":")||!text(gateway)||!text(",\"robot\":")||!text(telemetry)||
+     !text(",\"native\":")||!native()||!text(",\"system\":")||!text(system?std::string_view(*system):std::string_view("null"))||
+     !text(",\"nativeAgeMs\":")||!text(detailMs?std::to_string(uint32_t(current-detailMs)):"null")||
+     !text(",\"systemAgeMs\":")||!text(systemMs?std::to_string(uint32_t(current-systemMs)):"null")||
+     !text(",\"logs\":")||!jsonstream::writeString(logs?std::string_view(*logs):std::string_view{},send)||
+     !text(",\"logAgeMs\":")||!text(logMs?std::to_string(uint32_t(current-logMs)):"null")||
+     !text(",\"schemaVersion\":2}"))return ESP_FAIL;
+  return httpd_resp_send_chunk(req,nullptr,0);
 }
 esp_err_t pingHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
@@ -189,9 +249,9 @@ bool readBody(httpd_req_t *req,std::string &out,size_t maximum){
 }
 esp_err_t fieldHandler(httpd_req_t *req){
   lock();cJSON *robot=copyRobot();State s=state;unlock();auto c=cJSON_DetachItemFromObjectCaseSensitive(robot,"controller");
-  cJSON *doc=cJSON_CreateObject();cJSON_AddBoolToObject(doc,"requiresKey",true);
+  cJSON *doc=cJSON_CreateObject();cJSON_AddBoolToObject(doc,"requiresKey",false);
   cJSON_AddBoolToObject(doc,"connected",s.receivedUs&&esp_timer_get_time()-s.receivedUs<250000);
-  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field · UART to S3":s.active==Transport::WIFI?"C6 field · Wi-Fi to S3":"C6 field · S3 unavailable");
+  cJSON_AddStringToObject(doc,"interface",s.active==Transport::UART?"C6 field / UART to S3":s.active==Transport::WIFI?"C6 field / Wi-Fi to S3":"C6 field / S3 unavailable");
   cJSON_AddItemToObject(doc,"controller",c?c:cJSON_CreateNull());
   cJSON_AddStringToObject(doc,"transport",s.active==Transport::UART?"UART":s.active==Transport::WIFI?"WIFI":"NONE");
   if(s.receivedUs)number(doc,"telemetryAgeMs",(esp_timer_get_time()-s.receivedUs)/1000);else cJSON_AddNullToObject(doc,"telemetryAgeMs");
@@ -206,6 +266,8 @@ esp_err_t fieldHandler(httpd_req_t *req){
 bool integerValue(cJSON *d,const char *key,double low,double high,double &out){
   auto v=cJSON_GetObjectItemCaseSensitive(d,key);if(!cJSON_IsNumber(v)||!std::isfinite(v->valuedouble)||std::floor(v->valuedouble)!=v->valuedouble||v->valuedouble<low||v->valuedouble>high)return false;out=v->valuedouble;return true;
 }
+#include "CrowdApplication.h"
+#include "VisualApplication.h"
 esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
   Request request={};request.type=type;request.queuedMs=nowMs();request.size=w.size;
   if(w.size>sizeof(request.data))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Request too large");
@@ -213,16 +275,12 @@ esp_err_t queueRequest(httpd_req_t *req,Type type,const Writer &w){
   if(xQueueSend(requests,&request,0)!=pdTRUE){httpd_resp_set_status(req,"503 Service Unavailable");return replyJson(req,"{\"error\":\"Link queue full\"}");}
   httpd_resp_set_status(req,"202 Accepted");return replyJson(req,"{\"queued\":true,\"authority\":\"S3\"}");
 }
-esp_err_t controlHandler(httpd_req_t *req){
-  if(!authorize(req))return ESP_OK;
-  std::string body;if(!readBody(req,body,512))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid control body");
-  cJSON *doc=cJSON_ParseWithLength(body.data(),body.size());Control c;double v=0;bool valid=cJSON_IsObject(doc);
-  const char *keys[]={"epoch","client","sequence","observedMs","operation","deadman","overdrive","power","left","right"};
-  double values[10]={};for(unsigned i=0;i<10;++i){valid=integerValue(doc,keys[i],i>=8?-128:0,i<4?4294967295.0:i>=8?127:255,v)&&valid;values[i]=v;}
-  cJSON_Delete(doc);if(!valid)return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Expected integer control fields");
-  c.epoch=values[0];c.client=values[1];c.sequence=values[2];c.observedMs=values[3];c.operation=values[4];c.deadman=values[5];c.overdrive=values[6];c.power=values[7];c.left=values[8];c.right=values[9];
-  return queueRequest(req,Type::CONTROL,c.encode());
-}
+#include "MastSetupApplication.h"
+#include "MastApplication.h"
+#include "CameraApplication.h"
+#include "ControlApplication.h"
+#include "HardwareTestApplication.h"
+#include "BoothApplication.h"
 esp_err_t subscriptionHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
   std::string body;if(!readBody(req,body,128))return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Invalid subscription");
@@ -253,9 +311,11 @@ esp_err_t configHandler(httpd_req_t *req){
   cJSON_Delete(doc);reconfigure=true;
   return replyJson(req,"{\"saved\":true,\"message\":\"Connecting to Wi-Fi; gateway setup access point remains available.\"}");
 }
-void rebootTask(void *){vTaskDelay(pdMS_TO_TICKS(500));esp_restart();}
+TaskHandle_t rebootWorker=nullptr;
+void rebootTask(void *){ulTaskNotifyTake(pdTRUE,portMAX_DELAY);vTaskDelay(pdMS_TO_TICKS(750));esp_restart();}
 esp_err_t otaHandler(httpd_req_t *req){
   if(!authorize(req))return ESP_OK;
+  if(!rebootWorker)return httpd_resp_send_err(req,HTTPD_500_INTERNAL_SERVER_ERROR,"Reboot worker unavailable; update refused");
   const esp_partition_t *partition=esp_ota_get_next_update_partition(nullptr);
   if(!partition||req->content_len<512||size_t(req->content_len)>partition->size)
     return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Expected a C6 gateway firmware.bin within OTA slot size");
@@ -280,22 +340,39 @@ esp_err_t otaHandler(httpd_req_t *req){
   if(error==ESP_OK)error=esp_ota_set_boot_partition(partition);
   if(error!=ESP_OK){if(begun)esp_ota_abort(handle);otaUpdating=false;return httpd_resp_send_err(req,HTTPD_400_BAD_REQUEST,"Update rejected or incomplete; running firmware retained");}
   replyJson(req,"{\"updated\":true,\"message\":\"C6 gateway rebooting. The S3 controller continues running.\"}");
-  xTaskCreate(rebootTask,"reboot",2048,nullptr,2,nullptr);return ESP_OK;
+  xTaskNotifyGive(rebootWorker);return ESP_OK;
 }
+// Small HTTP headers and JSON should not wait for the peer's delayed ACK.
+// A failed socket option preserves access to the existing maintenance server.
+esp_err_t openHttpSession(httpd_handle_t,int socket){
+  const int enabled=1;
+  if(setsockopt(socket,IPPROTO_TCP,TCP_NODELAY,&enabled,sizeof(enabled))!=0)
+    ESP_LOGW(TAG,"TCP_NODELAY unavailable: %d",errno);
+  return ESP_OK;
+}
+esp_err_t helpHandler(httpd_req_t *req){httpd_resp_set_type(req,"text/html; charset=utf-8");httpd_resp_set_hdr(req,"Cache-Control","no-store");return httpd_resp_send(req,FIELD_HELP_PAGE,HTTPD_RESP_USE_STRLEN);}
 void startHttp(){
-  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=16;
-  cfg.lru_purge_enable=true;cfg.recv_wait_timeout=5;cfg.send_wait_timeout=5;
+  httpd_config_t cfg=HTTPD_DEFAULT_CONFIG();cfg.stack_size=12288;cfg.max_uri_handlers=40;
+  cfg.lru_purge_enable=true;cfg.recv_wait_timeout=5;cfg.send_wait_timeout=5;cfg.open_fn=openHttpSession;
   ESP_ERROR_CHECK(httpd_start(&server,&cfg));
   struct Route {const char *uri;httpd_method_t method;esp_err_t(*handler)(httpd_req_t *);};
   const Route routes[]={{"/",HTTP_GET,rootHandler},{"/api/status",HTTP_GET,statusHandler},
-    {"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},
+    {"/hardware-test",HTTP_GET,hardwarePageHandler},{"/hardware-test/",HTTP_GET,hardwarePageHandler},{"/hardware-test/app.js",HTTP_GET,hardwareScriptHandler},{"/hardware-test/styles.css",HTTP_GET,hardwareStyleHandler},
+    {"/booth",HTTP_GET,boothPageHandler},{"/booth/",HTTP_GET,boothPageHandler},{"/booth/app.js",HTTP_GET,boothScriptHandler},{"/booth/mast-settings.js",HTTP_GET,mastSettingsScriptHandler},{"/booth/mast-workbench.js",HTTP_GET,mastWorkbenchScriptHandler},
+    {"/help",HTTP_GET,helpHandler},{"/help/",HTTP_GET,helpHandler},{"/api/camera/status",HTTP_GET,cameraProxyHandler},{"/dev",HTTP_GET,devHandler},{"/api/field",HTTP_GET,fieldHandler},{"/api/control",HTTP_POST,controlHandler},{"/api/mast/config",HTTP_POST,mastConfigHandler},{"/api/camera",HTTP_GET,cameraProxyHandler},{"/api/camera",HTTP_POST,cameraProxyHandler},{"/api/camera/light",HTTP_GET,cameraProxyHandler},{"/api/camera/light",HTTP_POST,cameraProxyHandler},
     {"/api/subscribe",HTTP_POST,subscriptionHandler},{"/api/link",HTTP_POST,linkHandler},
+    {"/api/crowd",HTTP_GET,visualHandler},{"/api/visual",HTTP_GET,visualHandler},{"/api/visual",HTTP_POST,visualCommandHandler},
+    {"/api/visual/config",HTTP_POST,visualConfigHandler},
+    {"/api/mast/setup",HTTP_GET,mastSetupHandler},{"/api/mast/setup",HTTP_POST,mastSetupHandler},
+    {"/api/mast",HTTP_GET,mastHandler},{"/api/mast",HTTP_POST,mastCommandHandler},
     {"/api/robot",HTTP_GET,robotHandler},{"/api/config",HTTP_POST,configHandler},
     {"/api/ping",HTTP_POST,pingHandler},{"/api/ota",HTTP_POST,otaHandler}};
   for(const auto &r:routes){httpd_uri_t uri={};uri.uri=r.uri;uri.method=r.method;uri.handler=r.handler;ESP_ERROR_CHECK(httpd_register_uri_handler(server,&uri));}
 }
 }
 extern "C" void app_main(){
+  previousFailedAllocation=failedAllocationCookie==0x474C4144?failedAllocationBytes:0;failedAllocationCookie=0;
+  ESP_ERROR_CHECK(heap_caps_register_failed_alloc_callback(allocationFailed));
   usb_serial_jtag_driver_config_t usb=USB_SERIAL_JTAG_DRIVER_CONFIG_DEFAULT();
   ESP_ERROR_CHECK(usb_serial_jtag_driver_install(&usb));
   usb_serial_jtag_vfs_use_driver();
@@ -303,30 +380,44 @@ extern "C" void app_main(){
   stateMutex=xSemaphoreCreateMutex();configASSERT(stateMutex);
   esp_err_t err=nvs_flash_init();
   if(err==ESP_ERR_NVS_NO_FREE_PAGES||err==ESP_ERR_NVS_NEW_VERSION_FOUND){ESP_ERROR_CHECK(nvs_flash_erase());err=nvs_flash_init();}
-  ESP_ERROR_CHECK(err);bootId=esp_random();loadSettings();
+  ESP_ERROR_CHECK(err);bootId=esp_random();loadSettings();loadVisualSettings();
   requests=xQueueCreate(6,sizeof(Request));configASSERT(requests);
   startWifi();
   configASSERT(xTaskCreate(uartTask,"gladiator-link",12288,nullptr,LINK_TASK_PRIORITY,nullptr)==pdPASS);
+  configASSERT(xTaskCreate(rebootTask,"reboot",8192,nullptr,2,&rebootWorker)==pdPASS);
   startHttp();
   fcntl(STDIN_FILENO,F_SETFL,O_NONBLOCK);
   ESP_LOGI(TAG,"Gateway ready: C6 TX16/RX17, external antenna; setup http://192.168.8.1");
   uint32_t lastRetry=0,lastLog=0;bool verified=false;
-  char usbCommand[32]={};size_t usbUsed=0;
+  char usbCommand[32]={};size_t usbUsed=0;uint32_t consoleRxBytes=0,consoleCommands=0;
   for(;;){
+    lock();state.mainLoopMs=nowMs();unlock();
     char input;
     for(unsigned budget=0;budget<64&&read(STDIN_FILENO,&input,1)==1;++budget){
+      ++consoleRxBytes;
       if(input=='\n'||input=='\r'){
+        if(usbUsed)++consoleCommands;
         usbCommand[usbUsed]=0;
         if(strcmp(usbCommand,"credentials")==0)
           printf("{\"gatewayProvisioning\":true,\"ssid\":\"%s\",\"password\":\"%s\",\"adminKey\":\"%s\"}\n",config::AP_SSID,config::AP_PASSWORD,adminKey);
         else if(strcmp(usbCommand,"status")==0)printf("%s\n",serialize(gatewayState()).c_str());
+        else if(strcmp(usbCommand,"saved")==0){cJSON *record=nullptr;
+          if(mastSetupRead(&record)==ESP_OK)printf("%s\n",serialize(record).c_str());
+          else printf("{\"error\":\"Saved setup storage could not be read\"}\n");
+        }else if(strcmp(usbCommand,"field")==0){lock();auto robot=copyRobot();unlock();printf("%s\n",serialize(robot).c_str());}
         usbUsed=0;
       }else if(usbUsed<sizeof(usbCommand)-1)usbCommand[usbUsed++]=input;
       else usbUsed=0;
     }
-    State s;lock();s=state;unlock();
+    State s;lock();state.consoleRxBytes=consoleRxBytes;state.consoleCommands=consoleCommands;s=state;unlock();
     if(reconfigure.exchange(false)){esp_wifi_disconnect();applyStation();lastRetry=nowMs();}
-    else if(s.configured&&!s.wifiConnected&&nowMs()-lastRetry>10000){lastRetry=nowMs();esp_wifi_connect();}
+    else if(s.configured&&!s.wifiConnected&&nowMs()-lastRetry>10000){
+      lastRetry=nowMs();wifi_sta_list_t clients={};
+      // Opal searches take this shared radio off the setup AP channel. Keep a
+      // direct staff session responsive; retry when those clients leave.
+      // Startup and an explicit saved-settings reconnect still try immediately.
+      if(esp_wifi_ap_get_sta_list(&clients)==ESP_OK&&clients.num==0)esp_wifi_connect();
+    }
     if(!verified&&nowMs()>15000&&esp_timer_get_time()-s.uartAliveUs<2000000&&server){
       esp_ota_img_states_t status;
       if(esp_ota_get_state_partition(esp_ota_get_running_partition(),&status)==ESP_OK&&status==ESP_OTA_IMG_PENDING_VERIFY)

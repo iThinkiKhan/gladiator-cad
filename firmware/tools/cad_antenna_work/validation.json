@@ -1,0 +1,46 @@
+{
+  "source_sha256": "9e0410b32e4819a35b09d62fe146ec8e052537b07ee369f801e8db20c4157a30",
+  "master_unchanged": true,
+  "radius_mm": 3.2,
+  "screw_centres_mm": [
+    [
+      60.0,
+      10.0
+    ],
+    [
+      76.0,
+      10.0
+    ]
+  ],
+  "clearance_z_mm": [
+    62.0,
+    86.0
+  ],
+  "original_volume_mm3": 4333.468,
+  "corrected_volume_mm3": 3868.024,
+  "valid": true,
+  "solid_count": 1,
+  "body_tip": "AntFixAccessCut",
+  "screw_checks": {
+    "60.0": {
+      "original_blockage_above_flange_mm3": 232.722,
+      "remaining_blockage_above_flange_mm3": 0.0,
+      "remaining_shank_blockage_in_flange_mm3": 0.0
+    },
+    "76.0": {
+      "original_blockage_above_flange_mm3": 232.722,
+      "remaining_blockage_above_flange_mm3": 0.0,
+      "remaining_shank_blockage_in_flange_mm3": 0.0
+    }
+  },
+  "flange_material_change_mm3": 0.0,
+  "mesh_solid": true,
+  "mesh_nonmanifold": false,
+  "mesh_self_intersections": false,
+  "print_bbox_mm": [
+    24.0,
+    28.0,
+    11.0
+  ],
+  "mesh_sha256": "8a55d143f3ae15d71fc0b04db3b8f09bb7e124776f655682c0830cacab9d1393"
+}
