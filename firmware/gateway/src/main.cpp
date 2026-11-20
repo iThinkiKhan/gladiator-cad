@@ -17,6 +17,7 @@
 #include "driver/uart.h"
 #include "driver/usb_serial_jtag.h"
 #include "driver/usb_serial_jtag_vfs.h"
+#include "hal/usb_serial_jtag_ll.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_netif.h"
@@ -374,6 +375,9 @@ extern "C" void app_main(){
   previousFailedAllocation=failedAllocationCookie==0x474C4144?failedAllocationBytes:0;failedAllocationCookie=0;
   ESP_ERROR_CHECK(heap_caps_register_failed_alloc_callback(allocationFailed));
   usb_serial_jtag_driver_config_t usb=USB_SERIAL_JTAG_DRIVER_CONFIG_DEFAULT();
+  // Commit any packet left in the IN FIFO by the ROM/bootloader before
+  // installing the interrupt-driven console.
+  usb_serial_jtag_ll_txfifo_flush();
   ESP_ERROR_CHECK(usb_serial_jtag_driver_install(&usb));
   usb_serial_jtag_vfs_use_driver();
   fcntl(STDIN_FILENO,F_SETFL,O_NONBLOCK);
@@ -390,13 +394,22 @@ extern "C" void app_main(){
   ESP_LOGI(TAG,"Gateway ready: C6 TX16/RX17, external antenna; setup http://192.168.8.1");
   uint32_t lastRetry=0,lastLog=0;bool verified=false;
   char usbCommand[32]={};size_t usbUsed=0;uint32_t consoleRxBytes=0,consoleCommands=0;
+  bool usbTxPrimedForHost=false;
   for(;;){
     lock();state.mainLoopMs=nowMs();unlock();
     char input;
     for(unsigned budget=0;budget<64&&read(STDIN_FILENO,&input,1)==1;++budget){
       ++consoleRxBytes;
       if(input=='\n'||input=='\r'){
-        if(usbUsed)++consoleCommands;
+        if(usbUsed){
+          ++consoleCommands;
+          // Cold boots can precede the host's first IN transfer. Once a
+          // command arrives, explicitly kick the transmit FIFO before replying.
+          if(!usbTxPrimedForHost){
+            usb_serial_jtag_ll_txfifo_flush();
+            usbTxPrimedForHost=true;
+          }
+        }
         usbCommand[usbUsed]=0;
         if(strcmp(usbCommand,"credentials")==0)
           printf("{\"gatewayProvisioning\":true,\"ssid\":\"%s\",\"password\":\"%s\",\"adminKey\":\"%s\"}\n",config::AP_SSID,config::AP_PASSWORD,adminKey);
@@ -405,6 +418,7 @@ extern "C" void app_main(){
           if(mastSetupRead(&record)==ESP_OK)printf("%s\n",serialize(record).c_str());
           else printf("{\"error\":\"Saved setup storage could not be read\"}\n");
         }else if(strcmp(usbCommand,"field")==0){lock();auto robot=copyRobot();unlock();printf("%s\n",serialize(robot).c_str());}
+        if(usbUsed)fflush(stdout);
         usbUsed=0;
       }else if(usbUsed<sizeof(usbCommand)-1)usbCommand[usbUsed++]=input;
       else usbUsed=0;

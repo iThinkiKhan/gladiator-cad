@@ -53,6 +53,12 @@ A normal USB-triggered C6 core reset while the cable stays connected restored US
 
 Evidence: `diagnostics/connection-recovery-20261120/usb-cold-warm-summary.json`.
 
+### Gateway 2.4.17 fix
+
+The installed C6 application flushes the transmit FIFO before it starts the buffered USB driver and again before the first command reply. Each console reply also drains the standard-output buffer. Two real USB power cycles reported power-on reset and returned all three read-only console replies with zero recovery resets. Revision 14 read back on each cold boot. OTA preserved 2.4.15 in the rollback slot. All eight deployed operator-page assets matched their previous content.
+
+Evidence: `diagnostics/connection-recovery-20261120/usb-cold-fix-verified.json`. The pinned release and its exact source are in the adjacent `c6-usb-candidate` directory.
+
 ## Build, provision, update
 
 S3 remains Arduino 2.x; C6 uses ESP-IDF 6.0.1. Both use PlatformIO espressif32

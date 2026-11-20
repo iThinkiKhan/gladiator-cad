@@ -4,7 +4,7 @@
 
 **November 20, 2026 — Jim's status (supersedes older notes below):**
 - C6 connectivity: intermittent. Jim's theory is antenna issues.
-- C6 cold boot does not answer USB. Jim is working on this himself. In this morning's test, a cold-booted C6 received the USB commands (`receivedCommands` 3) but sent nothing back (0 bytes on all three). After a ROM reset back into the normal app, it replied normally. Evidence: diagnostics/connection-recovery-20261120.
+- C6 cold-boot USB: FIXED. Jim, later on November 20: "C6 usb cold boot is fixed". How it was fixed is not recorded here. Earlier problem: in this morning's test, a cold-booted C6 received the USB commands (`receivedCommands` 3) but sent nothing back (0 bytes on all three). After a ROM reset back into the normal app, it replied normally. Evidence: diagnostics/connection-recovery-20261120.
 - IMU orientation loss: Jim believes it was an I2C issue, which has since been resolved.
 - Radar: never installed. Its OFFLINE status is expected, not a fault.
 - Mast calibration revision 14 was re-verified on C6 and S3 after reboots on November 20.
